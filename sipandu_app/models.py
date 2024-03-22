@@ -17,6 +17,13 @@ WARNA = (
     (4, 'biru putih')
 )
 
+JENIS_SEKOLAH =(('negeri','Negeri'),('swasta','Swasta'))
+STATUS_KEPEMILIKAN_SEKOLAH = (('pemda','Pemerintah Daerah'),('pribadi','Pribadi'),('yayasan','Yayasan'))
+AKREDITASI_SEKOLAH = (('belum','Belum Terakreditasi'),('a','A'),('b','B'),('c','C'))
+KURIKULUM_SEKOLAH = (('2013','Kurikulum 2013'),('merdeka','Kurikulum Merdeka'))
+WAKTU_PENYELANGGARAAN_SEKOLAH =(('pagi','Pagi'),('siang','Siang'),('sore','Sore'),('malam','Malam'))
+SUMBER_LISTRIK = (('pln','PLN'),('pembangkit','Pembangkit Listrik'),('diesel','Diesel'))
+
 class Master_wilayah(models.Model):
     wilayah_id = models.TextField(primary_key=True, default=uuid.uuid4,editable=False, unique=True)
     wilayah_kode = models.TextField(unique=True)
@@ -49,7 +56,7 @@ class Master_sekolah(models.Model):
     sekolah_kepsek = models.TextField(null=True, default=None)
     sekolah_akreditasi = models.TextField(choices=AKREDITASI_SEKOLAH, null=True, default=None) 
     sekolah_kurikulum = models.TextField(choices=KURIKULUM_SEKOLAH, null=True, default=None)
-    sekolah_waktu_penyelenggaraan = models. TextField(choices=WAKTU_PENYELENGGARAAN_SEKOLAH, null=True, default=None)
+    sekolah_waktu_penyelenggaraan = models. TextField(choices= WAKTU_PENYELANGGARAAN_SEKOLAH, null=True, default=None)
     sekolah_alamat = models.TextField(null=True, default=None)
     sekolah_rt = models.TextField(null=True, default=None)
     sekolah_rw = models.TextField(null=True, default=None)
@@ -127,7 +134,7 @@ class Data_konten(models.Model):
     judul = models.CharField(max_length=200)
     deskripsi = models.TextField()
     image = models.ImageField()
-    tag = models.ManyToManyField(tag)
+    tag = models.TextField(max_length=25)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
