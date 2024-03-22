@@ -10,6 +10,13 @@ LEVEL_WILAYAH = (
     (4, 'Kampung')
 )
 
+WARNA = (
+    (1, 'merah putih'),
+    (2, 'putih biru'),
+    (3, 'putih abu'),
+    (4, 'biru putih')
+)
+
 class Master_wilayah(models.Model):
     wilayah_id = models.TextField(primary_key=True, default=uuid.uuid4,editable=False, unique=True)
     wilayah_kode = models.TextField(unique=True)
@@ -83,7 +90,7 @@ class Master_user(models.Model):
 class Master_tema(models.Model):
     tema_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     tema_jenjang = models.ForeignKey(Master_jenjang, on_delete=models.PROTECT,default=None, null=True)
-    tema_warna = models.BooleanField(default=True)
+    tema_warna = models.CharField(default=None, choices=WARNA, max_length=1)
     tema_nama = models.CharField(max_length=200)
     tema_folder_name = models.CharField(max_length=200)
     tema_thumbnail = models.ImageField()
@@ -94,19 +101,17 @@ class Master_kategori(models.Model):
     kategori_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     tema_id = models.ForeignKey(Master_tema, on_delete=models.PROTECT,default=None, null=True)
     sekolah_id = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
-    kategori_profil_sekolah = models.TextField()
-    kategori_jurusan = models.BooleanField(default=False)
-    kategori_program_sekolah = models.BooleanField(default=False)
-    kategori_prestasi_sekolah = models.CharField(max_length=200)
-    kategori_berita_sekolah = models.TextField()
-    kategori_ppdb = models.TextField()
-    kategori_pengumuman = models.TextField()
-    kategori_beasiswa = models.TextField()
-    kategori_bursa_kerja = models.BooleanField(default=False)
-    kategori_galeri = models.BooleanField(default=False)
+    kategori_uraian = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+class Sub_kategori(models.Model):
+    sub_kategori_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    kategori_id = models.ForeignKey(Master_kategori, on_delete=models.PROTECT,default=None, null=True)
+    sub_kategori_uraian = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
 class Transanksi_situs(models.Model):
     transanksi_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     tema_id = models.ForeignKey(Master_tema, on_delete=models.PROTECT,default=None, null=True)
@@ -116,6 +121,9 @@ class Transanksi_situs(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class Data_konten(models.Model):
+    id_data_konten = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    sekolah_id = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
+    kategori_id = models.ForeignKey(Master_kategori, on_delete=models.PROTECT,default=None, null=True)
     judul = models.CharField(max_length=200)
     deskripsi = models.TextField()
     image = models.ImageField()
