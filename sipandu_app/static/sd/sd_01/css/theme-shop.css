@@ -99,7 +99,8 @@ html.lightbox-beforeclose .quick-view {
 	overflow: hidden;
 	position: relative;
 	text-decoration: none;
-	max-width: 100%;
+	
+	x-width: 100%;
 	text-align: center;
 	padding: 0;
 	text-decoration: none;

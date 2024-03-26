@@ -1408,7 +1408,7 @@ Theme Version:	9.9.3
 }
 
 .badge-info {
-	background-color: #17a2b8;
+	background-color: #00a6ff;
 	color: #FFF;
 }
 
@@ -1561,7 +1561,7 @@ Theme Version:	9.9.3
 }
 
 .progress.progress-dark {
-	background: #333333;
+	background: #5273b0;
 }
 
 .progress.progress-right-side-value {
@@ -2364,7 +2364,7 @@ html body.body .btn:active {
 }
 
 .btn-info {
-	background-color: #17a2b8;
+	background-color: #255399;
 	border-color: #17a2b8 #17a2b8 #117a8b;
 	color: #FFF;
 }
@@ -12849,7 +12849,7 @@ html.boxed .nav-secondary.sticky-active {
 	bottom: 0;
 	left: 0;
 	z-index: 2;
-	background: #0884FF;
+	background: #00a6ff; /*untuk merubah warna pada jumlah siswa dan tentanmg sekolah*/
 	opacity: 0;
 	pointer-events: none;
 	transition: ease opacity 300ms 100ms;
