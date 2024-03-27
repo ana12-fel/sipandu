@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en" dir="ltr">
   <head>
@@ -11,36 +12,36 @@
 		<meta name="keywords" content="admin, dashboard, dashboard ui, admin dashboard template, admin panel dashboard, admin panel html, admin panel html template, admin panel template, admin ui templates, administrative templates, best admin dashboard, best admin templates, bootstrap 4 admin template, bootstrap admin dashboard, bootstrap admin panel, html css admin templates, html5 admin template, premium bootstrap templates, responsive admin template, template admin bootstrap 4, themeforest html">
 
 		<!-- FAVICON -->
-		<link rel="shortcut icon" type="image/x-icon" href="../../assets/images/brand/favicon.ico" />
+		<link rel="shortcut icon" type="image/x-icon" href="{% static 'admin/images/brand/favicon.ico' %}" />
 
 		<!-- TITLE -->
 		<title>Zanex – Bootstrap  Admin & Dashboard Template</title>
 
 		<!-- BOOTSTRAP CSS -->
-		<link href="../../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="{% static 'admin/plugins/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
 
 		<!-- STYLE CSS -->
-		<link href="../../assets/css/style.css" rel="stylesheet"/>
-		<link href="../../assets/css/dark-style.css" rel="stylesheet"/>
-		<link href="../../assets/css/skin-modes.css" rel="stylesheet" />
+		<link href="{% static 'admin/css/style.css' %}" rel="stylesheet"/>
+		<link href="{% static 'admin/css/dark-style.css' %}" rel="stylesheet"/>
+		<link href="{% static 'admin/css/skin-modes.css' %}" rel="stylesheet" />
 
 		<!-- SIDE-MENU CSS -->
-		<link href="../../assets/css/sidemenu.css" rel="stylesheet" id="sidemenu-theme">
+		<link href="{% static 'admin/css/sidemenu.css' %}" rel="stylesheet" id="sidemenu-theme">
 
 		<!-- SINGLE-PAGE CSS -->
-		<link href="../../assets/plugins/single-page/css/main.css" rel="stylesheet" type="text/css">
+		<link href="{% static 'admin/plugins/single-page/css/main.css' %}" rel="stylesheet" type="text/css">
 
 		<!--C3 CHARTS CSS -->
-		<link href="../../assets/plugins/charts-c3/c3-chart.css" rel="stylesheet"/>
+		<link href="{% static 'admin/plugins/charts-c3/c3-chart.css' %}" rel="stylesheet"/>
 
 		<!-- P-scroll bar css-->
-		<link href="../../assets/plugins/p-scroll/perfect-scrollbar.css" rel="stylesheet" />
+		<link href="{% static 'admin/plugins/p-scroll/perfect-scrollbar.css' %}" rel="stylesheet" />
 
 		<!--- FONT-ICONS CSS -->
-		<link href="../../assets/css/icons.css" rel="stylesheet"/>
+		<link href="{% static 'admin/css/icons.css' %}" rel="stylesheet"/>
 
-		<!-- COLOR SKIN CSS -->
-		<link id="theme" rel="stylesheet" type="text/css" media="all" href="../../assets/colors/color1.css" />
+		<!-- COLOR SKIN CSS -->{% static 'admin/colors/color1.css' %}
+		<link id="theme" rel="stylesheet" type="text/css" media="all" href="" />
 
 	</head>
 
@@ -51,7 +52,7 @@
 
 			<!-- GLOABAL LOADER -->
 			<div id="global-loader">
-				<img src="../../assets/images/loader.svg" class="loader-img" alt="Loader">
+				<img src="{% static 'admin/images/loader.svg' %}" class="loader-img" alt="Loader">
 			</div>
 			<!-- /GLOABAL LOADER -->
 
@@ -61,7 +62,7 @@
 				    <!-- CONTAINER OPEN -->
 					<div class="col col-login mx-auto">
 						<div class="text-center">
-							<img src="../../assets/images/brand/logo.png" class="header-brand-img" alt="">
+							<img src="{% static 'admin/images/brand/logo.png'%}" class="header-brand-img" alt="">
 						</div>
 					</div>
 					<div class="container-login100">
@@ -72,7 +73,7 @@
 										Login
 									</span>
 									<div class="wrap-input100 validate-input" data-bs-validate = "Valid email is required: ex@abc.xyz">
-										<input class="input100" type="text" name="email" placeholder="Email">
+										<input class="input100" type="text" name="username" placeholder="Username">
 										<span class="focus-input100"></span>
 										<span class="symbol-input100">
 											<i class="zmdi zmdi-email" aria-hidden="true"></i>
@@ -122,26 +123,26 @@
 		<!-- BACKGROUND-IMAGE CLOSED -->
 
 		<!-- JQUERY JS -->
-		<script src="../../assets/js/jquery.min.js"></script>
+		<script src="{% static 'admin/js/jquery.min.js' %}"></script>
 
 		<!-- BOOTSTRAP JS -->
-		<script src="../../assets/plugins/bootstrap/js/popper.min.js"></script>
-		<script src="../../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+		<script src="{% static 'admin/plugins/bootstrap/js/popper.min.js' %}"></script>
+		<script src="{% static 'admin/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
 
 		<!-- SPARKLINE JS -->
-		<script src="../../assets/js/jquery.sparkline.min.js"></script>
+		<script src="{% static 'admin/js/jquery.sparkline.min.js' %}"></script>
 
 		<!-- CHART-CIRCLE JS -->
-		<script src="../../assets/js/circle-progress.min.js"></script>
+		<script src="{% static 'admin/js/circle-progress.min.js' %}"></script>
 
 		<!-- Perfect SCROLLBAR JS-->
-		<script src="../../assets/plugins/p-scroll/perfect-scrollbar.js"></script>
+		<script src="{% static 'admin/plugins/p-scroll/perfect-scrollbar.js' %}"></script>
 
 		<!-- INPUT MASK JS -->
-		<script src="../../assets/plugins/input-mask/jquery.mask.min.js"></script>
+		<script src="{% static 'admin/plugins/input-mask/jquery.mask.min.js' %}"></script>
 
 		<!-- CUSTOM JS-->
-		<script src="../../assets/js/custom.js"></script>
+		<script src="{% static 'admin/js/custom.js' %}"></script>
 
 	</body>
 </html>
