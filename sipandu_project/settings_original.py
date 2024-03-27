@@ -123,6 +123,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, f'sipandu_app/static/{JENJANG}/{TEMPLATE_NAME}'),
+    os.path.join(BASE_DIR, f'sipandu_admin/assets'),
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
