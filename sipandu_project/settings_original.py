@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sipandu_app',
-    'sipandu_project',
+    'sipandu_admin',
 ]
 
 MIDDLEWARE = [
