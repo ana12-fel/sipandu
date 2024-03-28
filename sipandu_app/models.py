@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,PermissionsMixin
 import uuid
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 LEVEL_WILAYAH = (
     (1, 'Provinsi'),
@@ -17,6 +18,12 @@ WARNA = (
     (4, 'biru putih')
 )
 
+ROLE_CHOICE =[
+    ('superadmin', 'Superadmin'),
+    ('admin', 'Admin'),
+    ('admin_kabupaten', 'Admin Kabupaten'),
+    ('admin_sekolah', 'Admin Sekolah')
+]
 JENIS_SEKOLAH =(('negeri','Negeri'),('swasta','Swasta'))
 STATUS_KEPEMILIKAN_SEKOLAH = (('pemda','Pemerintah Daerah'),('pribadi','Pribadi'),('yayasan','Yayasan'))
 AKREDITASI_SEKOLAH = (('belum','Belum Terakreditasi'),('a','A'),('b','B'),('c','C'))
@@ -76,6 +83,32 @@ class Master_sekolah(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) 
     updated_at = models.DateTimeField(auto_now=True)
 
+
+class AccountManager(BaseUserManager):
+    use_in_migrations = True
+
+    def create_user(self, email, password, **extra_fields):
+    
+        if not email:
+            raise ValueError(_("The Email must be set"))
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save()
+        return user
+
+    def create_superuser(self, email, password, **extra_fields):
+       
+        extra_fields.setdefault("user_is_staff", True)
+        extra_fields.setdefault("user_is_superuser", True)
+        extra_fields.setdefault("user_is_activate", True)
+
+        if extra_fields.get("user_is_staff") is not True:
+            raise ValueError(_("Superuser must have is_staff=True."))
+        if extra_fields.get("user_is_superuseruser_is_superuser") is not True:
+            raise ValueError(_("Superuser must have is_superuser=True."))
+        return self.create_user(email, password, **extra_fields)
+
 class Master_user(models.Model):
     user_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     user_email = models.EmailField(unique=True)
@@ -91,8 +124,22 @@ class Master_user(models.Model):
     user_last_login = models.DateTimeField(null=True)
     user_phone = models.CharField(max_length=15)
     user_date_of_birth = models.DateField(blank=True, null=True)
+    user_role = models.CharField(max_lenght =15, choice = ROLE_CHOICE, default = 'operator_sekolah')
+    email_verification_token = models.CharField(max_length = 100, default = '')
     user_sekolah = models.ForeignKey(Master_sekolah, default=None, null=True, on_delete=models.PROTECT)
     user_kabupaten = models.ForeignKey(Master_wilayah, default=None, null=True, on_delete=models.PROTECT)
+
+    objects = AccountManager()
+
+    USERNAME_FIELD ='user_username'
+    REQUIRED_FIELDS = ['user_username','user_phone','user_level', 'user_is_superuser']
+
+    def get_full_name(self):
+        return f"{self.user_first_name} {self.user_last_name}"
+    
+    def get_short_name(self):
+        return self.user_first_name
+
 
 class Master_tema(models.Model):
     tema_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)

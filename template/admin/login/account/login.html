@@ -40,8 +40,8 @@
 		<!--- FONT-ICONS CSS -->
 		<link href="{% static 'admin/css/icons.css' %}" rel="stylesheet"/>
 
-		<!-- COLOR SKIN CSS -->{% static 'admin/colors/color1.css' %}
-		<link id="theme" rel="stylesheet" type="text/css" media="all" href="" />
+		<!-- COLOR SKIN CSS -->
+		<link id="theme" rel="stylesheet" type="text/css" media="all" href="{% static 'admin/css-rtl/colors/color1.css' %}" />
 
 	</head>
 
@@ -73,14 +73,14 @@
 										Login
 									</span>
 									<div class="wrap-input100 validate-input" data-bs-validate = "Valid email is required: ex@abc.xyz">
-										<input class="input100" type="text" name="username" placeholder="Username">
+										<input class="input100" type="text" name="email" placeholder="Email">
 										<span class="focus-input100"></span>
 										<span class="symbol-input100">
 											<i class="zmdi zmdi-email" aria-hidden="true"></i>
 										</span>
 									</div>
 									<div class="wrap-input100 validate-input" data-bs-validate = "Password is required">
-										<input class="input100" type="password" name="pass" placeholder="Password">
+										<input class="input100" type="password" name="password" placeholder="Password">
 										<span class="focus-input100"></span>
 										<span class="symbol-input100">
 											<i class="zmdi zmdi-lock" aria-hidden="true"></i>

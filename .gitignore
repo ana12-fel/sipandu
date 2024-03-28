@@ -3,3 +3,4 @@ sipandu_project/settings.py
 sipandu_app/migrations/*
 Scripts/*
 Lib/*
+Include/*
