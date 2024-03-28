@@ -42,4 +42,9 @@ def LaporanDataSekolah(request):
     if request.method == 'GET':
         data = {}
         return render(request, 'admin/laporan/laporan_data_sekolah.html', data)
+    
+def FormUser(request):
+    if request.method == 'GET':
+        data = {}
+        return render(request, 'admin/form/form_user.html', data)
 # Create your views here.
