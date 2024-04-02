@@ -17,7 +17,7 @@ Master User
                 </ol>
             </div>
             <div class="ms-auto pageheader-btn">
-                <a href="#" class="btn btn-primary btn-icon text-white me-2">
+                <a href="#" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#addDataModal">
                     <span>
                         <i class="fe fe-plus"></i>
                     </span> Tambahkan Data
@@ -30,6 +30,36 @@ Master User
             </div>
         </div>
         <!-- PAGE-HEADER END -->
+
+         <!-- Modal Tambah Data -->
+         <div class="modal fade" id="addDataModal" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addDataModalLabel">Tambah Data Jenjang</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form tambah data di sini -->
+                        <form action=" {% url 'sipandu_admin:index_jenjang' %} ">
+                            <div class="mb-3">
+                                <label for="jenjang" class="form-label">Jenjang Pendidikan</label>
+                                <input type="text" class="form-control" id="jenjang" placeholder="Masukkan jenjang pendidikan">
+                            </div>
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Status</label>
+                                <input type="text" class="form-control" id="status" placeholder="Masukkan status">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" >Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Tambah Data End -->
 
         <!-- ROW OPEN -->
         <div class="row row-cards">
@@ -136,4 +166,8 @@ Master User
                         </li>
                     </ul>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

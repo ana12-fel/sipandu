@@ -16,7 +16,7 @@ urlpatterns = [
     path('data-sekolah/', admin_views.DataSekolah, name='data_sekolah'),
     path('konten/', admin_views.Konten, name='konten'),
     path('laporan-data-sekolah/', admin_views.LaporanDataSekolah, name='laporan_data_sekolah'),
-    path('form-user/', admin_views.FormUser, name='form_user'),
+    path('form-jenjang/', admin_views.FormJenjang, name='form_jenjang'),
 
 
 
