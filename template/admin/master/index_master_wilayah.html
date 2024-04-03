@@ -1,0 +1,92 @@
+{% extends 'admin/base/base_index.html' %}
+{% load static %}
+{% block title %}
+Master User
+{% endblock %}
+
+{% block content %}
+<div class="app-content">
+    <div class="side-app">
+        <!-- PAGE-HEADER -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">MASTER Wilayah</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Master</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Master Wilayah</li>
+                </ol>
+            </div>
+            <div class="ms-auto pageheader-btn">
+                <a href="#" class="btn btn-primary btn-icon text-white me-2">
+                    <span>
+                        <i class="fe fe-plus"></i>
+                    </span> Tambah Data
+                </a>
+                <a href="#" class="btn btn-success btn-icon text-white">
+                    <span>
+                        <i class="fe fe-log-in"></i>
+                    </span> Export
+                </a>
+            </div>
+        </div>
+        <!-- PAGE-HEADER END -->
+
+        <!-- ROW-1 -->
+        <div class="row row-sm">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Daftar User</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                                <thead>
+                                    <tr>
+                                        <th class="wd-15p border-bottom-0">Jenjang Pendidikan</th>
+                                        <th class="wd-15p border-bottom-0">Status</th>
+                                        <th class="wd-20p border-bottom-0">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Bella</td>
+                                        <td>Chloe</td>
+                                        <td>System Developer</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>Donna</td>
+                                        <td>Bond</td>
+                                        <td>Account Manager</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>Harry</td>
+                                        <td>Carr</td>
+                                        <td>Technical Manager</td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    $(function(){
+        $('#responsive-datatable').DataTable({
+		scrollX: "100%",
+		language: {
+			searchPlaceholder: 'Search...',
+			sSearch: '',
+		}
+	});
+    })
+</script>
+{% endblock %}

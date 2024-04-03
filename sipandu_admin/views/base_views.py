@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 
 def admin_index(request):
-   return render(request, f'admin/base/base_index.html', )
+   return render(request, f'admin/base/index.html', )
+
 
 
 
