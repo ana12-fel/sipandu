@@ -1,0 +1,33 @@
+
+ <!-- Modal Tambah Data -->
+ 
+ <div class="modal fade" id="editdata_{{dt_jenjang.jenjang_id}}" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addDataModalLabel">Edit Data Jenjang</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form tambah data di sini -->
+                <form method="post" action="{% url 'sipandu_admin:edit_jenjang' dt_jenjang.jenjang_id %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="jenjang" class="form-label">Jenjang</label>
+                        <input type="text" value="{{dt_jenjang.jenjang_nama}}" class="form-control" name="jenjang_nama" placeholder="Masukkan id">
+                        <!-- Input jenjang_status secara default -->
+                        <input type="hidden" name="jenjang_status" value="True">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Tambah Data End -->
+
+                            

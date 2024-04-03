@@ -17,6 +17,13 @@ WARNA = (
     (4, 'biru putih')
 )
 
+ROLE_CHOICE =[
+    ('superadmin', 'Superadmin'),
+    ('admin', 'Admin'),
+    ('admin_kabupaten', 'Admin Kabupaten'),
+    ('admin_sekolah', 'Admin Sekolah')
+]
+
 JENIS_SEKOLAH =(('negeri','Negeri'),('swasta','Swasta'))
 STATUS_KEPEMILIKAN_SEKOLAH = (('pemda','Pemerintah Daerah'),('pribadi','Pribadi'),('yayasan','Yayasan'))
 AKREDITASI_SEKOLAH = (('belum','Belum Terakreditasi'),('a','A'),('b','B'),('c','C'))
@@ -40,6 +47,13 @@ class Master_jenjang(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
+
+    def create_jenjang():
+    # Buat instance model Jenjang dengan memberikan nilai yang valid untuk jenjang_status
+        new_jenjang = Master_jenjang.objects.create(
+        jenjang_nama='SD',
+        jenjang_status=True  # Berikan nilai boolean True atau False
+    )
 
 class Master_sekolah(models.Model):
     sekolah_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -76,10 +90,13 @@ class Master_sekolah(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) 
     updated_at = models.DateTimeField(auto_now=True)
 
-class Master_user(models.Model):
+class Master_user(AbstractBaseUser):
     user_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     user_email = models.EmailField(unique=True)
-    user_username = models.CharField(unique=True, max_length=100)
+    user_password = models.TextField(default='', null=False)
+    user_status = models.BooleanField(default=True)
+    user_role = models.CharField(max_length = 15, choices = ROLE_CHOICE, default = 'admin_sekolah')
+    user_ulang_password = models.TextField(default='', null=False)
     user_level = models.CharField(default=None, choices=LEVEL_WILAYAH, max_length=1)
     user_first_name = models.CharField(max_length=50)
     user_last_name = models.CharField(max_length=100)

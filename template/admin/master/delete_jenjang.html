@@ -1,0 +1,52 @@
+<div class="card">
+    <div class="card-header border-bottom-0 p-4">
+        <div class="page-options d-flex float-end">
+        </div>
+    </div>
+    <div class="e-table px-5 pb-5">
+        <div class="table-responsive table-lg">
+            <table class="table border-top table-bordered mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-center">Select </th>
+                        <th>JENJANG PENDIDIKAN</th>
+                        <th>STATUS</th>
+                        <th class="text-center">AKSI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dt_edit in edit_jenjang %}
+                    <tr>
+                        <td class="align-middle text-center">
+                            <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
+                                <input class="custom-control-input" id="item-{{ dt_edit.jenjang_id }}" type="checkbox"> <label class="custom-control-label" for="item-{{ dt_edit.jenjang_id }}"></label>
+                            </div>
+                        </td>
+                        <td class="text-nowrap align-middle">{{ dt_edit.jenjang_nama }}</td>
+                        <td class="text-nowrap align-middle"><span>{% if dt_edit.jenjang_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
+
+                        <td class="text-center align-middle">
+                            <div class="btn-group align-top">
+                                <button class="btn btn-sm btn-danger badge" onclick="deleteJenjang('{{ dt_edit.jenjang_id }}')" type="button">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <form id="deleteForm{{ dt_edit.jenjang_id }}" method="post" action="{% url 'sipandu_admin:delete_jenjang' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="jenjang_id" value="{{ dt_edit.jenjang_id }}">
+                    </form>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Delete Function -->
+<script>
+    function deleteJenjang(jenjang_id) {
+        if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+            document.getElementById('deleteForm' + jenjang_id).submit();
+        }
+    }
+</script>
