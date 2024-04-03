@@ -1,5 +1,7 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, JsonResponse
 from sipandu_app.models import Master_jenjang
+from django.urls import reverse
 
 def IndexJenjang(request):
     if request.method == 'POST':
@@ -33,14 +35,25 @@ def edit_jenjang(request, jenjang_id):
         dt_jenjang = Master_jenjang.objects.get(jenjang_id=jenjang_id)
         return render(request, 'admin/master/edit_jenjang.html', {"dt_jenjang": dt_jenjang,"id_jenjang": jenjang_id})
     
-def delete_jenjang(request, jenjang_id):     
+def delete_jenjang(request, jenjang_id):
     try:
-       
-        dt_jenjang = Master_jenjang.objects.get(jenjang_id=jenjang_id)
+        # Mengambil objek jenjang berdasarkan jenjang_id
+        dt_jenjang = get_object_or_404(Master_jenjang, jenjang_id=jenjang_id)
+        
+        # Hapus objek jenjang
         dt_jenjang.delete()
 
-        return redirect('sipandu_admin:index_jenjang')  
+        # Redirect ke halaman indeks jenjang menggunakan nama URL
+        data = {
+                'status': 'success',
+                'message': 'Jenjang berhasil dihapus'
+        }
+        return JsonResponse(data, status=200)
 
     except Master_jenjang.DoesNotExist:
-
-        return HttpResponse("Jenjang tidak ditemukan", status=404)  
+        # Jika jenjang tidak ditemukan, kembalikan respons 404
+        data = {
+                'status': 'error',
+                'message': 'Jenjang gagal dihapus, jenjang tidak ditemukan'
+        }
+        return JsonResponse(data, status=400)
