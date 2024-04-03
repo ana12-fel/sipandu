@@ -97,7 +97,7 @@ Master User
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_jenjang.jenjang_id}}">Edit</a> &nbsp;
-                                                <a href="{% url 'sipandu_admin:delete_jenjang' dt_jenjang.jenjang_id %}" class="btn btn-sm btn-danger badge">Delete</a>
+                                                <button onclick="deleteJenjang('{{ dt_edit.jenjang_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
                                             </div>
                                             </div>
 
@@ -133,4 +133,40 @@ Master User
     </div>
 </div>
 
+{% endblock %}
+
+{% block js %}
+<script>
+    function deleteJenjang(jenjang_id) {
+        swal({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'hapus_data.php'); // Ganti dengan URL yang sesuai
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        // Tampilkan pesan sukses menggunakan SweetAlert
+                        swal("Terhapus!", "Data telah dihapus.", "success");
+                        // Di sini Anda dapat memperbarui tampilan atau melakukan tindakan lain setelah menghapus data
+                    } else {
+                        // Tampilkan pesan kesalahan menggunakan SweetAlert
+                        swal("Error!", "Terjadi kesalahan saat menghapus data: " + xhr.statusText, "error");
+                    }
+                };
+                xhr.onerror = function() {
+                    // Tampilkan pesan kesalahan menggunakan SweetAlert
+                    swal("Error!", "Terjadi kesalahan saat menghapus data: " + xhr.statusText, "error");
+                };
+                xhr.send('id=123'); // Ganti dengan data yang sesuai yang ingin dihapus
+            }
+        });
+    }
+</script>
 {% endblock %}

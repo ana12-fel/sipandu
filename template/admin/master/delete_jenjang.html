@@ -43,10 +43,11 @@
 </div>
 
 <!-- JavaScript for Delete Function -->
+
+{% block js %}
 <script>
     function deleteJenjang(jenjang_id) {
-        if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
-            document.getElementById('deleteForm' + jenjang_id).submit();
-        }
+        console.log("test")
     }
 </script>
+{% endblock %}
