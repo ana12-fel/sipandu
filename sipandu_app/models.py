@@ -24,6 +24,13 @@ ROLE_CHOICE =[
     ('admin_kabupaten', 'Admin Kabupaten'),
     ('admin_sekolah', 'Admin Sekolah')
 ]
+
+ROLE_CHOICE =[
+    ('superadmin', 'Superadmin'),
+    ('admin', 'Admin'),
+    ('admin_kabupaten', 'Admin Kabupaten'),
+    ('admin_sekolah', 'Admin Sekolah')
+]
 JENIS_SEKOLAH =(('negeri','Negeri'),('swasta','Swasta'))
 STATUS_KEPEMILIKAN_SEKOLAH = (('pemda','Pemerintah Daerah'),('pribadi','Pribadi'),('yayasan','Yayasan'))
 AKREDITASI_SEKOLAH = (('belum','Belum Terakreditasi'),('a','A'),('b','B'),('c','C'))
@@ -47,6 +54,13 @@ class Master_jenjang(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
+
+    def create_jenjang():
+    # Buat instance model Jenjang dengan memberikan nilai yang valid untuk jenjang_status
+        new_jenjang = Master_jenjang.objects.create(
+        jenjang_nama='SD',
+        jenjang_status=True  # Berikan nilai boolean True atau False
+    )
 
 class Master_sekolah(models.Model):
     sekolah_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -90,7 +104,7 @@ class AccountManager(BaseUserManager):
     
         if not email:
             raise ValueError(_("The Email must be set"))
-        email = self.normalize_email(user_email)
+        email = self.normalize_email(email)
         user = self.model(user_email=user_email, **extra_fields)
         user.set_password(user_password)
         user.save()
@@ -107,8 +121,8 @@ class AccountManager(BaseUserManager):
         if extra_fields.get("user_is_superuser ") is not True:
             raise ValueError(_("Superuser must have user_is_superuser=True."))
         return self.create_user(user_email, user_password, **extra_fields)
-    
-class Master_user(AbstractBaseUser, PermissionsMixin):
+
+class Master_user(AbstractBaseUser,PermissionsMixin):
     user_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     user_email = models.EmailField(unique=True)
     user_level = models.CharField(default=None, choices=LEVEL_WILAYAH, max_length=1)

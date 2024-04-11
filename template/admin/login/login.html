@@ -68,9 +68,11 @@
 					<div class="container-login100">
 						<div class="wrap-login100 p-0">
 							<div class="card-body">
-								<form class="login100-form validate-form">
-									<span class="login100-form-title">
-										Login
+								<form method="post" class="login100-form validate-form" action="{% url 'sipandu_login:login_index' %}">
+									{% csrf_token %}
+									<span class="login100-form-title">LOGIN</span>
+									
+								</form>
 									</span>
 									<div class="wrap-input100 validate-input" data-bs-validate = "Valid email is required: ex@abc.xyz">
 										<input class="input100" type="text" name="email" placeholder="Email">

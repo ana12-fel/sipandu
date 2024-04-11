@@ -1,18 +1,6 @@
-from django.shortcuts import render
-
-def login_index(request):
-    return render (request, f'login/account/login.html')
-
-def IndexUser(request):
-    if request.method == 'GET':
-        data = {}
-        return render(request, 'admin/master/index_master_user.html', data)
-    
-def IndexJenjang(request):
-    if request.method == 'GET':
-        data = {}
-        return render(request, 'admin/master/index_master_jenjang.html', data)
-    
+from django.shortcuts import render,redirect
+from sipandu_app.models import Master_jenjang
+  
 def IndexWilayah(request):
     if request.method == 'GET':
         data = {}
@@ -43,8 +31,4 @@ def LaporanDataSekolah(request):
         data = {}
         return render(request, 'admin/laporan/laporan_data_sekolah.html', data)
     
-def FormJenjang(request):
-    if request.method == 'GET':
-        data = {}
-        return render(request, 'admin/form/form_jenjang.html', data)
 # Create your views here.
