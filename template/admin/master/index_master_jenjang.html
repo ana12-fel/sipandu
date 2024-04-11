@@ -89,27 +89,23 @@ Master User
                                 </thead>
                                 <tbody>
                                     {% for dt_jenjang in data_jenjang %}
-                
-                                    <tr>
-                                        <td class="text-center align-middle">{{dt_jenjang.jenjang_nama}}</td>
-                                        <td class="text-center align-middle"><span>{% if dt_jenjang.jenjang_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
+                                        <!-- Iterasi melalui setiap objek dt_jenjang -->
+                                        <tr>
+                                            <td class="text-center align-middle">{{ dt_jenjang.jenjang_nama }}</td>
+                                            <td class="text-center align-middle"><span>{% if dt_jenjang.jenjang_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
+                                            <td class="text-center align-middle">
+                                                <div class="btn-group align-top">
+                                                    <!-- Tombol edit -->
+                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_jenjang.jenjang_id}}">Edit</a> &nbsp;
+                                                    <!-- Tombol delete -->
+                                                    <button onclick="deleteJenjang('{{ dt_jenjang.jenjang_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% include 'admin/master/edit_jenjang.html'%}
+                                    {% endfor %}
 
-                                        <td class="text-center align-middle">
-                                            <div class="btn-group align-top">
-                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_jenjang.jenjang_id}}">Edit</a> &nbsp;
-                                                <a href="{% url 'sipandu_admin:delete_jenjang' dt_jenjang.jenjang_id %}" class="btn btn-sm btn-danger badge">Delete</a>
-                                            </div>
-                                            </div>
 
-                                            </div>
-                                            </div>
-                                        </td>
-                                        
-                                    </tr>
-                                    {% include 'admin/master/edit_jenjang.html'%}
-                                   
-                             
-                                    {% endfor %} 
                             
                                 </tbody>
                             </table>
@@ -132,5 +128,54 @@ Master User
         </div>
     </div>
 </div>
+
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
+<script>
+    function deleteJenjang(jenjang_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_jenjang' 'jenjang_id' %}".replace("jenjang_id",jenjang_);
+
+        swal({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                $.ajax({
+                    headers : { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "DELETE",
+                    success: function (response) {
+                        // Data berhasil dihapus
+                        swal("Data berhasil dihapus!", {
+                            icon: "success",
+                        }).then(() => {
+                            // Refresh halaman atau lakukan aksi lain
+                            window.location.reload(); // Contoh: Refresh halaman
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        // Terjadi kesalahan saat menghapus data
+                        swal("Terjadi kesalahan saat menghapus data!", {
+                            icon: "error",
+                        });
+                    }
+                });
+            } else {
+                // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+                swal("Tindakan dibatalkan", "", "info");
+            }
+        });
+    }
+</script>
 
 {% endblock %}

@@ -1,14 +1,19 @@
 <div class="card">
     <div class="card-header border-bottom-0 p-4">
-        <div class="page-options d-flex float-end">
+        <div class="page-options d-flex justify-content-end">
+            <!-- Tempatkan tombol-tombol atau opsi-opsi halaman di sini -->
         </div>
     </div>
     <div class="e-table px-5 pb-5">
         <div class="table-responsive table-lg">
+            <form id="deleteForm" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="jenjang_id" id="jenjang_id">
+            </form>
             <table class="table border-top table-bordered mb-0">
                 <thead>
                     <tr>
-                        <th class="text-center">Select </th>
+                        <th class="text-center">Select</th>
                         <th>JENJANG PENDIDIKAN</th>
                         <th>STATUS</th>
                         <th class="text-center">AKSI</th>
@@ -18,23 +23,23 @@
                     {% for dt_edit in edit_jenjang %}
                     <tr>
                         <td class="align-middle text-center">
-                            <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input class="custom-control-input" id="item-{{ dt_edit.jenjang_id }}" type="checkbox"> <label class="custom-control-label" for="item-{{ dt_edit.jenjang_id }}"></label>
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" id="item-{{ dt_edit.jenjang_id }}" type="checkbox"> 
+                                <label class="custom-control-label" for="item-{{ dt_edit.jenjang_id }}"></label>
                             </div>
                         </td>
                         <td class="text-nowrap align-middle">{{ dt_edit.jenjang_nama }}</td>
                         <td class="text-nowrap align-middle"><span>{% if dt_edit.jenjang_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
-
                         <td class="text-center align-middle">
                             <div class="btn-group align-top">
-                                <button class="btn btn-sm btn-danger badge" onclick="deleteJenjang('{{ dt_edit.jenjang_id }}')" type="button">Delete</button>
+                                <button class="btn btn-sm btn-danger badge" onclick="prepareDelete('{{ dt_edit.jenjang_id }}')" type="button">Delete</button>
                             </div>
                         </td>
+                        <form id="deleteForm{{ dt_jenjang.jenjang_id }}" method="post" action="{% url 'delete_jenjang' dt_jenjang.jenjang_id %}">
+                            {% csrf_token %}
+                        </form>
+                        
                     </tr>
-                    <form id="deleteForm{{ dt_edit.jenjang_id }}" method="post" action="{% url 'sipandu_admin:delete_jenjang' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="jenjang_id" value="{{ dt_edit.jenjang_id }}">
-                    </form>
                     {% endfor %}
                 </tbody>
             </table>
@@ -43,10 +48,18 @@
 </div>
 
 <!-- JavaScript for Delete Function -->
+{% block js %}
 <script>
-    function deleteJenjang(jenjang_id) {
-        if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
-            document.getElementById('deleteForm' + jenjang_id).submit();
+    function prepareDelete(jenjang_id) {
+        var confirmation = confirm("Apakah Anda yakin ingin menghapus data ini?");
+        if (confirmation) {
+            // Set nilai jenjang_id dalam form
+            document.getElementById("jenjang_id").value = jenjang_id;
+            // Submit form
+            document.getElementById("deleteForm").submit();
+        } else {
+            // Do nothing
         }
     }
 </script>
+{% endblock %}
