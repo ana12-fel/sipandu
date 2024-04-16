@@ -4,11 +4,6 @@ from sipandu_app.models import Master_jenjang
 def login_index(request):
     return render (request, f'login/account/login.html')
     
-def IndexWilayah(request):
-    if request.method == 'GET':
-        data = {}
-        return render(request, 'admin/master/index_master_wilayah.html', data)
-    
 def IndexSekolah(request):
     if request.method == 'GET':
         data = {}
