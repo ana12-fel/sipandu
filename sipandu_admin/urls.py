@@ -20,12 +20,9 @@ urlpatterns = [
     path('data-sekolah/', admin_views.DataSekolah, name='data_sekolah'),
     path('konten/', admin_views.Konten, name='konten'),
     path('laporan-data-sekolah/', admin_views.LaporanDataSekolah, name='laporan_data_sekolah'),
+    path('login/', login_view.login_index, name='login_index'),
+    path('login_index/', login_view.login_index, name='login_index'),
    
 ]
 
 
-app_name = 'sipandu_login'
-urlpatterns = [
-    path('login/', login_view.login_index, name='login_index'),
-    path('login_index/', login_view.login_index, name='login_index'),
-]
