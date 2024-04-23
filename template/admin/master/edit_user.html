@@ -1,0 +1,54 @@
+<!-- Modal Edit Data User -->
+<div class="modal fade" id="editUserModal_{{dt_user.user_id}}" tabindex="-1" aria-labelledby="editDataModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editDataModalLabel">Edit Data User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form edit data di sini -->
+                <form method="post" action="{% url 'sipandu_admin:edit_user' dt_user.user_id %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="first_name" class="form-label">Nama Depan</label>
+                        <input type="text" value="{{ dt_user.user_first_name }}" class="form-control" name="first_name" placeholder="Masukkan nama depan">
+                    </div>
+                    <div class="mb-3">
+                        <label for="role">Role</label>
+                        <select name="role" id="role" class="form-control">
+                            {% for role_key, role_display in role_choices %}
+                                <option value="{{ role_display }}">{{ role_key }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="last_name" class="form-label">Nama Belakang</label>
+                        <input type="text" value="{{ dt_user.user_last_name }}" class="form-control" name="last_name" placeholder="Masukkan nama belakang">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="Masukkan password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="level">Level</label>
+                        <select name="level" id="level" class="form-control">
+                            {% for dt_level in level %}
+                            <option value="{{dt_level.0}}">{{dt_level.1}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" value="{{ dt_user.user_email }}" class="form-control" name="email" placeholder="Masukkan email">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Edit Data User End -->

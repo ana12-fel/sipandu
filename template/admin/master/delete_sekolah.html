@@ -1,0 +1,73 @@
+<div class="card">
+    <div class="card-header border-bottom-0 p-4">
+        <div class="page-options d-flex justify-content-end">
+        </div>
+    </div>
+    <div class="e-table px-5 pb-5">
+        <div class="table-responsive table-lg">
+            <form id="deleteForm" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="sekolah_id" id="sekolah_id">
+            </form>
+            <table class="table border-top table-bordered mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-center">Select</th>
+                        <th>PROVINSI</th>
+                        <th>KABUPATEN</th>
+                        <th>KECAMATAN</th>
+                        <th>NAMA SEKOLAH</th>
+                        <th>JENJANG</th>
+                        <th>NPSN</th>
+                        <th>JENIS</th>
+                        <th>STATUS</th>
+                        <th class="text-center">AKSI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dt_sekolah in data_sekolah %}
+                    <tr>
+                        <td class="align-middle text-center">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" id="item-{{ dt_sekolah.sekolah_id }}" type="checkbox"> 
+                                <label class="custom-control-label" for="item-{{ dt_sekolah.sekolah_id }}"></label>
+                            </div>
+                        </td>
+                        <td class="text-nowrap align-middle">{{ dt_sekolah.sekolah_provinsi }}</td>
+                        <td class="text-nowrap align-middle">{{ dt_sekolah.sekolah_wilayah.kabupaten.nama }}</td>
+                        <td class="text-nowrap align-middle">{{ dt_sekolah.sekolah_wilayah.kecamatan.nama }}</td>
+                        <td class="text-nowrap align-middle">{{ dt_sekolah.sekolah_nama }}</td>
+                        <td class="text-nowrap align-middle">{{ dt_sekolah.sekolah_bentuk_pendidikan }}</td>
+                        <td class="text-nowrap align-middle">{{ dt_sekolah.sekolah_npsn }}</td>
+                        <td class="text-nowrap align-middle">{{ dt_sekolah.sekolah_jenis }}</td>
+                        <td class="text-nowrap align-middle">{{ dt_sekolah.sekolah_status }}</td>
+                        <td class="text-center align-middle">
+                            <div class="btn-group align-top">
+                                <button class="btn btn-sm btn-danger badge" onclick="prepareDelete('{{ dt_sekolah.sekolah_id }}')" type="button">Delete Sekolah</button>
+                            </div>
+                        </td>
+                        <form id="deleteForm{{ dt_sekolah.sekolah_id }}" method="post" action="{% url 'delete_sekolah' dt_sekolah.sekolah_id %}">
+                            {% csrf_token %}
+                        </form>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Delete Function -->
+{% block js %}
+<script>
+    function prepareDelete(sekolah_id) {
+        var confirmation = confirm("Apakah Anda yakin ingin menghapus data ini?");
+        if (confirmation) {
+            document.getElementById("sekolah_id").value = sekolah_id;
+            document.getElementById("deleteForm" + sekolah_id).submit();
+        } else {
+        }
+    }
+</script>
+{% endblock %}

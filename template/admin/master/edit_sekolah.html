@@ -1,0 +1,47 @@
+<!-- Modal Edit Data Sekolah -->
+<div class="modal fade" id="editdata_{{dt_sekolah.sekolah_id}}" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editDataModalLabel">Edit Data Sekolah</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form edit data di sini -->
+                <form method="post" action="{% url 'sipandu_admin:edit_sekolah' dt_sekolah.sekolah_id %}">
+
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="sekolah_nama" class="form-label">Nama Sekolah</label>
+                        <input type="text" value="{{ dt_sekolah.sekolah_nama }}" class="form-control" name="sekolah_nama" placeholder="Masukkan Nama Sekolah">
+                    </div>
+                    <div class="mb-3">
+                        <label for="sekolah_npsn" class="form-label">NPSN</label>
+                        <input type="text" value="{{ dt_sekolah.sekolah_npsn }}" class="form-control" name="sekolah_npsn" placeholder="Nomor NPSN">
+                    </div>
+                    <div class="mb-3">
+                        <label for="sekolah_jenis" class="form-label">Jenis Sekolah</label>
+                        <select class="form-select" id="sekolah_jenis" name="sekolah_jenis">
+                            <option value="negeri" {% if dt_sekolah.sekolah_jenis == 'negeri' %} selected {% endif %}>Negeri</option>
+                            <option value="swasta" {% if dt_sekolah.sekolah_jenis == 'swasta' %} selected {% endif %}>Swasta</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sekolah_jenjang" class="form-label">Bentuk Pendidikan</label>
+                        <select class="form-select" id="sekolah_jenjang" name="sekolah_jenjang">
+                            <option value="SD" {% if dt_sekolah.sekolah_jenjang == 'SD' %} selected {% endif %}>SD</option>
+                            <option value="SMP" {% if dt_sekolah.sekolah_jenjang == 'SMP' %} selected {% endif %}>SMP</option>
+                            <option value="SMA" {% if dt_sekolah.sekolah_jenjang == 'SMA' %} selected {% endif %}>SMA</option>
+                            <option value="SMK" {% if dt_sekolah.sekolah_jenjang == 'SMK' %} selected {% endif %}>SMK</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Edit Data Sekolah End -->
