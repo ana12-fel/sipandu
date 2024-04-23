@@ -1,5 +1,5 @@
 <!-- Modal Edit Data Sekolah -->
-<div class="modal fade" id="editSekolahModal_{{ dt_sekolah.id }}" tabindex="-1" aria-labelledby="editDataModalLabel" aria-hidden="true">
+<div class="modal fade" id="editdata_{{dt_sekolah.sekolah_id}}" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -27,12 +27,12 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="sekolah_bentuk_pendidikan" class="form-label">Bentuk Pendidikan</label>
-                        <select class="form-select" id="sekolah_bentuk_pendidikan" name="sekolah_bentuk_pendidikan">
-                            <option value="SD" {% if dt_sekolah.sekolah_bentuk_pendidikan == 'SD' %} selected {% endif %}>SD</option>
-                            <option value="SMP" {% if dt_sekolah.sekolah_bentuk_pendidikan == 'SMP' %} selected {% endif %}>SMP</option>
-                            <option value="SMA" {% if dt_sekolah.sekolah_bentuk_pendidikan == 'SMA' %} selected {% endif %}>SMA</option>
-                            <option value="SMK" {% if dt_sekolah.sekolah_bentuk_pendidikan == 'SMK' %} selected {% endif %}>SMK</option>
+                        <label for="sekolah_jenjang" class="form-label">Bentuk Pendidikan</label>
+                        <select class="form-select" id="sekolah_jenjang" name="sekolah_jenjang">
+                            <option value="SD" {% if dt_sekolah.sekolah_jenjang == 'SD' %} selected {% endif %}>SD</option>
+                            <option value="SMP" {% if dt_sekolah.sekolah_jenjang == 'SMP' %} selected {% endif %}>SMP</option>
+                            <option value="SMA" {% if dt_sekolah.sekolah_jenjang == 'SMA' %} selected {% endif %}>SMA</option>
+                            <option value="SMK" {% if dt_sekolah.sekolah_jenjang == 'SMK' %} selected {% endif %}>SMK</option>
                         </select>
                     </div>
                     <div class="modal-footer">

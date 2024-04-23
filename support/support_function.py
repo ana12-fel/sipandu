@@ -1,7 +1,7 @@
 def global_var():
     data = {
-        'jenjang': 'sd',
-        'template_name': 'sd_01'
+        'jenjang': 'sma',
+        'template_name': 'sma_01'
     }
     return data
 

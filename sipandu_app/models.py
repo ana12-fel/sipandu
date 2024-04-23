@@ -11,6 +11,10 @@ LEVEL_WILAYAH = (
     (4, 'Kampung')
 )
 
+PROVINSI = [
+    ('papteng', 'papua tengah')
+]
+
 WARNA = (
     (1, 'merah putih'),
     (2, 'putih biru'),
@@ -58,10 +62,12 @@ class Master_jenjang(models.Model):
 
 class Master_sekolah(models.Model):
     sekolah_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    sekolah_jenjang = models.ForeignKey(Master_jenjang, on_delete=models.PROTECT,default=None, null=True)
     sekolah_nama = models.TextField(null=True, default=None)
     sekolah_wilayah = models.ForeignKey('Master_wilayah', on_delete=models.PROTECT, default=None, null=True)
     sekolah_npsn = models.TextField(unique=True)
     sekolah_jenis = models.TextField(choices=JENIS_SEKOLAH)
+    sekolah_provinsi = models.CharField(max_length=15, choices=PROVINSI, default='papteng')
     sekolah_status_kepemilikan = models.TextField(choices=STATUS_KEPEMILIKAN_SEKOLAH, null=True, default=None)
     sekolah_no_sk_pendirian = models.TextField(null=True, default=None) 
     sekolah_tgl_sk_pendirian = models.DateField(null=True, default=None)
@@ -114,8 +120,8 @@ class AccountManager(BaseUserManager):
         if extra_fields.get("user_is_superuser ") is not True:
             raise ValueError(_("Superuser must have user_is_superuser=True."))
         return self.create_user(user_email, user_password, **extra_fields)
-
-class Master_user(AbstractBaseUser,PermissionsMixin):
+    
+class Master_user(AbstractBaseUser):
     user_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     user_email = models.EmailField(unique=True)
     user_level = models.CharField(default=None, choices=LEVEL_WILAYAH, max_length=1)
@@ -123,7 +129,7 @@ class Master_user(AbstractBaseUser,PermissionsMixin):
     user_first_name = models.CharField(max_length=50)
     user_last_name = models.CharField(max_length=100)
     user_is_staff = models.BooleanField(default=False)
-    user_is_superuser = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
     user_is_activate = models.BooleanField(default=False)
     user_is_verified = models.BooleanField(default=False)
     user_date_joined = models.DateField(default=timezone.now)

@@ -27,24 +27,25 @@ Master Sekolah
                         <i class="fe fe-plus"></i>
                     </span> Semua Sekolah
                 </a>
-                <a href="#" class="btn btn-primary btn-icon text-white me-2 btn-tambah-data">
+                <a href="#" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#addDataModal">
                     <span>
                         <i class="fe fe-plus"></i>
-                    </span> Tambah Data
+                    </span> Tambahkan Data
                 </a>
             </div>
         </div>
         <!-- PAGE-HEADER END -->
 
         <!-- Modal Form -->
-        <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-labelledby="modalFormLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal fade" id="addDataModal" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalFormLabel">Tambah Data Sekolah</h5>
+                        <h5 class="modal-title" id="addDataModalLabel">Tambah Data Jenjang</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        
                         <!-- Form -->
                         <form id="addSekolahForm" method="post" action="{% url 'sipandu_admin:index_sekolah' %}">
                             {% csrf_token %}
@@ -97,8 +98,8 @@ Master Sekolah
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="sekolah_bentuk_pendidikan" class="form-label">Jenjang</label>
-                                <select class="form-select" id="sekolah_bentuk_pendidikan" name="sekolah_bentuk_pendidikan">
+                                <label for="sekolah_jenjang" class="form-label">Jenjang</label>
+                                <select class="form-select" id="sekolah_jenjang" name="sekolah_jenjang">
                                     <option value="" selected disabled>Pilih Bentuk Pendidikan</option>
                                     <option value="SD">SD</option>
                                     <option value="SMP">SMP</option>
@@ -150,20 +151,21 @@ Master Sekolah
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.kabupaten.nama }}</td> 
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.kecamatan.nama }}</td> 
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_nama }}</td>
-                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_bentuk_pendidikan }}</td>
+                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_jenjang.jenjang_nama }}</td>
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_npsn }}</td>
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_jenis }}</td>
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_status }}</td>
                                             
                                             <td class="text-center align-middle">
                                                 <div class="btn-group align-top">
-                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editSekolahModal_{{dt_sekolah.sekolah_id}}">Edit</a>&nbsp;
-                                                    <a href="{% url 'sipandu_admin:delete_sekolah' dt_sekolah.sekolah_id %}" class="btn btn-sm btn-danger badge">Delete</a>
+                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_sekolah.sekolah_id}}">Edit</a> &nbsp;
+                                                    <button onclick="deleteSekolah('{{ dt_sekolah.sekolah_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+
+
                                                 </div>
                                             </td>
                                         </tr>
                                         {% include 'admin/master/edit_sekolah.html' %}
-                                        {% include 'admin/master/delete_sekolah.html' %}
                                     {% endfor %}
 
                                 </tbody>
@@ -179,19 +181,48 @@ Master Sekolah
 
 {% block js %}
 <script>
-    $(function(){
-        $('#responsive-datatable').DataTable({
-            scrollX: "100%",
-            language: {
-                searchPlaceholder: 'Search...',
-                sSearch: '',
+    function deleteSekolah(sekolah_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_sekolah' 'sekolah_id' %}".replace("sekolah_id",sekolah_);
+
+        swal({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                $.ajax({
+                    headers : { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "DELETE",
+                    success: function (response) {
+                        // Data berhasil dihapus
+                        swal("Data berhasil dihapus!", {
+                            icon: "success",
+                        }).then(() => {
+                            // Refresh halaman atau lakukan aksi lain
+                            window.location.reload(); // Contoh: Refresh halaman
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        // Terjadi kesalahan saat menghapus data
+                        swal("Terjadi kesalahan saat menghapus data!", {
+                            icon: "error",
+                        });
+                    }
+                });
+            } else {
+                // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+                swal("Tindakan dibatalkan", "", "info");
             }
         });
-
-        // Menampilkan modal saat tombol "Tambah Data" diklik
-        $('.btn-tambah-data').click(function(){
-            $('#modalForm').modal('show');
-        });
-    })
+    }
 </script>
+
 {% endblock %}

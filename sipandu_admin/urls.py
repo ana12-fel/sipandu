@@ -24,8 +24,9 @@ urlpatterns = [
     path('jenjang/<str:jenjang_id>/delete/', jenjang_view.delete_jenjang, name='delete_jenjang'),
 
     path('index-master-sekolah/', sekolah_view.IndexSekolah, name='index_sekolah'),
-    path('edit_sekolah/<uuid:sekolah_id>/', sekolah_view.edit_sekolah, name='edit_sekolah'),
-    path('delete_sekolah/', sekolah_view.delete_sekolah, name='delete_sekolah'),
+    path('edit_sekolah/<str:sekolah_id>/', sekolah_view.edit_sekolah, name='edit_sekolah'),
+    path('sekolah/<str:sekolah_id>/delete/', sekolah_view.delete_sekolah, name='delete_sekolah'),
+
 
     path('transanksi-situs/', admin_views.TransanksiSitus, name='transanksi_situs'),
     path('data-sekolah/', admin_views.DataSekolah, name='data_sekolah'),
