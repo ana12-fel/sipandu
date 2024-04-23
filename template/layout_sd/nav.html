@@ -1,0 +1,66 @@
+{% load static %}
+<div class="header-column justify-content-end">
+    <div class="header-row">
+        <div class="header-nav header-nav-links header-nav-line header-nav-bottom-line header-nav-bottom-line-active-text-light header-nav-dropdowns-dark header-nav-light-text">
+            <div class="header-nav-main header-nav-main-text-capitalize header-nav-main-mobile-dark header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-effect-2 header-nav-main-sub-effect-1">
+                <nav class="collapse">
+                    <ul class="nav nav-pills" id="mainNav">
+                        <li>
+                            <a class="nav-link active" href="{% url 'sipandu:home' %}">
+                                Home
+                            </a>
+                        </li>
+                        <li class="dropdown">									
+                            <a href="{% static 'demo-law-firm-2-about.html' %}" class="nav-link">PROFIL</a>
+                            <ul class="dropdown-menu border-radius-0">
+                                <li>
+                                    <a href="{% url 'sipandu:identitas' %}" class="nav-link">IDENTITAS SEKOLAH</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'sipandu:Visi' %}" class="nav-link">VISI & MISI</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'sipandu:struktur' %}" class="nav-link">STRUKTUR ORGANISASI</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'sipandu:fasilitas' %}" class="nav-link">FASILITAS</a>
+                                </li>
+                                <li>
+                                    <a href="{% static 'demo-law-firm-2-practice-areas-detail.html' %}" class="nav-link">DATA GTK</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="{% static 'demo-law-firm-2-practice-areas.html' %}" class="dropdown-item dropdown-toggle">BERITA</a>
+                            <ul class="dropdown-menu border-radius-0">
+                                <li>
+                                    <a href="{% url 'sipandu:berita' %}" class="nav-link">Berita</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'sipandu:pengumuman' %}" class="nav-link">PENGUMUMAN</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'sipandu:kegiatan' %}" class="nav-link">KEGIATAN</a>
+                                </li>
+                                
+                            </ul>
+                          </li>  
+                        <li>
+                            <a class="nav-link" href="{% url 'sipandu:galeri' %}">
+                               Galeri
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{% static 'demo-digital-agency-contact.html' %}">
+                              Kontak
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div> 
+        <button class="btn header-btn-collapse-nav ms-3 ms-sm-4" data-bs-toggle="collapse" data-bs-target=".header-nav-main nav">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</div>

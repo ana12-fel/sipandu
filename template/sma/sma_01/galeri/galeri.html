@@ -1,0 +1,69 @@
+{% extends 'layout/base_layout.html' %}
+{% block main %}
+{% load static %}
+
+<section class="page-header page-header-modern page-header-lg overlay overlay-show overlay-op-9 m-0" style="background-image: url(img/demos/law-firm-2/backgrounds/background-4.jpg); background-size: cover; background-position: center;">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col text-center">
+                <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2">
+                </ul>
+                <h1 class="text-color-light font-weight-bold text-10">GALERI</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-height-3 border-0 m-0">
+	<div class="container">
+		<div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+			<div class="row">
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/1.jpg' %}">
+						<img src="{% static 'logo/1.jpg' %}" class="img-fluid rounded-0" alt="" />
+					</a>		
+				</div>
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/2.jpg' %}">
+						<img src="{% static 'logo/2.jpg' %}" class="img-fluid rounded-0" alt="" />
+					</a>		
+				</div>
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/3.jpg' %}">
+						<img src="{% static 'logo/3.jpg'%}" class="img-fluid rounded-0" alt="" />
+					</a>		
+				</div>
+			</div>
+		</div>
+		<div class="lightbox pt-5" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+			<div class="row">
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/1.jpg' %}">
+						<img src="{% static 'logo/4.jpg' %}" class="img-fluid rounded-0" alt="" />
+					</a>		
+				</div>
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/2.jpg' %}">
+						<img src="{% static 'logo/5.jpg' %}" class="img-fluid rounded-0" alt="" />
+					</a>		
+				</div>
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/3.jpg' %}">
+						<img src="{% static 'logo/6.jpg'%}" class="img-fluid rounded-0" alt="" />
+					</a>		
+				</div>
+			</div>
+		</div>
+	</div>
+    <div class="container" style="padding-top: 50px;">
+        <div class="row">
+            <div class="col-md-12 ">
+                <iframe width="100%" height="500" src="https://www.youtube.com/embed/VZTRUy7VxD8?si=iIVj0VSjaVQr0eQp" 
+                title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock main %}
