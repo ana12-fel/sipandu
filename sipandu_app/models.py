@@ -108,7 +108,7 @@ class AccountManager(BaseUserManager):
             raise ValueError(_("Superuser must have user_is_superuser=True."))
         return self.create_user(user_email, user_password, **extra_fields)
     
-class Master_user(AbstractBaseUser, PermissionsMixin):
+class Master_user(AbstractBaseUser):
     user_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     user_email = models.EmailField(unique=True)
     user_level = models.CharField(default=None, choices=LEVEL_WILAYAH, max_length=1)
