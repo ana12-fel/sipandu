@@ -170,7 +170,7 @@ class Master_user(AbstractBaseUser):
 class Master_tema(models.Model):
     tema_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     tema_jenjang = models.ForeignKey(Master_jenjang, on_delete=models.PROTECT,default=None, null=True)
-    tema_warna = models.CharField(default=None, choices=WARNA, max_length=1)
+    tema_warna = models.CharField(default=None, choices=WARNA, max_length=1, null=True)
     tema_nama = models.CharField(max_length=200)
     tema_folder_name = models.CharField(max_length=200)
     tema_thumbnail = models.ImageField()
