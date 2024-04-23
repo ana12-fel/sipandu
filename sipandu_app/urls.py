@@ -8,10 +8,8 @@ urlpatterns = [
     path('', home.index, name='home'),
     path('identitas/', profile.identitas, name='identitas'),
     path('Visi/', profile.Visi, name='Visi'),
-<<<<<<< HEAD
     path('smp/', smp.indexsmp, name='smp'),
     path('berita/', berita.beritasmp, name='berita'),
-=======
     path('struktur/', profile.struktur, name='struktur'),
     path('fasilitas/', profile.fasilitas, name='fasilitas'),
     path('ipa/', jurusan.ipa, name='ipa'),
@@ -31,5 +29,4 @@ urlpatterns = [
     path('detail_fasilitas/', profile.detail_fasilitas, name='detail_fasilitas'),
   
   
->>>>>>> 0406747ed168ec3b8846a292e9325f0564a80c6f
 ]
