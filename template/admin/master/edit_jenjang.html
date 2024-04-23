@@ -16,7 +16,18 @@
                         <label for="jenjang" class="form-label">Jenjang</label>
                         <input type="text" value="{{dt_jenjang.jenjang_nama}}" class="form-control" name="jenjang_nama" placeholder="Masukkan id">
                         <!-- Input jenjang_status secara default -->
-                        <input type="hidden" name="jenjang_status" value="True">
+                    </div>
+                    <div class="mb-3">
+                        <label>Status:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="jenjang_status" id="statusAktif" value="True" {% if dt_jenjang.jenjang_status == "True" %} checked {% endif %}>
+                            <label class="form-check-label" for="statusAktif">Aktif</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="jenjang_status" id="statusTidakAktif" value="False" {% if dt_jenjang.jenjang_status == "False" %} checked {% endif %}>
+                            <label class="form-check-label" for="statusTidakAktif">Tidak Aktif</label>
+                        </div>
+                    </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

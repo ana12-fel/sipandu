@@ -7,19 +7,17 @@ def IndexWilayah(request):
     if request.method == 'POST':
         wilayah_id = request.POST.get('wilayah_id')
         wilayah_kode = request.POST.get('wilayah_kode') 
-        wilayah_parent = request.POST.get ('wilayah_parent')
         wilayah_nama = request.POST.get('wilayah_nama')
         wilayah_status = request.POST.get('wilayah_status')
 
         dt_wilayah = Master_wilayah.objects.create(
             wilayah_id=wilayah_id,
             wilayah_kode=wilayah_kode,
-            wilayah_parent=wilayah_parent,
             wilayah_nama=wilayah_nama,
             wilayah_status=wilayah_status,
         )
 
-        print(wilayah_id,wilayah_kode,wilayah_parent,wilayah_nama,wilayah_status)
+        print(wilayah_id,wilayah_kode,wilayah_nama,wilayah_status)
 
         return redirect('sipandu_admin:index_wilayah')
     

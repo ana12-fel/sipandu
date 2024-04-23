@@ -68,7 +68,7 @@
 					<div class="container-login100">
 						<div class="wrap-login100 p-0">
 							<div class="card-body">
-								<form method="post" class="login100-form validate-form" action="{% url 'sipandu_login:login_index' %}">
+								<form method="post" class="login100-form validate-form" action="{% url 'sipandu_admin:login_index' %}">
 									{% csrf_token %}
 									<span class="login100-form-title">LOGIN</span>
 									
@@ -92,7 +92,7 @@
 										<p class="mb-0"><a href="forgot-password.html" class="text-primary ms-1">Forgot Password?</a></p>
 									</div>
 									<div class="container-login100-form-btn">
-										<a href="index.html" class="login100-form-btn btn-primary">
+										<a href="login_index.html" class="login100-form-btn btn-primary">
 											Login
 										</a>
 									</div>

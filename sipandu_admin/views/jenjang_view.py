@@ -9,6 +9,7 @@ def IndexJenjang(request):
         jenjang_nama = request.POST.get('jenjang_nama')
         jenjang_status = request.POST.get('jenjang_status')
 
+
         dt_jenjang = Master_jenjang.objects.create(jenjang_id=jenjang_id,jenjang_nama=jenjang_nama, jenjang_status=jenjang_status)
         
         print(jenjang_id,jenjang_nama, jenjang_status)
@@ -25,6 +26,7 @@ def edit_jenjang(request, jenjang_id):
     if request.method == 'POST':
         dt_jenjang = Master_jenjang.objects.get(jenjang_id=jenjang_id)
         jenjang_nama = request.POST.get('jenjang_nama')
+        is_active = True  # Atau sesuaikan logika ini berdasarkan kebutuhan
         
         dt_jenjang.jenjang_nama=jenjang_nama
         # Lakukan perubahan yang diperlukan pada objek dt_jenjang
@@ -33,7 +35,7 @@ def edit_jenjang(request, jenjang_id):
     
     else:
         dt_jenjang = Master_jenjang.objects.get(jenjang_id=jenjang_id)
-        return render(request, 'admin/master/edit_jenjang.html', {"dt_jenjang": dt_jenjang,"id_jenjang": jenjang_id})
+        return render(request, 'admin/master/edit_jenjang.html', {'is_active': is_active,"dt_jenjang": dt_jenjang,"id_jenjang": jenjang_id})
     
 def delete_jenjang(request, jenjang_id):
     try:
