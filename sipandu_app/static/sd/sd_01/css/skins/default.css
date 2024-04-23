@@ -295,6 +295,18 @@ html .svg-fill-color-dark svg polygon {
 	fill: #212529 !important;
 }
 
+html .svg-fill-color-pp {
+	fill: #ef1628 !important;
+}
+
+html .svg-fill-color-pp svg path,
+html .svg-fill-color-pp svg rect,
+html .svg-fill-color-pp svg line,
+html .svg-fill-color-pp svg polyline,
+html .svg-fill-color-pp svg polygon {
+	fill: #ef1628 !important;
+}
+
 html .svg-fill-color-hover-dark:hover {
 	fill: #212529 !important;
 }

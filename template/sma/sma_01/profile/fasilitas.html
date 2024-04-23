@@ -1,0 +1,124 @@
+{% extends 'layout/base_layout.html' %}
+{% block main %}
+{% load static %}
+
+<section class="page-header page-header-modern page-header-lg overlay overlay-show overlay-op-9 m-0" style="background-color: deepskyblue; background-size: cover; background-position: center;">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col text-center text-color-light">
+                <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2 ">
+                    <h2 class="text-color-light">
+                      FASILITAS
+                    </h2>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <div class="row">
+        <div class="col">
+            <ul class="nav nav-pills sort-source sort-source-style-3 custom-sort-source mt-4" data-sort-id="portfolio" data-option-key="filter" data-plugin-options="{'layoutMode': 'packery', 'filter': '*'}"></ul>
+            <div class="sort-destination-loader sort-destination-loader-showing mt-4 pt-2">
+                <div class="row portfolio-list sort-destination" data-sort-id="portfolio">
+                    <div class="col-sm-6 col-lg-6 isotope-item websites">
+                        <div class="portfolio-item">
+                            <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-5 mb-3">
+                                <div class="thumb-info-wrapper rounded-5">
+                                    <img src="{%static 'logo/lab ipa.jpg' %}" class="img-fluid rounded-5" alt="" />
+                                    <div class="thumb-info-action">
+                                        <a href="{% url 'sipandu:detail_fasilitas' %}" aria-label="">
+                                            <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
+                                <a href="#" class="text-decoration-none text-color-dark opacity-hover-8">LAB IPA</a>
+                            </h3>
+                            <h2 class="text-color-dark font-weight-semibold text-3 opacity-7 line-height-1 mb-1">Lab IPA yang di mana siswa dan siswi melakukan praktik ipa di lab tersebut</h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6 isotope-item logos">
+                        <div class="portfolio-item">
+                            <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-5 mb-3">
+                                <div class="thumb-info-wrapper rounded-5">
+                                    <img src="{% static 'logo/lab komputer.jpg' %}" class="img-fluid rounded-5" alt="" />
+                                    <div class="thumb-info-action">
+                                        <a href="portfolio-single-wide-slider.html" aria-label="">
+                                            <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
+                                <a href="#" class="text-decoration-none text-color-dark opacity-hover-8">LAB KOMMPUTER</a>
+                            </h3>
+                            <h2 class="text-color-dark font-weight-semibold text-3 opacity-7 line-height-1 mb-1">Untuk pembelajaran TIK</h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6 isotope-item brands">
+                        <div class="portfolio-item">
+                            <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-5 mb-3">
+                                <div class="thumb-info-wrapper rounded-5">
+                                    <img src="{% static 'logo/aula.jpg' %}" class="img-fluid rounded-5" alt="" />
+                                    <div class="thumb-info-action">
+                                        <a href="portfolio-single-wide-slider.html" aria-label="">
+                                            <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
+                                <a href="#" class="text-decoration-none text-color-dark opacity-hover-8">AULA</a>
+                            </h3>
+                            <h2 class="text-color-dark font-weight-semibold text-3 opacity-7 line-height-1 mb-1">Untuk Kegiatan sekolah</h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6 isotope-item medias">
+                        <div class="portfolio-item">
+                            <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-5 mb-3">
+                                <div class="thumb-info-wrapper rounded-5">
+                                    <img src="{% static 'logo/perpustakaan.jpg' %}" class="img-fluid rounded-5" alt="" />
+                                    <div class="thumb-info-action">
+                                        <a href="portfolio-single-wide-slider.html" aria-label="">
+                                            <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                          
+                            <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
+                                <a href="#" class="text-decoration-none text-color-dark opacity-hover-8">PERPUSTAKAAN</a>
+                            </h3>
+                            <h2 class="text-color-dark font-weight-semibold text-3 opacity-7 line-height-1 mb-1">tambah wawasan  siswa dan siswi</h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6 isotope-item websites">
+                        <div class="portfolio-item">
+                            <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-5 mb-3">
+                                <div class="thumb-info-wrapper rounded-5">
+                                    <img src="{% static 'logo/lapangan.jpg' %}" class="img-fluid rounded-5" alt="" />
+                                    <div class="thumb-info-action">
+                                        <a href="portfolio-single-wide-slider.html" aria-label="">
+                                            <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
+                                <a href="#" class="text-decoration-none text-color-dark opacity-hover-8">LAPANGAN</a>
+                            </h3>
+                            <h2 class="text-color-dark font-weight-semibold text-3 opacity-7 line-height-1 mb-1">Terdapat beberapa lapangan seperti lapangan volly, lapangan basket, lapangan upacara dan lain-lain</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock main %}
