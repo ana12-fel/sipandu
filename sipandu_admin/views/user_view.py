@@ -9,15 +9,18 @@ def IndexUser(request):
         user_password = request.POST.get('password')
         user_level = request.POST.get('level')
         user_email = request.POST.get('email')
+
     
-        dt_user = Master_user.objects.create(
+        dt_user = Master_user(
             user_first_name=user_first_name,
             user_last_name=user_last_name,
-            user_password=user_password,
             user_level=user_level,
             user_email=user_email,
             user_role=user_role
         )
+
+        dt_user.set_password(user_password)
+        dt_user.save()
         
         print(user_first_name, user_last_name, user_password, user_level, user_email, user_role)
 

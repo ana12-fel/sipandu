@@ -51,7 +51,7 @@ Master User
                                 <label for="role">Role</label>
                                 <select name="role" id="role" class="form-control">
                                     {% for role_key, role_display in role_choices %}
-                                        <option value="{{ role_display }}">{{ role_key }}</option>
+                                        <option value="{{ role_key }}">{{ role_display }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
