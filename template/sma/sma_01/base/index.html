@@ -1,0 +1,523 @@
+{% extends 'layout/base_layout.html' %}
+{% block main %}
+{% load static %}
+
+<div role="main" class="main">
+	<div class="owl-carousel-wrapper" style="height: 845px;">
+		<div class="" style="height: 845px;">
+			<div class="owl-carousel dots-inside dots-horizontal-center show-dots-hover show-dots-xs show-dots-sm show-dots-md nav-style-1 nav-inside nav-inside-plus nav-light nav-lg nav-font-size-lg show-nav-hover mb-0" data-plugin-options="{'responsive': {'0': {'items': 1, 'dots': true, 'nav': false}, '479': {'items': 1, 'dots': true}, '768': {'items': 1, 'dots': true}, '979': {'items': 1}, '1199': {'items': 1}}, 'loop': false, 'autoHeight': false, 'margin': 0, 'dots': false, 'dotsVerticalOffset': '-235px', 'nav': true, 'navVerticalOffset': '70px', 'animateIn': 'fadeIn', 'animateOut': 'fadeOut', 'mouseDrag': false, 'touchDrag': false, 'pullDrag': false, 'autoplay': true, 'autoplayTimeout': 7000, 'autoplayHoverPause': true, 'rewind': true}">
+				<!-- Slide Carousel 1 -->
+				<div class="position-relative overflow-hidden pt-5" data-dynamic-height="['845px','845px','845px','750px','750px']" style="height: 845px;">
+					<img src="{% static 'logo/paskibra.jpg' %}" alt="">
+					<div class="container position-relative z-index-3 pb-5 h-100">
+						<div class="row justify-content-center align-items-center pb-5 h-100">
+						</div>
+					</div>
+				</div>
+				<!-- Slide Carousel 2 -->
+				<div class="position-relative overflow-hidden pt-5" data-dynamic-height="['845px','845px','845px','750px','750px']" style="height: 845px;">
+					<img src="{% static 'logo/pramuka.jpg' %}" alt="">
+					<div class="container position-relative z-index-3 pb-5 h-100">
+						<div class="row justify-content-center align-items-center pb-5 h-100">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+<!-- Nama Nama Jurusan -->
+	<div class="owl-carousel-wrapper position-relative z-index-3 pb-4 mb-4 pt-5 ppear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600" style="height: 373px; margin-top: -225px;">
+		<div class="owl-carousel owl-theme dots-horizontal-center custom-dots-style-1 dots-dark mb-0" data-plugin-options="{'responsive': {'576': {'items': 2}, '768': {'items': 2}, '992': {'items': 3}, '1200': {'items': 4}, '1440': {'items': 5}}, 'margin': 20, 'stagePadding': 20, 'loop': true, 'nav': false, 'dots': true, 'autoplay': true, 'autoplayTimeout': 7000}">
+			<div class="py-5">
+				<a href="{% url 'sipandu:ipa' %}" class="text-decoration-none">
+					<div class="card custom-card-style-1 custom-box-shadow-1">
+						<img src="{% static 'logo/ipa.jpg' %}" class="card-img-top" style="border-radius: 5px;" />
+						<div class="card-body text-center px-4 py-4">
+							<h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1">IPA</h2>
+							<p class="text-color-grey positive-ls-3 mb-3">Ilmu Pengetahuan Alam</p>
+								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+								</svg>
+							</span>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="py-5">
+				<a href="{% url 'sipandu:ips' %}" class="text-decoration-none">
+					<div class="card custom-card-style-1 custom-box-shadow-1">
+						<img src="{% static 'logo/ips.jpg' %}" class="card-img-top" style="border-radius: 5px;" />
+						<div class="card-body text-center px-4 py-4">
+							<h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1">IPS</h2>
+							<p class="text-color-grey positive-ls-3 mb-3">Ilmu Pengetahuan Sosial</p>
+								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+								</svg>
+							</span>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="py-5">
+				<a href="{% url 'sipandu:bahasa' %}" class="text-decoration-none">
+					<div class="card custom-card-style-1 custom-box-shadow-1">
+						<img src="{% static 'logo/bahasa.jpg' %}" class="card-img-top" style="border-radius: 5px;" />
+						<div class="card-body text-center px-4 py-4">
+							<h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1">Bahasa</h2>
+							<p class="text-color-grey positive-ls-3 mb-3">Ilmu Bahasa</p>
+								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+								</svg>
+							</span>
+						</div>
+					</div>
+				</a>
+			</div>
+			
+		</div>
+	</div>
+	
+<!-- Sambutan Kepala Sekolah -->
+	<div class="container py-3 my-3">
+		<div class="row align-items-center justify-content-center">
+			<div class="col-lg-6 mb-5 mb-lg-0">
+				<h2 class="text-color-dark font-weight-extra-bold text-10 mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200"><em> SAMBUTAN KEPALA SEKOLAH</em></h2>
+				<p class="font-weight-light text-color-dark mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="400">Assalamu’alaikum Warahmatullahi Wabarakaatuh. Salam sejahtera dan tetap semangat. Selamat datang di website SMA Negeri 1 Adiluwih Pringsewu. Sebagai media informasi dan komunikasi, web SMA Negeri 1 Adiluwih dibangun dan dikembangkan dalam rangka meningkatkan layanan sekolah kepada peserta didik, orang tua, masyarakat, dan stakeholder. Kualitas layanan menjadi salah satu misi sekolah dan kaitannya dengan transparansi dan akuntabilitas sekolah.
+
+				</p>
+				<p class="positive-ls-3 text-color-grey mb-3 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="600">FELLYANA TRI PURWA HASTUTI</p>
+				<a href="{% url 'sipandu:identitas' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-primary svg-stroke-color-primary ps-0">
+					Lihat Detail ...
+					<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+						<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+					</svg>
+				</a>
+			</div>
+			<div class="col-md-9 col-lg-6 ps-lg-5">
+				<div class="position-relative">
+					<div class="custom-shape-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="1100">
+						<div class="position-absolute top-0 left-0 right-0 bottom-0 bg-primary" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.1, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}" style="border-radius: 5px;"></div>
+					</div>
+					<div data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
+						<img src="{% static 'logo/FILLIANA.jpg' %}" class="img-fluid position-relative z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="border-radius: 5px;"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<hr class="my-5">													
+	<section class="section overlay overlay-show overlay-op-9 border-0 m-0" style="background-image: url({% static 'logo/sekolah.jpg' %}); background-size: cover; background-position: center;">
+		<div class="container py-5 mb-5">
+			<div class="row counters counters-sm">
+				<div class="col-sm-6 col-lg-3 mb-5 mb-lg-0">
+					<div class="counter">
+						<span class="text-color-light fa fa-graduation-cap fa-3x"></span>
+						<strong class="text-color-light font-weight-bold line-height-1 text-10 mb-1" data-to="50" data-append="+" data-plugin-options="{'appendWrapper': '<span class=text-color-secendary></span>'}">0</strong>
+						
+						<label class="text-color-light font-weight-bold text-5 mb-0">SISWA</label>
+					</div>
+				</div>
+				<div class="col-sm-6 col-lg-3 mb-5 mb-lg-0">
+					<div class="counter">
+						<span class="text-color-light fa fa-users"></span>
+						<strong class="text-color-light font-weight-bold line-height-1 text-10 mb-1" data-to="240" data-append="+" data-plugin-options="{'appendWrapper': '<span class=text-color-secendary></span>'}">0</strong>
+						<label class="text-color-light font-weight-bold text-5 mb-0">GURU</label>
+					</div>
+				</div>
+				<div class="col-sm-6 col-lg-3 mb-5 mb-sm-0">
+					<div class="counter">
+						<span class="text-color-light fa fa-user-plus"></span>
+						<strong class="text-color-light font-weight-bold line-height-1 text-10 mb-1" data-to="2000" data-append="+" data-plugin-options="{'appendWrapper': '<span class=text-color-secendary></span>'}">0</strong>
+						<label class="text-color-light font-weight-bold text-5 mb-0">PEGAWAI</label>
+					</div>
+				</div>
+				<div class="col-sm-6 col-lg-3">
+					<div class="counter">
+						<span class="text-color-light fa fa-id-card"></span>
+						<strong class="text-color-light font-weight-bold line-height-1 text-10 mb-1" data-to="20" data-append="+" data-plugin-options="{'appendWrapper': '<span class=text-color-secendary></span>'}">0</strong>
+						<label class="text-color-light font-weight-bold text-5 mb-0">ALUMNI</label>
+					</div>
+				</div>
+			</div>
+	
+<!-- Nama Guru dan Pegawai -->
+			<div class="row mt-5 mb-5">
+				<div class="col text-center">
+					<h2 class="text-transform-none text-color-light font-weight-bold text-10 negative-ls-1 mb-0 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">GURU dan PEGAWAI</h2>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="owl-carousel-wrapper position-relative z-index-3 pb-5 mb-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600" style="height: 373px; margin-top: -225px;">
+		<div class="owl-carousel owl-theme dots-horizontal-center custom-dots-style-1 dots-dark mb-0" data-plugin-options="{'responsive': {'576': {'items': 2}, '768': {'items': 2}, '992': {'items': 3}, '1200': {'items': 4}, '1440': {'items': 5}}, 'margin': 20, 'stagePadding': 20, 'loop': true, 'nav': false, 'dots': true, 'autoplay': true, 'autoplayTimeout': 7000}">
+			<div class="py-5">
+				<a href="{% static 'demo-law-firm-2-attorney-detail.html' %}" class="text-decoration-none">
+					<div class="card custom-card-style-1 border-0 border-radius-3 custom-box-shadow-1">
+						<img src="{% static 'logo/foto-1.jpg' %}" class="card-img-top border-radius-5" alt="John Doe Image"/>
+						<div class="card-body text-center px-4 py-4">
+							<h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1">NAMA</h2>
+							<p class="text-color-grey positive-ls-3 mb-3">JABATAN</p>
+								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+								</svg>
+							</span>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="py-5">
+				<a href="{% static 'demo-law-firm-2-attorney-detail.html' %}" class="text-decoration-none">
+					<div class="card custom-card-style-1 border-0 border-radius-3 custom-box-shadow-1">
+						<img src="{% static 'logo/foto-2.jpg' %}" class="card-img-top border-radius-5" alt="John Doe Image" />
+						<div class="card-body text-center px-4 py-4">
+							<h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1">Siti</h2>
+							<p class="text-color-grey positive-ls-3 mb-3">Guru Bahasa Indonesia</p>
+								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+								</svg>
+							</span>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="py-5">
+				<a href="{% static 'demo-law-firm-2-attorney-detail.html' %}" class="text-decoration-none">
+					<div class="card custom-card-style-1 border-0 border-radius-3 custom-box-shadow-1">
+						<img src="{% static 'logo/foto-3.jpg' %}" class="card-img-top border-radius-5" alt="John Doe Image" />
+						<div class="card-body text-center px-4 py-4">
+							<h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1">Malik</h2>
+							<p class="text-color-grey positive-ls-3 mb-3">Guru Agama</p>
+								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+								</svg>
+							</span>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="py-5">
+				<a href="{% static 'demo-law-firm-2-attorney-detail.html' %}" class="text-decoration-none">
+					<div class="card custom-card-style-1 border-0 border-radius-3 custom-box-shadow-1">
+						<img src="{% static 'logo/foto-4.jpg' %}" class="card-img-top border-radius-5" alt="John Doe Image" />
+						<div class="card-body text-center px-4 py-4">
+							<h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1">Lala</h2>
+							<p class="text-color-grey positive-ls-3 mb-3">Guru MTK</p>
+								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+								</svg>
+							</span>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="py-5">
+				<a href="{% static 'demo-law-firm-2-attorney-detail.html' %}" class="text-decoration-none">
+					<div class="card custom-card-style-1 border-0 border-radius-3 custom-box-shadow-1">
+						<img src="{% static 'logo/foto-1.jpg' %}" class="card-img-top border-radius-5" alt="John Doe Image" />
+						<div class="card-body text-center px-4 py-4">
+							<h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1">Jayen</h2>
+							<p class="text-color-grey positive-ls-3 mb-3">Guru Bahasa Lampung</p>
+								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+								</svg>
+							</span>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="py-5">
+				<a href="{% static 'demo-law-firm-2-attorney-detail.html' %}" class="text-decoration-none">
+					<div class="card custom-card-style-1 border-0 border-radius-3 custom-box-shadow-1">
+						<img src="{% static 'logo/foto-2.jpg' %}" class="card-img-top border-radius-5" alt="John Doe Image" />
+						<div class="card-body text-center px-4 py-4">
+							<h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1">Imron</h2>
+							<p class="text-color-grey positive-ls-3 mb-3">Guru IPA</p>
+								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+								</svg>
+							</span>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+	
+
+
+	<!--kegiatan sekolah  -->
+	<div class="container py-5 my-5">
+		<div class="row mb-5">
+			<div class="col text-center">
+				<h2 class="text-transform-none text-color-default font-weight-bold text-10 negative-ls-1 mb-2 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">KEGIATAN SEKOLAH</h2>
+			</div>
+		</div>
+		<div class="row row-gutter-sm pb-2 mb-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">
+			<div class="col-lg-4 mb-4 mb-lg-0">
+				<article>
+					<div class="card border-0 border-radius-5 custom-box-shadow-1">
+						<div class="card-img-top">
+							<a href="{% static 'demo-law-firm-2-blog-post.html' %}">
+								<img class="card-img-top border-radius-5 hover-effect-2" src="{% static 'logo/foto-2.jpg' %}" alt="Card Image">
+							</a>
+						</div>
+						<div class="card-body bg-light p-4 z-index-1">
+							<p class="text-uppercase text-color-default text-1 mb-1 pt-1">
+								<time pubdate datetime="2023-01-10">10 Jan 2023</time> 
+			
+							</p>
+							<div class="card-body p-0">
+								<h4 class="card-title alternative-font-4 font-weight-semibold text-5 mb-3"><a class="text-color-dark text-color-hover-primary text-decoration-none font-weight-bold text-3" href="demo-law-firm-2-blog-post.html">Lorem ipsum dolor sit a met</a></h4>
+								<p class="card-text mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc viverra lorem ipsum erat orci, ac auctor...</p>
+								<a href="{% static 'demo-law-firm-2-blog-post.html' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-primary svg-stroke-color-primary ps-0">
+									READ MORE
+									<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+										<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+									</svg>
+								</a>
+							</div>
+						</div>
+					</div>
+				</article>
+			</div>
+			<div class="col-lg-4 mb-4 mb-lg-0">
+				<article>
+					<div class="card border-0 border-radius-5 custom-box-shadow-1">
+						<div class="card-img-top">
+							<a href="{% static 'demo-law-firm-2-blog-post.html' %}">
+								<img class="card-img-top border-radius-5 hover-effect-2" src="{% static 'logo/foto-3.jpg' %}" alt="Card Image">
+							</a>
+						</div>
+						<div class="card-body bg-light p-4 z-index-1">
+							<p class="text-uppercase text-color-default text-1 mb-1 pt-1">
+								<time pubdate datetime="2023-01-10">10 Jan 2023</time> 
+			
+							</p>
+							<div class="card-body p-0">
+								<h4 class="card-title alternative-font-4 font-weight-semibold text-5 mb-3"><a class="text-color-dark text-color-hover-primary text-decoration-none font-weight-bold text-3" href="demo-law-firm-2-blog-post.html">Lorem ipsum dolor sit a met</a></h4>
+								<p class="card-text mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc viverra lorem ipsum erat orci, ac auctor...</p>
+								<a href="{% static 'demo-law-firm-2-blog-post.html' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-primary svg-stroke-color-primary ps-0">
+									READ MORE
+									<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+										<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+									</svg>
+								</a>
+							</div>
+						</div>
+					</div>
+				</article>
+			</div>
+			<div class="col-lg-4 mb-4 mb-lg-0">
+				<article>
+					<div class="card border-0 border-radius-5 custom-box-shadow-1">
+						<div class="card-img-top">
+							<a href="{% static 'demo-law-firm-2-blog-post.html' %}">
+								<img class="card-img-top border-radius-5 hover-effect-2" src="{% static 'logo/foto-1.jpg' %}" alt="Card Image">
+							</a>
+						</div>
+						<div class="card-body bg-light p-4 z-index-1">
+							<p class="text-uppercase text-color-default text-1 mb-1 pt-1">
+								<time pubdate datetime="2023-01-10">10 Jan 2023</time> 
+			
+							</p>
+							<div class="card-body p-0">
+								<h4 class="card-title alternative-font-4 font-weight-semibold text-5 mb-3"><a class="text-color-dark text-color-hover-primary text-decoration-none font-weight-bold text-3" href="{% static 'demo-law-firm-2-blog-post.html' %}">Lorem ipsum dolor sit a met</a></h4>
+								<p class="card-text mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc viverra lorem ipsum erat orci, ac auctor...</p>
+								<a href="{% static 'demo-law-firm-2-blog-post.html' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-primary svg-stroke-color-primary ps-0">
+									READ MORE
+									<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+										<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+									</svg>
+								</a>
+							</div>
+						</div>
+					</div>
+				</article>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col text-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="800" data-plugin-options="{'accY': -250}">
+				<a href="{% url 'sipandu:kegiatan' %}" class="btn btn-info font-weight-bold px-5 btn-py-3"><span class="fa fa-eye"></span> Lihat Kegiatan Lainnya</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- BURSA KERJA -->
+
+	<section class="section overlay overlay-show overlay-op-5 border-0 m-0 appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="300" style="background-image: url('{% static 'logo/sekolah.jpg' %}'); background-size: cover; background-position: center; opacity:0.8;">
+		<div class="container pt-5 pb-3">
+			<div class="row">
+				<div class="col text-center">
+					<h3 class="text-transform-none text-color-light font-weight-bold text-10 negative-ls-1 pb-3 mb-5">BURSA KERJA</h3>
+				</div>
+			</div>
+			<div class="row counters counters-sm py-5">
+				<div class="col-md-6 position-relative py-5">
+					<div class="appear-animation" data-appear-animation="fadeInLeftShorter" data-appear-animation-delay="0" data-appear-animation-duration="750">
+						<div class="strong-shadow rounded strong-shadow-top-right">
+							<img src="{% static 'logo/ips.jpg' %}" data-src="{% static 'logo/ips.jpg' %}" class="lazyload img-fluid border border-width-10 border-color-light rounded box-shadow-3" alt="Porto Admin"/>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<h3 class="text-color-light">Loker Cinta Sejati</h3>
+					<p class=" mb-4 appear-animation" data-appear-animation="fadeInLeftShorter" data-appear-animation-delay="800" data-appear-animation-duration="750"></p>
+					<p class="pb-2 mb-4 appear-animation text-color-light" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="800" data-appear-animation-duration="750" >Ilmu pengetahuan alam atau kerap diperpendek sebagai ilmu alam adalah istilah yang digunakan yang merujuk pada rumpun ilmu di mana objeknya adalah benda-benda alam dengan hukum-hukum yang pasti dan umum, berlaku kapan pun dan di mana pun. Orang yang menekuni bidang ilmu pengetahuan alam disebut sebagai Saintis. </p>
+					<a href="" class="btn btn-info btn-sm"> lihat lebih banyak</a>
+				</div>
+				<div class="col-md-6 position-relative py-5">
+					<div class="appear-animation" data-appear-animation="fadeInLeftShorter" data-appear-animation-delay="0" data-appear-animation-duration="750">
+						<div class="strong-shadow rounded strong-shadow-top-right">
+							<img src="{% static 'logo/ips.jpg' %}" data-src="{% static 'logo/ips.jpg' %}" class="lazyload img-fluid border border-width-10 border-color-light rounded box-shadow-3" alt="Porto Admin"/>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<h3 class="text-color-light">Loker Cinta Sejati</h3>
+					<p class=" mb-4 appear-animation" data-appear-animation="fadeInLeftShorter" data-appear-animation-delay="800" data-appear-animation-duration="750"></p>
+					<p class="pb-2 mb-4 appear-animation text-color-light" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="800" data-appear-animation-duration="750" >Ilmu pengetahuan alam atau kerap diperpendek sebagai ilmu alam adalah istilah yang digunakan yang merujuk pada rumpun ilmu di mana objeknya adalah benda-benda alam dengan hukum-hukum yang pasti dan umum, berlaku kapan pun dan di mana pun. Orang yang menekuni bidang ilmu pengetahuan alam disebut sebagai Saintis. </p>
+					<a href="" class="btn btn-info btn-sm"> lihat lebih banyak</a>
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+	<!-- GALERI -->
+<section class="section section-height-3 border-0 m-0">
+	<div class="container">
+		<div class="col text-center">
+			<h2 class="alternat
+			<h3 class="text-transform-none text-color-light font-weight-bold text-10 negative-ls-1 pb-3 mb-5">GALERI</h3>
+		</div>
+		<div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+			<div class="row">
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-5" href="{% static 'logo/1.jpg' %}">
+						<img src="{% static 'logo/1.jpg' %}" class="img-fluid rounded-5" alt="" style="border-radius: 5px;" />
+					</a>		
+				</div>
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-5" href="{% static 'logo/2.jpg' %}">
+						<img src="{% static 'logo/2.jpg' %}" class="img-fluid rounded-5" alt="" style="border-radius: 5px;"/>
+					</a>		
+				</div>
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-5" href="{% static 'logo/3.jpg' %}">
+						<img src="{% static 'logo/3.jpg'%}" class="img-fluid rounded-5" alt="" style="border-radius: 5px;"/>
+					</a>		
+				</div>
+			</div>
+		</div>
+		<div class="lightbox pt-5" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+			<div class="row">
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-5" href="{% static 'logo/4.jpg' %}">
+						<img src="{% static 'logo/4.jpg' %}" class="img-fluid rounded-5" alt="" style="border-radius: 5px;"/>
+					</a>		
+				</div>
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-5" href="{% static 'logo/5.jpg' %}">
+						<img src="{% static 'logo/5.jpg' %}" class="img-fluid rounded-5" alt="" style="border-radius: 5px;"/>
+					</a>		
+				</div>
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-5" href="{% static 'logo/6.jpg' %}">
+						<img src="{% static 'logo/6.jpg'%}" class="img-fluid rounded-5" alt="" style="border-radius: 5px;"/>
+					</a>		
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BERITA -->
+	
+<section style="background-color: #1e7dbf;">
+	<div class="container mt-5 " >
+		<div class="row mb-5">
+			<div class="col text-center">
+				<h2 class="text-transform-none text-color-light font-weight-bold text-10 negative-ls-1 pt-10 mb-2 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400" style="padding-top: 20px;">BERITA</h2>
+				<p class="text-color-light">
+					Informasi Berita Terbaru Sekolah Kami
+				</p>
+			</div>
+		</div>
+		<div class="row row-gutter-sm pb-2 mb-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">
+			<div class="col-lg-6 mb-4 mb-lg-0">
+				<article>
+					<div class="card border-5 border-radius-5 custom-box-shadow-1">
+						<div class="card-img-top">
+							<a href="{% static 'demo-law-firm-2-blog-post.html' %}">
+								<img class="card-img-top border-radius-0 hover-effect-2" src="{% static 'logo/foto-2.jpg' %}" alt="Card Image">
+							</a>
+						</div>
+						<div class="card-body bg-light p-4 z-index-1">
+							<p class="text-uppercase text-color-default text-1 mb-1 pt-1">
+								<time pubdate datetime="2023-01-10">10 Jan 2023</time> 
+			
+							</p>
+							<div class="card-body p-0">
+								<h4 class="card-title alternative-font-4 font-weight-semibold text-5 mb-3"><a class="text-color-dark text-color-hover-primary text-decoration-none font-weight-bold text-3" href="demo-law-firm-2-blog-post.html">Lorem ipsum dolor sit a met</a></h4>
+								<p class="card-text mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc viverra lorem ipsum erat orci, ac auctor...</p>
+								<a href="{% url 'sipandu:detail' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-primary svg-stroke-color-primary ps-0">
+									READ MORE
+									<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+										<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+									</svg>
+								</a>
+							</div>
+						</div>
+					</div>
+				</article>
+			</div>
+			<div class="col-lg-6 mb-4 mb-lg-0">
+				<article>
+					<div class="card border-5 border-radius-5 custom-box-shadow-1">
+						<div class="card-img-top">
+							<a href="{% url 'sipandu:detail' %}">
+								<img class="card-img-top border-radius-0 hover-effect-2" src="{% static 'logo/foto-3.jpg' %}" alt="Card Image">
+							</a>
+						</div>
+						<div class="card-body bg-light p-4 z-index-1">
+							<p class="text-uppercase text-color-default text-1 mb-1 pt-1">
+								<time pubdate datetime="2023-01-10">10 Jan 2023</time> 
+			
+							</p>
+							<div class="card-body p-0">
+								<h4 class="card-title alternative-font-4 font-weight-semibold text-5 mb-3"><a class="text-color-dark text-color-hover-primary text-decoration-none font-weight-bold text-3" href="demo-law-firm-2-blog-post.html">Lorem ipsum dolor sit a met</a></h4>
+								<p class="card-text mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc viverra lorem ipsum erat orci, ac auctor...</p>
+								<a href="{% static 'demo-law-firm-2-blog-post.html' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-primary svg-stroke-color-primary ps-0">
+									READ MORE
+									<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+										<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+									</svg>
+								</a>
+							</div>
+						</div>
+					</div>
+				</article>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col text-center">
+				<a href="{% url 'sipandu:berita' %}" class="btn btn-info font-weight-bold px-5 pb-10 btn-py-3"><span class="fa fa-eye"></span> Lihat Berita Lainnya</a>
+			</div>
+		</div>
+		<br><br>
+	</div>
+</section>
+
+
+
+	
+</div>
+
+
+	 
+		
+{% endblock main %}
+
