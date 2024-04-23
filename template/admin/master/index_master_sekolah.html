@@ -1,6 +1,5 @@
 {% extends 'admin/base/base_index.html' %}
 {% load static %}
-
 {% block title %}
 Master Sekolah
 {% endblock %}
@@ -47,19 +46,18 @@ Master Sekolah
                     </div>
                     <div class="modal-body">
                         <!-- Form -->
-                        <form method="post" action="{% url 'sipandu_admin:index_sekolah' %}">
+                        <form id="addSekolahForm" method="post" action="{% url 'sipandu_admin:index_sekolah' %}">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="provinsi" class="form-label">Provinsi</label>
-                                <select class="form-select" id="provinsi" name="provinsi">
+                                <label for="sekolah_provinsi">Provinsi</label>
+                                <select name="sekolah_provinsi" id="sekolah_provinsi" class="form-control">
                                     <option value="" selected disabled>Pilih Provinsi</option>
-                                    {% for wilayah in wilayah_list %}
-                                        {% if wilayah.level == 1 %}
-                                            <option value="{{ wilayah.wilayah_id }}">{{ wilayah.wilayah_nama }}</option>
-                                        {% endif %}
+                                    {% for provinsi in data_provinsi %}
+                                        <option value="{{ provinsi }}">{{ provinsi }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
+                            
                             <div class="mb-3">
                                 <label for="kabupaten" class="form-label">Kabupaten</label>
                                 <select class="form-select" id="kabupaten" name="kabupaten">
@@ -134,22 +132,21 @@ Master Sekolah
                             <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
                                 <thead>
                                     <tr>
-                                        <th class="wd-10p border-bottom-0">Provinsi</th> 
-                                        <th class="wd-10p border-bottom-0">Kabupaten</th> 
-                                        <th class="wd-10p border-bottom-0">Kecamatan</th> 
-                                        <th class="wd-15p border-bottom-0">Nama Sekolah</th>
-                                        <th class="wd-15p border-bottom-0">Jenjang</th>
-                                        <th class="wd-20p border-bottom-0">NPSN</th>
-                                        <th class="wd-15p border-bottom-0">Jenis</th>
-                                        <th class="wd-10p border-bottom-0">Status</th>
-                                        <th class="wd-25p border-bottom-0">Aksi</th>
-                                        
+                                        <th class="text-center border-bottom-0">PROVINSI</th>
+                                        <th class="text-center border-bottom-0">KABUPATEN</th>
+                                        <th class="text-center border-bottom-0">KECAMATAN</th>
+                                        <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
+                                        <th class="text-center border-bottom-0">JENJANG</th>
+                                        <th class="text-center border-bottom-0">NPSN</th>
+                                        <th class="text-center border-bottom-0">JENIS</th>
+                                        <th class="text-center border-bottom-0">STATUS</th>
+                                        <th class="text-center border-bottom-0">AKSI</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for dt_sekolah in data_sekolah %}
                                         <tr>
-                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.provinsi.nama }}</td> 
+                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_provinsi }}</td> 
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.kabupaten.nama }}</td> 
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.kecamatan.nama }}</td> 
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_nama }}</td>
@@ -157,10 +154,11 @@ Master Sekolah
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_npsn }}</td>
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_jenis }}</td>
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_status }}</td>
+                                            
                                             <td class="text-center align-middle">
                                                 <div class="btn-group align-top">
-                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editSekolahModal_{{ dt_sekolah.id }}">Edit</a>&nbsp;
-                                                    <button type="button" class="btn btn-sm btn-danger badge" data-bs-toggle="modal" data-bs-target="#deleteSekolahModal" onclick="setDeleteSekolahModal({{ dt_sekolah.id }}, '{{ dt_sekolah.sekolah_nama }}')">Hapus</button>
+                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editSekolahModal_{{dt_sekolah.sekolah_id}}">Edit</a>&nbsp;
+                                                    <a href="{% url 'sipandu_admin:delete_sekolah' dt_sekolah.sekolah_id %}" class="btn btn-sm btn-danger badge">Delete</a>
                                                 </div>
                                             </td>
                                         </tr>

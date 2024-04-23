@@ -3,28 +3,28 @@ from sipandu_app.models import Master_sekolah, Master_wilayah, Master_jenjang
 
 def IndexSekolah(request):
     if request.method == 'POST':
-        nama_sekolah = request.POST.get('sekolah_nama')
-        wilayah_id = request.POST.get('kampung')  
-        npsn = request.POST.get('sekolah_npsn')
-        jenis_sekolah = request.POST.get('sekolah_jenis')
-        bentuk_pendidikan = request.POST.get('sekolah_bentuk_pendidikan')  
+        sekolah_nama = request.POST.get('sekolah_nama') 
+        sekolah_provinsi = request.POST.get ('sekolah_provinsi')
+        sekolah_npsn = request.POST.get('sekolah_npsn')
+        sekolah_jenis = request.POST.get('sekolah_jenis')
+        pendidikan = request.POST.get('sekolah_bentuk_pendidikan')  
 
         dt_sekolah = Master_sekolah.objects.create(
-            sekolah_nama=nama_sekolah,
-            sekolah_npsn=npsn,
-            sekolah_jenis=jenis_sekolah,
-            sekolah_bentuk_pendidikan=bentuk_pendidikan,
-            sekolah_wilayah_id=wilayah_id,  
+            sekolah_nama=sekolah_nama,
+            sekolah_npsn=sekolah_npsn,
+            sekolah_jenis=sekolah_jenis,
+            sekolah_provinsi=sekolah_provinsi,
+            sekolah_bentuk_pendidikan=pendidikan,
         )
 
-        print(nama_sekolah,npsn,jenis_sekolah,bentuk_pendidikan,wilayah_id)
+        print(sekolah_nama,sekolah_provinsi,sekolah_npsn,sekolah_jenis,pendidikan)
 
         return redirect('sipandu_admin:index_sekolah')
     
     else:
-        sekolah_list = Master_sekolah.objects.all()
-        wilayah_list = Master_wilayah.objects.all()
-        return render(request, 'admin/master/index_master_sekolah.html', {'sekolah_list': sekolah_list, 'wilayah_list': wilayah_list})
+        data_sekolah = Master_sekolah.objects.all()
+        data_wilayah = Master_wilayah.objects.all()
+        return render(request, 'admin/master/index_master_sekolah.html', {'data_sekolah': data_sekolah, 'data_wilayah': data_wilayah})
     
 def edit_sekolah(request, sekolah_id):
     if request.method == 'POST':
