@@ -25,12 +25,6 @@ ROLE_CHOICE =[
     ('admin_sekolah', 'Admin Sekolah')
 ]
 
-ROLE_CHOICE =[
-    ('superadmin', 'Superadmin'),
-    ('admin', 'Admin'),
-    ('admin_kabupaten', 'Admin Kabupaten'),
-    ('admin_sekolah', 'Admin Sekolah')
-]
 JENIS_SEKOLAH =(('negeri','Negeri'),('swasta','Swasta'))
 STATUS_KEPEMILIKAN_SEKOLAH = (('pemda','Pemerintah Daerah'),('pribadi','Pribadi'),('yayasan','Yayasan'))
 AKREDITASI_SEKOLAH = (('belum','Belum Terakreditasi'),('a','A'),('b','B'),('c','C'))
@@ -39,7 +33,7 @@ WAKTU_PENYELANGGARAAN_SEKOLAH =(('pagi','Pagi'),('siang','Siang'),('sore','Sore'
 SUMBER_LISTRIK = (('pln','PLN'),('pembangkit','Pembangkit Listrik'),('diesel','Diesel'))
 
 class Master_wilayah(models.Model):
-    wilayah_id = models.TextField(primary_key=True, default=uuid.uuid4,editable=False, unique=True)
+    wilayah_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     wilayah_kode = models.TextField(unique=True)
     wilayah_parent = models.ForeignKey('self', default=None, on_delete=models.PROTECT, null=True)
     wilayah_nama = models.TextField()
@@ -63,12 +57,11 @@ class Master_jenjang(models.Model):
     )
 
 class Master_sekolah(models.Model):
-    sekolah_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    sekolah_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     sekolah_nama = models.TextField(null=True, default=None)
-    sekolah_wilayah = models.ForeignKey(Master_wilayah, on_delete=models.PROTECT,default=None, null=True)
+    sekolah_wilayah = models.ForeignKey('Master_wilayah', on_delete=models.PROTECT, default=None, null=True)
     sekolah_npsn = models.TextField(unique=True)
     sekolah_jenis = models.TextField(choices=JENIS_SEKOLAH)
-    sekolah_bentuk_pendidikan = models.ForeignKey(Master_jenjang, on_delete=models. PROTECT, default=None, null=True) 
     sekolah_status_kepemilikan = models.TextField(choices=STATUS_KEPEMILIKAN_SEKOLAH, null=True, default=None)
     sekolah_no_sk_pendirian = models.TextField(null=True, default=None) 
     sekolah_tgl_sk_pendirian = models.DateField(null=True, default=None)
@@ -77,7 +70,7 @@ class Master_sekolah(models.Model):
     sekolah_kepsek = models.TextField(null=True, default=None)
     sekolah_akreditasi = models.TextField(choices=AKREDITASI_SEKOLAH, null=True, default=None) 
     sekolah_kurikulum = models.TextField(choices=KURIKULUM_SEKOLAH, null=True, default=None)
-    sekolah_waktu_penyelenggaraan = models. TextField(choices= WAKTU_PENYELANGGARAAN_SEKOLAH, null=True, default=None)
+    sekolah_waktu_penyelenggaraan = models.TextField(choices=WAKTU_PENYELANGGARAAN_SEKOLAH, null=True, default=None)
     sekolah_alamat = models.TextField(null=True, default=None)
     sekolah_rt = models.TextField(null=True, default=None)
     sekolah_rw = models.TextField(null=True, default=None)

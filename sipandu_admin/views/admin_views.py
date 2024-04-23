@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from sipandu_app.models import Master_jenjang
-  
+
 def IndexWilayah(request):
     if request.method == 'GET':
         data = {}

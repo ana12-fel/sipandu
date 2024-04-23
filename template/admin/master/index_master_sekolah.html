@@ -1,7 +1,7 @@
 {% extends 'admin/base/base_index.html' %}
 {% load static %}
 {% block title %}
-Master User
+Master Sekolah
 {% endblock %}
 
 {% block content %}
@@ -27,61 +27,145 @@ Master User
                         <i class="fe fe-plus"></i>
                     </span> Semua Sekolah
                 </a>
-                <a href="#" class="btn btn-primary btn-icon text-white me-2">
+                <a href="#" class="btn btn-primary btn-icon text-white me-2 btn-tambah-data">
                     <span>
                         <i class="fe fe-plus"></i>
                     </span> Tambah Data
                 </a>
-                
             </div>
         </div>
         <!-- PAGE-HEADER END -->
+
+        <!-- Modal Form -->
+        <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-labelledby="modalFormLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalFormLabel">Tambah Data Sekolah</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form -->
+                        <form id="addSekolahForm" method="post" action="{% url 'sipandu_admin:index_sekolah' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="sekolah_provinsi">Provinsi</label>
+                                <select name="sekolah_provinsi" id="sekolah_provinsi" class="form-control">
+                                    <option value="" selected disabled>Pilih Provinsi</option>
+                                    {% for provinsi in data_provinsi %}
+                                        <option value="{{ provinsi }}">{{ provinsi }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="kabupaten" class="form-label">Kabupaten</label>
+                                <select class="form-select" id="kabupaten" name="kabupaten">
+                                    <option value="" selected disabled>Pilih Kabupaten</option>
+                                    {% for wilayah in wilayah_list %}
+                                        {% if wilayah.level == 2 %}
+                                            <option value="{{ wilayah.wilayah_id }}">{{ wilayah.wilayah_nama }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="kecamatan" class="form-label">Kecamatan</label>
+                                <select class="form-select" id="kecamatan" name="kecamatan">
+                                    <option value="" selected disabled>Pilih Kecamatan</option>
+                                    {% for wilayah in wilayah_list %}
+                                        {% if wilayah.level == 3 %}
+                                            <option value="{{ wilayah.wilayah_id }}">{{ wilayah.wilayah_nama }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="sekolah_nama" class="form-label">Nama Sekolah</label>
+                                <input type="text" class="form-control" id="sekolah_nama" name="sekolah_nama" placeholder="Masukkan Nama Sekolah">
+                            </div>
+                            <div class="mb-3">
+                                <label for="sekolah_npsn" class="form-label">NPSN</label>
+                                <input type="text" class="form-control" id="sekolah_npsn" name="sekolah_npsn" placeholder="Nomor NPSN">
+                            </div>
+                            <div class="mb-3">
+                                <label for="sekolah_jenis" class="form-label">Jenis</label>
+                                <select class="form-select" id="sekolah_jenis" name="sekolah_jenis">
+                                    <option value="" selected disabled>Pilih Jenis Sekolah</option>
+                                    <option value="negeri">Negeri</option>
+                                    <option value="swasta">Swasta</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="sekolah_bentuk_pendidikan" class="form-label">Jenjang</label>
+                                <select class="form-select" id="sekolah_bentuk_pendidikan" name="sekolah_bentuk_pendidikan">
+                                    <option value="" selected disabled>Pilih Bentuk Pendidikan</option>
+                                    <option value="SD">SD</option>
+                                    <option value="SMP">SMP</option>
+                                    <option value="SMA">SMA</option>
+                                    <option value="SMK">SMK</option>
+                                </select>
+                            </div>                            
+                            <!-- Tambahkan pilihan lainnya sesuai kebutuhan -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                        <!-- End Form -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
         <!-- ROW-1 -->
         <div class="row row-sm">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Daftar User</h3>
+                        <h3 class="card-title">Daftar Sekolah</h3>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
                                 <thead>
                                     <tr>
-                                        <th class="wd-15p border-bottom-0">First name</th>
-                                        <th class="wd-15p border-bottom-0">Last name</th>
-                                        <th class="wd-20p border-bottom-0">Position</th>
-                                        <th class="wd-15p border-bottom-0">Start date</th>
-                                        <th class="wd-10p border-bottom-0">Salary</th>
-                                        <th class="wd-25p border-bottom-0">E-mail</th>
+                                        <th class="text-center border-bottom-0">PROVINSI</th>
+                                        <th class="text-center border-bottom-0">KABUPATEN</th>
+                                        <th class="text-center border-bottom-0">KECAMATAN</th>
+                                        <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
+                                        <th class="text-center border-bottom-0">JENJANG</th>
+                                        <th class="text-center border-bottom-0">NPSN</th>
+                                        <th class="text-center border-bottom-0">JENIS</th>
+                                        <th class="text-center border-bottom-0">STATUS</th>
+                                        <th class="text-center border-bottom-0">AKSI</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Bella</td>
-                                        <td>Chloe</td>
-                                        <td>System Developer</td>
-                                        <td>2018/03/12</td>
-                                        <td>$654,765</td>
-                                        <td>b.Chloe@datatables.net</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Donna</td>
-                                        <td>Bond</td>
-                                        <td>Account Manager</td>
-                                        <td>2012/02/21</td>
-                                        <td>$543,654</td>
-                                        <td>d.bond@datatables.net</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Harry</td>
-                                        <td>Carr</td>
-                                        <td>Technical Manager</td>
-                                        <td>20011/02/87</td>
-                                        <td>$86,000</td>
-                                        <td>h.carr@datatables.net</td>
-                                    </tr>
+                                    {% for dt_sekolah in data_sekolah %}
+                                        <tr>
+                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_provinsi }}</td> 
+                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.kabupaten.nama }}</td> 
+                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.kecamatan.nama }}</td> 
+                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_nama }}</td>
+                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_bentuk_pendidikan }}</td>
+                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_npsn }}</td>
+                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_jenis }}</td>
+                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_status }}</td>
+                                            
+                                            <td class="text-center align-middle">
+                                                <div class="btn-group align-top">
+                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editSekolahModal_{{dt_sekolah.sekolah_id}}">Edit</a>&nbsp;
+                                                    <a href="{% url 'sipandu_admin:delete_sekolah' dt_sekolah.sekolah_id %}" class="btn btn-sm btn-danger badge">Delete</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% include 'admin/master/edit_sekolah.html' %}
+                                        {% include 'admin/master/delete_sekolah.html' %}
+                                    {% endfor %}
+
                                 </tbody>
                             </table>
                         </div>
@@ -92,16 +176,22 @@ Master User
     </div>
 </div>
 {% endblock %}
+
 {% block js %}
 <script>
     $(function(){
         $('#responsive-datatable').DataTable({
-		scrollX: "100%",
-		language: {
-			searchPlaceholder: 'Search...',
-			sSearch: '',
-		}
-	});
+            scrollX: "100%",
+            language: {
+                searchPlaceholder: 'Search...',
+                sSearch: '',
+            }
+        });
+
+        // Menampilkan modal saat tombol "Tambah Data" diklik
+        $('.btn-tambah-data').click(function(){
+            $('#modalForm').modal('show');
+        });
     })
 </script>
 {% endblock %}
