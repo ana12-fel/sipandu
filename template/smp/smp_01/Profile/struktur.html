@@ -1,4 +1,4 @@
-{% extends 'layout/base_layout.html' %}
+{% extends 'layoutsmp/base_layoutsmp.html' %}
 {% block main %}
 {% load static %}
 
@@ -15,6 +15,16 @@
         </div>
     </div>
 </section>
+<div class="container py-1">
+<div class="col">
+<div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3 mt-4">
+    <div class="thumb-info-wrapper rounded-0">
+        <img src="{% static 'img/struktur.jpg' %}" class="img-fluid rounded-0" alt="" style="border-radius: 5px;"/>
+        <div class="thumb-info-action"></div>
+    </div>
+</div>
+</div>
+</div>
 
 
 {% endblock main %}

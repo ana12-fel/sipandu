@@ -1,14 +1,14 @@
-{% extends 'layout/base_layout.html' %}
+{% extends 'layoutsmp/base_layoutsmp.html' %}
 {% block main %}
 {% load static %}
 
-<section class="page-header page-header-modern page-header-lg overlay overlay-show overlay-op-9 m-0" style="background-color: deepskyblue; background-size: cover; background-position: center;">
-    <div class="container py-4">
+<section class="page-header page-header-modern page-header-lg overlay overlay-show overlay-op-9 m-0" style="background-image: url(img/demos/law-firm-2/backgrounds/background-4.jpg); height: 300px; background-size: cover;  background-position: center;">
+    <div class="container py-5">
         <div class="row">
-            <div class="col text-center text-color-light">
-                <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2 ">
+            <div class="col text-align-center text-center">
+                <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium " style="margin-top: 80px;">
                     <h2 class="text-color-light">
-                       VISI & MISI
+                      Visi & Misi
                     </h2>
                 </ul>
             </div>
@@ -16,68 +16,30 @@
     </div>
 </section>
 
-<section class="section bg-light border-0 z-index-2 pb-0 m-0">
-    <div class="container pt-3 mt-5">
-        <div class="row justify-content-center mb-5">
-            <div class="col-lg-9 col-xl-8 text-center">
-                <div class="overflow-hidden mb-3">
-                    <h3 class="font-weight-bold text-transform-none text-9 line-height-2 mb-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="400">VISI</h3>
-                </div>
-                <p>Visi sendiri berfungsi sebagai suatu pandangan ke depan atau tujuan di masa depan yang ingin kamu capai. Sementara itu, misi adalah poin-poin penting tentang apa yang harus dilakukan untuk mencapai tujuan tersebut.</p>
-            </div>
-        </div>
-        <div class="row pb-5 mb-5">
-            <div class="row justify-content-center mb-5">
-                <div class="col-lg-9 col-xl-8 text-center">
-                    <div class="overflow-hidden mb-3">
-                        <h3 class="font-weight-bold text-transform-none text-9 line-height-2 mb-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="400">MISI</h3>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="750">
-                <div class="owl-carousel stage-margin stage-margin-md nav-style-1 nav-svg-arrows-1 nav-dark mb-0" data-plugin-options="{'responsive': {'0': {'items': 1}, '476': {'items': 2}, '768': {'items': 2}, '992': {'items': 3}, '1200': {'items': 4}}, 'autoHeight': true, 'autoplay': false, 'autoplayTimeout': 5000, 'autoplayHoverPause': true, 'dots': false, 'nav': true, 'loop': false, 'margin': 20, 'stagePadding': 75}">
-                    <div>
-                        <div class="custom-bg-lighten-quaternary custom-min-height-1 text-center bg-color-hover-blue px-3 py-5">
-                            <h4 class="text-color-light font-weight-bold text-6 mb-4">1968</h4>
-                            <p class="text-color-light opacity-6 font-weight-light mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor. </p>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="custom-bg-lighten-grey-1 custom-min-height-1 text-center bg-color-hover-primary px-3 py-5">
-                            <h4 class="text-color-light font-weight-bold text-6 mb-4">1969</h4>
-                            <p class="text-color-light opacity-6 font-weight-light mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum.</p>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="custom-bg-lighten-grey-1 custom-min-height-1 text-center bg-color-hover-primary px-3 py-5">
-                            <h4 class="text-color-light font-weight-bold text-6 mb-4">1972</h4>
-                            <p class="text-color-light opacity-6 font-weight-light mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor. </p>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="custom-bg-lighten-grey-1 custom-min-height-1 text-center bg-color-hover-primary px-3 py-5">
-                            <h4 class="text-color-light font-weight-bold text-6 mb-4">1978</h4>
-                            <p class="text-color-light opacity-6 font-weight-light mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum.</p>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="custom-bg-lighten-grey-1 custom-min-height-1 text-center bg-color-hover-primary px-3 py-5">
-                            <h4 class="text-color-light font-weight-bold text-6 mb-4">1983</h4>
-                            <p class="text-color-light opacity-6 font-weight-light mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor. </p>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="custom-bg-lighten-grey-1 custom-min-height-1 text-center bg-color-hover-primary px-3 py-5">
-                            <h4 class="text-color-light font-weight-bold text-6 mb-4">1985</h4>
-                            <p class="text-color-light opacity-6 font-weight-light mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="row mt-5 mb-5 pt-3 pb-3">
+    <div class="col-md-8">
+        <h2 class="font-weight-semibold mb-0">Visi</h2>
+        <p class="lead font-weight-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur hendrerit, leo vitae interdum pretium, tortor risus dapibus tortor, eu suscipit orci leo sed nisl. Integer et ipsum eu nulla auctor mattis sit amet in diam. Vestibulum non ornare arcu. Class aptent taciti sociosqu ad...</p>
+
     </div>
-</section>
+    <div class="col-md-4">
+        <img src="{% static 'img/visi.jpg' %}" alt class="img-fluid box-shadow-custom" /> 
+    </div>
+</div>
+
+<div class="row mt-5 mb-5 pt-3 pb-3">
+    <div class="col-md-8">
+        <h2 class="font-weight-semibold mb-0">Misi</h2>
+        <p class="lead font-weight-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur hendrerit, leo vitae interdum pretium, tortor risus dapibus tortor, eu suscipit orci leo sed nisl. Integer et ipsum eu nulla auctor mattis sit amet in diam. Vestibulum non ornare arcu. Class aptent taciti sociosqu ad...</p>
+    </div>
+    <div class="col-md-4">
+        <img src="{% static 'img/misi.png' %}" alt class="img-fluid box-shadow-custom" /> 
+    </div>
+</div>
 
 
 
