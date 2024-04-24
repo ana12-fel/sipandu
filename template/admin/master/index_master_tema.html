@@ -91,13 +91,13 @@ Master User
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Isi tabel data di sini -->
-                                    {% for tema in data_tema %}
+                                    {% for dt_tema in data_tema %}
+                                    
                                     <tr>
-                                        <td>{{ tema.tema_nama }}</td>
-                                        <td>{{ tema.tema_jenjang.jenjang_nama }}</td>
-                                        <td>{{ tema.tema_folder_name }}</td>
-                                        <td><img src="{% if tema.tema_thumbnail %}{{MEDIA_URL}}{{ tema.tema_thumbnail.url }}{% endif %}" alt="{{ tema.tema_nama }}" style="max-width: 100px;"></td>
+                                        <td>{{ dt_tema.tema_nama }}</td>
+                                        <td>{{ dt_tema.tema_jenjang.jenjang_nama }}</td>
+                                        <td>{{ dt_tema.tema_folder_name }}</td>
+                                        <td><img src="{% if dt_tema.tema_thumbnail %}{{MEDIA_URL}}{{ dt_tema.tema_thumbnail.url }}{% endif %}" alt="{{ dt_tema.tema_nama }}" style="max-width: 100px;"></td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_tema.tema_id}}">Edit</a> &nbsp;
@@ -106,6 +106,7 @@ Master User
 
                                             </div>
                                     </tr>
+                                    {% include 'admin/master/edit_tema.html' %}
                                     {% endfor %}
                                 </tbody>
                             </table>

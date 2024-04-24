@@ -1,0 +1,62 @@
+<div class="card">
+    <div class="card-header border-bottom-0 p-4">
+        <div class="page-options d-flex justify-content-end">
+        </div>
+    </div>
+    <div class="e-table px-5 pb-5">
+        <div class="table-responsive table-lg">
+            <form id="deleteForm" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="tema_id" id="tema_id">
+            </form>
+            <table class="table border-top table-bordered mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-center border-bottom-0">NAMA TEMA</th>
+                        <th class="text-center border-bottom-0">JENJANG</th>
+                        <th class="text-center border-bottom-0">NAMA FOLDER</th>
+                        <th class="text-center border-bottom-0">THUMBNAIL</th>
+                        <th class="text-center border-bottom-0">AKSI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tema in data_tema %}
+                    <tr>
+                        <td class="align-middle text-center">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" id="item-{{ dt_tema.tema_id }}" type="checkbox"> 
+                                <label class="custom-control-label" for="item-{{ dt_tema.tema_id }}"></label>
+                            </div>
+                        </td>
+                        <td>{{ tema.tema_nama }}</td>
+                        <td>{{ tema.tema_jenjang.jenjang_nama }}</td>
+                        <td>{{ tema.tema_folder_name }}</td>
+                        <td><img src="{% if tema.tema_thumbnail %}{{MEDIA_URL}}{{ tema.tema_thumbnail.url }}{% endif %}" alt="{{ tema.tema_nama }}" style="max-width: 100px;"></td>
+                        <td class="text-center align-middle">
+                            <div class="btn-group align-top">
+                                <button class="btn btn-sm btn-danger badge" onclick="prepareDelete('{{ dt_tema.tema_id }}')" type="button">Delete Tema</button>
+                            </div>
+                        </td>
+                        <form id="deleteForm{{ dt_tema.tema_id }}" method="post" action="{% url 'delete_tema' dt_tema.tema_id %}">
+                            {% csrf_token %}
+                        </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% block js %}
+<script>
+    function prepareDelete(tema_id) {
+        var confirmation = confirm("Apakah Anda yakin ingin menghapus data ini?");
+        if (confirmation) {
+            document.getElementById("tema_id").value = tema_id;
+            document.getElementById("deleteForm" + tema_id).submit();
+        } else {
+        }
+    }
+</script>
+{% endblock %}

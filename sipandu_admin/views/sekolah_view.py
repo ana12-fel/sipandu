@@ -39,7 +39,7 @@ def edit_sekolah(request, sekolah_id):
         dt_sekolah.sekolah_nama=sekolah_nama
         dt_sekolah.sekolah_npsn=sekolah_npsn
         dt_sekolah.sekolah_jenis=sekolah_jenis
-        dt_sekolah.sekolah_jenjang=Master_jenjang.objects.get(jenjang_nama__icontains = sekolah_jenjang)
+        dt_sekolah.sekolah_jenjang=Master_jenjang.objects.get(jenjang_id__icontains = sekolah_jenjang)
 
         dt_sekolah.save()
         
@@ -68,4 +68,6 @@ def delete_sekolah(request, sekolah_id):
                 'message': 'data sekolah gagal dihapus, data sekolah tidak ditemukan'
         }
         return JsonResponse(data, status=400)
+    
+
 
