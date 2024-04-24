@@ -101,31 +101,35 @@ class AccountManager(BaseUserManager):
 
     def create_user(self, user_email, user_password, **extra_fields):
     
-        if not email:
+        if not user_email:
             raise ValueError(_("The Email must be set"))
-        email = self.normalize_email(email)
+        email = self.normalize_email(user_email)
         user = self.model(user_email=user_email, **extra_fields)
+        print(user_password)
         user.set_password(user_password)
         user.save()
         return user
 
-    def create_superuser(self, user_email, user_password, **extra_fields):
+    def create_superuser(self, user_email, password, **extra_fields):
        
         extra_fields.setdefault("user_is_staff", True)
-        extra_fields.setdefault("user_is_superuser", True)
+        extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("user_is_activate", True)
-
+        
         if extra_fields.get("user_is_staff") is not True:
             raise ValueError(_("Superuser must have user_is_staff=True."))
-        if extra_fields.get("user_is_superuser ") is not True:
-            raise ValueError(_("Superuser must have user_is_superuser=True."))
-        return self.create_user(user_email, user_password, **extra_fields)
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError(_("Superuser must have is_superuser=True."))
+        return self.create_user(user_email, password, **extra_fields)
+
+    def get_queryset(self):
+        return super().get_queryset().filter()
     
 class Master_user(AbstractBaseUser):
     user_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     user_email = models.EmailField(unique=True)
-    user_level = models.CharField(default=None, choices=LEVEL_WILAYAH, max_length=1)
-    user_password = models.TextField(default=None, null=False)
+    user_level = models.CharField(default=3, choices=LEVEL_WILAYAH, max_length=1)
+    password = models.TextField(default=None, null=False)
     user_first_name = models.CharField(max_length=50)
     user_last_name = models.CharField(max_length=100)
     user_is_staff = models.BooleanField(default=False)
@@ -144,7 +148,7 @@ class Master_user(AbstractBaseUser):
     objects = AccountManager()
 
     USERNAME_FIELD = 'user_email'
-    REQUIRED_FIELDS = ['user_username', 'user_phone', 'user_level', 'user_is_superuser']
+    REQUIRED_FIELDS = ['user_phone', 'user_role', 'is_superuser']
 
     def get_full_name(self):
         return f"{self.user_first_name} {self.user_last_name}"
@@ -152,28 +156,28 @@ class Master_user(AbstractBaseUser):
     def get_short_name(self):
         return self.user_first_name
 
-    @property
-    def is_anonymous(self):
-        """
-        Property to determine if the user is anonymous.
-        """
-        return False
+    # @property
+    # def is_anonymous(self):
+    #     """
+    #     Property to determine if the user is anonymous.
+    #     """
+    #     return False
 
-    @property
-    def is_authenticated(self):
-        """
-        Property to determine if the user is authenticated.
-        """
-        return True
+    # @property
+    # def is_authenticated(self):
+    #     """
+    #     Property to determine if the user is authenticated.
+    #     """
+    #     return True
 
 
 class Master_tema(models.Model):
     tema_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     tema_jenjang = models.ForeignKey(Master_jenjang, on_delete=models.PROTECT,default=None, null=True)
-    tema_warna = models.CharField(default=None, choices=WARNA, max_length=1)
+    tema_warna = models.CharField(default=None, choices=WARNA, max_length=1, null=True)
     tema_nama = models.CharField(max_length=200)
     tema_folder_name = models.CharField(max_length=200)
-    tema_thumbnail = models.ImageField()
+    tema_thumbnail = models.ImageField(upload_to='thumbnails_tema/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

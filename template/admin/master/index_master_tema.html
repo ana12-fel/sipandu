@@ -1,0 +1,169 @@
+{% extends 'admin/base/base_index.html' %}
+{% load static %}
+{% block title %}
+Master User
+{% endblock %}
+
+{% block content %}
+<!--app-content open-->
+<div class="app-content">
+    <div class="side-app">
+        <!-- PAGE-HEADER -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">TEMA WEB</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Tema Web</li>
+                </ol>
+            </div>
+            <div class="ms-auto pageheader-btn">
+                <!-- Tombol untuk membuka modal tambah data -->
+                <button type="button" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#tambahModal">
+                    <span><i class="fe fe-plus"></i></span> Tambahkan
+                </button>
+                <a href="#" class="btn btn-success btn-icon text-white">
+                    <span><i class="fe fe-log-in"></i></span> Export
+                </a>
+            </div>
+        </div>
+        <!-- PAGE-HEADER END -->
+
+        <!-- Modal untuk tambah data -->
+        <div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form untuk tambah data -->
+                        <form method="POST" action="{% url 'sipandu_admin:index_tema' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama Tema</label>
+                                <input type="text" class="form-control" id="nama" name="tema_nama" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="sekolah_jenjang" class="form-label">Jenjang</label>
+                                <select class="form-select" id="sekolah_jenjang" name="tema_jenjang">
+                                    <option value="" selected disabled>Pilih jenjang</option>
+                                    {% for jenjang in data_jenjang %}
+                                    <option value="{{jenjang.jenjang_id}}">{{jenjang.jenjang_nama.upper}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>      
+                            <div class="mb-3">
+                                <label for="folder" class="form-label">Nama Folder</label>
+                                <input type="text" class="form-control" id="folder" name="tema_folder_name" >
+                            </div>
+                            <div class="mb-3">
+                                <label for="thumbnail" class="form-label">Thumbnail</label>
+                                <input type="file" class="form-control" id="thumbnail" name="tema_thumbnail" accept="image/*">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal end -->
+
+        <!-- ROW-1 OPEN -->
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">DATA TEMA</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center border-bottom-0">NAMA TEMA</th>
+                                        <th class="text-center border-bottom-0">JENJANG</th>
+                                        <th class="text-center border-bottom-0">NAMA FOLDER</th>
+                                        <th class="text-center border-bottom-0">THUMBNAIL</th>
+                                        <th class="text-center border-bottom-0">AKSI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Isi tabel data di sini -->
+                                    {% for tema in data_tema %}
+                                    <tr>
+                                        <td>{{ tema.tema_nama }}</td>
+                                        <td>{{ tema.tema_jenjang.jenjang_nama }}</td>
+                                        <td>{{ tema.tema_folder_name }}</td>
+                                        <td><img src="{% if tema.tema_thumbnail %}{{MEDIA_URL}}{{ tema.tema_thumbnail.url }}{% endif %}" alt="{{ tema.tema_nama }}" style="max-width: 100px;"></td>
+                                        <td class="text-center align-middle">
+                                            <div class="btn-group align-top">
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_tema.tema_id}}">Edit</a> &nbsp;
+                                                <button onclick="deleteTema('{{ dt_tema.tema_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+
+
+                                            </div>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ROW-1 END -->
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    function deleteTema(tema_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_tema' 'tema_id' %}".replace("tema_id",tema_);
+
+        swal({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                $.ajax({
+                    headers : { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "DELETE",
+                    success: function (response) {
+                        // Data berhasil dihapus
+                        swal("Data berhasil dihapus!", {
+                            icon: "success",
+                        }).then(() => {
+                            // Refresh halaman atau lakukan aksi lain
+                            window.location.reload(); // Contoh: Refresh halaman
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        // Terjadi kesalahan saat menghapus data
+                        swal("Terjadi kesalahan saat menghapus data!", {
+                            icon: "error",
+                        });
+                    }
+                });
+            } else {
+                // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+                swal("Tindakan dibatalkan", "", "info");
+            }
+        });
+    }
+</script>
+
+{% endblock %}
+

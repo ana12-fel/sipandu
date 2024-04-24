@@ -51,7 +51,7 @@ Master User
                                 <label for="role">Role</label>
                                 <select name="role" id="role" class="form-control">
                                     {% for role_key, role_display in role_choices %}
-                                        <option value="{{ role_display }}">{{ role_key }}</option>
+                                        <option value="{{ role_key }}">{{ role_display }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -120,10 +120,9 @@ Master User
                                             <td class="text-center align-middle">
                                                 <div class="btn-group align-top">
                                                     <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editUserModal_{{dt_user.user_id}}">Edit</a>&nbsp;
-                                                    <a href="{% url 'sipandu_admin:delete_user' dt_user.user_id %}" class="btn btn-sm btn-danger badge">Delete</a>
+                                                    <button onclick="deleteUser('{{ dt_user.user_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
                                                 </div>
                                             </td>
-                                            
                                         </tr>
 
                                         {% include 'admin/master/edit_user.html'%}
@@ -134,21 +133,68 @@ Master User
                         </div>
                     </div>
                 </div>
+                <div class="mb-5">
+                    <ul class="pagination float-end">
+                        <li class="page-item page-prev disabled">
+                            <a class="page-link" href="#" tabindex="-1">Prev</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item page-next">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
 </div>
 {% endblock %}
+
 {% block js %}
 <script>
-    $(function(){
-        $('#responsive-datatable').DataTable({
-		scrollX: "100%",
-		language: {
-			searchPlaceholder: 'Search...',
-			sSearch: '',
-		}
-	});
-    })
+    function deleteUser(user_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_user' 'user_id' %}".replace("user_id",user_);
+
+        swal({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                $.ajax({
+                    headers : { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "DELETE",
+                    success: function (response) {
+                        // Data berhasil dihapus
+                        swal("Data berhasil dihapus!", {
+                            icon: "success",
+                        }).then(() => {
+                            // Refresh halaman atau lakukan aksi lain
+                            window.location.reload(); // Contoh: Refresh halaman
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        // Terjadi kesalahan saat menghapus data
+                        swal("Terjadi kesalahan saat menghapus data!", {
+                            icon: "error",
+                        });
+                    }
+                });
+            } else {
+                // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+                swal("Tindakan dibatalkan", "", "info");
+            }
+        });
+    }
 </script>
+
 {% endblock %}
