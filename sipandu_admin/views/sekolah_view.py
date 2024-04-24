@@ -9,18 +9,12 @@ def IndexSekolah(request):
         sekolah_jenis = request.POST.get('sekolah_jenis')
         sekolah_jenjang = request.POST.get('sekolah_jenjang')
         
-        # Dapatkan instance Master_jenjang berdasarkan jenis sekolah
-        try:
-            sekolah_jenjang = Master_jenjang.objects.get(jenjang_nama=sekolah_jenjang)
-        except Master_jenjang.DoesNotExist:
-            sekolah_jenjang = None
-            print(f"Jenis sekolah '{sekolah_jenis}' tidak ditemukan dalam database.")
-            
+        print (sekolah_jenjang)
         dt_sekolah = Master_sekolah.objects.create(
             sekolah_nama=sekolah_nama,
             sekolah_npsn=sekolah_npsn,
             sekolah_jenis=sekolah_jenis,
-            sekolah_jenjang=sekolah_jenjang
+            sekolah_jenjang=Master_jenjang.objects.get(jenjang_id = sekolah_jenjang)
         )
 
         print(sekolah_nama, sekolah_npsn, sekolah_jenis, sekolah_jenjang)
@@ -28,9 +22,10 @@ def IndexSekolah(request):
         return redirect('sipandu_admin:index_sekolah')
     
     else:
+        data_jenjang = Master_jenjang.objects.all()
         data_sekolah = Master_sekolah.objects.all()
         data_wilayah = Master_wilayah.objects.all()
-        return render(request, 'admin/master/index_master_sekolah.html', {'data_sekolah': data_sekolah, 'data_wilayah': data_wilayah})
+        return render(request, 'admin/master/index_master_sekolah.html', {'data_sekolah': data_sekolah, 'data_wilayah': data_wilayah, "data_jenjang": data_jenjang})
     
 def edit_sekolah(request, sekolah_id):
     if request.method == 'POST':

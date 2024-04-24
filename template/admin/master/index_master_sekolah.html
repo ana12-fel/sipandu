@@ -100,13 +100,12 @@ Master Sekolah
                             <div class="mb-3">
                                 <label for="sekolah_jenjang" class="form-label">Jenjang</label>
                                 <select class="form-select" id="sekolah_jenjang" name="sekolah_jenjang">
-                                    <option value="" selected disabled>Pilih Bentuk Pendidikan</option>
-                                    <option value="SD">SD</option>
-                                    <option value="SMP">SMP</option>
-                                    <option value="SMA">SMA</option>
-                                    <option value="SMK">SMK</option>
+                                    <option value="" selected disabled>Pilih jenjang</option>
+                                    {% for jenjang in data_jenjang %}
+                                    <option value="{{jenjang.jenjang_id}}">{{jenjang.jenjang_nama.upper}}</option>
+                                    {% endfor %}
                                 </select>
-                            </div>                            
+                            </div>                           
                             <!-- Tambahkan pilihan lainnya sesuai kebutuhan -->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -27,14 +27,14 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="sekolah_jenjang" class="form-label">Bentuk Pendidikan</label>
+                        <label for="sekolah_jenjang" class="form-label">Jenjang</label>
                         <select class="form-select" id="sekolah_jenjang" name="sekolah_jenjang">
-                            <option value="SD" {% if dt_sekolah.sekolah_jenjang == 'SD' %} selected {% endif %}>SD</option>
-                            <option value="SMP" {% if dt_sekolah.sekolah_jenjang == 'SMP' %} selected {% endif %}>SMP</option>
-                            <option value="SMA" {% if dt_sekolah.sekolah_jenjang == 'SMA' %} selected {% endif %}>SMA</option>
-                            <option value="SMK" {% if dt_sekolah.sekolah_jenjang == 'SMK' %} selected {% endif %}>SMK</option>
+                            <option value="" selected disabled>Pilih jenjang</option>
+                            {% for jenjang in data_jenjang %}
+                            <option value="{{ jenjang.jenjang_id }}" {% if dt_sekolah.sekolah_jenjang_id == jenjang.jenjang_id %} selected {% endif %}>{{ jenjang.jenjang_nama.upper }}</option>
+                            {% endfor %}
                         </select>
-                    </div>
+                    </div>            
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Submit</button>

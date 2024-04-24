@@ -177,7 +177,7 @@ class Master_tema(models.Model):
     tema_warna = models.CharField(default=None, choices=WARNA, max_length=1, null=True)
     tema_nama = models.CharField(max_length=200)
     tema_folder_name = models.CharField(max_length=200)
-    tema_thumbnail = models.ImageField()
+    tema_thumbnail = models.ImageField(upload_to='thumbnails_tema/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
