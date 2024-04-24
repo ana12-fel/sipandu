@@ -57,13 +57,10 @@ def edit_sekolah(request, sekolah_id):
     
 def delete_sekolah(request, sekolah_id):
     try:
-        # Mengambil objek jenjang berdasarkan sekolah_id
         dt_sekolah = get_object_or_404(Master_sekolah, sekolah_id=sekolah_id)
         
-        # Hapus objek sekolah
         dt_sekolah.delete()
 
-        # Redirect ke halaman indeks sekolah menggunakan nama URL
         data = {
                 'status': 'success',
                 'message': 'data sekolah berhasil dihapus'
@@ -71,7 +68,6 @@ def delete_sekolah(request, sekolah_id):
         return JsonResponse(data, status=200)
 
     except Master_sekolah.DoesNotExist:
-        # Jika sekolah tidak ditemukan, kembalikan respons 404
         data = {
                 'status': 'error',
                 'message': 'data sekolah gagal dihapus, data sekolah tidak ditemukan'
