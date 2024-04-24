@@ -40,13 +40,11 @@ def edit_jenjang(request, jenjang_id):
     
 def delete_jenjang(request, jenjang_id):
     try:
-        # Mengambil objek jenjang berdasarkan jenjang_id
+       
         dt_jenjang = get_object_or_404(Master_jenjang, jenjang_id=jenjang_id)
         
-        # Hapus objek jenjang
         dt_jenjang.delete()
 
-        # Redirect ke halaman indeks jenjang menggunakan nama URL
         data = {
                 'status': 'success',
                 'message': 'Jenjang berhasil dihapus'
@@ -54,7 +52,6 @@ def delete_jenjang(request, jenjang_id):
         return JsonResponse(data, status=200)
 
     except Master_jenjang.DoesNotExist:
-        # Jika jenjang tidak ditemukan, kembalikan respons 404
         data = {
                 'status': 'error',
                 'message': 'Jenjang gagal dihapus, jenjang tidak ditemukan'

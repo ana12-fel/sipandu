@@ -39,7 +39,7 @@ Master User
                     </div>
                     <div class="modal-body">
                         <!-- Form untuk tambah data -->
-                        <form method="POST" action="{% url 'sipandu_admin:index_tema' %}">
+                        <form method="POST" action="{% url 'sipandu_admin:index_tema' %}" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama Tema</label>
@@ -47,16 +47,15 @@ Master User
                             </div>
                             <div class="mb-3">
                                 <label for="sekolah_jenjang" class="form-label">Jenjang</label>
-                                <select class="form-select" id="sekolah_jenjang" name="sekolah_jenjang">
+                                <select class="form-select" id="sekolah_jenjang" name="tema_jenjang">
                                     <option value="" selected disabled>Pilih jenjang</option>
-                                    <option value="SD">SD</option>
-                                    <option value="SMP">SMP</option>
-                                    <option value="SMA">SMA</option>
-                                    <option value="SMK">SMK</option>
+                                    {% for jenjang in data_jenjang %}
+                                    <option value="{{jenjang.jenjang_id}}">{{jenjang.jenjang_nama.upper}}</option>
+                                    {% endfor %}
                                 </select>
                             </div>      
                             <div class="mb-3">
-                                <label for="folder" class="form-label">Folder</label>
+                                <label for="folder" class="form-label">Nama Folder</label>
                                 <input type="text" class="form-control" id="folder" name="tema_folder_name" >
                             </div>
                             <div class="mb-3">
@@ -86,25 +85,26 @@ Master User
                                     <tr>
                                         <th class="text-center border-bottom-0">NAMA TEMA</th>
                                         <th class="text-center border-bottom-0">JENJANG</th>
-                                        <th class="text-center border-bottom-0">FOLDER</th>
+                                        <th class="text-center border-bottom-0">NAMA FOLDER</th>
                                         <th class="text-center border-bottom-0">THUMBNAIL</th>
                                         <th class="text-center border-bottom-0">AKSI</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <!-- Isi tabel data di sini -->
-                                    {% for tema in semua_tema %}
+                                    {% for tema in data_tema %}
                                     <tr>
                                         <td>{{ tema.tema_nama }}</td>
-                                        <td>{{ tema.tema_jenjang.nama }}</td>
+                                        <td>{{ tema.tema_jenjang.jenjang_nama }}</td>
                                         <td>{{ tema.tema_folder_name }}</td>
-                                        <td><img src="{{ tema.tema_thumbnail.url }}" alt="{{ tema.tema_nama }}" style="max-width: 100px;"></td>
-                                        <td>
-                                            <!-- Tombol-tombol aksi untuk tiap data -->
-                                            <!-- Misalnya: -->
-                                            <button type="button" class="btn btn-sm btn-warning">Edit</button>
-                                            <button type="button" class="btn btn-sm btn-danger">Hapus</button>
-                                        </td>
+                                        <td><img src="{% if tema.tema_thumbnail %}{{MEDIA_URL}}{{ tema.tema_thumbnail.url }}{% endif %}" alt="{{ tema.tema_nama }}" style="max-width: 100px;"></td>
+                                        <td class="text-center align-middle">
+                                            <div class="btn-group align-top">
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_tema.tema_id}}">Edit</a> &nbsp;
+                                                <button onclick="deleteTema('{{ dt_tema.tema_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+
+
+                                            </div>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -118,3 +118,52 @@ Master User
     </div>
 </div>
 {% endblock %}
+
+{% block js %}
+<script>
+    function deleteTema(tema_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_tema' 'tema_id' %}".replace("tema_id",tema_);
+
+        swal({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                $.ajax({
+                    headers : { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "DELETE",
+                    success: function (response) {
+                        // Data berhasil dihapus
+                        swal("Data berhasil dihapus!", {
+                            icon: "success",
+                        }).then(() => {
+                            // Refresh halaman atau lakukan aksi lain
+                            window.location.reload(); // Contoh: Refresh halaman
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        // Terjadi kesalahan saat menghapus data
+                        swal("Terjadi kesalahan saat menghapus data!", {
+                            icon: "error",
+                        });
+                    }
+                });
+            } else {
+                // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+                swal("Tindakan dibatalkan", "", "info");
+            }
+        });
+    }
+</script>
+
+{% endblock %}
+

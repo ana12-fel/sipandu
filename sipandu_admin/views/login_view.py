@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from sipandu_app.models import Master_user
+from flask import Flask, render_template, request, redirect, url_for, session
 
 
 def login_index(request):
@@ -24,3 +24,10 @@ def login_index(request):
             messages.error(request, 'Email atau kata sandi salah.')
 
     return render(request, 'admin/login/login.html')  # Ganti 'login.html' dengan nama template halaman login
+
+def logout():
+    session.pop('user_email', None)
+    return redirect(url_for('login_index'))
+
+    if __name__ == '__main__':
+        app.run(debug=True)

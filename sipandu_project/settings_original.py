@@ -138,4 +138,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Lokasi di mana file media akan disimpan
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# URL yang digunakan untuk mengakses file media
+MEDIA_URL = '/media/'
 

@@ -1,0 +1,77 @@
+{% extends 'layout_sd/base_layout_sd.html' %}
+{% block main %}
+{% load static %}
+
+
+<section class="page-header page-header-modern bg-primary custom-page-header">
+
+    <div class="custom-svg-style-1 svg-fill-color-primary position-absolute top-0 left-50pct transform3dx-n50 h-100 z-index-0">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1920 400" xml:space="preserve" preserveAspectRatio="none" width="100%" height="100%" data-plugin-float-element-svg="true">
+            <circle id="svg_2" r="7.5" cy="539.5" cx="209.5" fill="#FFF" opacity="0.2" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}"/>
+            <circle id="svg_3" r="12" cy="211" cx="268" fill="#FFF" opacity="0.2" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.4, 'transition': true, 'transitionDuration': 2000, 'isInsideSVG': true}"/>
+            <circle id="svg_4" r="17" cy="144" cx="1864" fill="#FFF" opacity="0.2" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.6, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}"/>
+            <circle id="svg_6" r="28.5" cy="326.74992" cx="327.75073" stroke-miterlimit="10" stroke-width="3" stroke="6CD499" fill="none"/>
+            <circle opacity="0.2" stroke="#ffffff" id="svg_8" r="21.5" cy="340.25" cx="90.74976" fill="none" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}"/>
+            <circle stroke="#ffffff" opacity="0.2" id="svg_9" r="14.625" cy="689.625" cx="128.87476" fill="none" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.5, 'transition': true, 'transitionDuration': 2000, 'isInsideSVG': true}"/>
+        </svg>								
+    </div>
+
+    <div class="container position-relative z-index-1 mt-4 h-100">
+        <div class="row h-100">
+            <div class="col align-self-end">
+                <div class="d-block">
+                    <span class="d-block custom-stroke-text-effect-1 custom-big-text-2 font-weight-bold opacity-2">KONTAK</span>
+                </div>
+                <div class="d-block">
+                    <h1 class="text-color-light font-weight-bold positive-ls-3 custom-big-text-1 line-height-1 mb-0">KONTAK</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<div class="container">
+
+    <div class="row mt-4 pt-4 mb-4 pb-4">
+        <div class="col-lg-4">
+
+            <div class="owl-carousel owl-theme nav-center custom-carousel-dots-style custom-carousel-dots-style-inside mt-1" data-plugin-options="{'items': 1, 'responsive': {'479': {'items': 1}, '979': {'items': 1}, '1199': {'items': 1}}, 'margin': 10, 'loop': false, 'dots': true, 'nav': false, 'autoplay': true, 'autoplayTimeout': 5000}">
+                <div>
+                    <img src="{% static 'logo/FILLIANA.jpg' %}" alt="" class="img-fluid" /> 
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <h5 class="mb-4">HUBUNGI KAMI</h5>
+            <div class="row">
+                <div class="col-lg-4">
+                    <ul class="list list-icons list-icons-style-2 text-color-primary">
+                        <li><i class="fas fa-map-marker-alt"></i>New York - NY</a></li>
+                        <li><i class="fas fa-phone"></i>(123) 456-789</a></li>
+                        <li><a href="demo-photography-2-about-me.html"><i class="far fa-envelope"></i>Biography</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-8">
+                    <ul class="list list-icons list-icons-style-2 text-color-primary">
+                        <li><a target="_blank" href="http://www.facebook.com"><i class="fab fa-facebook-f"></i>Facebook</a></li>
+                        <li><a target="_blank" href="http://www.facebook.com"><i class="fab fa-twitter"></i>Twitter</a></li>
+                        <li><a target="_blank" href="http://www.instagram.com"><i class="fab fa-instagram"></i>Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+<div class="container"
+<div class="row">
+       <div class="col-md-12">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.936998205257!2d110.3301911740317!3d-7.796495377382501!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7af9480fa3b1a9%3A0xb1ed95e491aa6b49!2sPT.%20Rizq%20Sanjaya%20Teknologi!5e0!3m2!1sid!2sid!4v1713769901673!5m2!1sid!2sid" 
+        width="100%" height="450" style="border:0;" allowfullscreen="" 
+        loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+       </iframe>
+       </div>
+</div>
+
+{% endblock main %}
+
