@@ -8,14 +8,12 @@ urlpatterns = [
     path('', home.index, name='home'),
     path('identitas/', profile.identitas, name='identitas'),
     path('Visi/', profile.Visi, name='Visi'),
-    path('smp/', smp.indexsmp, name='smp'),
     path('berita/', berita.beritasmp, name='berita'),
     path('struktur/', profile.struktur, name='struktur'),
     path('fasilitas/', profile.fasilitas, name='fasilitas'),
     path('ipa/', jurusan.ipa, name='ipa'),
-    path('ips/', jurusan.ips, name='ips'),
-    path('bahasa/', jurusan.bahasa, name='bahasa'),
-    path('ips/', jurusan.ips, name='ips'),
+    # path('ips/', jurusan.ips, name='ips'),
+    # path('bahasa/', jurusan.bahasa, name='bahasa'),
     path('ekstrakulikuler/', program.ekstrakulikuler, name='ekstrakulikuler'),
     path('kontak/', kontak.index_kontak, name='kontak'),
     path('prestasi/', prestasi.index_prestasi, name='prestasi'),
@@ -27,6 +25,7 @@ urlpatterns = [
     path('kegiatan/', berita.kegiatan, name='kegiatan'),
     path('bursa/', berita.bursa, name='bursa'),
     path('detail_fasilitas/', profile.detail_fasilitas, name='detail_fasilitas'),
+    path('detail_fasilitas_smp/', profile.detail_fasilitas_smp, name='detail_fasilitas_smp'),
   
   
 ]
