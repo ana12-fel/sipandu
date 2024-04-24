@@ -121,6 +121,9 @@ class AccountManager(BaseUserManager):
         if extra_fields.get("is_superuser") is not True:
             raise ValueError(_("Superuser must have is_superuser=True."))
         return self.create_user(user_email, password, **extra_fields)
+
+    def get_queryset(self):
+        return super().get_queryset().filter()
     
 class Master_user(AbstractBaseUser):
     user_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -153,19 +156,19 @@ class Master_user(AbstractBaseUser):
     def get_short_name(self):
         return self.user_first_name
 
-    @property
-    def is_anonymous(self):
-        """
-        Property to determine if the user is anonymous.
-        """
-        return False
+    # @property
+    # def is_anonymous(self):
+    #     """
+    #     Property to determine if the user is anonymous.
+    #     """
+    #     return False
 
-    @property
-    def is_authenticated(self):
-        """
-        Property to determine if the user is authenticated.
-        """
-        return True
+    # @property
+    # def is_authenticated(self):
+    #     """
+    #     Property to determine if the user is authenticated.
+    #     """
+    #     return True
 
 
 class Master_tema(models.Model):
