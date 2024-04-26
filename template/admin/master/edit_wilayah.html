@@ -12,12 +12,27 @@
                 <form method="post" action="{% url 'sipandu_admin:edit_wilayah' dt_wilayah.wilayah_id %}">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label for="kode" class="form-label">kode</label>
+                        <label for="kode" class="form-label">Kode</label>
                         <input type="text" value="{{dt_wilayah.wilayah_kode}}" class="form-control" name="wilayah_kode" placeholder="Masukkan Kode">
-                        <label for="wilayah" class="form-label">wilayah</label>
-                        <input type="text" value="{{dt_wilayah.wilayah_nama}}" class="form-control" name="wilayah_nama" placeholder="Masukkan Wilayah">
+                        <label for="provinsi" class="form-label">Provinsi</label>
+                        <input type="text" value="{{dt_wilayah.wilayah_provinsi}}" class="form-control" name="wilayah_provinsi" placeholder="Masukkan Provinsi">
+                        <label for="provinsi" class="form-label">Kabupaten</label>
+                        <input type="text" value="{{dt_wilayah.wilayah_kabupaten}}" class="form-control" name="wilayah_kabupaten" placeholder="Masukkan Kabupaten">
+                        <label for="provinsi" class="form-label">Distrik</label>
+                        <input type="text" value="{{dt_wilayah.wilayah_distrik}}" class="form-control" name="wilayah_distrik" placeholder="Masukkan Distrik">
                         <!-- Input wilayah_status secara default -->
-                        <input type="hidden" name="wilayah_status" value="True">
+                    </div>
+                        <div class="mb-3">
+                            <label>Status</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="wilayah_status" id="statusAktif" value="True" {% if dt_jenjang.jenjang_status == "True" %} checked {% endif %}>
+                                <label class="form-check-label" for="statusAktif">Aktif</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="wilayah_status" id="statusTidakAktif" value="False" {% if dt_jenjang.jenjang_status == "False" %} checked {% endif %}>
+                                <label class="form-check-label" for="statusTidakAktif">Tidak Aktif</label>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
