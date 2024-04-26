@@ -60,8 +60,10 @@ Master User
                             </div>
                             <div class="mb-3">
                                 <label for="thumbnail" class="form-label">Thumbnail</label>
-                                <input type="file" class="form-control" id="thumbnail" name="tema_thumbnail" accept="image/*">
+                                <input type="file" class="form-control" id="thumbnail" name="tema_thumbnail" accept="image/*" onchange="previewThumbnail(event)">
+
                             </div>
+                            <div id="thumbnail-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> <!-- Container untuk menampilkan preview thumbnail -->
                             <button type="submit" class="btn btn-primary">Simpan</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         </form>
@@ -91,13 +93,13 @@ Master User
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Isi tabel data di sini -->
-                                    {% for tema in data_tema %}
+                                    {% for dt_tema in data_tema %}
+                                    
                                     <tr>
-                                        <td>{{ tema.tema_nama }}</td>
-                                        <td>{{ tema.tema_jenjang.jenjang_nama }}</td>
-                                        <td>{{ tema.tema_folder_name }}</td>
-                                        <td><img src="{% if tema.tema_thumbnail %}{{MEDIA_URL}}{{ tema.tema_thumbnail.url }}{% endif %}" alt="{{ tema.tema_nama }}" style="max-width: 100px;"></td>
+                                        <td>{{ dt_tema.tema_nama }}</td>
+                                        <td>{{ dt_tema.tema_jenjang.jenjang_nama }}</td>
+                                        <td>{{ dt_tema.tema_folder_name }}</td>
+                                        <td><img src="{% if dt_tema.tema_thumbnail %}{{MEDIA_URL}}{{ dt_tema.tema_thumbnail.url }}{% endif %}" alt="{{ dt_tema.tema_nama }}" style="max-width: 100px;"></td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_tema.tema_id}}">Edit</a> &nbsp;
@@ -106,6 +108,7 @@ Master User
 
                                             </div>
                                     </tr>
+                                    {% include 'admin/master/edit_tema.html' %}
                                     {% endfor %}
                                 </tbody>
                             </table>
@@ -120,7 +123,33 @@ Master User
 {% endblock %}
 
 {% block js %}
+
 <script>
+    function previewThumbnail(event) {
+        var input = event.target;
+        var preview = document.getElementById('thumbnail-preview');
+        
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                // Menghapus preview thumbnail sebelumnya jika ada
+                while (preview.firstChild) {
+                    preview.removeChild(preview.firstChild);
+                }
+
+                // Menambahkan elemen img untuk menampilkan preview thumbnail
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '300px';
+                img.alt = 'Thumbnail Preview';
+                preview.appendChild(img);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
     function deleteTema(tema_) {
         var deleteUrl = "{% url 'sipandu_admin:delete_tema' 'tema_id' %}".replace("tema_id",tema_);
 

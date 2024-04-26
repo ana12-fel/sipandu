@@ -1,0 +1,43 @@
+<!-- Modal Edit Data Tema -->
+<div class="modal fade" id="editdata_{{ dt_tema.tema_id }}" tabindex="-1" aria-labelledby="editDataModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editDataModalLabel">Edit Data Tema</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form edit data di sini -->
+                <form method="post" enctype="multipart/form-data" action="{% url 'sipandu_admin:edit_tema' dt_tema.tema_id %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="tema_nama" class="form-label">Nama Tema</label>
+                        <input type="text" value="{{ dt_tema.tema_nama }}" class="form-control" name="tema_nama" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tema_jenjang" class="form-label">Jenjang</label>
+                        <select class="form-select" id="tema_jenjang" name="tema_jenjang">
+                            <option value="" selected disabled>Pilih jenjang</option>
+                            {% for jenjang in data_jenjang %}
+                            <option value="{{ jenjang.jenjang_id }}" {% if dt_tema.tema_jenjang_id == jenjang.jenjang_id %} selected {% endif %}>{{ jenjang.jenjang_nama.upper }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tema_folder_name" class="form-label">Nama Folder</label>
+                        <input type="text" value="{{ dt_tema.tema_folder_name }}" class="form-control" name="tema_folder_name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="tema_thumbnail" class="form-label">Thumbnail</label>
+                        <input type="file" class="form-control" name="tema_thumbnail" accept="image/*">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Edit Data Tema End -->

@@ -50,34 +50,30 @@ Master Sekolah
                         <form id="addSekolahForm" method="post" action="{% url 'sipandu_admin:index_sekolah' %}">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="sekolah_provinsi">Provinsi</label>
-                                <select name="sekolah_provinsi" id="sekolah_provinsi" class="form-control">
+                                <label for="sekolah_jenjang" class="form-label">Provinsi</label>
+                                <select class="form-select" id="sekolah_provinsi" name="sekolah_provinsi">
                                     <option value="" selected disabled>Pilih Provinsi</option>
-                                    {% for provinsi in data_provinsi %}
-                                        <option value="{{ provinsi }}">{{ provinsi }}</option>
+                                    {% for provinsi in data_wilayah %}
+                                    <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_provinsi.upper}}</option>
                                     {% endfor %}
                                 </select>
-                            </div>
+                            </div>  
                             
                             <div class="mb-3">
                                 <label for="kabupaten" class="form-label">Kabupaten</label>
-                                <select class="form-select" id="kabupaten" name="kabupaten">
+                                <select class="form-select" id="sekolah_provinsi" name="sekolah_provinsi">
                                     <option value="" selected disabled>Pilih Kabupaten</option>
-                                    {% for wilayah in wilayah_list %}
-                                        {% if wilayah.level == 2 %}
-                                            <option value="{{ wilayah.wilayah_id }}">{{ wilayah.wilayah_nama }}</option>
-                                        {% endif %}
+                                    {% for kabupaten in data_wilayah %}
+                                    <option value="{{kabupaten.wilayah_id}}">{{kabupaten.wilayah_kabupaten.upper}}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="kecamatan" class="form-label">Kecamatan</label>
-                                <select class="form-select" id="kecamatan" name="kecamatan">
-                                    <option value="" selected disabled>Pilih Kecamatan</option>
-                                    {% for wilayah in wilayah_list %}
-                                        {% if wilayah.level == 3 %}
-                                            <option value="{{ wilayah.wilayah_id }}">{{ wilayah.wilayah_nama }}</option>
-                                        {% endif %}
+                                <label for="distrik" class="form-label">Distrik</label>
+                                <select class="form-select" id="sekolah_provinsi" name="sekolah_provinsi">
+                                    <option value="" selected disabled>Pilih Kabupaten</option>
+                                    {% for distrik in data_wilayah %}
+                                    <option value="{{kabupaten.wilayah_id}}">{{distrik.wilayah_distrik.upper}}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -146,9 +142,9 @@ Master Sekolah
                                 <tbody>
                                     {% for dt_sekolah in data_sekolah %}
                                         <tr>
-                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_provinsi }}</td> 
-                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.kabupaten.nama }}</td> 
-                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.kecamatan.nama }}</td> 
+                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.wilayah_provinsi }}</td> 
+                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.wilayah_kabupaten }}</td> 
+                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.wilayah_distrik }}</td> 
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_nama }}</td>
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_jenjang.jenjang_nama }}</td>
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_npsn }}</td>

@@ -46,10 +46,14 @@ Master Wilayah
                         <form method="post" action="{% url 'sipandu_admin:index_wilayah' %}">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="kode" class="form-label">kode</label>
+                                <label for="kode" class="form-label">Kode</label>
                                 <input type="text" class="form-control" name="wilayah_kode" placeholder="Masukkan Status kode">
-                                <label for="wilayah" class="form-label">wilayah</label>
-                                <input type="text" class="form-control" name="wilayah_nama" placeholder="Masukkan Status wilayah">
+                                <label for="wilayah" class="form-label">Provinsi</label>
+                                <input type="text" class="form-control" name="wilayah_provinsi" placeholder="Masukkan Status provinsi">
+                                <label for="wilayah" class="form-label">Kabupaten</label>
+                                <input type="text" class="form-control" name="wilayah_kabupaten" placeholder="Masukkan Status kecamatan">
+                                <label for="wilayah" class="form-label">Distrik</label>
+                                <input type="text" class="form-control" name="wilayah_distrik" placeholder="Masukkan Status wilayah">
                                 <!-- Input wilayah_status secara default -->
                                 <input type="hidden" name="wilayah_status" value="True">
                             </div>
@@ -85,7 +89,9 @@ Master Wilayah
                                 <thead>
                                     <tr>
                                         <th class="text-center">KODE</th>
-                                        <th class="text-center">WILAYAH</th>
+                                        <th class="text-center">PROVINSI</th>
+                                        <th class="text-center">KABUPATEN</th>
+                                        <th class="text-center">DISTRIK</th>
                                         <th class="text-center">STATUS</th>
                                         <th class="text-center">AKSI</th>
                                     </tr>
@@ -95,7 +101,9 @@ Master Wilayah
                                         <!-- Iterasi melalui setiap objek dt_wilayah -->
                                         <tr>
                                             <td class="text-center align-middle">{{ dt_wilayah.wilayah_kode }}</td>
-                                            <td class="text-center align-middle">{{ dt_wilayah.wilayah_nama }}</td>
+                                            <td class="text-center align-middle">{{ dt_wilayah.wilayah_provinsi }}</td>
+                                            <td class="text-center align-middle">{{ dt_wilayah.wilayah_kabupaten }}</td>
+                                            <td class="text-center align-middle">{{ dt_wilayah.wilayah_distrik }}</td>
                                             <td class="text-center align-middle"><span>{% if dt_wilayah.wilayah_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
                                             <td class="text-center align-middle">
                                                 <div class="btn-group align-top">

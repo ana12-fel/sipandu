@@ -28,6 +28,10 @@ urlpatterns = [
     path('sekolah/<str:sekolah_id>/delete/', sekolah_view.delete_sekolah, name='delete_sekolah'),
 
     path('index-master-tema/', tema_view.IndexTema, name='index_tema'),
+    path('edit_tema/<str:tema_id>/', tema_view.edit_tema, name='edit_tema'),
+    path('tema/<str:tema_id>/delete/', tema_view.delete_tema, name='delete_tema'),
+
+
 
 
     path('transanksi-situs/', admin_views.TransanksiSitus, name='transanksi_situs'),

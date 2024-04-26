@@ -12,6 +12,34 @@
 
                     {% csrf_token %}
                     <div class="mb-3">
+                        <label for="sekolah_provinsi" class="form-label">Provinsi</label>
+                        <select class="form-select" id="sekolah_provinsi" name="sekolah_provinsi">
+                            <option value="" selected disabled>Pilih Provinsi</option>
+                            {% for provinsi in data_wilayah %}
+                            <option value="{{ provinsi.wilayah_id }}" {% if dt_sekolah.sekolah_wilayah_id == provinsi.wilayah_provinsi %} selected {% endif %}>{{ provinsi.wilayah_provinsi.upper }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>  
+                    
+                    <div class="mb-3">
+                        <label for="kabupaten" class="form-label">Kabupaten</label>
+                        <select class="form-select" id="sekolah_provinsi" name="sekolah_provinsi">
+                            <option value="" selected disabled>Pilih Kabupaten</option>
+                            {% for kabupaten in data_wilayah %}
+                            <option value="{{kabupaten.wilayah_id}}">{{kabupaten.wilayah_kabupaten.upper}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="distrik" class="form-label">Distrik</label>
+                        <select class="form-select" id="sekolah_provinsi" name="sekolah_provinsi">
+                            <option value="" selected disabled>Pilih Kabupaten</option>
+                            {% for distrik in data_wilayah %}
+                            <option value="{{kabupaten.wilayah_id}}">{{distrik.wilayah_distrik.upper}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="sekolah_nama" class="form-label">Nama Sekolah</label>
                         <input type="text" value="{{ dt_sekolah.sekolah_nama }}" class="form-control" name="sekolah_nama" placeholder="Masukkan Nama Sekolah">
                     </div>
