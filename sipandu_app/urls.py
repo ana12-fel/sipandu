@@ -26,6 +26,7 @@ urlpatterns = [
     path('bursa/', berita.bursa, name='bursa'),
     path('detail_fasilitas/', profile.detail_fasilitas, name='detail_fasilitas'),
     path('detail_fasilitas_smp/', profile.detail_fasilitas_smp, name='detail_fasilitas_smp'),
+    path('datagtk/', profile.datagtk, name='datagtk'),
   
   
 ]

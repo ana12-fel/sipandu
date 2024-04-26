@@ -6,33 +6,25 @@
                 <nav class="collapse px-3-5">
                     <ul class="nav nav-pills" id="mainNav">
                         <li>
-                            <a class="nav-link active" href="demo-construction.html">
-                                Home
-                            </a>
+                            <a class="nav-link active" href="{% url 'sipandu:home' %}">Home</a>
                         </li>
                         <li class="dropdown">
-                            <a class="nav-link dropdown-toggle" href="demo-construction-services.html">
-                                Profile
-                            </a>
+                            <a class="nav-link dropdown-toggle" href="{% url 'sipandu:identitas' %}">Profile</a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{% url 'sipandu:identitas' %}">Identitas Sekolah</a></li>
                                 <li><a class="dropdown-item" href="{% url 'sipandu:Visi' %}">Visi & Misi</a></li>
                                 <li><a class="dropdown-item" href="{% url 'sipandu:struktur' %}">Struktur Organisasi</a></li>
                                 <li><a class="dropdown-item" href="{% url 'sipandu:fasilitas' %}">Fasilitas</a></li>
-                                <li><a class="dropdown-item" href="demo-construction-services-detail.html">Data GTK</a></li>
+                                <li><a class="dropdown-item" href="{% url 'sipandu:datagtk' %}">Data GTK</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a class="nav-link dropdown-toggle" href="demo-construction-services.html">
-                                Program
-                            </a>
+                            <a class="nav-link dropdown-toggle" href="{% url 'sipandu:ekstrakulikuler' %}">Program</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="demo-construction-services-detail.html">Extrakulikuler</a></li>
+                                <li><a class="dropdown-item" href="{% url 'sipandu:ekstrakulikuler' %}">Extrakulikuler</a></li>
                             </ul>
                             <li>
-                                <a class="nav-link" href="demo-construction-contact.html">
-                                    Prestasi
-                                </a>
+                                <a class="nav-link" href="{% url 'sipandu:prestasi' %}">Prestasi</a>
                             </li>
 
                         <li class="dropdown">
@@ -45,14 +37,10 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="nav-link" href="{% url 'sipandu:galeri' %}">
-                                Galeri
-                            </a>
+                            <a class="nav-link" href="{% url 'sipandu:galeri' %}">Galeri</a>
                         </li>
                         <li>
-                            <a class="nav-link" href="{% url 'sipandu:kontak' %}">
-                                Kontak
-                            </a>
+                            <a class="nav-link" href="{% url 'sipandu:kontak' %}">Kontak</a>
                         </li>
                     </ul>
                 </nav>
