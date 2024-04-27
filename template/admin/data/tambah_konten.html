@@ -1,0 +1,44 @@
+{% extends 'admin/base/base_index.html' %}
+{% load static %}
+{% block title %}
+Master User
+{% endblock %}
+
+{% block content %}
+<!--app-content open-->
+<div class="app-content">
+    <div class="side-app">
+
+        <!-- PAGE-HEADER -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">DATA KONTEN</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">data konten</li>
+                </ol>
+            </div>
+            <div class="ms-auto pageheader-btn">
+                <a href="#" class="btn btn-primary btn-icon text-white me-2">
+                    <span>
+                        <i class="fe fe-plus"></i>
+                    </span> Tambahkan konten
+                </a>
+            </div>
+        </div>
+        <!-- PAGE-HEADER END -->
+
+        <!-- ROW-1 OPEN -->
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Data Posting Konten</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="example">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}

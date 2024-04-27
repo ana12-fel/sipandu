@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import base_views,admin_views,jenjang_view,user_view,sekolah_view,login_view,wilayah_view,tema_view
+from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views
 from django.contrib.auth import views as auth_views
 
 
@@ -36,7 +36,8 @@ urlpatterns = [
 
     path('transanksi-situs/', admin_views.TransanksiSitus, name='transanksi_situs'),
     path('data-sekolah/', admin_views.DataSekolah, name='data_sekolah'),
-    path('konten/', admin_views.Konten, name='konten'),
+    path('konten/', konten_views.IndexKonten, name='index_konten'),
+    path('tambah_konten/', konten_views.TambahKonten, name='tambah_konten'),
     path('laporan-data-sekolah/', admin_views.LaporanDataSekolah, name='laporan_data_sekolah'),
   
 ]
