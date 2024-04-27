@@ -1,308 +1,253 @@
-		{% extends 'layout_sd/base_layout_sd.html' %}
-		{% block main %}
-		{% load static %}
-		<div role="main" class="main">
-			<div class="owl-carousel owl-carousel-light owl-carousel-light-init-fadeIn owl-theme manual dots-inside dots-horizontal-center custom-dots-style-1 dots-light show-dots-hover show-dots-xs show-dots-sm show-dots-md nav-style-1 nav-inside nav-inside-plus nav-light nav-lg nav-font-size-lg show-nav-hover bg-color-quaternary custom-slider-container mb-0" data-plugin-options="{'autoplay': false, 'autoplayTimeout': 7000}" data-dynamic-height="['780px','780px','780px','780px','510px']" style="height: 780px;">
-				<div class="owl-stage-outer">
-					<div class="owl-stage">
+{% extends 'layout_sd/base_layout_sd.html' %}
+{% block main %}
+{% load static %}
+<div role="main" class="main">
+	<div class="owl-carousel owl-carousel-light owl-carousel-light-init-fadeIn owl-theme manual dots-inside dots-horizontal-center custom-dots-style-1 dots-light show-dots-hover show-dots-xs show-dots-sm show-dots-md nav-style-1 nav-inside nav-inside-plus nav-light nav-lg nav-font-size-lg show-nav-hover bg-color-quaternary custom-slider-container mb-0" data-plugin-options="{'autoplay': false, 'autoplayTimeout': 7000}" data-dynamic-height="['780px','780px','780px','780px','510px']" style="height: 780px;">
+		<div class="owl-stage-outer">
+			<div class="owl-stage">
+			
+		<!-- Carousel Slide 1 -->
+				<div class="position-relative  overlay-show overlay-op-0 overflow-hidden pt-4" data-dynamic-height="['845px','845px','845px','750px','750px']" style="height: 845px;">
+					<div class="background-image-wrapper position-absolute top-0 left-0 right-0 bottom-0" data-appear-animation="kenBurnsToLeft" data-appear-animation-duration="30s" data-plugin-options="{'minWindowWidth': 0}" data-carousel-onchange-show style="background-image: url(/static/logo/sd.jpg); background-size: cover; background-position: center;"></div>
+					<div class="container position-relative z-index-3 pb-5 h-100">
+						<div class="row justify-content-center align-items-center pb-5 h-100">
+							<div class="col-lg-8 text-center pb-5 mb-5">
+								<h1 class="text-color-light font-weight-bold line-height-1 text-12 text-md-14 positive-ls-3 mb-3 appear-animation" data-appear-animation="blurIn" data-appear-animation-delay="1000" data-plugin-options="{'minWindowWidth': 0}">SELAMAT DATANG DI SD NEGERI 103 OKU</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Carousel Slide 2 -->
+				<div class="position-relative  overlay-show overlay-op-0 overflow-hidden pt-4" data-dynamic-height="['845px','845px','845px','750px','750px']" style="height: 845px;">
+					<div class="background-image-wrapper position-absolute top-0 left-0 right-0 bottom-0" data-appear-animation="kenBurnsToLeft" data-appear-animation-duration="30s" data-plugin-options="{'minWindowWidth': 0}" data-carousel-onchange-show style="background-image: url(/static/logo/sd2.jpg); background-size: cover; background-position: center;"></div>
+					<div class="container position-relative z-index-3 pb-5 h-100">
+						<div class="row justify-content-center align-items-center pb-5 h-100">
+							<div class="col-lg-8 text-center pb-5 mb-5">
+								<h1 class="text-color-light font-weight-bold line-height-1 text-12 text-md-14 positive-ls-3 mb-3 appear-animation" data-appear-animation="blurIn" data-appear-animation-delay="1000" data-plugin-options="{'minWindowWidth': 0}">SELAMAT DATANG DI SD NEGERI 103 ADILUWIH</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>	
+		<div class="owl-nav">
+			<button type="button" role="presentation" class="owl-prev" aria-label="Previous"></button>
+			<button type="button" role="presentation" class="owl-next" aria-label="Next"></button>
+		</div>
+		<div class="owl-dots mb-5">
+			<button role="button" class="owl-dot active"><span></span></button>
+			<button role="button" class="owl-dot"><span></span></button>
+		</div>				
+	</div>
+
+<!-- SAMBUTAN KEPALA SEKOLAH -->
+<div class="container py-3 my-3">
+	<div class="row align-items-center justify-content-center">
+		<div class="col-lg-6 mb-5 mb-lg-0">
+			<h2 class="text-color-dark font-weight-extra-bold text-10 mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200"><em> SAMBUTAN KEPALA SEKOLAH</em></h2>
+			<p class="font-weight-light text-color-dark mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="400">Assalamu’alaikum Warahmatullahi Wabarakaatuh. Salam sejahtera dan tetap semangat. Selamat datang di website SMA Negeri 1 Adiluwih Pringsewu. Sebagai media informasi dan komunikasi, web SMA Negeri 1 Adiluwih dibangun dan dikembangkan dalam rangka meningkatkan layanan sekolah kepada peserta didik, orang tua, masyarakat, dan stakeholder. Kualitas layanan menjadi salah satu misi sekolah dan kaitannya dengan transparansi dan akuntabilitas sekolah.</p>
+			<p class="positive-ls-3 text-color-grey mb-3 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="600">FELLYANA TRI PURWA HASTUTI</p>
+			<a href="{% url 'sipandu:identitas' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
+				Lihat Detail ...
+				<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+					<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+				</svg>
+			</a>
+		</div>
+		<div class="col-md-9 col-lg-6 ps-lg-5">
+			<div class="position-relative">
+				<div class="custom-shape-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="1100">
+					<div class="position-absolute top-0 left-0 right-0 bottom-0 bg-primary" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.1, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
+					</div>
+				</div>
+				<div data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
+					<img src="{% static 'logo/FILLIANA.jpg' %}" class="img-fluid position-relative z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="border-radius: 5px;"/>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- JUMLAH PEGAWAI -->
+<section class="section overlay overlay-show overlay-op-5 border-0 m-0" style="background-image: url({% static 'logo/sd01.jpg' %}); background-size: cover; background-position: center;">
 					
-					<!-- Carousel Slide 1 -->
-							<div class="owl-item position-relative overflow-hidden">
-								<img src="{% static 'logo/sd.jpg' %}" class="img-fluid custom-bg-slider-right" alt="" />
-								<div class="custom-svg-style-1 svg-fill-color-primary position-absolute top-0 left-50pct transform3dx-n50 h-100 z-index-0">
-									<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1920 799" xml:space="preserve" preserveAspectRatio="none" width="100%" height="100%" data-plugin-float-element-svg="true">
-										<path id="svg_1" d="m803,799c-0.65,-17.51 -0.69,-41.58 2,-70c7.66,-80.82 31.97,-139.52 47,-175c30.86,-72.87 67.88,-124.83 89,-152c17.86,-22.98 84.33,-105.42 201,-174c34.75,-20.42 121.02,-67.28 243,-90c48.07,-8.95 141.2,-21.52 256,-4c123.54,18.85 208.91,62.88 228,73c21.42,11.35 38.74,22.03 51,30c0,-79 0,-158 0,-237c-640,0 -1280,0 -1920,0c0,266.33 0,532.67 0,799c267.67,0 535.33,0 803,0z" fill="#48C97F" opacity="0.5"/>
-										<circle id="svg_2" r="7.5" cy="539.5" cx="209.5" fill="#FFF" opacity="0.1" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}"/>
-										<circle id="svg_3" r="12" cy="211" cx="268" fill="#FFF" opacity="0.1" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.4, 'transition': true, 'transitionDuration': 2000, 'isInsideSVG': true}"/>
-										<circle id="svg_4" r="17" cy="144" cx="1864" fill="#FFF" opacity="0.1" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.6, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}"/>
-										<path id="svg_5" d="m982,356c24.33,-22.33 48.67,-44.67 73,-67c-1.91,-2.73 -5.1,-6.6 -10,-10c-7.11,-4.93 -13.93,-6.15 -19,-7c-5.42,-0.91 -14.32,-2.3 -25,1c-4.46,1.38 -16.54,5.83 -25,18c-5.85,8.41 -7.29,16.65 -8,21c-0.51,3.13 -1.54,9.79 0,18c2.48,13.19 10.04,22.01 14,26z" fill="#FFF" opacity="0.1" style="fill: #FFF !important;"/>
-										<circle id="svg_6" r="28.5" cy="326.74992" cx="327.75073" stroke-miterlimit="10" stroke-width="3" stroke="6CD499" fill="none"/>
-										<circle opacity="0.1" stroke="#ffffff" id="svg_8" r="21.5" cy="340.25" cx="90.74976" fill="none" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}"/>
-										<circle stroke="#ffffff" opacity="0.1" id="svg_9" r="14.625" cy="689.625" cx="128.87476" fill="none" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.5, 'transition': true, 'transitionDuration': 2000, 'isInsideSVG': true}"/>
-									</svg>
-									
-																
+					<div class="container py-5 mb-5">
+						<div class="row">
+							<div class="col md-12">
+								<div class="col text-center mb-5">
+									<h2 class="text-transform-none text-color-light
+									font-weight-bold text-10 negative-ls-1 mb-2 appear-animation"
+									data-appear-animation="fadeInUpShorterPlus" 
+									data-appear-animation-delay="400">JUMLAH GURU DAN PEGAWAI</h2>
 								</div>
-								<div class="container position-relative h-100 z-index-1 mt-4">
-									<div class="row align-items-center h-100">
-										<div class="col mb-5-5 mb-sm-0">
-											<div class="appear-animation" data-appear-animation="fadeInDownShorterPlus" data-appear-animation-delay="400">
-												<span class="d-block custom-stroke-text-effect-1 custom-big-text-2 font-weight-bold opacity-2">DESIGN</span>
-											</div>
-											<div class="appear-animation" data-appear-animation="fadeInDownShorterPlus" data-appear-animation-delay="600">
-												<span class="d-block custom-stroke-text-effect-1 custom-big-text-2 font-weight-bold opacity-5">DESIGN</span>
-											</div>
-											<div class="appear-animation" data-appear-animation="fadeInDownShorterPlus" data-appear-animation-delay="800">
-												<span class="d-block custom-stroke-text-effect-1 custom-big-text-2 font-weight-bold">DESIGN</span>
-											</div>
-											<div class="appear-animation" data-appear-animation="fadeInDownShorterPlus" data-appear-animation-delay="1000">
-												<h1 class="text-color-light font-weight-bold positive-ls-3 custom-big-text-1 line-height-1 mb-0">DESIGN</h1>
-											</div>
-											<p class="text-color-dark font-weight-bold text-7 text-sm-9 ms-2 mb-0 appear-animation" data-appear-animation="fadeInDownShorterPlus" data-appear-animation-delay="1200">to a whole new level</p>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<!-- Carousel Slide 2 -->
-							<div class="owl-item position-relative overflow-hidden">
-								<img src="{% static 'logo/sd.jpg' %}" class="img-fluid custom-bg-slider-left" alt="" />
-								<div class="custom-svg-style-1 custom-svg-style-1-variation custom-svg-reverse svg-fill-color-dark position-absolute top-0 left-50pct transform3dx-n50 h-100 z-index-0">
-									<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1920 799" xml:space="preserve" preserveAspectRatio="none" width="100%" height="100%" data-plugin-float-element-svg="true">
-										<path id="svg_1" d="m803,799c-0.65,-17.51 -0.69,-41.58 2,-70c7.66,-80.82 31.97,-139.52 47,-175c30.86,-72.87 67.88,-124.83 89,-152c17.86,-22.98 84.33,-105.42 201,-174c34.75,-20.42 121.02,-67.28 243,-90c48.07,-8.95 141.2,-21.52 256,-4c123.54,18.85 208.91,62.88 228,73c21.42,11.35 38.74,22.03 51,30c0,-79 0,-158 0,-237c-640,0 -1280,0 -1920,0c0,266.33 0,532.67 0,799c267.67,0 535.33,0 803,0z" fill="#48C97F"/>
-										<circle id="svg_2" r="7.5" cy="539.5" cx="209.5" fill="#FFF" opacity="0.2" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}"/>
-										<circle id="svg_3" r="12" cy="211" cx="268" fill="#FFF" opacity="0.2" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.4, 'transition': true, 'transitionDuration': 2000, 'isInsideSVG': true}"/>
-										<circle id="svg_4" r="17" cy="144" cx="1864" fill="#FFF" opacity="0.2" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.2, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}"/>
-										<path id="svg_5" d="m982,356c24.33,-22.33 48.67,-44.67 73,-67c-1.91,-2.73 -5.1,-6.6 -10,-10c-7.11,-4.93 -13.93,-6.15 -19,-7c-5.42,-0.91 -14.32,-2.3 -25,1c-4.46,1.38 -16.54,5.83 -25,18c-5.85,8.41 -7.29,16.65 -8,21c-0.51,3.13 -1.54,9.79 0,18c2.48,13.19 10.04,22.01 14,26z" fill="#FFF" opacity="0.2" style="fill: #FFF !important;"/>
-										<circle id="svg_6" r="28.5" cy="326.74992" cx="327.75073" stroke-miterlimit="10" stroke-width="3" stroke="6CD499" fill="none" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}"/>
-										<circle opacity="0.2" stroke="#ffffff" id="svg_8" r="21.5" cy="340.25" cx="90.74976" fill="none" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.4, 'transition': true, 'transitionDuration': 2000, 'isInsideSVG': true}"/>
-										<circle stroke="#ffffff" opacity="0.2" id="svg_9" r="14.625" cy="689.625" cx="128.87476" fill="none" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.5, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}"/>
-									</svg>								
-								</div>
-								<div class="container position-relative h-100 z-index-1 mt-4">
-									<div class="row align-items-center h-100">
-										<div class="col mb-5-5 mb-sm-0 text-end">
-											<div class="appear-animation" data-appear-animation="fadeInDownShorterPlus" data-appear-animation-delay="400">
-												<span class="d-block custom-stroke-text-effect-1 text-11 text-sm-15 line-height-1 positive-ls-2 font-weight-bold opacity-2 mb-1">DEVELOPMENT</span>
-											</div>
-											<div class="appear-animation" data-appear-animation="fadeInDownShorterPlus" data-appear-animation-delay="600">
-												<span class="d-block custom-stroke-text-effect-1 text-11 text-sm-15 line-height-1 positive-ls-2 font-weight-bold opacity-5 mb-1">DEVELOPMENT</span>
-											</div>
-											<div class="appear-animation" data-appear-animation="fadeInDownShorterPlus" data-appear-animation-delay="800">
-												<span class="d-block custom-stroke-text-effect-1 text-11 text-sm-15 line-height-1 positive-ls-2 font-weight-bold mb-1">DEVELOPMENT</span>
-											</div>
-											<div class="appear-animation" data-appear-animation="fadeInDownShorterPlus" data-appear-animation-delay="1000">
-												<h1 class="text-color-light font-weight-bold positive-ls-3 text-12 text-sm-17 line-height-1 mb-3">DEVELOPMENT</h1>
-											</div>
-											<p class="text-color-primary font-weight-bold text-7 text-sm-9 ms-2 mb-0 appear-animation" data-appear-animation="fadeInDownShorterPlus" data-appear-animation-delay="1200">to a whole new level</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						
-					</div>
-				</div>	
-				<div class="owl-nav">
-					<button type="button" role="presentation" class="owl-prev" aria-label="Previous"></button>
-					<button type="button" role="presentation" class="owl-next" aria-label="Next"></button>
-				</div>
-				<div class="owl-dots mb-5">
-					<button role="button" class="owl-dot active"><span></span></button>
-					<button role="button" class="owl-dot"><span></span></button>
-				</div>				
-			</div>
-
-		<!-- SAMBUTAN KEPALA SEKOLAH -->
-		<div class="container py-3 my-3">
-			<div class="row align-items-center justify-content-center">
-				<div class="col-lg-6 mb-5 mb-lg-0">
-					<h2 class="text-color-dark font-weight-extra-bold text-10 mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200"><em> SAMBUTAN KEPALA SEKOLAH</em></h2>
-					<p class="font-weight-light text-color-dark mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="400">Assalamu’alaikum Warahmatullahi Wabarakaatuh. Salam sejahtera dan tetap semangat. Selamat datang di website SMA Negeri 1 Adiluwih Pringsewu. Sebagai media informasi dan komunikasi, web SMA Negeri 1 Adiluwih dibangun dan dikembangkan dalam rangka meningkatkan layanan sekolah kepada peserta didik, orang tua, masyarakat, dan stakeholder. Kualitas layanan menjadi salah satu misi sekolah dan kaitannya dengan transparansi dan akuntabilitas sekolah.</p>
-					<p class="positive-ls-3 text-color-grey mb-3 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="600">FELLYANA TRI PURWA HASTUTI</p>
-					<a href="{% url 'sipandu:identitas' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
-						Lihat Detail ...
-						<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-							<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
-						</svg>
-					</a>
-				</div>
-				<div class="col-md-9 col-lg-6 ps-lg-5">
-					<div class="position-relative">
-						<div class="custom-shape-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="1100">
-							<div class="position-absolute top-0 left-0 right-0 bottom-0 bg-primary" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.1, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
 							</div>
 						</div>
-						<div data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
-							<img src="{% static 'logo/FILLIANA.jpg' %}" class="img-fluid position-relative z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="border-radius: 5px;"/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- JUMLAH PEGAWAI -->
-		<section class="section overlay overlay-show overlay-op-5 border-0 m-0" style="background-image: url({% static 'logo/sd01.jpg' %}); background-size: cover; background-position: center;">
-							
-							<div class="container py-5 mb-5">
-								<div class="row">
-									<div class="col md-12">
-										<div class="col text-center mb-5">
-											<h2 class="text-transform-none text-color-light
-											font-weight-bold text-10 negative-ls-1 mb-2 appear-animation"
-											data-appear-animation="fadeInUpShorterPlus" 
-											data-appear-animation-delay="400">JUMLAH GURU DAN PEGAWAI</h2>
-										</div>
-									</div>
-								</div>
-								<div class="row counters counters-sm">
-									<div class="col-sm-6 col-lg-3 mb-5 mb-lg-0">
-										<div class="counter">
-											<span class="text-color-light fa fa-graduation-cap fa-3x"></span>
-											<strong class="text-color-light font-weight-bold line-height-1 text-10 mb-1" data-to="50" data-append="+" data-plugin-options="{'appendWrapper': '<span class=text-color-secendary></span>'}">0</strong>
-											<label class="text-color-light font-weight-bold text-5 mb-0">SISWA</label>
-										</div>
-									</div>
-									<div class="col-sm-6 col-lg-3 mb-5 mb-lg-0">
-										<div class="counter">
-											<span class="text-color-light fa fa-users"></span>
-											<strong class="text-color-light font-weight-bold line-height-1 text-10 mb-1" data-to="240" data-append="+" data-plugin-options="{'appendWrapper': '<span class=text-color-secendary></span>'}">0</strong>
-											<label class="text-color-light font-weight-bold text-5 mb-0">GURU</label>
-										</div>
-									</div>
-									<div class="col-sm-6 col-lg-3 mb-5 mb-sm-0">
-										<div class="counter">
-											<span class="text-color-light fa fa-user-plus"></span>
-											<strong class="text-color-light font-weight-bold line-height-1 text-10 mb-1" data-to="2000" data-append="+" data-plugin-options="{'appendWrapper': '<span class=text-color-secendary></span>'}">0</strong>
-											<label class="text-color-light font-weight-bold text-5 mb-0">PEGAWAI</label>
-										</div>
-									</div>
-									<div class="col-sm-6 col-lg-3">
-										<div class="counter">
-											<span class="text-color-light fa fa-id-card"></span>
-											<strong class="text-color-light font-weight-bold line-height-1 text-10 mb-1" data-to="20" data-append="+" data-plugin-options="{'appendWrapper': '<span class=text-color-secendary></span>'}">0</strong>
-											<label class="text-color-light font-weight-bold text-5 mb-0">ALUMNI</label>
-										</div>
-									</div>
+						<div class="row counters counters-sm">
+							<div class="col-sm-6 col-lg-3 mb-5 mb-lg-0">
+								<div class="counter">
+									<span class="text-color-light fa fa-graduation-cap fa-3x"></span>
+									<strong class="text-color-light font-weight-bold line-height-1 text-10 mb-1" data-to="50" data-append="+" data-plugin-options="{'appendWrapper': '<span class=text-color-secendary></span>'}">0</strong>
+									<label class="text-color-light font-weight-bold text-5 mb-0">SISWA</label>
 								</div>
 							</div>
-		</section>
+							<div class="col-sm-6 col-lg-3 mb-5 mb-lg-0">
+								<div class="counter">
+									<span class="text-color-light fa fa-users"></span>
+									<strong class="text-color-light font-weight-bold line-height-1 text-10 mb-1" data-to="240" data-append="+" data-plugin-options="{'appendWrapper': '<span class=text-color-secendary></span>'}">0</strong>
+									<label class="text-color-light font-weight-bold text-5 mb-0">GURU</label>
+								</div>
+							</div>
+							<div class="col-sm-6 col-lg-3 mb-5 mb-sm-0">
+								<div class="counter">
+									<span class="text-color-light fa fa-user-plus"></span>
+									<strong class="text-color-light font-weight-bold line-height-1 text-10 mb-1" data-to="2000" data-append="+" data-plugin-options="{'appendWrapper': '<span class=text-color-secendary></span>'}">0</strong>
+									<label class="text-color-light font-weight-bold text-5 mb-0">PEGAWAI</label>
+								</div>
+							</div>
+							<div class="col-sm-6 col-lg-3">
+								<div class="counter">
+									<span class="text-color-light fa fa-id-card"></span>
+									<strong class="text-color-light font-weight-bold line-height-1 text-10 mb-1" data-to="20" data-append="+" data-plugin-options="{'appendWrapper': '<span class=text-color-secendary></span>'}">0</strong>
+									<label class="text-color-light font-weight-bold text-5 mb-0">ALUMNI</label>
+								</div>
+							</div>
+						</div>
+					</div>
+</section>
 
-		<!-- BERITA -->
-		<div class="container pb-5 mb-4 pt-5">
+<!-- BERITA -->
+<div class="container pb-5 mb-4 pt-5">
+	<div class="row">
+		<div class="col">
+			<div class="col text-center">
+				<h2 class="text-transform-none text-color-dark font-weight-bold text-10 negative-ls-1 mb-2 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">BERITA</h2>
+			</div>
 			<div class="row">
-				<div class="col">
-					<div class="col text-center">
-						<h2 class="text-transform-none text-color-dark font-weight-bold text-10 negative-ls-1 mb-2 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">BERITA</h2>
+				<div class="col-sm-9 col-md-6 mb-5-5">
+					<div id="teamMember1" class="row align-items-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
+						<div class="col-lg-5 col-xl-6 pe-lg-0 mb-0">
+							<img src="{% static 'logo/pramuka.jpg' %}" class="img-fluid" alt="Image of the team member" />
+						</div>
+						<div class="col-lg-7 col-xl-6 ps-lg-4">
+							<h4 class="text-color-dark font-weight-bold line-height-1 mt-3 mb-1">DIADAKAN NYA PRAMUKA YANG DIHADIRI OLEH JOKOWI</h4>
+							<p class="text-3 mb-3-5">Presiden Republik Indonesia Menghadiri kehiatan premuka yang di adakan di alun alun kediri </p>
+							<a href="{% url 'sipandu:detail' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
+								Lihat Detail ...
+								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+								</svg>
+							</a>
+						</div>
 					</div>
-					<div class="row">
-						<div class="col-sm-9 col-md-6 mb-5-5">
-							<div id="teamMember1" class="row align-items-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
-								<div class="col-lg-5 col-xl-6 pe-lg-0 mb-0">
-									<img src="{% static 'logo/pramuka.jpg' %}" class="img-fluid" alt="Image of the team member" />
-								</div>
-								<div class="col-lg-7 col-xl-6 ps-lg-4">
-									<h4 class="text-color-dark font-weight-bold line-height-1 mt-3 mb-1">DIADAKAN NYA PRAMUKA YANG DIHADIRI OLEH JOKOWI</h4>
-									<p class="text-3 mb-3-5">Presiden Republik Indonesia Menghadiri kehiatan premuka yang di adakan di alun alun kediri </p>
-									<a href="{% url 'sipandu:detail' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
-										Lihat Detail ...
-										<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-											<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
-										</svg>
-									</a>
-								</div>
-							</div>
+				</div>
+				<div class="col-sm-9 col-md-6 mb-5-5">
+					<div id="teamMember2" class="row align-items-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">
+						<div class="col-lg-5 col-xl-6 pe-lg-0 mb-0">
+							<img src="{%static 'logo/paskibra.jpg' %}" class="img-fluid" alt="Image of the team member" />
 						</div>
-						<div class="col-sm-9 col-md-6 mb-5-5">
-							<div id="teamMember2" class="row align-items-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">
-								<div class="col-lg-5 col-xl-6 pe-lg-0 mb-0">
-									<img src="{%static 'logo/paskibra.jpg' %}" class="img-fluid" alt="Image of the team member" />
-								</div>
-								<div class="col-lg-7 col-xl-6 ps-lg-4">
-									<h4 class="text-color-dark font-weight-bold line-height-1 mt-3 mb-1">POLINELA ADAKAN PENGIBRAN BENDERA MERAH PUTIH </h4>
-									<p class="text-3 mb-3-5">Memperingati hari kemerdekaan polinela adakan upacara pengibaran bendera di lapanagn GSG</p>
-									<a href="{% url 'sipandu:detail' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
-										Lihat Detail ...
-										<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-											<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
-										</svg>
-									</a>	
-								</div>
-							</div>
+						<div class="col-lg-7 col-xl-6 ps-lg-4">
+							<h4 class="text-color-dark font-weight-bold line-height-1 mt-3 mb-1">POLINELA ADAKAN PENGIBRAN BENDERA MERAH PUTIH </h4>
+							<p class="text-3 mb-3-5">Memperingati hari kemerdekaan polinela adakan upacara pengibaran bendera di lapanagn GSG</p>
+							<a href="{% url 'sipandu:detail' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
+								Lihat Detail ...
+								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+								</svg>
+							</a>	
 						</div>
-						<div class="col-sm-9 col-md-6 mb-5-5">
-							<div id="teamMember3" class="row align-items-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">
-								<div class="col-lg-5 col-xl-6 pe-lg-0 mb-0">
-									<img src="{% static 'logo/pmr.jpg' %}" class="img-fluid" alt="Image of the team member" />
-								</div>
-								<div class="col-lg-7 col-xl-6 ps-lg-4">
-									<h4 class="text-color-dark font-weight-bold line-height-1 mt-3 mb-1">AKSI PMR MENYELAMATKAN KORBAN KECELAKAAN</h4>
-									<p class="text-3 mb-3-5">PMR adakan kegitan di SD N 103 untuk motivasi anak-anak untuk saling tolong menolong   </p>
-									<a href="{% url 'sipandu:detail' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
-										Lihat Detail ...
-										<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-											<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
-										</svg>
-									</a>
-								</div>
-							</div>
+					</div>
+				</div>
+				<div class="col-sm-9 col-md-6 mb-5-5">
+					<div id="teamMember3" class="row align-items-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">
+						<div class="col-lg-5 col-xl-6 pe-lg-0 mb-0">
+							<img src="{% static 'logo/pmr.jpg' %}" class="img-fluid" alt="Image of the team member" />
 						</div>
-						<div class="col-sm-9 col-md-6 mb-5-5">
-							<div id="teamMember4" class="row align-items-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="800">
-								<div class="col-lg-5 col-xl-6 pe-lg-0 mb-0">
-									<img src="{% static 'logo/praktek.jpeg' %}" class="img-fluid" alt="Image of the team member" />
-								</div>
-								<div class="col-lg-7 col-xl-6 ps-lg-4">
-									<h4 class="text-color-dark font-weight-bold line-height-1 mt-3 mb-1">ANAK KELAS 06 SD SUDAH MELAUKAN PRAKTEK DI LAB BARU</h4>
-									<p class="text-3 mb-3-5">Praktik Ilmu Pengetahuan Sosial sudah di lakukan di Lab baru SD N 103 OKU</p>
-									<a href="{% url 'sipandu:detail' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
-										Lihat Detail ...
-										<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-											<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
-										</svg>
-									</a>
-								</div>
-							</div>
+						<div class="col-lg-7 col-xl-6 ps-lg-4">
+							<h4 class="text-color-dark font-weight-bold line-height-1 mt-3 mb-1">AKSI PMR MENYELAMATKAN KORBAN KECELAKAAN</h4>
+							<p class="text-3 mb-3-5">PMR adakan kegitan di SD N 103 untuk motivasi anak-anak untuk saling tolong menolong   </p>
+							<a href="{% url 'sipandu:detail' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
+								Lihat Detail ...
+								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+								</svg>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-9 col-md-6 mb-5-5">
+					<div id="teamMember4" class="row align-items-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="800">
+						<div class="col-lg-5 col-xl-6 pe-lg-0 mb-0">
+							<img src="{% static 'logo/praktek.jpeg' %}" class="img-fluid" alt="Image of the team member" />
+						</div>
+						<div class="col-lg-7 col-xl-6 ps-lg-4">
+							<h4 class="text-color-dark font-weight-bold line-height-1 mt-3 mb-1">ANAK KELAS 06 SD SUDAH MELAUKAN PRAKTEK DI LAB BARU</h4>
+							<p class="text-3 mb-3-5">Praktik Ilmu Pengetahuan Sosial sudah di lakukan di Lab baru SD N 103 OKU</p>
+							<a href="{% url 'sipandu:detail' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
+								Lihat Detail ...
+								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+								</svg>
+							</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
 
-		<!-- GALERI -->
-		<section class="section overlay overlay-show overlay-op-5 border-0 m-0" style="background-image: url({% static 'logo/sd01.jpg' %}); background-size: cover; background-position: center;">
-			<div class="container py-5 mb-5 pt-5">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="col text-center mb-5">
-							<h2 class="text-transform-none text-color-light font-weight-bold text-10 negative-ls-1 mb-2 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">GALERI</h2>
-						</div>
-					</div>
-				</div>
-				<div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
-					<div class="row">
-						<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
-							<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd1.jpg' %}">
-								<img src="{% static 'logo/sd1.jpg' %}" class="img-fluid rounded-0" alt="" />
-							</a>		
-						</div>
-						<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">
-							<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd2.jpg' %}">
-								<img src="{% static 'logo/sd2.jpg' %}" class="img-fluid rounded-0" alt="" />
-							</a>		
-						</div>
-						<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">
-							<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd3.jpg' %}">
-								<img src="{% static 'logo/sd3.jpg'%}" class="img-fluid rounded-0" alt="" />
-							</a>		
-						</div>
-					</div>
-				</div>
-				<div class="lightbox pt-5" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
-					<div class="row">
-						<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
-							<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd4.jpg' %}">
-								<img src="{% static 'logo/sd4.jpg' %}" class="img-fluid rounded-0" alt="" />
-							</a>		
-						</div>
-						<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">
-							<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd5.jpg' %}">
-								<img src="{% static 'logo/sd5.jpg' %}" class="img-fluid rounded-0" alt="" />
-							</a>		
-						</div>
-						<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">
-							<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd6.jpg' %}">
-								<img src="{% static 'logo/sd6.jpg'%}" class="img-fluid rounded-0" alt="" />
-							</a>		
-						</div>
-					</div>
+<!-- GALERI -->
+<section class="section overlay overlay-show overlay-op-5 border-0 m-0" style="background-image: url({% static 'logo/sd01.jpg' %}); background-size: cover; background-position: center;">
+	<div class="container py-5 mb-5 pt-5">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="col text-center mb-5">
+					<h2 class="text-transform-none text-color-light font-weight-bold text-10 negative-ls-1 mb-2 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">GALERI</h2>
 				</div>
 			</div>
-		</section>
-
 		</div>
+		<div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+			<div class="row">
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd1.jpg' %}">
+						<img src="{% static 'logo/sd1.jpg' %}" class="img-fluid rounded-0" alt="" />
+					</a>		
+				</div>
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd2.jpg' %}">
+						<img src="{% static 'logo/sd2.jpg' %}" class="img-fluid rounded-0" alt="" />
+					</a>		
+				</div>
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd3.jpg' %}">
+						<img src="{% static 'logo/sd1.jpg'%}" class="img-fluid rounded-0" alt="" />
+					</a>		
+				</div>
+			</div>
+		</div>
+		<div class="lightbox pt-5" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+			<div class="row">
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd4.jpg' %}">
+						<img src="{% static 'logo/sd4.jpg' %}" class="img-fluid rounded-0" alt="" />
+					</a>		
+				</div>
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd5.jpg' %}">
+						<img src="{% static 'logo/sd5.jpg' %}" class="img-fluid rounded-0" alt="" />
+					</a>		
+				</div>
+				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">
+					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd6.jpg' %}">
+						<img src="{% static 'logo/sd6.jpg'%}" class="img-fluid rounded-0" alt="" />
+					</a>		
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
 
-
-
-
-						
-		{% endblock main %}
+</div>
+{% endblock main %}
