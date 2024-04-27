@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import base_views,admin_views,jenjang_view,user_view,sekolah_view,login_view,wilayah_view,tema_view
+from .views import base_views,admin_views,jenjang_view,user_view,sekolah_view,login_view,wilayah_view,tema_view,kategori_views
 from django.contrib.auth import views as auth_views
 
 
@@ -30,6 +30,9 @@ urlpatterns = [
     path('index-master-tema/', tema_view.IndexTema, name='index_tema'),
     path('edit_tema/<str:tema_id>/', tema_view.edit_tema, name='edit_tema'),
     path('tema/<str:tema_id>/delete/', tema_view.delete_tema, name='delete_tema'),
+
+    path('master-kategori/', kategori_views.MasterKategori, name='master_kategori'),
+
 
 
 
