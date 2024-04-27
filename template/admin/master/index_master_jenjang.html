@@ -32,7 +32,7 @@ Master User
         </div>
         <!-- PAGE-HEADER END -->
 
-         <!-- Modal Tambah Data -->
+        <!-- Modal Tambah Data -->
  
          <div class="modal fade" id="addDataModal" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -134,7 +134,7 @@ Master User
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
 <script>
-    function deleteJenjang(jenjang_) {
+    function deleteKategori(kategori_) {
     var deleteUrl = "{% url 'sipandu_admin:delete_jenjang' 'jenjang_id' %}".replace("jenjang_id", jenjang_);
 
     swal({

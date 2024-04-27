@@ -1,0 +1,343 @@
+{% extends 'admin/base/base_index.html' %}
+{% load static %}
+{% block title %}
+Master User
+{% endblock %}
+
+{% block content %}
+<!--app-content open-->
+<div class="app-content">
+    <div class="side-app">
+
+        <!-- PAGE-HEADER -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">DATA KATEGORI</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">kategori</li>
+                </ol>
+            </div>
+            <div class="ms-auto pageheader-btn">
+                <a href="#" class="btn btn-success btn-icon text-white">
+                    <span>
+                        <i class="fe fe-log-in"></i>
+                    </span> Export
+                </a>
+            </div>
+        </div>
+        <!-- PAGE-HEADER END -->
+    
+        <div class="app-index index">
+            <div class="container-fluid">
+                <div class="d-flex">
+                    <div class="main-index-center ms-3 d-none d-md-block">
+                        <select class="form-select" id="tema_id" name="tema_id" onchange="ubah_pilihan_tema(this)">
+                            <option value="" disabled>Pilih Tema</option>
+                            {% for tema in data_tema %}
+                            <option value="{{ tema.tema_id }}">{{ tema.tema_nama.upper }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+ <!-- KATEGORI        -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">KATEGORI</h1>
+            </div>
+            <div class="ms-auto pageheader-btn">
+                <button type="button" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#tambahModal">
+                    <span>
+                        <i class="fe fe-plus"></i>
+                    </span> Tambahkan
+                </a>
+            </div>
+    </div>
+
+    <!-- Modal Tambah Data -->
+
+    <div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addDataModalLabel">Tambah Data Kategori</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form tambah data di sini -->
+                    <form method="post" action="{% url 'sipandu_admin:master_kategori' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="form_tema" class="form-label">Nama Tema</label>
+                            <input type="hidden" class="form-control" id="form_tema_id" name="form_tema_id">
+                            <input type="text" class="form-control" id="form_tema" name="form_tema">
+                        </div>
+                        <div class="mb-3">
+                            <label for="kategori_nama" class="form-label">Nama Kategori</label>
+                            <input type="text" class="form-control" id="kategori_nama" name="kategori_nama">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Modal Tambah Data End -->
+
+    <!-- ROW-1 -->
+    <div class="row row-sm">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title text-center">DATA KATEGORI</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Nama Kategori</th>
+                                    <th class="text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for dt_kategori in data_kategori %}
+                                    <tr>
+                                        <td class="text-center align-middle">{{ dt_kategori.kategori_uraian }}</td>
+                                        <td class="text-center align-middle">
+                                            <div class="btn-group align-top">
+                                                <!-- Tombol edit -->
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_kategori.kategori_id}}">Edit</a> &nbsp;
+                                                <!-- Tombol delete -->
+                                                <button onclick="deleteKategori('{{ dt_kategori.kategori_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% include 'admin/master_kategori/edit_kategori.html'%}
+                                {% endfor %}
+
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                             
+<!-- KATEGORI END -->
+
+<!-- SUB KATEGORI -->
+
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">SUB KATEGORI</h1>
+                </div>
+                <div class="ms-auto pageheader-btn">
+                    <button type="button" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#tambahData">
+                        <span>
+                            <i class="fe fe-plus"></i>
+                        </span> Tambahkan
+                    </a>
+                </div>
+        </div>
+        <!-- ROW-1 -->
+
+        <!-- Modal Tambah Data -->
+
+    <div class="modal fade" id="tambahData" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addDataModalLabel">Tambah Data Sub Kategori</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form tambah data di sini -->
+                    <form method="post" action="{% url 'sipandu_admin:sub_kategori' %}">
+                        {% csrf_token %}
+                
+                        <div class="mb-3">
+                            <label for="kategori_uraian" class="form-label">Nama Kategori</label>
+                            <select class="form-select" id="kategori_uraian" name="kategori_uraian">
+                                <option value="" selected disabled>Pilih kategori</option>
+                                {% for kategori in data_kategori %}
+                                <option value="{{kategori.kategori_id}}">{{kategori.kategori_uraian.upper}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>      
+                        <div class="mb-3">
+                            <label for="sub_kategori_uraian" class="form-label">Sub Kategori</label>
+                            <input type="text" class="form-control" id="sub_kategori_uraian" name="sub_kategori_uraian">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Modal Tambah Data End -->
+
+        <div class="row row-sm">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title text-center">DATA SUB KATEGORI</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Nama Kategori</th>
+                                        <th class="text-center">Sub Kategori</th>
+                                        <th class="text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for dt_sub_kategori in data_sub_kategori %}
+                                    
+                                    <tr>
+                                        <td>{{ dt_sub_kategori.kategori_id.kategori_uraian}}</td>
+                                        <td>{{ dt_sub_kategori.sub_kategori_uraian }}</td>
+                                        <td class="text-center align-middle">
+                                            <div class="btn-group align-top">
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_sub_kategori.sub_kategori_id}}">Edit</a> &nbsp;
+                                                <button onclick="deleteSubKategori('{{ dt_sub_kategori.sub_kategori_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+
+
+                                            </div>
+                                    </tr>
+                                    {% include 'admin/master_kategori/edit_sub_kategori.html' %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- SUB KATEGORI END -->
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
+<script>
+    function ubah_pilihan_tema(e){
+        $('#form_tema_id').val($(e).val());
+        $('#form_tema').val($(e).find(":selected").text())
+        // console.log($(e).val(), $(e).find(":selected").text())
+    }
+
+    function deleteKategori(kategori_) {
+    var deleteUrl = "{% url 'sipandu_admin:delete_kategori' 'kategori_id' %}".replace("kategori_id", kategori_);  
+    swal({
+        title: "Apakah Anda yakin?",
+                    text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Ya, hapus!",
+                    cancelButtonText: "Batal",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                            url: deleteUrl,
+                            type: "DELETE",
+                            success: function (response) {
+                                console.log('berhasil');
+                                swal({
+                                    title: "Data berhasil dihapus!",
+                                    icon: "success",
+                                    buttons: false, // Tidak menampilkan tombol OK
+                                    timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                                });
+                                window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                            },
+                            error: function (xhr, status, error) {
+                                // Terjadi kesalahan saat menghapus data
+                                swal("Terjadi kesalahan saat menghapus data!", {
+                                    icon: "error",
+                                });
+                            }
+                        });
+                    } else {
+                        // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+                        swal("Tindakan dibatalkan", "", "info");
+                    }
+                });
+            }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
+<script>
+    function ubah_pilihan_tema(e){
+        $('#form_tema_id').val($(e).val());
+        $('#form_tema').val($(e).find(":selected").text())
+        // console.log($(e).val(), $(e).find(":selected").text())
+    }
+
+    function deleteSubKategori(subkategori_) {
+    var deleteUrl = "{% url 'sipandu_admin:delete_sub_kategori' 'sub_kategori_id' %}".replace("sub_kategori_id", subkategori_);  
+    swal({
+        title: "Apakah Anda yakin?",
+                    text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Ya, hapus!",
+                    cancelButtonText: "Batal",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                            url: deleteUrl,
+                            type: "DELETE",
+                            success: function (response) {
+                                console.log('berhasil');
+                                swal({
+                                    title: "Data berhasil dihapus!",
+                                    icon: "success",
+                                    buttons: false, // Tidak menampilkan tombol OK
+                                    timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                                });
+                                window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                            },
+                            error: function (xhr, status, error) {
+                                // Terjadi kesalahan saat menghapus data
+                                swal("Terjadi kesalahan saat menghapus data!", {
+                                    icon: "error",
+                                });
+                            }
+                        });
+                    } else {
+                        // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+                        swal("Tindakan dibatalkan", "", "info");
+                    }
+                });
+            }
+</script>
+{% endblock %}
+
+
+       

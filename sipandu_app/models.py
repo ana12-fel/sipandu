@@ -185,8 +185,8 @@ class Master_tema(models.Model):
     
 class Master_kategori(models.Model):
     kategori_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    tema_id = models.ForeignKey(Master_tema, on_delete=models.PROTECT,default=None, null=True)
-    sekolah_id = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
+    kategori_tema = models.ForeignKey(Master_tema, on_delete=models.PROTECT,default=None, null=True)
+    kategori_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
     kategori_uraian = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
