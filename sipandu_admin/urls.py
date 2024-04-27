@@ -9,7 +9,7 @@ app_name = 'sipandu_admin'
 urlpatterns = [
     path('', base_views.admin_index, name='admin_index'),
     path('login/', login_view.login_index, name='login_index'),
-    path('logout/', login_view.logout, name='logout'),
+    path('logout/', login_view.logout_views, name='logout'),
 
     path('index-master-user/', user_view.IndexUser, name='index_user'),
     path('edit_user/<str:user_id>/', user_view.edit_user, name='edit_user'),
