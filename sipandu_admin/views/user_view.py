@@ -12,6 +12,7 @@ def IndexUser(request):
         user_password = request.POST.get('password')
         user_level = request.POST.get('level')
         user_email = request.POST.get('email')
+        user_status = request.POST.get('user_status')
 
     
         dt_user = Master_user.objects.create(
@@ -21,12 +22,13 @@ def IndexUser(request):
             user_email=user_email,
             user_role=user_role,
             password=user_password,
+            user_status=user_status,
         )
 
         dt_user.set_password(user_password)
         dt_user.save()
         
-        print(user_first_name, user_last_name, user_password, user_level, user_email, user_role)
+        print(user_first_name, user_last_name, user_password, user_level, user_email, user_role,user_status)
 
         return redirect('sipandu_admin:index_user')
 
@@ -46,14 +48,19 @@ def edit_user(request, user_id):
         user_level = request.POST.get('level')
         user_email = request.POST.get('email')
         user_role = request.POST.get('role')
+        status = request.POST.get('user_status')
 
-        dt_user.user_first_name=user_first_name,
-        dt_user.user_last_name=user_last_name,
-        dt_user.password=password,
-        dt_user.user_level=user_level,
-        dt_user.user_email=user_email,
+        print(status)
+
+
+
+        dt_user.user_first_name=user_first_name
+        dt_user.user_last_name=user_last_name
+        dt_user.password=password
+        dt_user.user_level=user_level
+        dt_user.user_email=user_email
         dt_user.user_role=user_role
-
+        dt_user.user_status=status
         dt_user.save()
         
         return redirect('sipandu_admin:index_user')

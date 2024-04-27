@@ -131,6 +131,7 @@ class Master_user(AbstractBaseUser):
     user_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     user_email = models.EmailField(unique=True)
     user_level = models.CharField(default=3, choices=LEVEL_WILAYAH, max_length=1)
+    user_status = models.BooleanField(default=True)
     password = models.TextField(default=None, null=False)
     user_first_name = models.CharField(max_length=50)
     user_last_name = models.CharField(max_length=100)

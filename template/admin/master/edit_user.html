@@ -39,6 +39,14 @@
                         </select>
                     </div>
                     <div class="mb-3">
+                        <label>Status:</label>
+                        <select class="form-select" name="user_status" aria-label="Default select example">
+                            <option selected>Pillih Status</option>
+                            <option {% if dt_user.user_status == 1 %} selected {% endif %} value="1">Aktif</option>
+                            <option {% if dt_user.user_status == 0 %} selected {% endif %} value="0">Tidak Aktif</option>
+                          </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" value="{{ dt_user.user_email }}" class="form-control" name="email" placeholder="Masukkan email">
                     </div>
