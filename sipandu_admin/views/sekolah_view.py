@@ -7,6 +7,8 @@ def IndexSekolah(request):
         sekolah_nama = request.POST.get('sekolah_nama') 
         sekolah_npsn = request.POST.get('sekolah_npsn')
         sekolah_jenis = request.POST.get('sekolah_jenis')
+        wilayah = request.POST.get ('wilayah')
+     
         sekolah_jenjang = request.POST.get('sekolah_jenjang')
         
         print (sekolah_jenjang)
@@ -14,10 +16,11 @@ def IndexSekolah(request):
             sekolah_nama=sekolah_nama,
             sekolah_npsn=sekolah_npsn,
             sekolah_jenis=sekolah_jenis,
-            sekolah_jenjang=Master_jenjang.objects.get(jenjang_id = sekolah_jenjang)
+            sekolah_wilayah_id=wilayah,
+            sekolah_jenjang=Master_jenjang.objects.get(jenjang_id = sekolah_jenjang),
         )
 
-        print(sekolah_nama, sekolah_npsn, sekolah_jenis, sekolah_jenjang)
+        print(sekolah_nama, sekolah_npsn, sekolah_jenis, sekolah_jenjang,wilayah)
 
         return redirect('sipandu_admin:index_sekolah')
     

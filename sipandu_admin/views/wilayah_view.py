@@ -7,17 +7,21 @@ def IndexWilayah(request):
     if request.method == 'POST':
         wilayah_id = request.POST.get('wilayah_id')
         wilayah_kode = request.POST.get('wilayah_kode') 
-        wilayah_nama = request.POST.get('wilayah_nama')
         wilayah_status = request.POST.get('wilayah_status')
+        wilayah_provinsi = request.POST.get ('wilayah_provinsi')
+        wilayah_kabupaten = request.POST.get('wilayah_kabupaten')
+        wilayah_distrik = request.POST.get('wilayah_distrik')
 
         dt_wilayah = Master_wilayah.objects.create(
             wilayah_id=wilayah_id,
             wilayah_kode=wilayah_kode,
-            wilayah_nama=wilayah_nama,
             wilayah_status=wilayah_status,
+            wilayah_provinsi=wilayah_provinsi,
+            wilayah_kabupaten = wilayah_kabupaten,
+            wilayah_distrik = wilayah_distrik,
         )
 
-        print(wilayah_id,wilayah_kode,wilayah_nama,wilayah_status)
+        print(wilayah_id,wilayah_kode,wilayah_status,wilayah_provinsi,wilayah_kabupaten, wilayah_distrik)
 
         return redirect('sipandu_admin:index_wilayah')
     
@@ -31,12 +35,16 @@ def edit_wilayah(request, wilayah_id):
         dt_wilayah = Master_wilayah.objects.get(wilayah_id=wilayah_id)
         wilayah_status=request.POST.get('wilayah_status')
         wilayah_kode=request.POST.get('wilayah_kode')
-        wilayah_nama = request.POST.get('wilayah_nama')
+        wilayah_provinsi = request.POST.get('wilayah_provinsi')
+        wilayah_kabupaten = request.POST.get('wilayah_kabupaten')
+        wilayah_distrik = request.POST.get('wilayah_distrik')
         
         
-        dt_wilayah.wilayah_nama=wilayah_nama
+        dt_wilayah.wilayah_provinsi=wilayah_provinsi
         dt_wilayah.wilayah_kode=wilayah_kode
         dt_wilayah.wilayah_status=wilayah_status
+        dt_wilayah.wilayah_kabupaten = wilayah_kabupaten
+        dt_wilayah.wilayah_distrik = wilayah_distrik
         # Lakukan perubahan yang diperlukan pada objek dt_wilayah
         dt_wilayah.save()
         return redirect('sipandu_admin:index_wilayah')  # Redirect ke halaman edit_wilayah dengan menyertakan wilayah_id
