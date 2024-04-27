@@ -19,7 +19,7 @@ Master User
                 </ol>
             </div>
             <div class="ms-auto pageheader-btn">
-                <a href="#" class="btn btn-primary btn-icon text-white me-2">
+                <a href="{% url 'sipandu_admin:tambah_konten'%}" class="btn btn-primary btn-icon text-white me-2">
                     <span>
                         <i class="fe fe-plus"></i>
                     </span> Tambahkan konten
@@ -33,28 +33,36 @@ Master User
             <div class="col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">-------</h3>
+                        <h3 class="card-title">Data Posting Konten</h3>
                     </div>
                     <div class="card-body">
                         <div class="example">
-                            <div class="row mt-4">
-                                <div class="col-md-6 col-xl-3">
-                                    <a href="#" class="thumbnail ">
-                                        <img src="../../assets/images/media/1.jpg" alt="SD" class="thumbimg">
-                                    </a>
-                                </div>
-                                <div class="col-md-6 col-xl-3">
-                                    <a href="#" class="thumbnail">
-                                        <img src="../../assets/images/media/2.jpg" alt="SMP" class="thumbimg">
-                                    </a>
-                                </div>
-                                <div class="col-md-6 col-xl-3">
-                                    <a href="#" class="thumbnail">
-                                        <img src="../../assets/images/media/3.jpg" alt="SMA" class="thumbimg">
-                                    </a>
-                                </div>
+                            <table class="table border-top table-bordered mb-0">
+                                <thead>
+                                    <th>No</th>
+                                    <th>Tanggal</th>
+                                    <th>Kategori</th>
+                                    <th>Sub Kategori</th>
+                                    <th>Judul</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>12 februari 2024</td>
+                                        <td>Profil</td>
+                                        <td>Identitas Sekolah</td>
+                                        <td>Sejarah Singkat</td>
+                                        <td><button type="button" class="btn btn-success"><i class="fa fa-check"></i> Aktif</button></td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_001c1dbc-156d-43ac-abfc-be2d49f3ecce"><i class="fa fa-pencil"></i> Edit</a>
+                                            <a href="#" class="btn btn-sm btn-danger badge" data-bs-toggle="modal" data-bs-target="#editdata_001c1dbc-156d-43ac-abfc-be2d49f3ecce"><i class="fa fa-times"></i> Hapus</a>
+                                        </td>
+                                    </tr>
 
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

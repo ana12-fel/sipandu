@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import base_views,admin_views,jenjang_view,user_view,sekolah_view,login_view,wilayah_view,tema_view,kategori_views
+from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,kategori_views
 from django.contrib.auth import views as auth_views
 
 
@@ -9,7 +9,7 @@ app_name = 'sipandu_admin'
 urlpatterns = [
     path('', base_views.admin_index, name='admin_index'),
     path('login/', login_view.login_index, name='login_index'),
-    path('logout/', login_view.logout, name='logout'),
+    path('logout/', login_view.logout_views, name='logout'),
 
     path('index-master-user/', user_view.IndexUser, name='index_user'),
     path('edit_user/<str:user_id>/', user_view.edit_user, name='edit_user'),
@@ -43,7 +43,8 @@ urlpatterns = [
 
     path('transanksi-situs/', admin_views.TransanksiSitus, name='transanksi_situs'),
     path('data-sekolah/', admin_views.DataSekolah, name='data_sekolah'),
-    path('konten/', admin_views.Konten, name='konten'),
+    path('konten/', konten_views.IndexKonten, name='index_konten'),
+    path('tambah_konten/', konten_views.TambahKonten, name='tambah_konten'),
     path('laporan-data-sekolah/', admin_views.LaporanDataSekolah, name='laporan_data_sekolah'),
   
 ]
