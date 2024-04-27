@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from sipandu_app.models import Master_user, LEVEL_WILAYAH, ROLE_CHOICE
 from django.contrib.auth.decorators import login_required
 
-@login_required(login_url='sipandu_admin:login_index')
+# @login_required(login_url='sipandu_admin:login_index')
 def IndexUser(request):
     if request.method == 'POST':
         user_first_name = request.POST.get('first_name')
@@ -34,7 +34,7 @@ def IndexUser(request):
 
         return render(request, 'admin/master/index_master_user.html', {"data_user" : data_user, 'level': LEVEL_WILAYAH, 'role_choices': ROLE_CHOICE})
 
-@login_required(login_url='sipandu_admin:login_index')
+# @login_required(login_url='sipandu_admin:login_index')
 def edit_user(request, user_id):
     if request.method == 'POST':
         dt_user = Master_user.objects.get(user_id=user_id)
@@ -61,7 +61,7 @@ def edit_user(request, user_id):
         user = Master_user.objects.get(user_id=user_id)
         return render(request, 'admin/master/edit_user.html', {"dt_user": user})
 
-@login_required(login_url='sipandu_admin:login_index')
+# @login_required(login_url='sipandu_admin:login_index')
 def delete_user(request, user_id):
     try:
         dt_user = Master_user.objects.get(user_id=user_id)

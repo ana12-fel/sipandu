@@ -51,32 +51,15 @@ Master Sekolah
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="sekolah_jenjang" class="form-label">Provinsi</label>
-                                <select class="form-select" id="sekolah_provinsi" name="sekolah_provinsi">
-                                    <option value="" selected disabled>Pilih Provinsi</option>
+                                <select class="form-select" id="sekolah_provinsi" name="wilayah">
+                                    <option value="test" selected disabled>Pilih Wilayah</option>
                                     {% for provinsi in data_wilayah %}
                                     <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_provinsi.upper}}</option>
                                     {% endfor %}
                                 </select>
                             </div>  
                             
-                            <div class="mb-3">
-                                <label for="kabupaten" class="form-label">Kabupaten</label>
-                                <select class="form-select" id="sekolah_provinsi" name="sekolah_provinsi">
-                                    <option value="" selected disabled>Pilih Kabupaten</option>
-                                    {% for kabupaten in data_wilayah %}
-                                    <option value="{{kabupaten.wilayah_id}}">{{kabupaten.wilayah_kabupaten.upper}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="distrik" class="form-label">Distrik</label>
-                                <select class="form-select" id="sekolah_provinsi" name="sekolah_provinsi">
-                                    <option value="" selected disabled>Pilih Kabupaten</option>
-                                    {% for distrik in data_wilayah %}
-                                    <option value="{{kabupaten.wilayah_id}}">{{distrik.wilayah_distrik.upper}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                
                             <div class="mb-3">
                                 <label for="sekolah_nama" class="form-label">Nama Sekolah</label>
                                 <input type="text" class="form-control" id="sekolah_nama" name="sekolah_nama" placeholder="Masukkan Nama Sekolah">
@@ -177,47 +160,49 @@ Master Sekolah
 {% block js %}
 <script>
     function deleteSekolah(sekolah_) {
-        var deleteUrl = "{% url 'sipandu_admin:delete_sekolah' 'sekolah_id' %}".replace("sekolah_id",sekolah_);
+    var deleteUrl = "{% url 'sipandu_admin:delete_sekolah' 'sekolah_id' %}".replace("sekolah_id", sekolah_);
 
-        swal({
-            title: "Apakah Anda yakin?",
-            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Ya, hapus!",
-            cancelButtonText: "Batal",
-            closeOnConfirm: false,
-            closeOnCancel: false
-        },
-        function(isConfirm){
-            if (isConfirm) {
-                $.ajax({
-                    headers : { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
-                    url: deleteUrl,
-                    type: "DELETE",
-                    success: function (response) {
-                        // Data berhasil dihapus
-                        swal("Data berhasil dihapus!", {
-                            icon: "success",
-                        }).then(() => {
-                            // Refresh halaman atau lakukan aksi lain
-                            window.location.reload(); // Contoh: Refresh halaman
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        // Terjadi kesalahan saat menghapus data
-                        swal("Terjadi kesalahan saat menghapus data!", {
-                            icon: "error",
-                        });
-                    }
-                });
-            } else {
-                // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
-                swal("Tindakan dibatalkan", "", "info");
-            }
-        });
-    }
+    swal({
+        title: "Apakah Anda yakin?",
+        text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, hapus!",
+        cancelButtonText: "Batal",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+    function (isConfirm) {
+        if (isConfirm) {
+            $.ajax({
+                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                url: deleteUrl,
+                type: "DELETE",
+                success: function (response) {
+                    console.log('berhasil');
+                    swal({
+                        title: "Data berhasil dihapus!",
+                        icon: "success",
+                        buttons: false, // Tidak menampilkan tombol OK
+                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                    });
+                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                },
+                error: function (xhr, status, error) {
+                    // Terjadi kesalahan saat menghapus data
+                    swal("Terjadi kesalahan saat menghapus data!", {
+                        icon: "error",
+                    });
+                }
+            });
+        } else {
+            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+            swal("Tindakan dibatalkan", "", "info");
+        }
+    });
+}
+
 </script>
 
 {% endblock %}

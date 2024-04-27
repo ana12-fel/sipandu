@@ -13,7 +13,7 @@
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="sekolah_provinsi" class="form-label">Provinsi</label>
-                        <select class="form-select" id="sekolah_provinsi" name="sekolah_provinsi">
+                        <select class="form-select" id="sekolah_wilayah" name="wilayah_provinsi">
                             <option value="" selected disabled>Pilih Provinsi</option>
                             {% for provinsi in data_wilayah %}
                             <option value="{{ provinsi.wilayah_id }}" {% if dt_sekolah.sekolah_wilayah_id == provinsi.wilayah_provinsi %} selected {% endif %}>{{ provinsi.wilayah_provinsi.upper }}</option>
