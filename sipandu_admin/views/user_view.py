@@ -19,7 +19,8 @@ def IndexUser(request):
             user_last_name=user_last_name,
             user_level=user_level,
             user_email=user_email,
-            user_role=user_role
+            user_role=user_role,
+            password=user_password,
         )
 
         dt_user.set_password(user_password)
