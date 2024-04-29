@@ -48,21 +48,16 @@ Master User
                                 <input type="text" class="form-control" id="user_first_name" name="first_name">
                             </div>
                             <div class="mb-3">
+                                <label for="user_status" class="form-label">Nama Belakang</label>
+                                <input type="text" class="form-control" id="user_last_name" name="last_name">
+                            </div>
+                            <div class="mb-3">
                                 <label for="role">Role</label>
                                 <select name="role" id="role" class="form-control">
                                     {% for role_key, role_display in role_choices %}
                                         <option value="{{ role_key }}">{{ role_display }}</option>
                                     {% endfor %}
                                 </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="last_name" class="form-label">Status</label>
-                                <input type="hidden" name="user_status" value="True">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="user_status" class="form-label">Nama Belakang</label>
-                                <input type="text" class="form-control" id="user_last_name" name="last_name">
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
@@ -76,6 +71,14 @@ Master User
                                     {% endfor %}
                                 </select>
                             </div>
+                            <div class="mb-3">
+                        <label>Status:</label>
+                        <select class="form-select" name="user_status" aria-label="Default select example">
+                            <option selected>Pillih Status</option>
+                            <option {% if dt_user.user_status == 1 %} selected {% endif %} value="1">Aktif</option>
+                            <option {% if dt_user.user_status == 0 %} selected {% endif %} value="0">Tidak Aktif</option>
+                          </select>
+                    </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" class="form-control" id="user_email" name="email">
