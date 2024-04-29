@@ -38,13 +38,16 @@ urlpatterns = [
     path('edit_sub_kategori/<str:sub_kategori_id_>/', kategori_views.edit_sub_kategori, name='edit_sub_kategori'),
     path('subkategori/<str:sub_kategori_id>/delete/', kategori_views.SubKategoriDelete, name='delete_sub_kategori'),
 
+    path('konten/', konten_views.IndexKonten, name='index_konten'),
+    path('tambah_konten/', konten_views.TambahKonten, name='tambah_konten'),
+    path('edit_konten/<str:id_data_konten>/', konten_views.EditKonten, name='edit_konten'),
+    path('delete_konten/<str:id_data_konten>/delete', konten_views.DeleteKonten, name='delete_konten'),
+    
 
 
 
     path('transanksi-situs/', admin_views.TransanksiSitus, name='transanksi_situs'),
     path('data-sekolah/', admin_views.DataSekolah, name='data_sekolah'),
-    path('konten/', konten_views.IndexKonten, name='index_konten'),
-    path('tambah_konten/', konten_views.TambahKonten, name='tambah_konten'),
     path('laporan-data-sekolah/', admin_views.LaporanDataSekolah, name='laporan_data_sekolah'),
   
 ]

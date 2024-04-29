@@ -5,7 +5,7 @@ Master User
 {% endblock %}
 
 {% block content %}
-<!--app-content open-->
+<!-- tambah_konten_form.html -->
 <div class="app-content">
     <div class="side-app">
 
@@ -22,40 +22,87 @@ Master User
                         <h3 class="card-title">Tambah Konten</h3>
                     </div>
                     <div class="card-body">
-                        <form>
-                            <div class="form-row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="validationDefault01">Judul</label>
-                                    <input type="text" class="form-control" id="validationDefault01" value="Mark" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="validationDefault03">Deskripsi</label>
-                                    <input type="text" class="form-control" id="validationDefault03" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="validationDefault01">Tag</label>
-                                    <input type="text" class="form-control" id="validationDefault01" value="Mark" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="validationDefault01">Judul</label>
-                                    <input type="text" class="form-control" id="validationDefault01" value="Mark" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-                                    <label class="form-check-label" for="invalidCheck2">Agree to terms and conditions</label>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary" type="submit">Submit form</button>
-                        </form>
-                    </div>
-                </div>
-        </div>
+<form method="post" action="{% url 'sipandu_admin:index_konten' %}">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="kategori_id" class="form-label">Kategori</label>
+        <select class="form-select" id="kategori_id" name="kategori_id " required>
+            <!-- List of categories -->
+            {% for kategori in data_kategori %}
+                <option value="{{ kategori.kategori_id }}">{{ kategori.kategori_uraian.upper }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="sub_kategori_uraian" class="form-label">Sub Kategori</label>
+        <select class="form-select" id="sub_kategori_uraian" name="sub_kategori_uraian" required>
+            <!-- List of sub categories -->
+            {% for sub_kategori in data_sub_kategori %}
+                <option value="{{ sub_kategori.sub_kategori_id }}">{{ sub_kategori.sub_kategori_uraian.upper }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="judul" class="form-label">Judul</label>
+        <input type="text" class="form-control" id="judul" name="judul" required>
+    </div>
+    <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-select" id="status" name="status" required>
+            <option value="1">Aktif</option>
+            <option value="0">Tidak Aktif</option>
+        </select>
+    </div>    
+    <button type="submit" class="btn btn-primary">Simpan</button>
+</form>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    function deleteKonten(konten_) {
+    var deleteUrl = "{% url 'sipandu_admin:delete_konten' 'id_data_konten' %}".replace("id_data_konten", konten_);
+
+    swal({
+        title: "Apakah Anda yakin?",
+        text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, hapus!",
+        cancelButtonText: "Batal",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+    function (isConfirm) {
+        if (isConfirm) {
+            $.ajax({
+                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                url: deleteUrl,
+                type: "DELETE",
+                success: function (response) {
+                    console.log('berhasil');
+                    swal({
+                        title: "Data berhasil dihapus!",
+                        icon: "success",
+                        buttons: false, // Tidak menampilkan tombol OK
+                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                    });
+                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                },
+                error: function (xhr, status, error) {
+                    // Terjadi kesalahan saat menghapus data
+                    swal("Terjadi kesalahan saat menghapus data!", {
+                        icon: "error",
+                    });
+                }
+            });
+        } else {
+            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+            swal("Tindakan dibatalkan", "", "info");
+        }
+    });
+}
+</script>
+
 {% endblock %}
