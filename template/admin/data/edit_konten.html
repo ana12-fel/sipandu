@@ -1,0 +1,59 @@
+<!-- Modal Edit Data Tema -->
+<div class="modal fade" id="editdata_{{ dt_konten.id_data_konten }}" tabindex="-1" aria-labelledby="editDataModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editDataModalLabel">Edit Data Konten</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form edit data di sini -->
+                <form method="post" enctype="multipart/form-data" action="{% url 'sipandu_admin:edit_konten' dt_konten.id_data_konten %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="created_at" class="form-label">Tanggal</label>
+                        <input type="text" value="{{ dt_konten.Judul }}" class="form-control" name="created_at" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="kategori_uraian" class="form-label">Kategori</label>
+                        <select class="form-select" id="kategori_uraian" name="kategori_uraian">
+                            <option value="" selected disabled>Pilih Kategori</option>
+                            {% for kategori in data_kategori %}
+                            <option value="{{ kategori.kategori_id }}" {% if dt_konten.kategori_id_id == kategori.kategori_id %} selected {% endif %}>{{ kategori.kategori_uraian.upper }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sub_kategori_uraian" class="form-label">Sub Kategori</label>
+                        <select class="form-select" id="sub_kategori_uraian" name="sub_kategori_uraian">
+                            <option value="" selected disabled>Pilih Sub Kategori</option>
+                            {% for sub_kategori in data_sub_kategori %}
+                            <option value="{{ sub_kategori.sub_kategori_id }}" {% if dt_konten.sub_kategori_id_id == sub_kategori.sub_kategori_id %} selected {% endif %}>{{ sub_kategori.sub_kategori_uraian.upper }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="judul" class="form-label">Judul</label>
+                        <input type="text" value="{{ dt_konten.judul }}" class="form-control" name="judul" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Status</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" id="statusAktif" value="True" {% if dt_konten.status == "True" %} checked {% endif %}>
+                            <label class="form-check-label" for="statusAktif">Aktif</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" id="statusTidakAktif" value="False" {% if dt_konten.status == "False" %} checked {% endif %}>
+                            <label class="form-check-label" for="statusTidakAktif">Tidak Aktif</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Edit Data Tema End -->

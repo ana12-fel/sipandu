@@ -43,7 +43,7 @@ Master User
             </div>
         </div>
 
- <!-- KATEGORI        -->
+        <!-- KATEGORI -->
         <div class="page-header">
             <div>
                 <h1 class="page-title">KATEGORI</h1>
@@ -53,63 +53,65 @@ Master User
                     <span>
                         <i class="fe fe-plus"></i>
                     </span> Tambahkan
-                </a>
+                </button>
             </div>
-    </div>
+        </div>
 
-    <!-- Modal Tambah Data -->
-
-    <div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addDataModalLabel">Tambah Data Kategori</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Form tambah data di sini -->
-                    <form method="post" action="{% url 'sipandu_admin:master_kategori' %}">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="form_tema" class="form-label">Nama Tema</label>
-                            <input type="hidden" class="form-control" id="form_tema_id" name="form_tema_id">
-                            <input type="text" class="form-control" id="form_tema" name="form_tema">
-                        </div>
-                        <div class="mb-3">
-                            <label for="kategori_nama" class="form-label">Nama Kategori</label>
-                            <input type="text" class="form-control" id="kategori_nama" name="kategori_nama">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
+        <!-- Modal Tambah Data -->
+        <div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addDataModalLabel">Tambah Data Kategori</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form tambah data di sini -->
+                        <form method="post" action="{% url 'sipandu_admin:master_kategori' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="form_tema" class="form-label">Nama Tema</label>
+                                <input type="hidden" class="form-control" id="form_tema_id" name="form_tema_id">
+                                <input type="text" class="form-control" id="form_tema" name="form_tema">
+                            </div>
+                            <div class="mb-3">
+                                <label for="kategori_nama" class="form-label">Nama Kategori</label>
+                                <input type="text" class="form-control" id="kategori_nama" name="kategori_nama">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-<!-- Modal Tambah Data End -->
+        <!-- Modal Tambah Data End -->
 
-    <!-- ROW-1 -->
-    <div class="row row-sm">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title text-center">DATA KATEGORI</h3>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">Nama Kategori</th>
-                                    <th class="text-center">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for dt_kategori in data_kategori %}
+        <!-- ROW-1 -->
+        <div class="row row-sm">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title text-center">DATA KATEGORI</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="kategoriResponsiveDatatable">
+                                <thead>
                                     <tr>
-                                        <td class="text-center align-middle">{{ dt_kategori.kategori_uraian }}</td>
+                                        <th class="text-center">Nomor Halaman</th>
+                                        <th class="text-center">Nama Kategori</th>
+                                        <th class="text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Isi tabel Kategori -->
+                                    {% for dt_kategori in data_kategori %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ dt_kategori.kategori_uraian }}</td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <!-- Tombol edit -->
@@ -120,74 +122,81 @@ Master User
                                         </td>
                                     </tr>
                                     {% include 'admin/master_kategori/edit_kategori.html'%}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Paginasi untuk Kategori -->
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item" id="kategoriPrevBtn">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                </li>
+                                {% for i in 1..kategoriNumPages %}
+                                <li class="page-item"><a class="page-link" href="#" onclick="showKategoriPage({{ i }})">{{ i }}</a></li>
                                 {% endfor %}
-
-                            </tbody>
-                            
-                        </table>
+                                <li class="page-item" id="kategoriNextBtn">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-                             
-<!-- KATEGORI END -->
+        <!-- ROW-1 END -->
 
-<!-- SUB KATEGORI -->
-
-            <div class="page-header">
-                <div>
-                    <h1 class="page-title">SUB KATEGORI</h1>
-                </div>
-                <div class="ms-auto pageheader-btn">
-                    <button type="button" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#tambahData">
-                        <span>
+        <!-- SUB KATEGORI -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">SUB KATEGORI</h1>
+            </div>
+            <div class="ms-auto pageheader-btn">
+                <button type="button" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#tambahData">
+                    <span>
                             <i class="fe fe-plus"></i>
-                        </span> Tambahkan
-                    </a>
-                </div>
+                    </span> Tambahkan
+                </button>
+            </div>
         </div>
-        <!-- ROW-1 -->
 
         <!-- Modal Tambah Data -->
-
-    <div class="modal fade" id="tambahData" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addDataModalLabel">Tambah Data Sub Kategori</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Form tambah data di sini -->
-                    <form method="post" action="{% url 'sipandu_admin:sub_kategori' %}">
-                        {% csrf_token %}
-                
-                        <div class="mb-3">
-                            <label for="kategori_uraian" class="form-label">Nama Kategori</label>
-                            <select class="form-select" id="kategori_uraian" name="kategori_uraian">
-                                <option value="" selected disabled>Pilih kategori</option>
-                                {% for kategori in data_kategori %}
-                                <option value="{{kategori.kategori_id}}">{{kategori.kategori_uraian.upper}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>      
-                        <div class="mb-3">
-                            <label for="sub_kategori_uraian" class="form-label">Sub Kategori</label>
-                            <input type="text" class="form-control" id="sub_kategori_uraian" name="sub_kategori_uraian">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
+        <div class="modal fade" id="tambahData" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addDataModalLabel">Tambah Data Sub Kategori</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form tambah data di sini -->
+                        <form method="post" action="{% url 'sipandu_admin:sub_kategori' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="kategori_uraian" class="form-label">Nama Kategori</label>
+                                <select class="form-select" id="kategori_uraian" name="kategori_uraian">
+                                    <option value="" selected disabled>Pilih kategori</option>
+                                    {% for kategori in data_kategori %}
+                                    <option value="{{kategori.kategori_id}}">{{kategori.kategori_uraian.upper}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>      
+                            <div class="mb-3">
+                                <label for="sub_kategori_uraian" class="form-label">Sub Kategori</label>
+                                <input type="text" class="form-control" id="sub_kategori_uraian" name="sub_kategori_uraian">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-<!-- Modal Tambah Data End -->
+        <!-- Modal Tambah Data End -->
 
+        <!-- ROW-2 -->
         <div class="row row-sm">
             <div class="col-lg-12">
                 <div class="card">
@@ -196,38 +205,53 @@ Master User
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="subkategoriResponsiveDatatable">
                                 <thead>
                                     <tr>
+                                        <th class="text-center">Nomor Halaman</th>
                                         <th class="text-center">Nama Kategori</th>
                                         <th class="text-center">Sub Kategori</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <!-- Isi tabel Sub Kategori -->
                                     {% for dt_sub_kategori in data_sub_kategori %}
-                                    
                                     <tr>
+                                        <td>{{ forloop.counter }}</td>
                                         <td>{{ dt_sub_kategori.kategori_id.kategori_uraian}}</td>
                                         <td>{{ dt_sub_kategori.sub_kategori_uraian }}</td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_sub_kategori.sub_kategori_id}}">Edit</a> &nbsp;
                                                 <button onclick="deleteSubKategori('{{ dt_sub_kategori.sub_kategori_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
-
-
                                             </div>
+                                        </td>
                                     </tr>
                                     {% include 'admin/master_kategori/edit_sub_kategori.html' %}
                                     {% endfor %}
                                 </tbody>
                             </table>
                         </div>
+                        <!-- Paginasi untuk Sub Kategori -->
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item" id="subkategoriPrevBtn">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                </li>
+                                {% for i in 1..subkategoriNumPages %}
+                                <li class="page-item"><a class="page-link" href="#" onclick="showSubKategoriPage({{ i }})">{{ i }}</a></li>
+                                {% endfor %}
+                                <li class="page-item" id="subkategoriNextBtn">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
         </div>
-<!-- SUB KATEGORI END -->
+        <!-- ROW-2 END -->
     </div>
 </div>
 </div>
@@ -286,14 +310,7 @@ Master User
             }
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
 <script>
-    function ubah_pilihan_tema(e){
-        $('#form_tema_id').val($(e).val());
-        $('#form_tema').val($(e).find(":selected").text())
-        // console.log($(e).val(), $(e).find(":selected").text())
-    }
-
     function deleteSubKategori(subkategori_) {
     var deleteUrl = "{% url 'sipandu_admin:delete_sub_kategori' 'sub_kategori_id' %}".replace("sub_kategori_id", subkategori_);  
     swal({
@@ -337,7 +354,78 @@ Master User
                 });
             }
 </script>
+
+<script>
+    $(document).ready(function() {
+        var rowsShown = 10;
+
+        // Kategori
+        var kategoriRows = $('#kategoriResponsiveDatatable tbody tr');
+        var kategoriRowsTotal = kategoriRows.length;
+        var kategoriNumPages = Math.ceil(kategoriRowsTotal / rowsShown);
+        var kategoriCurrentPage = 0;
+
+        // Sub Kategori
+        var subkategoriRows = $('#subkategoriResponsiveDatatable tbody tr');
+        var subkategoriRowsTotal = subkategoriRows.length;
+        var subkategoriNumPages = Math.ceil(subkategoriRowsTotal / rowsShown);
+        var subkategoriCurrentPage = 0;
+
+        // Menampilkan halaman pertama untuk Kategori dan Sub Kategori
+        showKategoriPage(1);
+        showSubKategoriPage(1);
+
+        // Fungsi untuk menampilkan halaman untuk Kategori
+        function showKategoriPage(page) {
+            kategoriCurrentPage = page;
+            var start = (page - 1) * rowsShown;
+            var end = start + rowsShown;
+            kategoriRows.hide();
+            kategoriRows.slice(start, end).show();
+            // Mengatur status tombol Previous dan Next
+            $('#kategoriPrevBtn').prop('disabled', page === 1);
+            $('#kategoriNextBtn').prop('disabled', page === kategoriNumPages);
+        }
+
+        // Fungsi untuk menampilkan halaman untuk Sub Kategori
+        function showSubKategoriPage(page) {
+            subkategoriCurrentPage = page;
+            var start = (page - 1) * rowsShown;
+            var end = start + rowsShown;
+            subkategoriRows.hide();
+            subkategoriRows.slice(start, end).show();
+            // Mengatur status tombol Previous dan Next
+            $('#subkategoriPrevBtn').prop('disabled', page === 1);
+            $('#subkategoriNextBtn').prop('disabled', page === subkategoriNumPages);
+        }
+
+        // Event handler saat tombol "Previous" diklik untuk Kategori
+        $('#kategoriPrevBtn').on('click', function() {
+            if (kategoriCurrentPage > 1) {
+                showKategoriPage(kategoriCurrentPage - 1);
+            }
+        });
+
+        // Event handler saat tombol "Next" diklik untuk Kategori
+        $('#kategoriNextBtn').on('click', function() {
+            if (kategoriCurrentPage < kategoriNumPages) {
+                showKategoriPage(kategoriCurrentPage + 1);
+            }
+        });
+
+        // Event handler saat tombol "Previous" diklik untuk Sub Kategori
+        $('#subkategoriPrevBtn').on('click', function() {
+            if (subkategoriCurrentPage > 1) {
+                showSubKategoriPage(subkategoriCurrentPage - 1);
+            }
+        });
+
+        // Event handler saat tombol "Next" diklik untuk Sub Kategori
+        $('#subkategoriNextBtn').on('click', function() {
+            if (subkategoriCurrentPage < subkategoriNumPages) {
+                showSubKategoriPage(subkategoriCurrentPage + 1);
+            }
+        });
+    });
+</script>
 {% endblock %}
-
-
-       

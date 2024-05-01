@@ -21,10 +21,10 @@ def DataSekolah(request):
         data = {}
         return render(request, 'admin/data/data_sekolah.html', data)
     
-def Konten(request):
-    if request.method == 'GET':
-        data = {}
-        return render(request, 'admin/data/konten.html', data)
+# def Konten(request):
+#     if request.method == 'GET':
+#         data = {}
+#         return render(request, 'admin/data/konten.html', data)
     
 def LaporanDataSekolah(request):
     if request.method == 'GET':

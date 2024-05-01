@@ -211,12 +211,17 @@ class Data_konten(models.Model):
     id_data_konten = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     sekolah_id = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
     kategori_id = models.ForeignKey(Master_kategori, on_delete=models.PROTECT,default=None, null=True)
+    sub_kategori_id = models.ForeignKey(Sub_kategori, on_delete=models.PROTECT,default=None, null=True)
     judul = models.CharField(max_length=200)
+    isi_konten = models.TextField(default=None, null=True)
+    status = models.BooleanField(default=True)
     deskripsi = models.TextField()
     image = models.ImageField()
     tag = models.TextField(max_length=25)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
 
 
 
