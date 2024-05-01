@@ -1,0 +1,32 @@
+
+ <!-- Modal Tambah Data -->
+ 
+ <div class="modal fade" id="editdata_{{dt_kategori.kategori_id}}" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addDataModalLabel">Edit Data Kategori</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form tambah data di sini -->
+                <form method="post" action="{% url 'sipandu_admin:edit_kategori' dt_kategori.kategori_id %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="kategori_" class="form-label">Nama Kategori</label>
+                        <input type="text" value="{{dt_kategori.kategori_uraian}}" class="form-control" name="kategori_uraian" placeholder="Masukkan id">
+                        <!-- Input jenjang_status secara default -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Tambah Data End -->
+
+                            
