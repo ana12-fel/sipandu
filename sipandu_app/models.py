@@ -210,8 +210,8 @@ class Transanksi_situs(models.Model):
 class Data_konten(models.Model):
     id_data_konten = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     sekolah_id = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
-    kategori_id = models.ForeignKey(Master_kategori, on_delete=models.PROTECT,default=None, null=True)
-    sub_kategori_id = models.ForeignKey(Sub_kategori, on_delete=models.PROTECT,default=None, null=True)
+    konten_kategori = models.ForeignKey(Master_kategori, on_delete=models.PROTECT,default=None, null=True)
+    konten_sub_kategori = models.ForeignKey(Sub_kategori, on_delete=models.PROTECT,default=None, null=True)
     judul = models.CharField(max_length=200)
     isi_konten = models.TextField(default=None, null=True)
     status = models.BooleanField(default=True)

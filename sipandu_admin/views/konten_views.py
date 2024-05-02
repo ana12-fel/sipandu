@@ -5,20 +5,19 @@ from django.urls import reverse
 
 def IndexKonten(request):
     if request.method == 'POST':
-        created_at = request.POST.get ('created_at')
-        kategori_id_id = request.POST.get ('kategori_id_id')
-        sub_kategori_id_id = request.POST.get ('sub_kategori_id_id')
+        konten_kategori = request.POST.get ('konten_kategori')
+        konten_sub_kategori = request.POST.get ('konten_sub_kategori')
         judul = request.POST.get ('judul')
         status = request.POST.get ('status')
 
+        print(konten_kategori, konten_sub_kategori)
         dt_konten = Data_konten.objects.create(
-                                             created_at=created_at,
-                                             kategori_id_id=kategori_id_id,
-                                             sub_kategori_id_id=sub_kategori_id_id,
+                                             konten_kategori=Master_kategori.objects.get(kategori_id = konten_kategori),
+                                             konten_sub_kategori=Sub_kategori.objects.get(sub_kategori_id = konten_sub_kategori),
                                              judul=judul,
                                              status=status)
 
-        print(created_at,kategori_id_id,sub_kategori_id_id,judul,status)
+        print(konten_kategori,konten_sub_kategori,judul,status)
 
         return redirect('sipandu_admin:index_konten')
     
@@ -31,83 +30,67 @@ def IndexKonten(request):
     
 def TambahKonten(request):
     if request.method == 'POST':
-        # Ambil data yang di-post dari form
-        created_at = request.POST('created_at')
-        kategori_id_id = request.POST('kategori_uraian')
-        sub_kategori_id_id = request.POST('sub_kategori_uraian')
-        judul = request.POST('judul')
-        status = request.POST('status')
+        konten_kategori = request.POST.get ('konten_kategori')
+        konten_sub_kategori = request.POST.get ('konten_sub_kategori')
+        judul = request.POST.get ('judul')
+        status = request.POST.get ('status')
 
-        # Buat objek konten baru
+        print(konten_kategori, konten_sub_kategori)
         dt_konten = Data_konten.objects.create(
-                                             created_at=created_at,
-                                             kategori_id_id=kategori_id_id,
-                                             sub_kategori_id_id=sub_kategori_id_id,
+                                             konten_kategori=Master_kategori.objects.get(kategori_id = konten_kategori),
+                                             konten_sub_kategori=Sub_kategori.objects.get(sub_kategori_id = konten_sub_kategori),
                                              judul=judul,
                                              status=status)
 
-        # Simpan objek konten baru ke database
+        print(konten_kategori,konten_sub_kategori,judul,status)
         dt_konten.save()
 
-        # Redirect ke halaman yang sesuai setelah berhasil menambahkan konten
         return redirect('sipandu_admin:index_konten')
 
     else:
-        # Jika bukan metode POST, tampilkan form tambah konten
         data_kategori = Master_kategori.objects.all()
         data_sub_kategori = Sub_kategori.objects.all()
         data_konten = Data_konten.objects.all()
         return render(request, 'admin/data/tambah_konten.html', {'data_kategori': data_kategori, 'data_sub_kategori': data_sub_kategori, 'data_konten': data_konten})
        
 def EditKonten(request, id_data_konten):
-    if request.method == 'GET':
-        data_kategori = Master_kategori.objects.all()
-        data_sub_kategori = Sub_kategori.objects.all()
-        
-        return render(request, 'admin/data/edit_konten.html', {'dt_konten': dt_konten, 'data_kategori': data_kategori, 'data_sub_kategori': data_sub_kategori})
-    
     if request.method == 'POST':
-        try:
-            dt_konten = Data_konten.objects.get(id_data_konten=id_data_konten)
-            
-            created_at = request.POST.get('created_at')
-            kategori_id = request.POST.get('kategori_id')
-            sub_kategori_id = request.POST.get('sub_kategori_id')
-            judul = request.POST.get('judul')
-            status = request.POST.get('status')
+        dt_konten = Data_konten.objects.get(id_data_konten=id_data_konten)
 
-            # Perbarui nilai atribut konten
-            dt_konten.created_at = created_at
-            dt_konten.kategori_id = kategori_id
-            dt_konten.sub_kategori_id = sub_kategori_id
-            dt_konten.judul = judul
-            dt_konten.status = status
+        konten_kategori = request.POST.get ('konten_kategori')
+        konten_sub_kategori = request.POST.get ('konten_sub_kategori')
+        judul = request.POST.get('judul')
+        status = request.POST.get('status')
 
-            # Simpan perubahan
-            dt_konten.save()
+        dt_konten.konten_kategori=Master_kategori.objects.get(kategori_id = konten_kategori)
+        dt_konten.konten_sub_kategori=Sub_kategori.objects.get(sub_kategori_id = konten_sub_kategori)
+        dt_konten.judul=judul
+        dt_konten.status=status
 
-            return redirect('sipandu_admin:index_konten')
-        except Data_konten.DoesNotExist:
-            pass
-    
+        dt_konten.save()
 
+        return redirect('sipandu_admin:index_konten')
+    else:
+        dt_konten = Data_konten.objects.get(id_data_konten=id_data_konten)
+        return render(request, 'admin/data/edit_konten.html', {"dt_konten": dt_konten, "id_data_konten": id_data_konten })
     
 
 def DeleteKonten(request, id_data_konten):
     try:
         dt_konten = get_object_or_404(Data_konten, id_data_konten=id_data_konten)
+        
         dt_konten.delete()
 
-        Data = {
-                'status': 'success',
-                'message': 'data konten berhasil dihapus'   
-        }
-        return JsonResponse(data, status=200)
-    
-    except Data_konten.DoesNotExist:
         data = {
                 'status': 'success',
-                'message': 'data konten gagal di hapus, data konten tidak ditemukan'   
+                'message': 'data konten berhasil dihapus'
+        }
+        return JsonResponse(data, status=200)
+
+    except Data_konten.DoesNotExist:
+        data = {
+                'status': 'error',
+                'message': 'data konten gagal dihapus, data tidak ditemukan'
         }
         return JsonResponse(data, status=400)
     
