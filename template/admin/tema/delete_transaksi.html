@@ -1,0 +1,55 @@
+<div class="card">
+    <div class="card-header border-bottom-0 p-4">
+        <div class="page-options d-flex justify-content-end">
+        </div>
+    </div>
+    <div class="e-table px-5 pb-5">
+        <div class="table-responsive table-lg">
+            <form id="deleteForm" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="tema_id" id="tema_id">
+            </form>
+            <table class="table border-top table-bordered mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-center border-bottom-0">SEKOLAH</th>
+                        <th class="text-center border-bottom-0">TEMA</th>
+                        <th class="text-center border-bottom-0">THUMBNAIL</th>
+                        <th class="text-center border-bottom-0">DOMAIN</th>
+                        <th class="text-center border-bottom-0">AKSI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dt_transaksi in data_transaksi %}
+                    <tr>
+                        <td>{{ dt_transaksi.sekolah_id.sekolah_nama }}</td>
+                        <td>{{ dt_transaksi.tema_id.tema_nama }}</td>
+                        <td>{{ dt_transaksi.domain }}</td>
+                        <td><img src="{% if dt_transaksi.tema_id.tema_thumbnail %}{{ MEDIA_URL }}{{ dt_transaksi.tema_id.tema_thumbnail.url }}{% endif %}" alt="{{ transaksi.tema_nama }}" style="max-width: 100px;"></td>
+                        <td class="text-center align-middle">
+                            <div class="btn-group align-top">
+                                <button class="btn btn-sm btn-danger badge" onclick="prepareDelete('{{ dt_transaksi.transanksi_id }}')" type="button">Delete Transaksi</button>
+                            </div>
+                        </td>
+                        <button onclick="deleteTransaksi('{{ dt_transaksi.transanksi_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                        </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% block js %}
+<script>
+    function prepareDelete(transanksi_id) {
+        var confirmation = confirm("Apakah Anda yakin ingin menghapus data ini?");
+        if (confirmation) {
+            document.getElementById("transanksi_id").value = transanksi_id;
+            document.getElementById("deleteForm" + transanksi_id).submit();
+        } else {
+        }
+    }
+</script>
+{% endblock %}

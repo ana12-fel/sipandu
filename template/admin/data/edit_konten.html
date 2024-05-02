@@ -11,24 +11,20 @@
                 <form method="post" enctype="multipart/form-data" action="{% url 'sipandu_admin:edit_konten' dt_konten.id_data_konten %}">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label for="created_at" class="form-label">Tanggal</label>
-                        <input type="text" value="{{ dt_konten.Judul }}" class="form-control" name="created_at" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="kategori_uraian" class="form-label">Kategori</label>
-                        <select class="form-select" id="kategori_uraian" name="kategori_uraian">
+                        <label for="konten_kategori" class="form-label">Kategori</label>
+                        <select class="form-select" id="konten_kategori" name="konten_kategori">
                             <option value="" selected disabled>Pilih Kategori</option>
                             {% for kategori in data_kategori %}
-                            <option value="{{ kategori.kategori_id }}" {% if dt_konten.kategori_id_id == kategori.kategori_id %} selected {% endif %}>{{ kategori.kategori_uraian.upper }}</option>
+                            <option value="{{ kategori.kategori_id }}" {% if dt_konten.konten_kategori_id == kategori.kategori_id %} selected {% endif %}>{{ kategori.kategori_uraian.upper }}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="sub_kategori_uraian" class="form-label">Sub Kategori</label>
-                        <select class="form-select" id="sub_kategori_uraian" name="sub_kategori_uraian">
+                        <label for="konten_sub_kategori" class="form-label">Sub Kategori</label>
+                        <select class="form-select" id="konten_sub_kategori" name="konten_sub_kategori">
                             <option value="" selected disabled>Pilih Sub Kategori</option>
                             {% for sub_kategori in data_sub_kategori %}
-                            <option value="{{ sub_kategori.sub_kategori_id }}" {% if dt_konten.sub_kategori_id_id == sub_kategori.sub_kategori_id %} selected {% endif %}>{{ sub_kategori.sub_kategori_uraian.upper }}</option>
+                            <option value="{{ sub_kategori.sub_kategori_id }}" {% if dt_konten.konten_sub_kategori_id == sub_kategori.sub_kategori_id %} selected {% endif %}>{{ sub_kategori.sub_kategori_uraian.upper }}</option>
                             {% endfor %}
                         </select>
                     </div>

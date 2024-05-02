@@ -7,13 +7,12 @@
         <div class="table-responsive table-lg">
             <form id="deleteForm" method="post">
                 {% csrf_token %}
-                <input type="hidden" name="tema_id" id="tema_id">
+                <input type="hidden" name="id_data_konten" id="id_data_konten">
             </form>
             <table class="table border-top table-bordered mb-0">
                 <thead>
                     <tr>
                         <th class="text-center border-bottom-0">No</th>
-                        <th class="text-center border-bottom-0">Tanggal</th>
                         <th class="text-center border-bottom-0">Kategori</th>
                         <th class="text-center border-bottom-0">Sub Kategori</th>
                         <th class="text-center border-bottom-0">Judul</th>
@@ -31,17 +30,16 @@
                             </div>
                         </td>
                         <td>{{ forloop.counter }}</td>
-                        <td>{{ dt_konten.created_at }}</td>
                         <td>{{ dt_konten.kategori_id.kategori_uraian }}</td>
                         <td>{{ dt_konten.sub_kategori_id.sub_kategori_uraian }}</td>
                         <td>{{ dt_konten.judul }}</td>
                         <td>{{ dt_konten.status }}</td>
                         <td class="text-center align-middle">
                             <div class="btn-group align-top">
-                                <button class="btn btn-sm btn-danger badge" onclick="DeleteKonten('{{ dt_konten.id_data_konten }}')" type="button">Delete Konten</button>
+                                <button class="btn btn-sm btn-danger badge" onclick="prepareDelete('{{ dt_konten.id_data_konten }}')" type="button">Delete Sekolah</button>
                             </div>
                         </td>
-                        <form id="deleteForm{{ dt_konten.id_data_konten }}" method="post" action="{% url 'delete_konten' dt_konten.id_data_konten%}">
+                        <form id="deleteForm{{ dt_konten.id_data_konten}}" method="post" action="{% url 'delete_konten' dt_konten.id_data_sekolah %}">
                             {% csrf_token %}
                         </form>
                     </tr>
@@ -52,17 +50,13 @@
     </div>
 </div>
 {% block js %}
+
 <script>
-    function DeleteKonten(id_data_konten) {
-        // if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
-        //     window.location.href = "{% url 'sipandu_admin:delete_konten' %}?id_data_konten=" + kontenId;
-        // }
-        var confirmation = confirm("Apakah Anda yakin ingin menghapus data ini?");
-        if (confirmation) {
-            document.getElementById("id_data_konten").value = id_data_konten;
-            document.getElementById("deleteForm" + id_data_konten).submit();
-        } else {
+    function deleteKonten(id_data_konten) {
+        if (confirm("Apakah Anda yakin ingin menghapus pengguna ini?")) {
+            window.location.href = "{% url 'sipandu_admin:delete_konten' %}?id_data_konten=" + id_data_konten;
         }
     }
 </script>
+
 
