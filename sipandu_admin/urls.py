@@ -1,5 +1,6 @@
 from django.urls import path, include
 from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,kategori_views
+from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,transaksi_view
 from django.contrib.auth import views as auth_views
 
 
@@ -47,6 +48,10 @@ urlpatterns = [
 
 
     path('transanksi-situs/', admin_views.TransanksiSitus, name='transanksi_situs'),
+    path('index-transaksi/', transaksi_view.IndexTransaksi, name='index_transaksi'),
+    path('edit-transaksi/<str:transanksi_id>/', transaksi_view.edit_transaksi, name='edit_transaksi'),
+    path('delete-transaksi/<str:transanksi_id>/delete/',  transaksi_view.delete_transaksi, name='delete_transaksi'),
+    
     path('data-sekolah/', admin_views.DataSekolah, name='data_sekolah'),
     path('laporan-data-sekolah/', admin_views.LaporanDataSekolah, name='laporan_data_sekolah'),
   
