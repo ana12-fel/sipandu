@@ -22,12 +22,18 @@ Master User
                         <h3 class="card-title">Tambah Konten</h3>
                     </div>
                     <div class="card-body">
-<form method="post" action="{% url 'sipandu_admin:index_konten' %}">
+<form method="post" action="{% url 'sipandu_admin:tambah_konten' %}" enctype="multipart/form-data">
     {% csrf_token %}
-<<<<<<< HEAD
-    
-    
-=======
+    <div class="mb-3">
+        <label for="konten_sekolah" class="form-label">Sekolah</label>
+        <select class="form-select" id="konten_sekolah" name="konten_sekolah">
+            <option value="test" selected disabled>Pilih Sekolah</option>
+            {% for sekolah in data_sekolah %}
+            <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
+            {% endfor %}
+        </select>
+    </div> 
+
     <div class="mb-3">
         <label for="konten_kategori" class="form-label">Kategori</label>
         <select class="form-select" id="konten_kategori" name="konten_kategori" required>
@@ -46,7 +52,6 @@ Master User
             {% endfor %}
         </select>
     </div>
->>>>>>> 1467ffe41f135d2dd1a2cbf9ac6688721cc22b1f
     <div class="mb-3">
         <label for="judul" class="form-label">Judul</label>
         <input type="text" class="form-control" id="judul" name="judul" required>
@@ -57,8 +62,77 @@ Master User
             <option value="1">Aktif</option>
             <option value="0">Tidak Aktif</option>
         </select>
-    </div>    
+    </div> 
+    
+    <div class="mb-3">
+        <label for="konten_deskripsi" class="form-label">Deskripsi</label>
+        <input type="text" class="form-control" id="konten_deskripsi" name="konten_deskripsi" required>
+      
+    </div>
+
+    <div class="mb-3">
+        <label for="konten_tag" class="form-label">Tag</label>
+        <input type="text" class="form-control" id="konten_tag" name="konten_tag" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="image" class="form-label">Image</label>
+        <input type="file" class="form-control" id="image" name="konten_image" accept="image/*" onchange="previewImage(event)">
+    </div>
+    <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> <!-- Container untuk menampilkan preview thumbnail -->
+ 
+    
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header border-bottom-0">
+                    <div class="card-title">
+                        Form Editor
+                    </div>
+                </div>
+                <div class="card-body">
+                    <textarea id="isi_konten" name="test"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <button type="submit" class="btn btn-primary">Simpan</button>
 </form>
 
+{% endblock %}
+
+{% block js %}
+
+<script>
+ $('#isi_konten').richText();
+
+    function previewImage(event) {
+        var input = event.target;
+        var preview = document.getElementById('image-preview');
+        
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                // Menghapus preview thumbnail sebelumnya jika ada
+                while (preview.firstChild) {
+                    preview.removeChild(preview.firstChild);
+                }
+
+                // Menambahkan elemen img untuk menampilkan preview thumbnail
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '300px';
+                img.alt = ' Preview';
+                preview.appendChild(img);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+</script>
 {% endblock %}
