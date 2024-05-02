@@ -24,24 +24,8 @@ Master User
                     <div class="card-body">
 <form method="post" action="{% url 'sipandu_admin:index_konten' %}">
     {% csrf_token %}
-    <div class="mb-3">
-        <label for="kategori_id" class="form-label">Kategori</label>
-        <select class="form-select" id="kategori_id" name="kategori_id " required>
-            <!-- List of categories -->
-            {% for kategori in data_kategori %}
-                <option value="{{ kategori.kategori_id }}">{{ kategori.kategori_uraian.upper }}</option>
-            {% endfor %}
-        </select>
-    </div>
-    <div class="mb-3">
-        <label for="sub_kategori_uraian" class="form-label">Sub Kategori</label>
-        <select class="form-select" id="sub_kategori_uraian" name="sub_kategori_uraian" required>
-            <!-- List of sub categories -->
-            {% for sub_kategori in data_sub_kategori %}
-                <option value="{{ sub_kategori.sub_kategori_id }}">{{ sub_kategori.sub_kategori_uraian.upper }}</option>
-            {% endfor %}
-        </select>
-    </div>
+    
+    
     <div class="mb-3">
         <label for="judul" class="form-label">Judul</label>
         <input type="text" class="form-control" id="judul" name="judul" required>
