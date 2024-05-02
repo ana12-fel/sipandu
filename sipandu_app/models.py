@@ -215,9 +215,9 @@ class Data_konten(models.Model):
     judul = models.CharField(max_length=200)
     isi_konten = models.TextField(default=None, null=True)
     status = models.BooleanField(default=True)
-    deskripsi = models.TextField()
-    image = models.ImageField()
-    tag = models.TextField(max_length=25)
+    konten_deskripsi = models.TextField()
+    konten_image = models.ImageField()
+    konten_tag = models.TextField(max_length=25)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
