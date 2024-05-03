@@ -57,14 +57,14 @@ Master User
                                     <tr>
                                         <td>{{ forloop.counter }}</td>
                                         <td>{{ dt_konten.created_at }}</td>
-                                        <td>{{ dt_konten.kategori_id.kategori_uraian }}</td>
-                                        <td>{{ dt_konten.sub_kategori_id.sub_kategori_uraian }}</td>
+                                        <td>{{ dt_konten.konten_kategori.kategori_uraian }}</td>
+                                        <td>{{ dt_konten.konten_sub_kategori.sub_kategori_uraian }}</td>
                                         <td>{{ dt_konten.judul }}</td>
                                         <td class="text-center align-middle"><span>{% if dt_konten.status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_konten.id_data_konten}}">Edit</a> &nbsp;
-                                                <button onclick="DeleteKonten('{{ dt_konten.id_data_konten }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                <button onclick="deleteKonten('{{ dt_konten.id_data_konten }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
                                             </div>
                                         </td> 
                                         <!-- <td><button type="button" class="btn btn-success"><i class="fa fa-check"></i> Aktif</button></td> --> 
@@ -84,48 +84,50 @@ Master User
 {% block js %}
 
 <script>
-    function DeleteKonten(konten_) {
-    var deleteUrl = "{% url 'sipandu_admin:delete_konten' 'id_data_konten' %}".replace("id_data_konten",konten_);
+    function deleteKonten(konten_) {
+    var deleteUrl = "{% url 'sipandu_admin:delete_konten' 'id_data_konten' %}".replace("id_data_konten", konten_);
 
-        swal({
-            title: "Apakah Anda yakin?",
-            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Ya, hapus!",
-            cancelButtonText: "Batal",
-            closeOnConfirm: false,
-            closeOnCancel: false
-        },
-        function(isConfirm){
-            if (isConfirm) {
-                $.ajax({
-                    headers : { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
-                    url: deleteUrl,
-                    type: "DELETE",
-                    success: function (response) {
-                        // Data berhasil dihapus
-                        swal("Data berhasil dihapus!", {
-                            icon: "success",
-                        }).then(() => {
-                            // Refresh halaman atau lakukan aksi lain
-                            window.location.reload(); // Contoh: Refresh halaman
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        // Terjadi kesalahan saat menghapus data
-                        swal("Terjadi kesalahan saat menghapus data!", {
-                            icon: "error",
-                        });
-                    }
-                });
-            } else {
-                // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
-                swal("Tindakan dibatalkan", "", "info");
-            }
-        });
-    }
+    swal({
+        title: "Apakah Anda yakin?",
+        text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, hapus!",
+        cancelButtonText: "Batal",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+    function (isConfirm) {
+        if (isConfirm) {
+            $.ajax({
+                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                url: deleteUrl,
+                type: "DELETE",
+                success: function (response) {
+                    console.log('berhasil');
+                    swal({
+                        title: "Data berhasil dihapus!",
+                        icon: "success",
+                        buttons: false, // Tidak menampilkan tombol OK
+                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                    });
+                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                },
+                error: function (xhr, status, error) {
+                    // Terjadi kesalahan saat menghapus data
+                    swal("Terjadi kesalahan saat menghapus data!", {
+                        icon: "error",
+                    });
+                }
+            });
+        } else {
+            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+            swal("Tindakan dibatalkan", "", "info");
+        }
+    });
+}
+
 </script>
 
 {% endblock %}

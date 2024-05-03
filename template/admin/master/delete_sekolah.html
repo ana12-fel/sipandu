@@ -49,7 +49,6 @@
                         <form id="deleteForm{{ dt_sekolah.sekolah_id }}" method="post" action="{% url 'delete_sekolah' dt_sekolah.sekolah_id %}">
                             {% csrf_token %}
                         </form>
-                        
                     </tr>
                     {% endfor %}
                 </tbody>
