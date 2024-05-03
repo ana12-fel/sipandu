@@ -19,6 +19,7 @@ urlpatterns = [
     path('index-master-wilayah/', wilayah_view.IndexWilayah, name='index_wilayah'),
     path('edit_wilayah/<str:wilayah_id>/', wilayah_view.edit_wilayah, name='edit_wilayah'),
     path('wilayah/<str:wilayah_id>/delete/', wilayah_view.delete_wilayah, name='delete_wilayah'),
+    path('get-wilayah-by-level/', wilayah_view.get_wilayah_by_level, name='get_wilayah_by_level'),
 
     path('index-master-jenjang/', jenjang_view.IndexJenjang, name='index_jenjang'),
     path('edit_jenjang/<str:jenjang_id>/', jenjang_view.edit_jenjang, name='edit_jenjang'),
@@ -52,7 +53,6 @@ urlpatterns = [
     path('edit-transaksi/<str:transanksi_id>/', transaksi_view.edit_transaksi, name='edit_transaksi'),
     path('delete-transaksi/<str:transanksi_id>/delete/',  transaksi_view.delete_transaksi, name='delete_transaksi'),
     
-    path('data-sekolah/', admin_views.DataSekolah, name='data_sekolah'),
     path('laporan-data-sekolah/', admin_views.LaporanDataSekolah, name='laporan_data_sekolah'),
   
 ]

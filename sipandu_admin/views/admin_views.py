@@ -16,10 +16,10 @@ def TransanksiSitus(request):
         data = {}
         return render(request, 'admin/tema/transanksi_situs.html', data)
     
-def DataSekolah(request):
-    if request.method == 'GET':
-        data = {}
-        return render(request, 'admin/data/data_sekolah.html', data)
+# def DataSekolah(request):
+#     if request.method == 'GET':
+#         data = {}
+#         return render(request, 'admin/data/data_sekolah.html', data)
     
 # def Konten(request):
 #     if request.method == 'GET':

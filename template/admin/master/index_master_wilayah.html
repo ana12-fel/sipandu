@@ -43,20 +43,34 @@ Master Wilayah
                     </div>
                     <div class="modal-body">
                         <!-- Form tambah data di sini -->
-                        <form method="post" action="{% url 'sipandu_admin:index_wilayah' %}">
+                        <form id="addWilayahForm" method="post" action="{% url 'sipandu_admin:index_wilayah' %}">
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="kode" class="form-label">Kode</label>
                                 <input type="text" class="form-control" name="wilayah_kode" placeholder="Masukkan Status kode">
-                                <label for="wilayah" class="form-label">Provinsi</label>
-                                <input type="text" class="form-control" name="wilayah_provinsi" placeholder="Masukkan Status provinsi">
-                                <label for="wilayah" class="form-label">Kabupaten</label>
-                                <input type="text" class="form-control" name="wilayah_kabupaten" placeholder="Masukkan Status kecamatan">
-                                <label for="wilayah" class="form-label">Distrik</label>
-                                <input type="text" class="form-control" name="wilayah_distrik" placeholder="Masukkan Status wilayah">
+                            </div>
+                            <div class="mb-3">
+                                <label for="role">Level</label>
+                                <select name="wilayah_level" id="wilayah_level" class="form-control">
+                                    {% for level_key, level_display in wilayah_level %}
+                                        <option value="{{ level_key }}">{{ level_display }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="wilayah" class="form-label">Wilayah</label>
+                                <select name="level" id="wilayah_nama" class="form-control">
+                                    {% for level, level_display in level_wilayah %}
+                                        <option value="{{ level }}">{{ level_display }}</option>
+                                    {% endfor %}
+                                    <!-- Options will be populated dynamically -->
+                                </select>
+                            </div>
                                 <!-- Input wilayah_status secara default -->
+                            <div class="mb-3">
                                 <input type="hidden" name="wilayah_status" value="True">
                             </div>
+                            
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -89,10 +103,10 @@ Master Wilayah
                                 <thead>
                                     <tr>
                                         <th class="text-center">KODE</th>
-                                        <th class="text-center">PROVINSI</th>
-                                        <th class="text-center">KABUPATEN</th>
-                                        <th class="text-center">DISTRIK</th>
+                                        <th class="text-center">WILAYAH</th>
+                                        <th class="text-center">PARENT</th>
                                         <th class="text-center">STATUS</th>
+                                        <th class="text-center">LEVEL</th>
                                         <th class="text-center">AKSI</th>
                                     </tr>
                                 </thead>
@@ -101,10 +115,10 @@ Master Wilayah
                                         <!-- Iterasi melalui setiap objek dt_wilayah -->
                                         <tr>
                                             <td class="text-center align-middle">{{ dt_wilayah.wilayah_kode }}</td>
-                                            <td class="text-center align-middle">{{ dt_wilayah.wilayah_provinsi }}</td>
-                                            <td class="text-center align-middle">{{ dt_wilayah.wilayah_kabupaten }}</td>
-                                            <td class="text-center align-middle">{{ dt_wilayah.wilayah_distrik }}</td>
+                                            <td class="text-center align-middle">{{ dt_wilayah.wilayah_nama }}</td>
+                                            <td class="text-center align-middle">{{ dt_wilayah.wilayah_parent }}</td>
                                             <td class="text-center align-middle"><span>{% if dt_wilayah.wilayah_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
+                                            <td class="text-center align-middle">{{ dt_wilayah.wilayah_level }}</td>
                                             <td class="text-center align-middle">
                                                 <div class="btn-group align-top">
                                                     <!-- Tombol edit -->
@@ -116,9 +130,6 @@ Master Wilayah
                                         </tr>
                                         {% include 'admin/master/edit_wilayah.html'%}
                                     {% endfor %}
-
-
-                            
                                 </tbody>
                             </table>
                         </div>
@@ -146,48 +157,32 @@ Master Wilayah
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
 <script>
-    function deletewilayah(wilayah_) {
-        var deleteUrl = "{% url 'sipandu_admin:delete_wilayah' 'wilayah_id' %}".replace("wilayah_id",wilayah_);
-
-        swal({
-            title: "Apakah Anda yakin?",
-            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Ya, hapus!",
-            cancelButtonText: "Batal",
-            closeOnConfirm: false,
-            closeOnCancel: false
-        },
-        function(isConfirm){
-            if (isConfirm) {
-                $.ajax({
-                    headers : { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
-                    url: deleteUrl,
-                    type: "DELETE",
-                    success: function (response) {
-                        // Data berhasil dihapus
-                        swal("Data berhasil dihapus!", {
-                            icon: "success",
-                        }).then(() => {
-                            // Refresh halaman atau lakukan aksi lain
-                            window.location.reload(); // Contoh: Refresh halaman
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        // Terjadi kesalahan saat menghapus data
-                        swal("Terjadi kesalahan saat menghapus data!", {
-                            icon: "error",
-                        });
-                    }
-                });
-            } else {
-                // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
-                swal("Tindakan dibatalkan", "", "info");
+    // Function to get wilayah by level
+    function getWilayahByLevel(level) {
+        $.ajax({
+            url: "{% url 'sipandu_admin:get_wilayah_by_level' %}",
+            type: "GET",
+            data: {
+                'level': level
+            },
+            success: function(response) {
+                var options = '<option value="">Pilih Wilayah</option>';
+                for (var i = 0; i < response.length; i++) {
+                    options += '<option value="' + response[i] + '">' + response[i] + '</option>';
+                }
+                $('#wilayah_nama').html(options);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
             }
         });
     }
+
+    // Event listener when level dropdown changes
+    $('#wilayah_level').change(function() {
+        var level = $(this).val();
+        getWilayahByLevel(level);
+    });
 </script>
 
 {% endblock %}
