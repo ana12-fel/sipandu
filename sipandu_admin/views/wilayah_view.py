@@ -10,12 +10,22 @@ def IndexWilayah(request):
         wilayah_nama = request.POST.get('wilayah_nama')
         wilayah_level = request.POST.get('wilayah_level')
         wilayah_status = request.POST.get('wilayah_status')
-        wilayah_parent = request.POST.get('wilayah_parent')
+        
+        prov = request.POST.get('prov')
+        kab = request.POST.get('kab')
+        kec = request.POST.get('kec')
+
+        if wilayah_level == '1': #prov
+            wilayah_parent = None
+        elif wilayah_level == '2': #kab
+            wilayah_parent = Master_wilayah.objects.get(wilayah_id = prov)
+        elif wilayah_level == '3': #kec
+            wilayah_parent = Master_wilayah.objects.get(wilayah_id = kab)
+        else:
+            wilayah_parent = Master_wilayah.objects.get(wilayah_id = kec)
 
         dt_wilayah = Master_wilayah.objects.create(
-            wilayah_id=wilayah_id,
             wilayah_kode=wilayah_kode,
-            wilayah_status=wilayah_status,
             wilayah_nama=wilayah_nama,
             wilayah_level=wilayah_level,
             wilayah_parent=wilayah_parent
@@ -27,14 +37,18 @@ def IndexWilayah(request):
     
     else:
         data_wilayah = Master_wilayah.objects.all()
-        return render(request, 'admin/master/index_master_wilayah.html', {'data_wilayah': data_wilayah, 'wilayah_level': LEVEL_WILAYAH})
+        data_prov = Master_wilayah.objects.filter(wilayah_level='1')
+        return render(request, 'admin/master/index_master_wilayah.html', {'data_wilayah': data_wilayah, 'wilayah_level': LEVEL_WILAYAH,
+            "data_prov": data_prov})
 
 def get_wilayah_by_level(request):
-    if request.is_ajax() and request.method == 'GET':
+    if request.method == 'GET':
         level = request.GET.get('level')
-        if level:
-            wilayah_list = Master_wilayah.objects.filter(wilayah_level=level).values_list('wilayah_nama', flat=True)
-            return JsonResponse(list(wilayah_list), safe=False)
+        wilayah_id = request.GET.get('wilayah_id')
+        
+        wilayah_list = Master_wilayah.objects.filter(wilayah_parent=wilayah_id).values('wilayah_id', 'wilayah_nama')
+        
+        return JsonResponse({"data_wilayah": list(wilayah_list)})
     return JsonResponse({'error': 'Invalid request'})
 
     

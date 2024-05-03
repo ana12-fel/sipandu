@@ -37,7 +37,7 @@ WAKTU_PENYELANGGARAAN_SEKOLAH =(('pagi','Pagi'),('siang','Siang'),('sore','Sore'
 SUMBER_LISTRIK = (('pln','PLN'),('pembangkit','Pembangkit Listrik'),('diesel','Diesel'))
 
 class Master_wilayah(models.Model):
-    wilayah_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    wilayah_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     wilayah_kode = models.TextField(unique=True)
     wilayah_parent = models.ForeignKey('self', default=None, on_delete=models.PROTECT, null=True)
     wilayah_nama = models.TextField()
