@@ -124,7 +124,7 @@ Master Wilayah
                                                     <!-- Tombol edit -->
                                                     <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_wilayah.wilayah_id}}">Edit</a> &nbsp;
                                                     <!-- Tombol delete -->
-                                                    <button onclick="deletewilayah('{{ dt_wilayah.wilayah_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                    <button onclick="deleteWilayah('{{ dt_wilayah.wilayah_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -157,32 +157,49 @@ Master Wilayah
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
 <script>
-    // Function to get wilayah by level
-    function getWilayahByLevel(level) {
-        $.ajax({
-            url: "{% url 'sipandu_admin:get_wilayah_by_level' %}",
-            type: "GET",
-            data: {
-                'level': level
-            },
-            success: function(response) {
-                var options = '<option value="">Pilih Wilayah</option>';
-                for (var i = 0; i < response.length; i++) {
-                    options += '<option value="' + response[i] + '">' + response[i] + '</option>';
-                }
-                $('#wilayah_nama').html(options);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
+    function deleteWilayah(wilayah_) {
+    var deleteUrl = "{% url 'sipandu_admin:delete_wilayah' 'wilayah_id' %}".replace("wilayah_id", wilayah_);
 
-    // Event listener when level dropdown changes
-    $('#wilayah_level').change(function() {
-        var level = $(this).val();
-        getWilayahByLevel(level);
+    swal({
+        title: "Apakah Anda yakin?",
+        text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, hapus!",
+        cancelButtonText: "Batal",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+    function (isConfirm) {
+        if (isConfirm) {
+            $.ajax({
+                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                url: deleteUrl,
+                type: "DELETE",
+                success: function (response) {
+                    console.log('berhasil');
+                    swal({
+                        title: "Data berhasil dihapus!",
+                        icon: "success",
+                        buttons: false, // Tidak menampilkan tombol OK
+                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                    });
+                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                },
+                error: function (xhr, status, error) {
+                    // Terjadi kesalahan saat menghapus data
+                    swal("Terjadi kesalahan saat menghapus data!", {
+                        icon: "error",
+                    });
+                }
+            });
+        } else {
+            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+            swal("Tindakan dibatalkan", "", "info");
+        }
     });
+}
 </script>
 
 {% endblock %}

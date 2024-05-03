@@ -134,7 +134,7 @@ Master User
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
 <script>
-    function deleteKategori(kategori_) {
+    function deleteJenjang(jenjang_) {
     var deleteUrl = "{% url 'sipandu_admin:delete_jenjang' 'jenjang_id' %}".replace("jenjang_id", jenjang_);
 
     swal({
