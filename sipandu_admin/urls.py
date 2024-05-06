@@ -1,6 +1,6 @@
 from django.urls import path, include
 from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,kategori_views
-from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,transaksi_view
+from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,transaksi_view,galeri
 from django.contrib.auth import views as auth_views
 
 
@@ -45,6 +45,8 @@ urlpatterns = [
     path('edit_konten/<str:id_data_konten>/', konten_views.EditKonten, name='edit_konten'),
     path('delete_konten/<str:id_data_konten>/delete', konten_views.DeleteKonten, name='delete_konten'),
     
+    path('galeri/', galeri.Indexgaleri, name='index_galeri'),
+
 
 
 
