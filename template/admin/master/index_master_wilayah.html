@@ -46,18 +46,46 @@ Master Wilayah
                         <form id="addWilayahForm" method="post" action="{% url 'sipandu_admin:index_wilayah' %}">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="kode" class="form-label">Kode</label>
-                                <input type="text" class="form-control" name="wilayah_kode" placeholder="Masukkan Status kode">
-                            </div>
-                            <div class="mb-3">
                                 <label for="role">Level</label>
-                                <select name="wilayah_level" id="wilayah_level" class="form-control">
+                                <select name="wilayah_level" id="wilayah_level" class="form-control" onchange="pilih_level(this)">
+                                    <option value="">- Pilih Level Wilayah -</option>
                                     {% for level_key, level_display in wilayah_level %}
                                         <option value="{{ level_key }}">{{ level_display }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
+                            <div class="mb-3 d-none" id="div_prov">
+                                <label for="role">Provinsi</label>
+                                <select name="prov" id="prov" data-level="prov" class="form-control" onchange="render_kab(this)">
+                                    <option value="">- Pilih Provinsi -</option>
+                                    {% for prov in data_prov %}
+                                        <option value="{{ prov.wilayah_id }}">{{ prov.wilayah_nama }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3 d-none" id="div_kab">
+                                <label for="role">Kabupaten</label>
+                                <select name="kab" id="kab" data-level="kab" class="form-control" onchange="render_kab(this)">
+                                    <option value="">- Pilih Kabupaten -</option>
+                                    <!-- {% for level_key, level_display in wilayah_level %}
+                                        <option value="{{ level_key }}">{{ level_display }}</option>
+                                    {% endfor %} -->
+                                </select>
+                            </div>
+                            <div class="mb-3 d-none" id="div_kec">
+                                <label for="role">Kecamatan</label>
+                                <select name="kec" id="kec" data-level="kec" class="form-control">
+                                    <option value="">- Pilih Kecamatan -</option>
+                                    <!-- {% for level_key, level_display in wilayah_level %}
+                                        <option value="{{ level_key }}">{{ level_display }}</option>
+                                    {% endfor %} -->
+                                </select>
+                            </div>
                             <div class="mb-3">
+                                <label for="kode" class="form-label">Kode</label>
+                                <input type="text" class="form-control" name="wilayah_kode" placeholder="Masukkan Status kode">
+                            </div>
+                            <div class="mb-3 d-none">
                                 <label for="wilayah" class="form-label">Wilayah</label>
                                 <select name="level" id="wilayah_nama" class="form-control">
                                     {% for level, level_display in level_wilayah %}
@@ -65,6 +93,10 @@ Master Wilayah
                                     {% endfor %}
                                     <!-- Options will be populated dynamically -->
                                 </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="wilayah_nama" class="form-label">Nama Wilayah</label>
+                                <input type="text" class="form-control" id="wilayah_nama" name="wilayah_nama" placeholder="Masukkan Nama Wilayah">
                             </div>
                                 <!-- Input wilayah_status secara default -->
                             <div class="mb-3">
@@ -116,7 +148,7 @@ Master Wilayah
                                         <tr>
                                             <td class="text-center align-middle">{{ dt_wilayah.wilayah_kode }}</td>
                                             <td class="text-center align-middle">{{ dt_wilayah.wilayah_nama }}</td>
-                                            <td class="text-center align-middle">{{ dt_wilayah.wilayah_parent }}</td>
+                                            <td class="text-center align-middle">{{ dt_wilayah.wilayah_parent.wilayah_nama }}</td>
                                             <td class="text-center align-middle"><span>{% if dt_wilayah.wilayah_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
                                             <td class="text-center align-middle">{{ dt_wilayah.wilayah_level }}</td>
                                             <td class="text-center align-middle">
@@ -157,49 +189,145 @@ Master Wilayah
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
 <script>
-    function deleteWilayah(wilayah_) {
-    var deleteUrl = "{% url 'sipandu_admin:delete_wilayah' 'wilayah_id' %}".replace("wilayah_id", wilayah_);
+     function deleteWilayah(wilayah_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_wilayah' 'wilayah_id' %}".replace("wilayah_id", wilayah_);
 
-    swal({
-        title: "Apakah Anda yakin?",
-        text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Ya, hapus!",
-        cancelButtonText: "Batal",
-        closeOnConfirm: false,
-        closeOnCancel: false
-    },
-    function (isConfirm) {
-        if (isConfirm) {
-            $.ajax({
-                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
-                url: deleteUrl,
-                type: "DELETE",
-                success: function (response) {
-                    console.log('berhasil');
-                    swal({
-                        title: "Data berhasil dihapus!",
-                        icon: "success",
-                        buttons: false, // Tidak menampilkan tombol OK
-                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
-                    });
-                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
-                },
-                error: function (xhr, status, error) {
-                    // Terjadi kesalahan saat menghapus data
-                    swal("Terjadi kesalahan saat menghapus data!", {
-                        icon: "error",
-                    });
-                }
-            });
-        } else {
-            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
-            swal("Tindakan dibatalkan", "", "info");
+        swal({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "DELETE",
+                    success: function (response) {
+                        console.log('berhasil');
+                        swal({
+                            title: "Data berhasil dihapus!",
+                            icon: "success",
+                            buttons: false, // Tidak menampilkan tombol OK
+                            timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                        });
+                        window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                    },
+                    error: function (xhr, status, error) {
+                        // Terjadi kesalahan saat menghapus data
+                        swal("Terjadi kesalahan saat menghapus data!", {
+                            icon: "error",
+                        });
+                    }
+                });
+            } else {
+                // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+                swal("Tindakan dibatalkan", "", "info");
+            }
+        });
+    }
+
+    function pilih_level(e){
+        // 1 = provinsi, 2 = kab, 3 = kec
+        var level = $(e).val();
+        var div_prov = $('#div_prov')
+        var div_kab = $('#div_kab')
+        var div_kec = $('#div_kec')
+
+        if (level == '1') {
+            div_prov.addClass('d-none')
+            div_kab.addClass('d-none')
+            div_kec.addClass('d-none')
+        }else if(level == '2'){
+            div_prov.removeClass('d-none')
+            div_kab.addClass('d-none')
+            div_kec.addClass('d-none')
+        }else if(level == '3'){
+            div_prov.removeClass('d-none')
+            div_kab.removeClass('d-none')
+            div_kec.addClass('d-none')
+        }else{
+            div_prov.removeClass('d-none')
+            div_kab.removeClass('d-none')
+            div_kec.removeClass('d-none')
         }
+
+        div_prov.trigger('change')
+        div_kab.trigger('change')
+        div_kec.trigger('change')
+    }
+
+    function render_kab(e){
+        var level_wilayah = $(e).data('level');
+
+      $.ajax({
+            url: "{% url 'sipandu_admin:get_wilayah_by_level' %}",
+            type: "GET",
+            data: {
+                'level': $('#wilayah_level').val(),
+                'wilayah_id': $(e).val()
+            },
+            success: function(response) {
+                console.log(response, level_wilayah)
+                if (level_wilayah == 'prov') {
+                    var elem = $('#kab')
+                }else if(level_wilayah == 'kab'){
+                    var elem = $('#kec')
+                }
+
+                elem.html('');
+                var opt_label = '<option value="">- Pilih Kabupaten -</option>'
+                for (var i = 0; i < response.data_wilayah.length; i++) {
+                    elem.append(`<option value="${response.data_wilayah[i]['wilayah_id']}">${response.data_wilayah[i]['wilayah_nama']}</option>`)
+                    console.log(response.data_wilayah[i]['wilayah_nama'])
+                }
+                elem.val('');
+
+                // var options = '<option value="">Pilih Wilayah</option>';
+                // for (var i = 0; i < response.length; i++) {
+                //     options += '<option value="' + response[i] + '">' + response[i] + '</option>';
+                // }
+                // $('#wilayah_nama').html(options);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });  
+    }
+
+    // Function to get wilayah by level
+    function getWilayahByLevel(level) {
+        $.ajax({
+            url: "{% url 'sipandu_admin:get_wilayah_by_level' %}",
+            type: "GET",
+            data: {
+                'level': level
+            },
+            success: function(response) {
+                var options = '<option value="">Pilih Wilayah</option>';
+                for (var i = 0; i < response.length; i++) {
+                    options += '<option value="' + response[i] + '">' + response[i] + '</option>';
+                }
+                $('#wilayah_nama').html(options);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    // Event listener when level dropdown changes
+    $('#wilayah_level').change(function() {
+        var level = $(this).val();
+        getWilayahByLevel(level);
     });
-}
+
 </script>
 
 {% endblock %}

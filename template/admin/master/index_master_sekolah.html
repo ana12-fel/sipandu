@@ -51,13 +51,31 @@ Master Sekolah
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="sekolah_jenjang" class="form-label">Provinsi</label>
-                                <select class="form-select" id="sekolah_provinsi" name="wilayah">
+                                <select class="form-select" id="wilayah_id" name="wilayah_nama">
                                     <option value="test" selected disabled>Pilih Wilayah</option>
                                     {% for provinsi in data_wilayah %}
                                     <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_provinsi.upper}}</option>
                                     {% endfor %}
                                 </select>
-                            </div>  
+                            </div>
+                            <div class="mb-3">
+                                <label for="sekolah_jenjang" class="form-label">Kecamatan</label>
+                                <select class="form-select" id="wilayah_id" name="wilayah_nama">
+                                    <option value="test" selected disabled>Pilih Wilayah</option>
+                                    {% for provinsi in data_wilayah %}
+                                    <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_provinsi.upper}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div> 
+                            <div class="mb-3">
+                                <label for="sekolah_jenjang" class="form-label">Kabupaten</label>
+                                <select class="form-select" id="wilayah_id" name="wilayah">
+                                    <option value="test" selected disabled>Pilih Wilayah</option>
+                                    {% for provinsi in data_wilayah %}
+                                    <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_provinsi.upper}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>   
                             
                 
                             <div class="mb-3">

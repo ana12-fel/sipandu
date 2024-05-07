@@ -48,10 +48,11 @@ def TambahKonten(request):
         konten_sub_kategori = request.POST.get ('konten_sub_kategori')
         judul = request.POST.get ('judul')
         status = request.POST.get ('status')
-        isi_konten = request.POST.get('test')
+        isi_konten = request.POST.get('isi_konten')
         konten_deskripsi = request.POST.get('konten_deskripsi')
         konten_image = request.FILES.get('konten_image')
         konten_tag = request.POST.get('konten_tag')
+        print(request.POST)
 
 
         print(konten_kategori, konten_sub_kategori, konten_sekolah, isi_konten)
