@@ -11,7 +11,7 @@
                             </a>
                         </li>
                         <li class="dropdown">									
-                            <a href="{% static 'demo-law-firm-2-about.html' %}" class="nav-link">PROFIL</a>
+                            <a href="{% url 'sipandu:home' %}" class="nav-link">PROFIL</a>
                             <ul class="dropdown-menu border-radius-0">
                                 <li>
                                     <a href="{% url 'sipandu:identitas' %}" class="nav-link">IDENTITAS SEKOLAH</a>
@@ -31,7 +31,7 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="{% static 'demo-law-firm-2-practice-areas.html' %}" class="dropdown-item dropdown-toggle">BERITA</a>
+                            <a href="{% url 'sipandu:home' %}" class="dropdown-item dropdown-toggle">BERITA</a>
                             <ul class="dropdown-menu border-radius-0">
                                 <li>
                                     <a href="{% url 'sipandu:berita' %}" class="nav-link">Berita</a>

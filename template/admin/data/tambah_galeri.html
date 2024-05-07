@@ -1,0 +1,106 @@
+{% extends 'admin/base/base_index.html' %}
+{% load static %}
+{% block title %}
+Master User
+{% endblock %}
+
+{% block content %}
+<!-- tambah_konten_form.html -->
+<div class="app-content">
+    <div class="side-app">
+
+        <!-- PAGE-HEADER -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">GALERI</h1>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Tambah Konten</h3>
+                    </div>
+                <div class="card-body">
+<form method="post" action="{% url 'sipandu_admin:tambah_galeri' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="konten_sekolah" class="form-label">Sekolah</label>
+        <select class="form-select" id="konten_sekolah" name="konten_sekolah">
+            <option value="test" selected disabled>Pilih Sekolah</option>
+            {% for sekolah in data_sekolah %}
+            <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
+            {% endfor %}
+        </select>
+    </div> 
+    <div class="mb-3">
+        <label for="judul" class="form-label">Judul</label>
+        <input type="text" class="form-control" id="judul" name="judul" required>
+    </div>
+    <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-select" id="status" name="status" required>
+            <option value="1">Aktif</option>
+            <option value="0">Tidak Aktif</option>
+        </select>
+    </div> 
+    
+    <div class="mb-3">
+        <label for="konten_deskripsi" class="form-label">Deskripsi</label>
+        <input type="text" class="form-control" id="konten_deskripsi" name="konten_deskripsi" required>
+      
+    </div>
+    <div class="mb-3">
+        <label for="image" class="form-label">Image</label>
+        <input type="file" class="form-control" id="image" name="konten_image" accept="image/*" onchange="previewImage(event)">
+    </div>
+    <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> 
+    
+    <button type="submit" class="btn btn-primary">Simpan</button>
+</form>
+</div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'admin/js/ckeditor.js'%}"></script>
+
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .then( editor => {
+                console.log( editor );
+        } )
+        .catch( error => {
+                console.error( error );
+        } );
+        
+    function previewImage(event) {
+        var input = event.target;
+        var preview = document.getElementById('image-preview');
+        
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                // Menghapus preview thumbnail sebelumnya jika ada
+                while (preview.firstChild) {
+                    preview.removeChild(preview.firstChild);
+                }
+
+                // Menambahkan elemen img untuk menampilkan preview thumbnail
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '300px';
+                img.alt = ' Preview';
+                preview.appendChild(img);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+</script>
+{% endblock %}
