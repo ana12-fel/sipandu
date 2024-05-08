@@ -215,6 +215,10 @@ class Data_konten(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+class Data_galeri(models.Model):
+    id_data_galeri = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    judul = models.CharField(max_length=200)
+    gambar = models.ImageField(upload_to='image_konten/')
 
 
 
