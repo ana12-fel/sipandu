@@ -213,16 +213,34 @@ class Data_konten(models.Model):
     judul = models.CharField(max_length=200)
     isi_konten = models.TextField(default=None, null=True)
     status = models.BooleanField(default=True)
-    konten_deskripsi = models.TextField()
     konten_image = models.ImageField(upload_to='image_konten/')
     konten_tag = models.TextField(max_length=25)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 class Data_galeri(models.Model):
-    id_data_galeri = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    judul = models.CharField(max_length=200)
+    id_data_galeri= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    galeri_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
     gambar = models.ImageField(upload_to='image_konten/')
+    video = models.ImageField(upload_to='video_konten/', default='default_video.mp4')
+
+class Data_kontak(models.Model):
+    id_data_kontak= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    kontak_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
+    email = models.EmailField(max_length=254, blank=True, null=True)
+    fb = models.CharField(max_length=100, blank=True, null=True, verbose_name="Facebook")
+    tw = models.CharField(max_length=100, blank=True, null=True, verbose_name="Twitter")
+    ig = models.CharField(max_length=100, blank=True, null=True, verbose_name="Instagram")
+    no_hp = models.CharField(max_length=15, blank=True, null=True, verbose_name="Nomor HP")
+
+class Data_link(models.Model):
+    id_data_link= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    link_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
+    Nama_link = models.CharField(max_length=200)
+    link = models.CharField(max_length=200)
+
+    
+
 
 
 
