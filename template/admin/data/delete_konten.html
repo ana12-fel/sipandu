@@ -13,6 +13,7 @@
                 <thead>
                     <tr>
                         <th class="text-center border-bottom-0">No</th>
+                        <th class="text-center border-bottom-0">Tanggal</th>
                         <th class="text-center border-bottom-0">Kategori</th>
                         <th class="text-center border-bottom-0">Sub Kategori</th>
                         <th class="text-center border-bottom-0">Judul</th>
@@ -21,7 +22,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for konten in data_konten %}
+                    {% for dt_edit in edit_konten %}
                     <tr>
                         <td class="align-middle text-center">
                             <div class="custom-control custom-checkbox">
@@ -36,10 +37,10 @@
                         <td>{{ dt_konten.status }}</td>
                         <td class="text-center align-middle">
                             <div class="btn-group align-top">
-                                <button class="btn btn-sm btn-danger badge" onclick="prepareDelete('{{ dt_konten.id_data_konten }}')" type="button">Delete Sekolah</button>
+                                <button class="btn btn-sm btn-danger badge" onclick="prepareDelete('{{ dt_edit.id_data_konten }}')" type="button">Delete Konten</button>
                             </div>
                         </td>
-                        <form id="deleteForm{{ dt_konten.id_data_konten}}" method="post" action="{% url 'delete_konten' dt_konten.id_data_sekolah %}">
+                        <form id="deleteForm{{ dt_konten.id_data_konten}}" action="{% url 'delete_konten' dt_konten.id_data_sekolah %}">
                             {% csrf_token %}
                         </form>
                     </tr>
@@ -50,13 +51,17 @@
     </div>
 </div>
 {% block js %}
-
 <script>
-    function deleteKonten(id_data_konten) {
-        if (confirm("Apakah Anda yakin ingin menghapus pengguna ini?")) {
-            window.location.href = "{% url 'sipandu_admin:delete_konten' %}?id_data_konten=" + id_data_konten;
+    function prepareDelete(id_data_konten) {
+        var confirmation = confirm("Apakah Anda yakin ingin menghapus data ini?");
+        if (confirmation) {
+            document.getElementById("id_data_konten").value = id_data_konten;
+            document.getElementById("deleteForm").submit();
+        } else {
         }
     }
 </script>
+
+{% endblock %}
 
 

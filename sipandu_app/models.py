@@ -11,10 +11,6 @@ LEVEL_WILAYAH = (
     (4, 'Kampung')
 )
 
-PROVINSI = [
-    ('papteng', 'papua tengah')
-]
-
 WARNA = (
     (1, 'merah putih'),
     (2, 'putih biru'),

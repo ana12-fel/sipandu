@@ -67,9 +67,9 @@ Master Wilayah
                                 <label for="role">Kabupaten</label>
                                 <select name="kab" id="kab" data-level="kab" class="form-control" onchange="render_kab(this)">
                                     <option value="">- Pilih Kabupaten -</option>
-                                    <!-- {% for level_key, level_display in wilayah_level %}
+                                    {% for level_key, level_display in wilayah_level %}
                                         <option value="{{ level_key }}">{{ level_display }}</option>
-                                    {% endfor %} -->
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="mb-3 d-none" id="div_kec">

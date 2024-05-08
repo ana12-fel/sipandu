@@ -5,29 +5,42 @@ from sipandu_app.models import Master_tema,Master_kategori,Sub_kategori
 def MasterKategori(request):
     if request.method == 'POST':
         kategori_nama = request.POST.get ('kategori_nama')
-        kategori_tema_id = request.POST.get ('form_tema_id')
+        kategori_tema= request.POST.get ('form_tema_id')
 
-        dt_kategori = Master_kategori.objects.create(kategori_uraian=kategori_nama, kategori_tema=Master_tema.objects.get(tema_id=kategori_tema_id))
+        dt_kategori = Master_kategori.objects.create(kategori_uraian=kategori_nama, kategori_tema_id = kategori_tema )
 
-        print(kategori_tema_id,kategori_nama)
+        print(kategori_tema,kategori_nama)
 
-        return redirect('sipandu_admin:master_kategori')
+        redirect_url = f'/admin/master-kategori?tema_id={kategori_tema}'
+        return redirect(redirect_url)
     
     else:
-        data_sub_kategori = Sub_kategori.objects.all()
+        tema_id = request.GET.get('tema_id' , '')
         data_tema = Master_tema.objects.all()
-        data_kategori = Master_kategori.objects.all()
-        return render(request, 'admin/master_kategori/master_kategori.html', {'data_tema': data_tema, 'data_kategori' : data_kategori, 'data_sub_kategori' : data_sub_kategori})
+        data_kat = None
+
+        if tema_id:
+            data_kategori = Master_kategori.objects.filter(kategori_tema=tema_id)
+            data_kat = Master_tema.objects.filter(tema_id=tema_id)
+            data_sub_kategori = Sub_kategori.objects.filter(kategori_id__in=data_kategori)
+        else:
+            data_kategori = Master_kategori.objects.all()
+            data_sub_kategori = Sub_kategori.objects.all()
+        return render(request, 'admin/master_kategori/master_kategori.html', {'data_tema': data_tema, 'data_kategori' : data_kategori, 'data_sub_kategori' : data_sub_kategori, 'data_kat' : data_kat})
 
 def edit_kategori(request, kategori_id_):
+
     if request.method == 'POST':
         dt_kategori = Master_kategori.objects.get(kategori_id=kategori_id_)
         kategori_uraian = request.POST.get('kategori_uraian')
+        kategori_tema= request.POST.get ('form_sub')
+
         
         dt_kategori.kategori_uraian=kategori_uraian
-        # Lakukan perubahan yang diperlukan pada objek dt_jenjang
         dt_kategori.save()
-        return redirect('sipandu_admin:master_kategori')  # Redirect ke halaman edit_jenjang dengan menyertakan jenjang_id
+
+        redirect_url = f'/admin/master-kategori?tema_id={kategori_tema}'
+        return redirect(redirect_url) 
     
     else:
         dt_kategori = Master_kategori.objects.get(kategori_id=kategori_id_)
@@ -58,12 +71,14 @@ def SubKategori(request):
      if request.method == 'POST':
         kategori_id_id = request.POST.get('kategori_uraian')
         Sub_kategori_uraian = request.POST.get ('sub_kategori_uraian')
+        kategori_tema= request.POST.get ('form_sub')
 
         dt_sub_kategori = Sub_kategori.objects.create(kategori_id_id=kategori_id_id,sub_kategori_uraian=Sub_kategori_uraian)
 
         print(kategori_id_id,Sub_kategori_uraian)
 
-        return redirect('sipandu_admin:master_kategori')
+        redirect_url = f'/admin/master-kategori?tema_id={kategori_tema}'
+        return redirect(redirect_url)
     
      else:
         data_tema = Master_tema.objects.all()
@@ -76,10 +91,13 @@ def edit_sub_kategori(request, sub_kategori_id_):
         dt_sub_kategori = Sub_kategori.objects.get(sub_kategori_id=sub_kategori_id_)
 
         sub_kategori_uraian = request.POST.get('sub_kategori_uraian')
+        kategori_tema= request.POST.get ('form_sub')
+
         
         dt_sub_kategori.sub_kategori_uraian=sub_kategori_uraian
         dt_sub_kategori.save()
-        return redirect('sipandu_admin:master_kategori')  
+        redirect_url = f'/admin/master-kategori?tema_id={kategori_tema}'
+        return redirect(redirect_url)
     
     else:
         dt_sub_kategori = Sub_kategori.objects.get(sub_kategori_id=sub_kategori_id_)

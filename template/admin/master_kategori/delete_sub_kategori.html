@@ -52,12 +52,9 @@
     function prepareDelete(sub_kategori_id) {
         var confirmation = confirm("Apakah Anda yakin ingin menghapus data ini?");
         if (confirmation) {
-            // Set nilai jenjang_id dalam form
             document.getElementById("sub_kategori_id").value = sub_kategori_id;
-            // Submit form
             document.getElementById("deleteForm").submit();
         } else {
-            // Do nothing
         }
     }
 </script>

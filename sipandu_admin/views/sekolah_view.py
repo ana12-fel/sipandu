@@ -1,34 +1,53 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
-from sipandu_app.models import Master_sekolah, Master_wilayah, Master_jenjang
+from sipandu_app.models import Master_sekolah, Master_wilayah, Master_jenjang, LEVEL_WILAYAH
 
 def IndexSekolah(request):
     if request.method == 'POST':
         sekolah_nama = request.POST.get('sekolah_nama') 
         sekolah_npsn = request.POST.get('sekolah_npsn')
         sekolah_jenis = request.POST.get('sekolah_jenis')
-        wilayah = request.POST.get ('wilayah')
-     
+        sekolah_wilayah = request.POST.get ('sekolah_wilayah')
         sekolah_jenjang = request.POST.get('sekolah_jenjang')
+
         
         print (sekolah_jenjang)
         dt_sekolah = Master_sekolah.objects.create(
             sekolah_nama=sekolah_nama,
             sekolah_npsn=sekolah_npsn,
             sekolah_jenis=sekolah_jenis,
-            sekolah_wilayah_id=wilayah,
+            sekolah_wilayah=Master_wilayah.objects.get(wilayah_id = sekolah_wilayah),
             sekolah_jenjang=Master_jenjang.objects.get(jenjang_id = sekolah_jenjang),
         )
 
-        print(sekolah_nama, sekolah_npsn, sekolah_jenis, sekolah_jenjang,wilayah)
-
+        print(sekolah_nama, sekolah_npsn, sekolah_jenis, sekolah_jenjang, sekolah_wilayah)
         return redirect('sipandu_admin:index_sekolah')
     
     else:
+        data_prov = Master_wilayah.objects.filter(wilayah_level='1')
         data_jenjang = Master_jenjang.objects.all()
         data_sekolah = Master_sekolah.objects.all()
         data_wilayah = Master_wilayah.objects.all()
-        return render(request, 'admin/master/index_master_sekolah.html', {'data_sekolah': data_sekolah, 'data_wilayah': data_wilayah, "data_jenjang": data_jenjang})
+        return render(request, 'admin/master/index_master_sekolah.html', {'data_sekolah': data_sekolah, 'data_wilayah': data_wilayah, "data_jenjang": data_jenjang, "data_prov" : data_prov})
+    
+def get_wilayah(request):
+    if request.method == 'GET' and request.is_ajax():
+        level = request.GET.get('level')
+        wilayah_id = request.GET.get('wilayah_id')
+        
+        if level == 'kab':
+            wilayah_list = Master_wilayah.objects.filter(wilayah_parent=wilayah_id, wilayah_level=3).values('wilayah_id', 'wilayah_nama')
+        elif level == 'kec':
+            wilayah_list = Master_wilayah.objects.filter(wilayah_parent=wilayah_id, wilayah_level=4).values('wilayah_id', 'wilayah_nama')
+        else:
+            wilayah_list = []
+
+        return JsonResponse({"data_wilayah": list(wilayah_list)})
+    return JsonResponse({'error': 'Invalid request'})
+
+    
+from django.shortcuts import get_object_or_404
+
     
 def edit_sekolah(request, sekolah_id):
     if request.method == 'POST':

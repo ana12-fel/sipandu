@@ -12,10 +12,12 @@
                 <!-- Form tambah data di sini -->
                 <form method="post" action="{% url 'sipandu_admin:edit_kategori' dt_kategori.kategori_id %}">
                     {% csrf_token %}
+                    {% for dt_kat in data_kat %}
+                    <input type="hidden" class="form-control" id="form_tema_id" value="{{ dt_kat.tema_id }}" name="form_sub">
+                    {% endfor %}
                     <div class="mb-3">
                         <label for="kategori_" class="form-label">Nama Kategori</label>
                         <input type="text" value="{{dt_kategori.kategori_uraian}}" class="form-control" name="kategori_uraian" placeholder="Masukkan id">
-                        <!-- Input jenjang_status secara default -->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

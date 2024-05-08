@@ -42,6 +42,7 @@ Master User
                 </div>
             </div>
         </div>
+        <div class="" id="data_tema"></div>
 
         <!-- KATEGORI -->
         <div class="page-header">
@@ -69,11 +70,14 @@ Master User
                         <!-- Form tambah data di sini -->
                         <form method="post" action="{% url 'sipandu_admin:master_kategori' %}">
                             {% csrf_token %}
+                            {% for dt_kat in data_kat %}
                             <div class="mb-3">
                                 <label for="form_tema" class="form-label">Nama Tema</label>
-                                <input type="hidden" class="form-control" id="form_tema_id" name="form_tema_id">
-                                <input type="text" class="form-control" id="form_tema" name="form_tema">
+                                <input type="hidden" class="form-control" id="form_tema_id" value="{{ dt_kat.tema_id }}" name="form_tema_id">
+                                <input type="text" class="form-control" id="form_tema" name="form_tema" value="{{ dt_kat.tema_nama }}">
                             </div>
+                            {% endfor %}
+                            
                             <div class="mb-3">
                                 <label for="kategori_nama" class="form-label">Nama Kategori</label>
                                 <input type="text" class="form-control" id="kategori_nama" name="kategori_nama">
@@ -173,6 +177,9 @@ Master User
                         <form method="post" action="{% url 'sipandu_admin:sub_kategori' %}">
                             {% csrf_token %}
                             <div class="mb-3">
+                                {% for dt_sub_kat in data_kat %}
+                                <input type="hidden" class="form-control" id="form_tema_id" value="{{ dt_sub_kat.tema_id }}" name="form_sub">
+                                {% endfor %}
                                 <label for="kategori_uraian" class="form-label">Nama Kategori</label>
                                 <select class="form-select" id="kategori_uraian" name="kategori_uraian">
                                     <option value="" selected disabled>Pilih kategori</option>
@@ -261,9 +268,15 @@ Master User
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
 <script>
     function ubah_pilihan_tema(e){
+        var tema_id = e.value;
+        var tema_nama = e.options[e.selectedIndex].text;
         $('#form_tema_id').val($(e).val());
         $('#form_tema').val($(e).find(":selected").text())
-        // console.log($(e).val(), $(e).find(":selected").text())
+
+        var dataTemaElement = document.getElementById("data_tema");
+        dataTemaElement.innerHTML = `<h3 class="pt-2">Data untuk tema ${tema_nama}</h3>`;
+        window.location.replace(`?tema_id=${$(e).val()}`);
+
     }
 
     function deleteKategori(kategori_) {
@@ -290,20 +303,18 @@ Master User
                                 swal({
                                     title: "Data berhasil dihapus!",
                                     icon: "success",
-                                    buttons: false, // Tidak menampilkan tombol OK
-                                    timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                                    buttons: false, 
+                                    timer: 1500 
                                 });
-                                window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                                window.location.reload(); 
                             },
                             error: function (xhr, status, error) {
-                                // Terjadi kesalahan saat menghapus data
                                 swal("Terjadi kesalahan saat menghapus data!", {
                                     icon: "error",
                                 });
                             }
                         });
                     } else {
-                        // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
                         swal("Tindakan dibatalkan", "", "info");
                     }
                 });
@@ -335,20 +346,18 @@ Master User
                                 swal({
                                     title: "Data berhasil dihapus!",
                                     icon: "success",
-                                    buttons: false, // Tidak menampilkan tombol OK
-                                    timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                                    buttons: false, 
+                                    timer: 1500 
                                 });
-                                window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                                window.location.reload(); 
                             },
                             error: function (xhr, status, error) {
-                                // Terjadi kesalahan saat menghapus data
                                 swal("Terjadi kesalahan saat menghapus data!", {
                                     icon: "error",
                                 });
                             }
                         });
                     } else {
-                        // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
                         swal("Tindakan dibatalkan", "", "info");
                     }
                 });
@@ -371,11 +380,9 @@ Master User
         var subkategoriNumPages = Math.ceil(subkategoriRowsTotal / rowsShown);
         var subkategoriCurrentPage = 0;
 
-        // Menampilkan halaman pertama untuk Kategori dan Sub Kategori
         showKategoriPage(1);
         showSubKategoriPage(1);
 
-        // Fungsi untuk menampilkan halaman untuk Kategori
         function showKategoriPage(page) {
             kategoriCurrentPage = page;
             var start = (page - 1) * rowsShown;
@@ -426,6 +433,10 @@ Master User
                 showSubKategoriPage(subkategoriCurrentPage + 1);
             }
         });
+
+        let searchParams = new URLSearchParams(window.location.search)
+        // console.log()
+        $('#tema_id').val(searchParams.get('tema_id'))
     });
 </script>
 {% endblock %}
