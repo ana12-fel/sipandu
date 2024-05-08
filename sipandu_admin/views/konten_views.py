@@ -11,7 +11,6 @@ def IndexKonten(request):
         judul = request.POST.get ('judul')
         status = request.POST.get ('status')
         isi_konten = request.POST.get('isi_konten')
-        konten_deskripsi = request.POST.get('konten_deskripsi')
         konten_image = request.FILES.get('konten_image')
         konten_tag = request.POST.get('konten_tag')
 
@@ -24,11 +23,10 @@ def IndexKonten(request):
                                             judul=judul,
                                             status=status,
                                             isi_konten=isi_konten,
-                                            konten_deskripsi=konten_deskripsi,
                                             konten_image=konten_image,
                                             konten_tag=konten_tag)
         
-        print(konten_sekolah,konten_kategori,konten_sub_kategori,judul,status,isi_konten,konten_deskripsi,konten_image,konten_tag)
+        print(konten_sekolah,konten_kategori,konten_sub_kategori,judul,status,isi_konten,konten_image,konten_tag)
 
 
         return redirect('sipandu_admin:index_konten')
@@ -49,7 +47,6 @@ def TambahKonten(request):
         judul = request.POST.get ('judul')
         status = request.POST.get ('status')
         isi_konten = request.POST.get('isi_konten')
-        konten_deskripsi = request.POST.get('konten_deskripsi')
         konten_image = request.FILES.get('konten_image')
         konten_tag = request.POST.get('konten_tag')
         print(request.POST)
@@ -63,7 +60,6 @@ def TambahKonten(request):
                                             judul=judul,
                                             status=status,
                                             isi_konten=isi_konten,
-                                            konten_deskripsi=konten_deskripsi,
                                             konten_image=konten_image,
                                             konten_tag=konten_tag)
 
@@ -90,7 +86,6 @@ def EditKonten(request, id_data_konten):
         judul = request.POST.get ('judul')
         status = request.POST.get ('status')
         isi_konten = request.POST.get('isi_konten')
-        konten_deskripsi = request.POST.get('konten_deskripsi')
         konten_image = request.FILES.get('konten_image')
         konten_tag = request.POST.get('konten_tag')
         print(request.POST)
@@ -101,7 +96,6 @@ def EditKonten(request, id_data_konten):
         dt_konten.judul=judul
         dt_konten.status=status
         dt_konten.isi_konten=isi_konten
-        dt_konten.konten_deskripsi=konten_deskripsi
         dt_konten.konten_image=konten_image
         dt_konten.konten_tag=konten_tag
 
