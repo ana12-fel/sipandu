@@ -28,6 +28,8 @@ urlpatterns = [
     path('index-master-sekolah/', sekolah_view.IndexSekolah, name='index_sekolah'),
     path('edit_sekolah/<str:sekolah_id>/', sekolah_view.edit_sekolah, name='edit_sekolah'),
     path('sekolah/<str:sekolah_id>/delete/', sekolah_view.delete_sekolah, name='delete_sekolah'),
+    path('get-wilayah/', sekolah_view.get_wilayah, name='get_wilayah'),
+
 
     path('index-master-tema/', tema_view.IndexTema, name='index_tema'),
     path('edit_tema/<str:tema_id>/', tema_view.edit_tema, name='edit_tema'),
@@ -42,7 +44,7 @@ urlpatterns = [
 
     path('konten/', konten_views.IndexKonten, name='index_konten'),
     path('tambah_konten/', konten_views.TambahKonten, name='tambah_konten'),
-    path('edit_konten/<str:id_data_konten>/', konten_views.EditKonten, name='edit_konten'),
+    path('edit_konten/<str:id_data_konten>/edit', konten_views.EditKonten, name='edit_konten'),
     path('delete_konten/<str:id_data_konten>/delete', konten_views.DeleteKonten, name='delete_konten'),
     
     path('galeri/', galeri.Indexgaleri, name='index_galeri'),

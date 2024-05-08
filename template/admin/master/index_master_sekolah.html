@@ -17,16 +17,6 @@ Master Sekolah
                 </ol>
             </div>
             <div class="ms-auto pageheader-btn">
-                <!-- <a href="#" class="btn btn-primary btn-icon text-white me-2">
-                    <span>
-                        <i class="fe fe-plus"></i>
-                    </span> Data Sekolah
-                </a> -->
-                <!-- <a href="#" class="btn btn-primary btn-icon text-white me-2">
-                    <span>
-                        <i class="fe fe-plus"></i>
-                    </span> Semua Sekolah
-                </a> -->
                 <a href="#" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#addDataModal">
                     <span>
                         <i class="fe fe-plus"></i>
@@ -51,13 +41,31 @@ Master Sekolah
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="sekolah_jenjang" class="form-label">Provinsi</label>
-                                <select class="form-select" id="sekolah_provinsi" name="wilayah">
+                                <select class="form-select" id="wilayah_id" name="wilayah_nama">
                                     <option value="test" selected disabled>Pilih Wilayah</option>
                                     {% for provinsi in data_wilayah %}
                                     <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_provinsi.upper}}</option>
                                     {% endfor %}
                                 </select>
-                            </div>  
+                            </div>
+                            <div class="mb-3">
+                                <label for="sekolah_jenjang" class="form-label">Kecamatan</label>
+                                <select class="form-select" id="wilayah_id" name="wilayah_nama">
+                                    <option value="test" selected disabled>Pilih Wilayah</option>
+                                    {% for provinsi in data_wilayah %}
+                                    <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_provinsi.upper}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div> 
+                            <div class="mb-3">
+                                <label for="sekolah_jenjang" class="form-label">Kabupaten</label>
+                                <select class="form-select" id="wilayah_id" name="wilayah">
+                                    <option value="test" selected disabled>Pilih Wilayah</option>
+                                    {% for provinsi in data_wilayah %}
+                                    <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_provinsi.upper}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>   
                             
                 
                             <div class="mb-3">
@@ -96,9 +104,6 @@ Master Sekolah
                 </div>
             </div>
         </div>
-
-
-
         <!-- ROW-1 -->
         <div class="row row-sm">
             <div class="col-lg-12">
@@ -108,9 +113,10 @@ Master Sekolah
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="sekolahResponsiveDatatable">
                                 <thead>
                                     <tr>
+                                        <th class="text-center border-bottom-0">NO</th>
                                         <th class="text-center border-bottom-0">PROVINSI</th>
                                         <th class="text-center border-bottom-0">KABUPATEN</th>
                                         <th class="text-center border-bottom-0">KECAMATAN</th>
@@ -125,6 +131,7 @@ Master Sekolah
                                 <tbody>
                                     {% for dt_sekolah in data_sekolah %}
                                         <tr>
+                                            <td class="text-center align-middle">{{ forloop.counter }}</td>
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.wilayah_provinsi }}</td> 
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.wilayah_kabupaten }}</td> 
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.wilayah_distrik }}</td> 
@@ -159,7 +166,64 @@ Master Sekolah
 
 {% block js %}
 <script>
-    function deleteSekolah(sekolah_) {
+    function getKabupaten(e) {
+    var provinsi_id = $(e).val();
+    var kabupatenSelect = $('#kab');
+
+    $.ajax({
+        url: "{% url 'sipandu_admin:get_wilayah' %}",
+        type: "GET",
+        data: {
+            'level': 'kab',
+            'wilayah_id': provinsi_id
+        },
+        success: function(response) {
+            console.log(response);
+            kabupatenSelect.empty().append('<option value="">- Pilih Kabupaten -</option>');
+            response.data_wilayah.forEach(function(item) {
+                kabupatenSelect.append($('<option>', {
+                    value: item.wilayah_id,
+                    text: item.wilayah_nama
+                }));
+            });
+            kabupatenSelect.prop('disabled', false);
+            getKecamatan(kabupatenSelect); 
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
+
+function getKecamatan(e) {
+    var kabupaten_id = $(e).val();
+    var kecamatanSelect = $('#kec');
+
+    $.ajax({
+        url: "{% url 'sipandu_admin:get_wilayah' %}",
+        type: "GET",
+        data: {
+            'level': 'kec',
+            'wilayah_id': kabupaten_id
+        },
+        success: function(response) {
+            console.log(response);
+            kecamatanSelect.empty().append('<option value="">- Pilih Kecamatan -</option>');
+            response.data_wilayah.forEach(function(item) {
+                kecamatanSelect.append($('<option>', {
+                    value: item.wilayah_id,
+                    text: item.wilayah_nama
+                }));
+            });
+            kecamatanSelect.prop('disabled', false);
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
+
+function deleteSekolah(sekolah_) {
     var deleteUrl = "{% url 'sipandu_admin:delete_sekolah' 'sekolah_id' %}".replace("sekolah_id", sekolah_);
 
     swal({
@@ -202,6 +266,15 @@ Master Sekolah
         }
     });
 }
+    $(function(){
+        $('#sekolahResponsiveDatatable').DataTable({
+		scrollX: "100%",
+		language: {
+			searchPlaceholder: 'Search...',
+			sSearch: '',
+		}
+	});
+    })
 
 </script>
 

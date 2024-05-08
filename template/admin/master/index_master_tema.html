@@ -22,9 +22,6 @@ Master User
                 <button type="button" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#tambahModal">
                     <span><i class="fe fe-plus"></i></span> Tambahkan
                 </button>
-                <a href="#" class="btn btn-success btn-icon text-white">
-                    <span><i class="fe fe-log-in"></i></span> Export
-                </a>
             </div>
         </div>
         <!-- PAGE-HEADER END -->
@@ -80,7 +77,7 @@ Master User
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="temaResponsiveDatatable">
                                 <thead>
                                     <tr>
                                         <th class="text-center border-bottom-0">NAMA TEMA</th>
@@ -189,6 +186,17 @@ Master User
             }
         });
     }
+
+    $(function(){
+        $('#temaResponsiveDatatable').DataTable({
+		scrollX: "100%",
+		language: {
+			searchPlaceholder: 'Search...',
+			sSearch: '',
+		}
+	});
+    })
+
 </script>
 
 {% endblock %}

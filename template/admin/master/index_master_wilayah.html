@@ -23,11 +23,6 @@ Master Wilayah
                         <i class="fe fe-plus"></i>
                     </span> Tambahkan Data
                 </a>
-                <a href="#" class="btn btn-success btn-icon text-white">
-                    <span>
-                        <i class="fe fe-log-in"></i>
-                    </span> Export
-                </a>
             </div>
         </div>
         <!-- PAGE-HEADER END -->
@@ -67,18 +62,18 @@ Master Wilayah
                                 <label for="role">Kabupaten</label>
                                 <select name="kab" id="kab" data-level="kab" class="form-control" onchange="render_kab(this)">
                                     <option value="">- Pilih Kabupaten -</option>
-                                    <!-- {% for level_key, level_display in wilayah_level %}
+                                    {% for level_key, level_display in wilayah_level %}
                                         <option value="{{ level_key }}">{{ level_display }}</option>
-                                    {% endfor %} -->
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="mb-3 d-none" id="div_kec">
                                 <label for="role">Kecamatan</label>
                                 <select name="kec" id="kec" data-level="kec" class="form-control">
                                     <option value="">- Pilih Kecamatan -</option>
-                                    {% for level_key, level_display in wilayah_level %}
+                                    <!-- {% for level_key, level_display in wilayah_level %}
                                         <option value="{{ level_key }}">{{ level_display }}</option>
-                                    {% endfor %}
+                                    {% endfor %} -->
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -118,12 +113,6 @@ Master Wilayah
         <!-- ROW OPEN -->
         <div class="row row-cards">
             <div class="col-lg-12 col-xl-12">
-                <div class="input-group mb-5">
-                    <input type="text" class="form-control" placeholder="">
-                    <div class="input-group-text btn btn-primary">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                    </div>
-                </div>
                 <div class="card">
                     <div class="card-header border-bottom-0 p-4">
                         <div class="page-options d-flex float-end">
@@ -131,7 +120,7 @@ Master Wilayah
                     </div>
                     <div class="e-table px-5 pb-5">
                         <div class="table-responsive table-lg">
-                            <table class="table border-top table-bordered mb-0">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="wilayahResponsiveDatatable">
                                 <thead>
                                     <tr>
                                         <th class="text-center">KODE</th>
@@ -156,7 +145,7 @@ Master Wilayah
                                                     <!-- Tombol edit -->
                                                     <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_wilayah.wilayah_id}}">Edit</a> &nbsp;
                                                     <!-- Tombol delete -->
-                                                    <button onclick="deletewilayah('{{ dt_wilayah.wilayah_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                    <button onclick="deleteWilayah('{{ dt_wilayah.wilayah_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -166,18 +155,6 @@ Master Wilayah
                             </table>
                         </div>
                     </div>
-                </div>
-                <div class="mb-5">
-                    <ul class="pagination float-end">
-                        <li class="page-item page-prev disabled">
-                            <a class="page-link" href="#" tabindex="-1">Prev</a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item page-next">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -189,6 +166,49 @@ Master Wilayah
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
 <script>
+     function deleteWilayah(wilayah_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_wilayah' 'wilayah_id' %}".replace("wilayah_id", wilayah_);
+
+        swal({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "DELETE",
+                    success: function (response) {
+                        console.log('berhasil');
+                        swal({
+                            title: "Data berhasil dihapus!",
+                            icon: "success",
+                            buttons: false, // Tidak menampilkan tombol OK
+                            timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                        });
+                        window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                    },
+                    error: function (xhr, status, error) {
+                        // Terjadi kesalahan saat menghapus data
+                        swal("Terjadi kesalahan saat menghapus data!", {
+                            icon: "error",
+                        });
+                    }
+                });
+            } else {
+                // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+                swal("Tindakan dibatalkan", "", "info");
+            }
+        });
+    }
 
     function pilih_level(e){
         // 1 = provinsi, 2 = kab, 3 = kec
@@ -284,6 +304,17 @@ Master Wilayah
         var level = $(this).val();
         getWilayahByLevel(level);
     });
+
+    $(function(){
+        $('#wilayahResponsiveDatatable').DataTable({
+		scrollX: "100%",
+		language: {
+			searchPlaceholder: 'Search...',
+			sSearch: '',
+		}
+	});
+    })
+
 </script>
 
 {% endblock %}

@@ -40,7 +40,7 @@ Master User
                     </div>
                     <div class="card-body">
                         <div class="example">
-                            <table class="table border-top table-bordered mb-0">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="datakontenResponsiveDatatable">
                                 <thead>
                                     <tr>
                                         <th class="text-center border-bottom-0">No</th>
@@ -63,13 +63,12 @@ Master User
                                         <td class="text-center align-middle"><span>{% if dt_konten.status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
-                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_konten.id_data_konten}}">Edit</a> &nbsp;
+                                                <a href="{% url 'sipandu_admin:edit_konten' dt_konten.id_data_konten %}" class="btn btn-sm btn-primary badge">Edit</a> &nbsp;
                                                 <button onclick="deleteKonten('{{ dt_konten.id_data_konten }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
                                             </div>
                                         </td> 
                                         <!-- <td><button type="button" class="btn btn-success"><i class="fa fa-check"></i> Aktif</button></td> --> 
                                     </tr>
-                                    {% include 'admin/data/edit_konten.html' %}
                                     {% endfor %}
                                 </tbody>
                             </table>
@@ -101,9 +100,8 @@ Master User
     function (isConfirm) {
         if (isConfirm) {
             $.ajax({
-                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
                 url: deleteUrl,
-                type: "DELETE",
+                type: "GET",
                 success: function (response) {
                     console.log('berhasil');
                     swal({
@@ -127,6 +125,15 @@ Master User
         }
     });
 }
+    $(function(){
+        $('#datakontenResponsiveDatatable').DataTable({
+		scrollX: "100%",
+		language: {
+			searchPlaceholder: 'Search...',
+			sSearch: '',
+		}
+	});
+    })
 
 </script>
 

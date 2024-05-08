@@ -1,55 +1,152 @@
-<!-- Modal Edit Data Tema -->
-<div class="modal fade" id="editdata_{{ dt_konten.id_data_konten }}" tabindex="-1" aria-labelledby="editDataModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editDataModalLabel">Edit Data Konten</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+{% extends 'admin/base/base_index.html' %}
+{% load static %}
+{% block title %}
+Master User
+{% endblock %}
+
+{% block content %}
+<!-- edit_konten.html -->
+<div class="app-content">
+    <div class="side-app">
+
+        <!-- PAGE-HEADER -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Edit DATA KONTEN</h1>
             </div>
-            <div class="modal-body">
-                <!-- Form edit data di sini -->
-                <form method="post" enctype="multipart/form-data" action="{% url 'sipandu_admin:edit_konten' dt_konten.id_data_konten %}">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="konten_kategori" class="form-label">Kategori</label>
-                        <select class="form-select" id="konten_kategori" name="konten_kategori">
-                            <option value="" selected disabled>Pilih Kategori</option>
-                            {% for kategori in data_kategori %}
-                            <option value="{{ kategori.kategori_id }}" {% if dt_konten.konten_kategori_id == kategori.kategori_id %} selected {% endif %}>{{ kategori.kategori_uraian.upper }}</option>
-                            {% endfor %}
-                        </select>
+        </div>
+
+        <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Edit Konten</h3>
                     </div>
-                    <div class="mb-3">
-                        <label for="konten_sub_kategori" class="form-label">Sub Kategori</label>
-                        <select class="form-select" id="konten_sub_kategori" name="konten_sub_kategori">
-                            <option value="" selected disabled>Pilih Sub Kategori</option>
-                            {% for sub_kategori in data_sub_kategori %}
-                            <option value="{{ sub_kategori.sub_kategori_id }}" {% if dt_konten.konten_sub_kategori_id == sub_kategori.sub_kategori_id %} selected {% endif %}>{{ sub_kategori.sub_kategori_uraian.upper }}</option>
-                            {% endfor %}
-                        </select>
+                <div class="card-body">
+<form method="post" action="{% url 'sipandu_admin:edit_konten' dt_konten.id_data_konten %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="konten_sekolah" class="form-label">Sekolah</label>
+        <select class="form-select" id="konten_sekolah" name="konten_sekolah">
+            <option value="test" selected disabled>Pilih Sekolah</option>
+            {% for sekolah in data_sekolah %}
+            <option value="{{ sekolah.sekolah_id }}" {% if dt_konten.konten_sekolah_id == sekolah.sekolah_id %} selected {% endif %}>{{ sekolah.sekolah_nama.upper }}</option>
+            {% endfor %}
+        </select>
+    </div> 
+    <div class="mb-3">
+        <label for="konten_kategori" class="form-label">Kategori</label>
+        <select class="form-select" id="konten_kategori" name="konten_kategori">
+            <option value="" selected disabled>Pilih Kategori</option>
+            {% for kategori in data_kategori %}
+            <option value="{{ kategori.kategori_id }}" {% if dt_konten.konten_kategori_id == kategori.kategori_id %} selected {% endif %}>{{ kategori.kategori_uraian.upper }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="konten_sub_kategori" class="form-label">Sub Kategori</label>
+        <select class="form-select" id="konten_sub_kategori" name="konten_sub_kategori">
+            <option value="" selected disabled>Pilih Sub Kategori</option>
+            {% for sub_kategori in data_sub_kategori %}
+            <option value="{{ sub_kategori.sub_kategori_id }}" {% if dt_konten.konten_sub_kategori_id == sub_kategori.sub_kategori_id %} selected {% endif %}>{{ sub_kategori.sub_kategori_uraian.upper }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="judul" class="form-label">Judul</label>
+        <input type="text" value="{{ dt_konten.judul }}" class="form-control" name="judul" required>
+    </div>
+    <div class="mb-3">
+        <label>Status</label>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="status" id="statusAktif" value="True" {% if dt_konten.konten_status == "True" %} checked {% endif %}>
+            <label class="form-check-label" for="statusAktif">Aktif</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="status" id="statusTidakAktif" value="False" {% if dt_konten.konten_status == "False" %} checked {% endif %}>
+            <label class="form-check-label" for="statusTidakAktif">Tidak Aktif</label>
+        </div>
+    </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="konten_tag" class="form-label">Tag</label>
+        <input type="text" value="{{ dt_konten.konten_tag }}" class="form-control" id="konten_tag" name="konten_tag" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="image" class="form-label">Image</label>
+        <input type="file" value="{{ dt_konten.konten_image }}" class="form-control" id="image" name="konten_image" accept="image/*" onchange="previewImage(event)">
+    </div>
+    <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> 
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header border-bottom-0">
+                    <div class="card-title">
+                        Isi Konten
                     </div>
-                    <div class="mb-3">
-                        <label for="judul" class="form-label">Judul</label>
-                        <input type="text" value="{{ dt_konten.judul }}" class="form-control" name="judul" required>
-                    </div>
-                    <div class="mb-3">
-                        <label>Status</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="status" id="statusAktif" value="True" {% if dt_konten.status == "True" %} checked {% endif %}>
-                            <label class="form-check-label" for="statusAktif">Aktif</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="status" id="statusTidakAktif" value="False" {% if dt_konten.status == "False" %} checked {% endif %}>
-                            <label class="form-check-label" for="statusTidakAktif">Tidak Aktif</label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </form>
+                </div>
+                <div class="card-body">
+                    <textarea value="{{ dt_konten.isi_konten }}" id="editor" name="isi_konten" >
+                        {{ dt_konten.isi_konten }}
+                    </textarea>
+                </div>
             </div>
         </div>
     </div>
+
+    
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+    </div>
+</form>
 </div>
-<!-- Modal Edit Data Tema End -->
+</div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'admin/js/ckeditor.js'%}"></script>
+
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .then( editor => {
+                console.log( editor );
+        } )
+        .catch( error => {
+                console.error( error );
+        } );
+        
+    function previewImage(event) {
+        var input = event.target;
+        var preview = document.getElementById('image-preview');
+        
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                // Menghapus preview thumbnail sebelumnya jika ada
+                while (preview.firstChild) {
+                    preview.removeChild(preview.firstChild);
+                }
+
+                // Menambahkan elemen img untuk menampilkan preview thumbnail
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '300px';
+                img.alt = ' Preview';
+                preview.appendChild(img);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+</script>
+{% endblock %}
+
+

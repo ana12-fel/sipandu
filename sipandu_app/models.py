@@ -11,10 +11,6 @@ LEVEL_WILAYAH = (
     (4, 'Kampung')
 )
 
-PROVINSI = [
-    ('papteng', 'papua tengah')
-]
-
 WARNA = (
     (1, 'merah putih'),
     (2, 'putih biru'),
@@ -212,7 +208,7 @@ class Data_konten(models.Model):
     konten_sub_kategori = models.ForeignKey(Sub_kategori, on_delete=models.PROTECT,default=None, null=True)
     judul = models.CharField(max_length=200)
     isi_konten = models.TextField(default=None, null=True)
-    status = models.BooleanField(default=True)
+    status = models.CharField(max_length=100, null=True)
     konten_image = models.ImageField(upload_to='image_konten/')
     konten_tag = models.TextField(max_length=25)
     created_at = models.DateTimeField(auto_now_add=True)

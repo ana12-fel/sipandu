@@ -1,39 +1,61 @@
-<!-- Modal Tambah Data -->
- 
- <div class="modal fade" id="editdata_{{dt_wilayah.wilayah_id}}" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
+<!-- Modal Edit Data -->
+<div class="modal fade" id="editdata_{{dt_wilayah.wilayah_id}}" tabindex="-1" aria-labelledby="editdata_{{dt_wilayah.wilayah_id}}Label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addDataModalLabel">Edit Data wilayah</h5>
+                <h5 class="modal-title" id="editdata_{{dt_wilayah.wilayah_id}}Label">Edit Data Wilayah</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Form tambah data di sini -->
-                <form method="post" action="{% url 'sipandu_admin:edit_wilayah' dt_wilayah.wilayah_id %}">
+                <!-- Form edit data di sini -->
+                <form id="editWilayahForm_{{dt_wilayah.wilayah_id}}" method="post" action="{% url 'sipandu_admin:edit_wilayah' dt_wilayah.wilayah_id %}">
                     {% csrf_token %}
                     <div class="mb-3">
+                        <label for="role">Level</label>
+                        <select name="wilayah_level_edit" id="wilayah_level_edit_{{dt_wilayah.wilayah_id}}" class="form-control" onchange="pilih_level_edit(this)">
+                            <option value="">- Pilih Level Wilayah -</option>
+                            {% for key_level, display_level in wilayah_level %}
+                                <option value="{{ key_level }}">{{ display_level }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3 d-none" id="div_prov_edit_{{dt_wilayah.wilayah_id}}">
+                        <label for="role">Provinsi</label>
+                        <select name="prov_edit" id="prov_edit_{{dt_wilayah.wilayah_id}}" data-level="prov_edit" class="form-control" onchange="render_prov_edit(this)">
+                            <option value="">- Pilih Provinsi -</option>
+                            {% for provinsi in data_prov %}
+                                <option value="{{ provinsi.wilayah_id }}">{{ provinsi.wilayah_nama }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3 d-none" id="div_kab_edit_{{dt_wilayah.wilayah_id}}">
+                        <label for="role">Kabupaten</label>
+                        <select name="kab_edit" id="kab_edit_{{dt_wilayah.wilayah_id}}" data-level="kab_edit" class="form-control" onchange="render_kab_edit(this)">
+                            <option value="">- Pilih Kabupaten -</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 d-none" id="div_kec_edit_{{dt_wilayah.wilayah_id}}">
+                        <label for="role">Kecamatan</label>
+                        <select name="kec_edit" id="kec_edit_{{dt_wilayah.wilayah_id}}" data-level="kec_edit" class="form-control">
+                            <option value="">- Pilih Kecamatan -</option>
+                            {% for key_level, display_level in wilayah_level %}
+                                <option value="{{ key_level }}">{{ display_level }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="kode" class="form-label">Kode</label>
-                        <input type="text" value="{{dt_wilayah.wilayah_kode}}" class="form-control" name="wilayah_kode" placeholder="Masukkan Kode">
-                        <label for="provinsi" class="form-label">Provinsi</label>
-                        <input type="text" value="{{dt_wilayah.wilayah_provinsi}}" class="form-control" name="wilayah_provinsi" placeholder="Masukkan Provinsi">
-                        <label for="provinsi" class="form-label">Kabupaten</label>
-                        <input type="text" value="{{dt_wilayah.wilayah_kabupaten}}" class="form-control" name="wilayah_kabupaten" placeholder="Masukkan Kabupaten">
-                        <label for="provinsi" class="form-label">Distrik</label>
-                        <input type="text" value="{{dt_wilayah.wilayah_distrik}}" class="form-control" name="wilayah_distrik" placeholder="Masukkan Distrik">
-                        <!-- Input wilayah_status secara default -->
+                        <input type="text" class="form-control" name="wilayah_kode_edit" placeholder="Masukkan Status kode">
                     </div>
-                        <div class="mb-3">
-                            <label>Status</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="wilayah_status" id="statusAktif" value="True" {% if dt_jenjang.jenjang_status == "True" %} checked {% endif %}>
-                                <label class="form-check-label" for="statusAktif">Aktif</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="wilayah_status" id="statusTidakAktif" value="False" {% if dt_jenjang.jenjang_status == "False" %} checked {% endif %}>
-                                <label class="form-check-label" for="statusTidakAktif">Tidak Aktif</label>
-                            </div>
-                        </div>
+                    <div class="mb-3">
+                        <label for="wilayah_nama_edit" class="form-label">Nama Wilayah</label>
+                        <input type="text" class="form-control" id="wilayah_nama_edit_{{dt_wilayah.wilayah_id}}" name="wilayah_nama_edit" placeholder="Masukkan Nama Wilayah">
                     </div>
+                    <!-- Input wilayah_status secara default -->
+                    <div class="mb-3">
+                        <input type="hidden" name="wilayah_status_edit" value="True">
+                    </div>
+                    
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -44,6 +66,64 @@
         </div>
     </div>
 </div>
-<!-- Modal Tambah Data End -->
 
-                            
+<script>
+    function pilih_level_edit(e) {
+        var level = $(e).val();
+        var div_prov = $('#div_prov_edit_' + e.id.split("_").pop());
+        var div_kab = $('#div_kab_edit_' + e.id.split("_").pop());
+        var div_kec = $('#div_kec_edit_' + e.id.split("_").pop());
+
+        if (level == '1') {
+            div_prov.addClass('d-none');
+            div_kab.addClass('d-none');
+            div_kec.addClass('d-none');
+        } else if (level == '2') {
+            div_prov.removeClass('d-none');
+            div_kab.addClass('d-none');
+            div_kec.addClass('d-none');
+        } else if (level == '3') {
+            div_prov.removeClass('d-none');
+            div_kab.removeClass('d-none');
+            div_kec.addClass('d-none');
+        } else {
+            div_prov.removeClass('d-none');
+            div_kab.removeClass('d-none');
+            div_kec.removeClass('d-none');
+        }
+
+        div_prov.trigger('change');
+        div_kab.trigger('change');
+        div_kec.trigger('change');
+    }
+
+    function render_kab_edit(e) {
+        var level_wilayah = $(e).data('level');
+
+        $.ajax({
+            url: "{% url 'sipandu_admin:get_wilayah_by_level' %}",
+            type: "GET",
+            data: {
+                'level': $('#wilayah_level_edit_' + e.id.split("_").pop()).val(),
+                'wilayah_id': $(e).val()
+            },
+            success: function(response) {
+                if (level_wilayah == 'prov_edit') {
+                    var elem = $('#kab_edit_' + e.id.split("_").pop());
+                } else if (level_wilayah == 'kab_edit') {
+                    var elem = $('#kec_edit_' + e.id.split("_").pop());
+                }
+
+                elem.html('');
+                var opt_label = '<option value="">- Pilih Kabupaten -</option>';
+                for (var i = 0; i < response.data_wilayah.length; i++) {
+                    elem.append(`<option value="${response.data_wilayah[i]['wilayah_id']}">${response.data_wilayah[i]['wilayah_nama']}</option>`);
+                }
+                elem.val('');
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+</script>
