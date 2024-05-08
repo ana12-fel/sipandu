@@ -61,11 +61,9 @@ Master User
                             <div class="mb-3">
                                 <label for="thumbnail" class="form-label">Thumbnail</label>
                                 <input type="file" class="form-control" id="thumbnail" name="tema_thumbnail" accept="image/*" onchange="previewThumbnail(event)">
-
                             </div>
                             <div id="thumbnail-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> <!-- Container untuk menampilkan preview thumbnail -->
                             <button type="submit" class="btn btn-primary">Simpan</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         </form>
                     </div>
                 </div>
@@ -104,9 +102,8 @@ Master User
                                             <div class="btn-group align-top">
                                                 <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_tema.tema_id}}">Edit</a> &nbsp;
                                                 <button onclick="deleteTema('{{ dt_tema.tema_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
-
-
                                             </div>
+                                        </td> 
                                     </tr>
                                     {% include 'admin/master/edit_tema.html' %}
                                     {% endfor %}

@@ -1,0 +1,39 @@
+<!-- Modal Edit Data Tema -->
+<div class="modal fade" id="editdata_{{ dt_sub_kategori.sub_kategori_id }}" tabindex="-1" aria-labelledby="editDataModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editDataModalLabel">Edit Data Sub Kategori</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form edit data di sini -->
+                <form method="post" enctype="multipart/form-data" action="{% url 'sipandu_admin:edit_sub_kategori' dt_sub_kategori.sub_kategori_id %}">
+                    {% csrf_token %}
+                    {% for dt_sub_kat in data_kat %}
+                    <input type="hidden" class="form-control" id="form_tema_id" value="{{ dt_sub_kat.tema_id }}" name="form_sub">
+                    {% endfor %}
+                    <div class="mb-3">
+                        <label for="kategori_uraian" class="form-label">Nama Kategori</label>
+                        <select class="form-select" id="kategori_uraian" name="kategori_uraian">
+                            <option value="" selected disabled>Pilih Kategori</option>
+                            {% for kategori in data_kategori %}
+                            <option value="{{ kategori.kategori_id }}" {% if dt_sub_kategori.kategori_id_id == kategori.kategori_id %} selected {% endif %}>{{ kategori.kategori_uraian.upper }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sub_kategori_uraian" class="form-label">Sub Kategori</label>
+                        <input type="text" value="{{ dt_sub_kategori.sub_kategori_uraian }}" class="form-control" name="sub_kategori_uraian" required>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Edit Data Tema End -->

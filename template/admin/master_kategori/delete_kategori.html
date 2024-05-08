@@ -1,0 +1,62 @@
+<div class="card">
+    <div class="card-header border-bottom-0 p-4">
+        <div class="page-options d-flex justify-content-end">
+            <!-- Tempatkan tombol-tombol atau opsi-opsi halaman di sini -->
+        </div>
+    </div>
+    <div class="e-table px-5 pb-5">
+        <div class="table-responsive table-lg">
+            <form id="deleteForm" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="kategori_id" id="kategori_id">
+            </form>
+            <table class="table border-top table-bordered mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-center">Select</th>
+                        <th>Nama Kategori</th>
+                        <th class="text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dt_edit in edit_kategori %}
+                    <tr>
+                        <td class="align-middle text-center">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" id="item-{{ dt_edit.kategori_id }}" type="checkbox"> 
+                                <label class="custom-control-label" for="item-{{ dt_edit.kategori_id }}"></label>
+                            </div>
+                        </td>
+                        <td class="text-nowrap align-middle">{{ dt_edit.kategori_uraian }}</td>
+                            <div class="btn-group align-top">
+                                <button class="btn btn-sm btn-danger badge" onclick="prepareDelete('{{ dt_edit.kategori_id }}')" type="button">Delete</button>
+                            </div>
+                        </td>
+                        <form id="deleteForm{{ dt_kategori.kategori_id }}" method="post" action="{% url 'delete_kategori' dt_kategori.kategori_id %}">
+                            {% csrf_token %}
+                        </form>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Delete Function -->
+{% block js %}
+<script>
+    function prepareDelete(kategori_id) {
+        var confirmation = confirm("Apakah Anda yakin ingin menghapus data ini?");
+        if (confirmation) {
+            // Set nilai jenjang_id dalam form
+            document.getElementById("jenjang_id").value = kategori_id;
+            // Submit form
+            document.getElementById("deleteForm").submit();
+        } else {
+            // Do nothing
+        }
+    }
+</script>
+{% endblock %}

@@ -32,7 +32,7 @@ Master User
         </div>
         <!-- PAGE-HEADER END -->
 
-         <!-- Modal Tambah Data -->
+        <!-- Modal Tambah Data -->
  
          <div class="modal fade" id="addDataModal" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -135,47 +135,48 @@ Master User
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
 <script>
     function deleteJenjang(jenjang_) {
-        var deleteUrl = "{% url 'sipandu_admin:delete_jenjang' 'jenjang_id' %}".replace("jenjang_id",jenjang_);
+    var deleteUrl = "{% url 'sipandu_admin:delete_jenjang' 'jenjang_id' %}".replace("jenjang_id", jenjang_);
 
-        swal({
-            title: "Apakah Anda yakin?",
-            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Ya, hapus!",
-            cancelButtonText: "Batal",
-            closeOnConfirm: false,
-            closeOnCancel: false
-        },
-        function(isConfirm){
-            if (isConfirm) {
-                $.ajax({
-                    headers : { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
-                    url: deleteUrl,
-                    type: "DELETE",
-                    success: function (response) {
-                        // Data berhasil dihapus
-                        swal("Data berhasil dihapus!", {
-                            icon: "success",
-                        }).then(() => {
-                            // Refresh halaman atau lakukan aksi lain
-                            window.location.reload(); // Contoh: Refresh halaman
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        // Terjadi kesalahan saat menghapus data
-                        swal("Terjadi kesalahan saat menghapus data!", {
-                            icon: "error",
-                        });
-                    }
-                });
-            } else {
-                // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
-                swal("Tindakan dibatalkan", "", "info");
-            }
-        });
-    }
+    swal({
+        title: "Apakah Anda yakin?",
+        text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, hapus!",
+        cancelButtonText: "Batal",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+    function (isConfirm) {
+        if (isConfirm) {
+            $.ajax({
+                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                url: deleteUrl,
+                type: "DELETE",
+                success: function (response) {
+                    console.log('berhasil');
+                    swal({
+                        title: "Data berhasil dihapus!",
+                        icon: "success",
+                        buttons: false, // Tidak menampilkan tombol OK
+                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                    });
+                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                },
+                error: function (xhr, status, error) {
+                    // Terjadi kesalahan saat menghapus data
+                    swal("Terjadi kesalahan saat menghapus data!", {
+                        icon: "error",
+                    });
+                }
+            });
+        } else {
+            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+            swal("Tindakan dibatalkan", "", "info");
+        }
+    });
+}
 </script>
 
 {% endblock %}

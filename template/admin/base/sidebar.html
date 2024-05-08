@@ -29,18 +29,26 @@
         <li class="slide">
             <a class="side-menu__item" data-bs-toggle="slide" href="#"></i><span class="side-menu__label">Master Tema</span><i class="angle fa fa-angle-right"></i></a>
             <ul class="slide-menu">
-                <li><a href="{% url 'sipandu_admin:transanksi_situs' %}" class="slide-item">Transanksi Situs</a></li>
+                <li><a href="{% url 'sipandu_admin:index_transaksi' %}" class="slide-item">Transanksi Situs</a></li>
             </ul>
         </li>
         <li class="slide">
-            <a class="side-menu__item"  data-bs-toggle="slide" href="{% url 'sipandu_admin:admin_index' %}"></i><span class="side-menu__label">Master kategori</span></a>
+            <a class="side-menu__item"  data-bs-toggle="slide" href="{% url 'sipandu_admin:master_kategori' %}"></i><span class="side-menu__label">Master kategori</span></a>
         </li>
 
         <li class="slide">
             <a class="side-menu__item" data-bs-toggle="slide" href="#"></i><span class="side-menu__label">Data</span><i class="angle fa fa-angle-right"></i></a>
             <ul class="slide-menu">
-                <li><a href="{% url 'sipandu_admin:data_sekolah' %}" class="slide-item">Data Sekolah</a></li>
-                <li><a href="{% url 'sipandu_admin:konten' %}" class="slide-item">Konten</a></li>
+                <li><a href="{% url 'sipandu_admin:index_konten' %}" class="slide-item">Konten</a></li>
+            </ul>
+            <ul class="slide-menu">
+                <li><a href="{% url 'sipandu_admin:index_galeri' %}" class="slide-item">Galeri</a></li>
+            </ul>
+            <ul class="slide-menu">
+                <li><a href="{% url 'sipandu_admin:index_galeri' %}" class="slide-item">Kontak Sekolah</a></li>
+            </ul>
+            <ul class="slide-menu">
+                <li><a href="{% url 'sipandu_admin:index_galeri' %}" class="slide-item">Link</a></li>
             </ul>
         </li>
        

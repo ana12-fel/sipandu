@@ -1,0 +1,197 @@
+{% extends 'admin/base/base_index.html' %}
+{% load static %}
+{% block title %}
+Transaksi Situs
+{% endblock %}
+
+{% block content %}
+
+<div class="app-content">
+    <div class="side-app">
+        <!-- PAGE-HEADER -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Transaksi Situs</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Transaksi Situs</li>
+                </ol>
+            </div>
+            <div class="ms-auto pageheader-btn">
+                <a href="#" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#addDataModal">
+                    <span>
+                        <i class="fe fe-plus"></i>
+                    </span> Tambahkan Data
+                </a>
+                <a href="#" class="btn btn-success btn-icon text-white">
+                    <span>
+                        <i class="fe fe-log-in"></i>
+                    </span> Export
+                </a>
+            </div>
+        </div>
+        <!-- PAGE-HEADER END -->
+
+        <!-- Modal Tambah Data -->
+        <div class="modal fade" id="addDataModal" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addDataModalLabel">Tambah Data Situs</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form tambah data di sini -->
+                        <form method="post" action="{% url 'sipandu_admin:index_transaksi' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="sekolah_jenjang" class="form-label">Sekolah</label>
+                                <select class="form-select" id="sekolah_id" name="sekolah_nama">
+                                    <option value="test" selected disabled>Pilih Sekolah</option>
+                                    {% for sekolah in data_sekolah %}
+                                    <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div> 
+                            <div class="mb-3">
+                                <label for="sekolah_jenjang" class="form-label">Tema</label>
+                                <select class="form-select" id="tema_id" name="tema_nama">
+                                    <option value="test" selected disabled>Pilih Tema</option>
+                                    {% for tema in data_tema %}
+                                    <option value="{{tema.tema_id}}">{{tema.tema_nama.upper}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div> 
+                            <div class="mb-3">
+                                <label for="jenjang" class="form-label">Domain</label>
+                                <input type="text" class="form-control" name="domain" placeholder="Masukkan Domain">
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Tambah Data End -->
+
+        <!-- ROW OPEN -->
+        <div class="row row-cards">
+            <div class="col-lg-12 col-xl-12">
+                <div class="input-group mb-5">
+                    <input type="text" class="form-control" placeholder="">
+                    <div class="input-group-text btn btn-primary">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header border-bottom-0 p-4">
+                        <div class="page-options d-flex float-end">
+                        </div>
+                    </div>
+                    <div class="e-table px-5 pb-5">
+                        <div class="table-responsive table-lg">
+                            <table class="table border-top table-bordered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center border-bottom-0">SEKOLAH</th>
+                                        <th class="text-center border-bottom-0">TEMA</th>
+                                        <th class="text-center border-bottom-0">DOMAIN</th>
+                                        <th class="text-center border-bottom-0">THUMBNAIL</th>
+                                        <th class="text-center border-bottom-0">AKSI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for dt_transaksi in data_transaksi %}
+                                        <tr>
+                                            <td>{{ dt_transaksi.sekolah_id.sekolah_nama }}</td>
+                                            <td>{{ dt_transaksi.tema_id.tema_nama }}</td>
+                                            <td>{{ dt_transaksi.domain }}</td>
+                                            <td>
+                                                <img src="{% if dt_transaksi.tema_id.tema_thumbnail %}{{ MEDIA_URL }}{{ dt_transaksi.tema_id.tema_thumbnail.url }}{% endif %}" alt="{{ dt_transaksi.tema_id.tema_nama }}" style="max-width: 100px;">
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <div class="btn-group align-top">
+                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{ dt_transaksi.transanksi_id }}">Edit</a> &nbsp;
+                                                    <button onclick="deleteTransaksi('{{ dt_transaksi.transanksi_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% include 'admin/tema/edit_transaksi.html' %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-5">
+                    <ul class="pagination float-end">
+                        <li class="page-item page-prev disabled">
+                            <a class="page-link" href="#" tabindex="-1">Prev</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item page-next">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
+<script>
+    function deleteTransaksi(transaksi_) {
+    var deleteUrl = "{% url 'sipandu_admin:delete_transaksi' 'transanksi_id' %}".replace("transanksi_id", transaksi_);
+
+    swal({
+        title: "Apakah Anda yakin?",
+        text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, hapus!",
+        cancelButtonText: "Batal",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+    function (isConfirm) {
+        if (isConfirm) {
+            $.ajax({
+                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                url: deleteUrl,
+                type: "DELETE",
+                success: function (response) {
+                    console.log('berhasil');
+                    swal({
+                        title: "Data berhasil dihapus!",
+                        icon: "success",
+                        buttons: false, // Tidak menampilkan tombol OK
+                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                    });
+                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                },
+                error: function (xhr, status, error) {
+                    // Terjadi kesalahan saat menghapus data
+                    swal("Terjadi kesalahan saat menghapus data!", {
+                        icon: "error",
+                    });
+                }
+            });
+        } else {
+            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+            swal("Tindakan dibatalkan", "", "info");
+        }
+    });
+}
+</script>
+
+{% endblock %}

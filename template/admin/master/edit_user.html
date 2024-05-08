@@ -15,16 +15,16 @@
                         <input type="text" value="{{ dt_user.user_first_name }}" class="form-control" name="first_name" placeholder="Masukkan nama depan">
                     </div>
                     <div class="mb-3">
+                        <label for="last_name" class="form-label">Nama Belakang</label>
+                        <input type="text" value="{{ dt_user.user_last_name }}" class="form-control" name="last_name" placeholder="Masukkan nama belakang">
+                    </div>
+                    <div class="mb-3">
                         <label for="role">Role</label>
                         <select name="role" id="role" class="form-control">
                             {% for role_key, role_display in role_choices %}
                                 <option value="{{ role_display }}">{{ role_key }}</option>
                             {% endfor %}
                         </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="last_name" class="form-label">Nama Belakang</label>
-                        <input type="text" value="{{ dt_user.user_last_name }}" class="form-control" name="last_name" placeholder="Masukkan nama belakang">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
@@ -37,6 +37,14 @@
                             <option value="{{dt_level.0}}">{{dt_level.1}}</option>
                             {% endfor %}
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Status:</label>
+                        <select class="form-select" name="user_status" aria-label="Default select example">
+                            <option selected>Pillih Status</option>
+                            <option {% if dt_user.user_status == 1 %} selected {% endif %} value="1">Aktif</option>
+                            <option {% if dt_user.user_status == 0 %} selected {% endif %} value="0">Tidak Aktif</option>
+                          </select>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>

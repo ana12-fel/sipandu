@@ -48,17 +48,16 @@ Master User
                                 <input type="text" class="form-control" id="user_first_name" name="first_name">
                             </div>
                             <div class="mb-3">
+                                <label for="user_status" class="form-label">Nama Belakang</label>
+                                <input type="text" class="form-control" id="user_last_name" name="last_name">
+                            </div>
+                            <div class="mb-3">
                                 <label for="role">Role</label>
                                 <select name="role" id="role" class="form-control">
                                     {% for role_key, role_display in role_choices %}
                                         <option value="{{ role_key }}">{{ role_display }}</option>
                                     {% endfor %}
                                 </select>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="last_name" class="form-label">Nama Belakang</label>
-                                <input type="text" class="form-control" id="user_last_name" name="last_name">
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
@@ -72,6 +71,14 @@ Master User
                                     {% endfor %}
                                 </select>
                             </div>
+                            <div class="mb-3">
+                        <label>Status:</label>
+                        <select class="form-select" name="user_status" aria-label="Default select example">
+                            <option selected>Pillih Status</option>
+                            <option {% if dt_user.user_status == 1 %} selected {% endif %} value="1">Aktif</option>
+                            <option {% if dt_user.user_status == 0 %} selected {% endif %} value="0">Tidak Aktif</option>
+                          </select>
+                    </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" class="form-control" id="user_email" name="email">
@@ -114,9 +121,8 @@ Master User
                                             <td class="text-center align-middle">{{ dt_user.user_first_name }}</td>
                                             <td class="text-center align-middle">{{ dt_user.user_role }}</td>
                                             <td class="text-center align-middle">{{ dt_user.user_last_login }}</td>
-                                            <td class="text-center align-middle">{% if dt_user.user_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</td>
+                                            <td class="text-center align-middle"><span>{% if dt_user.user_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
                                             <td class="text-center align-middle">{{ dt_user.user_email }}</td>
-                                            
                                             <td class="text-center align-middle">
                                                 <div class="btn-group align-top">
                                                     <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editUserModal_{{dt_user.user_id}}">Edit</a>&nbsp;
@@ -154,47 +160,48 @@ Master User
 {% block js %}
 <script>
     function deleteUser(user_) {
-        var deleteUrl = "{% url 'sipandu_admin:delete_user' 'user_id' %}".replace("user_id",user_);
+    var deleteUrl = "{% url 'sipandu_admin:delete_user' 'user_id' %}".replace("user_id", user_);
 
-        swal({
-            title: "Apakah Anda yakin?",
-            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Ya, hapus!",
-            cancelButtonText: "Batal",
-            closeOnConfirm: false,
-            closeOnCancel: false
-        },
-        function(isConfirm){
-            if (isConfirm) {
-                $.ajax({
-                    headers : { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
-                    url: deleteUrl,
-                    type: "DELETE",
-                    success: function (response) {
-                        // Data berhasil dihapus
-                        swal("Data berhasil dihapus!", {
-                            icon: "success",
-                        }).then(() => {
-                            // Refresh halaman atau lakukan aksi lain
-                            window.location.reload(); // Contoh: Refresh halaman
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        // Terjadi kesalahan saat menghapus data
-                        swal("Terjadi kesalahan saat menghapus data!", {
-                            icon: "error",
-                        });
-                    }
-                });
-            } else {
-                // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
-                swal("Tindakan dibatalkan", "", "info");
-            }
-        });
-    }
+    swal({
+        title: "Apakah Anda yakin?",
+        text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, hapus!",
+        cancelButtonText: "Batal",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+    function (isConfirm) {
+        if (isConfirm) {
+            $.ajax({
+                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                url: deleteUrl,
+                type: "DELETE",
+                success: function (response) {
+                    console.log('berhasil');
+                    swal({
+                        title: "Data berhasil dihapus!",
+                        icon: "success",
+                        buttons: false, // Tidak menampilkan tombol OK
+                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                    });
+                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                },
+                error: function (xhr, status, error) {
+                    // Terjadi kesalahan saat menghapus data
+                    swal("Terjadi kesalahan saat menghapus data!", {
+                        icon: "error",
+                    });
+                }
+            });
+        } else {
+            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+            swal("Tindakan dibatalkan", "", "info");
+        }
+    });
+}
 </script>
 
 {% endblock %}

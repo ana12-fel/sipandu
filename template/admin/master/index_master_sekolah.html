@@ -17,16 +17,6 @@ Master Sekolah
                 </ol>
             </div>
             <div class="ms-auto pageheader-btn">
-                <a href="#" class="btn btn-primary btn-icon text-white me-2">
-                    <span>
-                        <i class="fe fe-plus"></i>
-                    </span> Data Sekolah
-                </a>
-                <a href="#" class="btn btn-primary btn-icon text-white me-2">
-                    <span>
-                        <i class="fe fe-plus"></i>
-                    </span> Semua Sekolah
-                </a>
                 <a href="#" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#addDataModal">
                     <span>
                         <i class="fe fe-plus"></i>
@@ -50,33 +40,62 @@ Master Sekolah
                         <form id="addSekolahForm" method="post" action="{% url 'sipandu_admin:index_sekolah' %}">
                             {% csrf_token %}
                             <div class="mb-3">
+<<<<<<< HEAD
+                                <label for="prov">Provinsi</label>
+                                <select name="prov" id="prov" class="form-control" onchange="getKabupaten(this)">
+                                    <option value="">- Pilih Provinsi -</option>
+                                    {% for provinsi in data_prov %}
+                                        <option value="{{ provinsi.wilayah_id }}">{{ provinsi.wilayah_nama }}</option>
+=======
                                 <label for="sekolah_jenjang" class="form-label">Provinsi</label>
-                                <select class="form-select" id="sekolah_provinsi" name="sekolah_provinsi">
-                                    <option value="" selected disabled>Pilih Provinsi</option>
+                                <select class="form-select" id="wilayah_id" name="wilayah_nama">
+                                    <option value="test" selected disabled>Pilih Wilayah</option>
+                                    {% for provinsi in data_wilayah %}
+                                    <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_provinsi.upper}}</option>
+>>>>>>> 89731ad39b8e02172269befbef91737100dd82c7
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+<<<<<<< HEAD
+                                <label for="kab">Kabupaten</label>
+                                <select name="kab" id="kab" class="form-control" onchange="getKecamatan(this)">
+                                    <option value="">- Pilih Kabupaten -</option>
+                                    {% for kabupaten in data_wilayah  %}
+                                        <option value="{{ kabupaten.wilayah_id }}">{{ kabupaten.wilayah_nama }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="kec">Kecamatan</label>
+                                <select name="kec" id="kec" class="form-control">
+                                    <option value="">- Pilih Kecamatan -</option>
+                                    {% for kecamatan in data_wilayah %}
+                                        <option value="{{ kecamatan.wilayah_id }}">{{ kecamatan.wilayah_nama }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+=======
+                                <label for="sekolah_jenjang" class="form-label">Kecamatan</label>
+                                <select class="form-select" id="wilayah_id" name="wilayah_nama">
+                                    <option value="test" selected disabled>Pilih Wilayah</option>
                                     {% for provinsi in data_wilayah %}
                                     <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_provinsi.upper}}</option>
                                     {% endfor %}
                                 </select>
-                            </div>  
+                            </div> 
+                            <div class="mb-3">
+                                <label for="sekolah_jenjang" class="form-label">Kabupaten</label>
+                                <select class="form-select" id="wilayah_id" name="wilayah">
+                                    <option value="test" selected disabled>Pilih Wilayah</option>
+                                    {% for provinsi in data_wilayah %}
+                                    <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_provinsi.upper}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>   
                             
-                            <div class="mb-3">
-                                <label for="kabupaten" class="form-label">Kabupaten</label>
-                                <select class="form-select" id="sekolah_provinsi" name="sekolah_provinsi">
-                                    <option value="" selected disabled>Pilih Kabupaten</option>
-                                    {% for kabupaten in data_wilayah %}
-                                    <option value="{{kabupaten.wilayah_id}}">{{kabupaten.wilayah_kabupaten.upper}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="distrik" class="form-label">Distrik</label>
-                                <select class="form-select" id="sekolah_provinsi" name="sekolah_provinsi">
-                                    <option value="" selected disabled>Pilih Kabupaten</option>
-                                    {% for distrik in data_wilayah %}
-                                    <option value="{{kabupaten.wilayah_id}}">{{distrik.wilayah_distrik.upper}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                
+>>>>>>> 89731ad39b8e02172269befbef91737100dd82c7
                             <div class="mb-3">
                                 <label for="sekolah_nama" class="form-label">Nama Sekolah</label>
                                 <input type="text" class="form-control" id="sekolah_nama" name="sekolah_nama" placeholder="Masukkan Nama Sekolah">
@@ -113,9 +132,6 @@ Master Sekolah
                 </div>
             </div>
         </div>
-
-
-
         <!-- ROW-1 -->
         <div class="row row-sm">
             <div class="col-lg-12">
@@ -176,48 +192,107 @@ Master Sekolah
 
 {% block js %}
 <script>
-    function deleteSekolah(sekolah_) {
-        var deleteUrl = "{% url 'sipandu_admin:delete_sekolah' 'sekolah_id' %}".replace("sekolah_id",sekolah_);
+    function getKabupaten(e) {
+    var provinsi_id = $(e).val();
+    var kabupatenSelect = $('#kab');
 
-        swal({
-            title: "Apakah Anda yakin?",
-            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Ya, hapus!",
-            cancelButtonText: "Batal",
-            closeOnConfirm: false,
-            closeOnCancel: false
+    $.ajax({
+        url: "{% url 'sipandu_admin:get_wilayah' %}",
+        type: "GET",
+        data: {
+            'level': 'kab',
+            'wilayah_id': provinsi_id
         },
-        function(isConfirm){
-            if (isConfirm) {
-                $.ajax({
-                    headers : { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
-                    url: deleteUrl,
-                    type: "DELETE",
-                    success: function (response) {
-                        // Data berhasil dihapus
-                        swal("Data berhasil dihapus!", {
-                            icon: "success",
-                        }).then(() => {
-                            // Refresh halaman atau lakukan aksi lain
-                            window.location.reload(); // Contoh: Refresh halaman
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        // Terjadi kesalahan saat menghapus data
-                        swal("Terjadi kesalahan saat menghapus data!", {
-                            icon: "error",
-                        });
-                    }
-                });
-            } else {
-                // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
-                swal("Tindakan dibatalkan", "", "info");
-            }
-        });
-    }
+        success: function(response) {
+            console.log(response);
+            kabupatenSelect.empty().append('<option value="">- Pilih Kabupaten -</option>');
+            response.data_wilayah.forEach(function(item) {
+                kabupatenSelect.append($('<option>', {
+                    value: item.wilayah_id,
+                    text: item.wilayah_nama
+                }));
+            });
+            kabupatenSelect.prop('disabled', false);
+            getKecamatan(kabupatenSelect); 
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
+
+function getKecamatan(e) {
+    var kabupaten_id = $(e).val();
+    var kecamatanSelect = $('#kec');
+
+    $.ajax({
+        url: "{% url 'sipandu_admin:get_wilayah' %}",
+        type: "GET",
+        data: {
+            'level': 'kec',
+            'wilayah_id': kabupaten_id
+        },
+        success: function(response) {
+            console.log(response);
+            kecamatanSelect.empty().append('<option value="">- Pilih Kecamatan -</option>');
+            response.data_wilayah.forEach(function(item) {
+                kecamatanSelect.append($('<option>', {
+                    value: item.wilayah_id,
+                    text: item.wilayah_nama
+                }));
+            });
+            kecamatanSelect.prop('disabled', false);
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
+
+function deleteSekolah(sekolah_) {
+    var deleteUrl = "{% url 'sipandu_admin:delete_sekolah' 'sekolah_id' %}".replace("sekolah_id", sekolah_);
+
+    swal({
+        title: "Apakah Anda yakin?",
+        text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, hapus!",
+        cancelButtonText: "Batal",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+    function (isConfirm) {
+        if (isConfirm) {
+            $.ajax({
+                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                url: deleteUrl,
+                type: "DELETE",
+                success: function (response) {
+                    console.log('berhasil');
+                    swal({
+                        title: "Data berhasil dihapus!",
+                        icon: "success",
+                        buttons: false, // Tidak menampilkan tombol OK
+                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                    });
+                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                },
+                error: function (xhr, status, error) {
+                    // Terjadi kesalahan saat menghapus data
+                    swal("Terjadi kesalahan saat menghapus data!", {
+                        icon: "error",
+                    });
+                }
+            });
+        } else {
+            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+            swal("Tindakan dibatalkan", "", "info");
+        }
+    });
+}
+
 </script>
 
 {% endblock %}
