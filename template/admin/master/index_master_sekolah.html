@@ -39,7 +39,6 @@ Master Sekolah
                         <!-- Form -->
                         <form id="addSekolahForm" method="post" action="{% url 'sipandu_admin:index_sekolah' %}">
                             {% csrf_token %}
-<<<<<<< HEAD
                             <div class="mb-3">
                                 <label for="prov">Provinsi</label>
                                 <select name="prov" id="prov" class="form-control" onchange="getKabupaten(this)">
@@ -52,20 +51,6 @@ Master Sekolah
                             <div class="mb-3">
                                 <label for="kab">Kabupaten</label>
                                 <select name="kab" id="kab" class="form-control" onchange="getKecamatan(this)">
-=======
-                            <div class="mb-3" id="div_prov">
-                                <label for="role">Provinsi</label>
-                                <select name="sekolah_provinsi" id="prov" data-level="prov" class="form-control" onchange="render_kab(this)">
-                                    <option value="">- Pilih Provinsi -</option>
-                                    {% for provinsi in data_prov %}
-                                    <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_nama.upper}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="mb-3" id="div_kab">
-                                <label for="role">Kabupaten</label>
-                                <select name="sekolah_kabupaten" id="kab" data-level="kab" class="form-control" onchange="render_kab(this)">
->>>>>>> 3c29cb42aeb591b0e04acdf310403e6c8563ac2f
                                     <option value="">- Pilih Kabupaten -</option>
                                 </select>
                             </div>
@@ -73,17 +58,11 @@ Master Sekolah
                                 <label for="role">Kecamatan</label>
                                 <select name="sekolah_kecamatan" id="kec" data-level="kec" class="form-control">
                                     <option value="">- Pilih Kecamatan -</option>
-<<<<<<< HEAD
                                     {% for kecamatan in data_wilayah %}
                                         <option value="{{ kecamatan.wilayah_id }}">{{ kecamatan.wilayah_nama }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-=======
-                                    <option value="test" selected disabled>Pilih Kecamatan</option>
-                                </select>
-                            </div>   
->>>>>>> 3c29cb42aeb591b0e04acdf310403e6c8563ac2f
                             <div class="mb-3">
                                 <label for="sekolah_nama" class="form-label">Nama Sekolah</label>
                                 <input type="text" class="form-control" id="sekolah_nama" name="sekolah_nama" placeholder="Masukkan Nama Sekolah">
