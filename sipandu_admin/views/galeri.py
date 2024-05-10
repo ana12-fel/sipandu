@@ -6,18 +6,15 @@ from django.urls import reverse
 def Indexgaleri(request):
     if request.method == 'POST':
         galeri_sekolah = request.POST.get('galeri_sekolah')
-        galeri_image = request.FILES.get('galeri_image')
-        video = request.FILES.get('video_konten')
-        dt_galeri = Data_galeri.objects.create( galeri=galeri_image)
+        gambar = request.FILES.get('image_galeri')
+        video = request.FILES.get('video_galeri')
 
-        print(video, galeri_image, galeri_sekolah)
+        dt_galeri = Data_galeri.objects.create(galeri_sekolah=Master_sekolah.objects.get(sekolah_id=galeri_sekolah), gambar=gambar, video=video)
 
-        dt_galeri = Data_galeri.objects.create(
-                                                galeri_sekolah=Master_sekolah.objects.get(sekolah_id=galeri_sekolah),
-                                                gambar=galeri_image,
-                                                video=video)
+        print(galeri_sekolah,gambar,video)
 
         return redirect('sipandu_admin:index_galeri')
+    
     else:
         dt_galeri = Data_galeri.objects.all()
         data_sekolah = Master_sekolah.objects.all()
@@ -26,16 +23,12 @@ def Indexgaleri(request):
 def Tambahgaleri(request):
     if request.method == 'POST':
         galeri_sekolah = request.POST.get('galeri_sekolah')
-        galeri_image = request.FILES.get('galeri_image')
-        video = request.FILES.get('video_konten')
-        dt_galeri = Data_galeri.objects.create( galeri=galeri_image)
+        gambar = request.FILES.get('image_galeri')
+        video = request.FILES.get('video_galeri')
 
-        
-
-        dt_galeri = Data_galeri.objects.create(
-                                                 galeri_sekolah=Master_sekolah.objects.get(sekolah_id = galeri_sekolah),
-                                                 gambar=galeri_image,
-                                                 video=video)
+        dt_galeri = Data_galeri.objects.create( 
+                                                galeri_sekolah_id=galeri_sekolah, 
+                                                gambar=gambar, video=video)
                                             
         dt_galeri.save()
 
