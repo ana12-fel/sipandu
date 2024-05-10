@@ -8,48 +8,70 @@
             </div>
             <div class="modal-body">
                 <!-- Form edit data di sini -->
-                <form method="post" action="{% url 'sipandu_admin:edit_user' dt_user.user_id %}">
+                <form id="editWilayahForm_{{dt_user.user_id}}" method="post" action="{% url 'sipandu_admin:edit_user' dt_user.user_id %}">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label for="first_name" class="form-label">Nama Depan</label>
-                        <input type="text" value="{{ dt_user.user_first_name }}" class="form-control" name="first_name" placeholder="Masukkan nama depan">
-                    </div>
-                    <div class="mb-3">
-                        <label for="last_name" class="form-label">Nama Belakang</label>
-                        <input type="text" value="{{ dt_user.user_last_name }}" class="form-control" name="last_name" placeholder="Masukkan nama belakang">
-                    </div>
-                    <div class="mb-3">
-                        <label for="role">Role</label>
-                        <select name="role" id="role" class="form-control">
-                            {% for role_key, role_display in role_choices %}
-                                <option value="{{ role_display }}">{{ role_key }}</option>
+                        <label for="role_edit">Level</label>
+                        <select name="role_edit" id="role_edit_{{dt_user.user_id}}" class="form-control" onchange="pilih_role_edit(this)">
+                            <option value="">- Pilih Role -</option>
+                            {% for role_key_edit, role_display_edit in role_choices %}
+                                <option value="{{ role_key_edit }}">{{ role_display_edit }}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" placeholder="Masukkan password">
-                    </div>
-                    <div class="mb-3">
-                        <label for="level">Level</label>
-                        <select name="level" id="level" class="form-control">
-                            {% for dt_level in level %}
-                            <option value="{{dt_level.0}}">{{dt_level.1}}</option>
+                    <div class="mb-3 d-none" id="div_prov_edit_{{dt_user.user_id}}">
+                        <label for="prov_edit">Provinsi</label>
+                        <select name="prov_edit" id="prov_edit_{{dt_user.user_id}}" class="form-control" onchange="render_kab_edit(this)" data-role="prov_edit">
+                            <option value="">- Pilih Provinsi -</option>
+                            {% for provinsi_edit in prov %}
+                                <option value="{{ provinsi_edit.wilayah_id }}">{{ provinsi_edit.wilayah_nama }}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label>Status:</label>
-                        <select class="form-select" name="user_status" aria-label="Default select example">
-                            <option selected>Pillih Status</option>
-                            <option {% if dt_user.user_status == 1 %} selected {% endif %} value="1">Aktif</option>
-                            <option {% if dt_user.user_status == 0 %} selected {% endif %} value="0">Tidak Aktif</option>
-                          </select>
+                    <!-- Tambahkan div untuk kabupaten -->
+                    <div class="mb-3 d-none" id="div_kab_edit_{{dt_user.user_id}}">
+                        <label for="kab_edit">Kabupaten</label>
+                        <select name="kab_edit" id="kab_edit_{{dt_user.user_id}}" class="form-control" data-role="kab_edit">
+                            <option value="">- Pilih Kabupaten -</option>
+                        </select>
+                    </div>
+                    <!-- Tambahkan div untuk kecamatan -->
+                    <div class="mb-3 d-none" id="div_kec_edit_{{dt_user.user_id}}">
+                        <label for="kec_edit">Kecamatan</label>
+                        <select name="kec_edit" id="kec_edit_{{dt_user.user_id}}" class="form-control" data-role="kec_edit">
+                            <option value="">- Pilih Kecamatan -</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 d-none" id="div_sekolah_edit_{{dt_user.user_id}}">
+                        <label for="sekolah_edit">Sekolah</label>
+                        <select name="sekolah_edit" id="sekolah_edit_{{dt_user.user_id}}" class="form-control" data-role="sekolah_edit">
+                            <option value="">- Pilih Sekolah-</option>
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" value="{{ dt_user.user_email }}" class="form-control" name="email" placeholder="Masukkan email">
+                        <label for="first_name_edit" class="form-label">Nama Depan</label>
+                        <input type="text" class="form-control" id="first_name_edit_{{dt_user.user_id}}" name="first_name_edit">
                     </div>
+                    <div class="mb-3">
+                        <label for="last_name_edit" class="form-label">Nama Belakang</label>
+                        <input type="text" class="form-control" id="last_name_edit_{{dt_user.user_id}}" name="last_name_edit">
+                    </div>
+                    <div class="mb-3">
+                        <label for="user_status_edit" class="form-label">Status</label>
+                        <select class="form-select" name="user_status_edit" aria-label="Default select example">
+                            <option value="1">Aktif</option>
+                            <option value="0">Tidak Aktif</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password_edit" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password_edit_{{dt_user.user_id}}" name="password_edit">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email_edit" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email_edit_{{dt_user.user_id}}" name="email_edit">
+                    </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -59,4 +81,70 @@
         </div>
     </div>
 </div>
-<!-- Modal Edit Data User End -->
+
+<script>
+    function pilih_role_edit(e) {
+        var level = $(e).val();
+        var div_prov = $('#div_prov_edit_' + e.id.split("_").pop());
+        var div_kab = $('#div_kab_edit_' + e.id.split("_").pop());
+        var div_kec = $('#div_kec_edit_' + e.id.split("_").pop());
+        var div_sekolah = $('#div_sekolah_edit_' + e.id.split("_").pop());
+
+        if (level == 'superadmin' || level == 'admin') {
+            div_prov.addClass('d-none');
+            div_kab.addClass('d-none');
+            div_kec.addClass('d-none');
+            div_sekolah.addClass('d-none');
+        } else if (level == 'admin_kabupaten') {
+            div_prov.removeClass('d-none');
+            div_kab.removeClass('d-none');
+            div_kec.addClass('d-none');
+            div_sekolah.addClass('d-none');
+        } else if (level == 'admin_sekolah') {
+            div_prov.removeClass('d-none');
+            div_kab.removeClass('d-none');
+            div_kec.removeClass('d-none');
+            div_sekolah.removeClass('d-none');
+        } else {
+            div_prov.removeClass('d-none');
+            div_kab.removeClass('d-none');
+            div_kec.removeClass('d-none');
+            div_sekolah.removeClass('d-none');
+        }
+
+        div_prov.trigger('change');
+        div_kab.trigger('change');
+        div_kec.trigger('change');
+    }
+
+    function render_kab_edit(e) {
+        var level_wilayah = $(e).data('level');
+
+        $.ajax({
+            url: "{% url 'sipandu_admin:get_user_by_level' %}",
+            type: "GET",
+            data: {
+                'level': $('#wilayah_level_edit_' + e.id.split("_").pop()).val(),
+                'wilayah_id': $(e).val()
+            },
+            success: function(response) {
+                if (level_wilayah == 'prov_edit') {
+                    var elem = $('#kab_edit_' + e.id.split("_").pop());
+                } else if (level_wilayah == 'kab_edit') {
+                    var elem = $('#kec_edit_' + e.id.split("_").pop());
+                }
+
+                elem.html('');
+                var opt_label = '<option value="">- Pilih Kabupaten -</option>';
+                for (var i = 0; i < response.data_wilayah.length; i++) {
+                    elem.append(`<option value="${response.data_wilayah[i]['wilayah_id']}">${response.data_wilayah[i]['wilayah_nama']}</option>`);
+                }
+                elem.val('');
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+</script>
