@@ -12,17 +12,17 @@ Master User
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <div>
-                <h1 class="page-title">DATA KONTAK</h1>
+                <h1 class="page-title">DATA LINK</h1>
             </div>
         </div>
 
         <div class="col-lg-12 col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Tambah Kontak</h3>
+                        <h3 class="card-title">Tambah Link</h3>
                     </div>
                 <div class="card-body">
-<form method="post" action="{% url 'sipandu_admin:tambah_kontak' %}" enctype="multipart/form-data">
+<form method="post" action="{% url 'sipandu_admin:tambah_link' %}" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="mb-3">
         <label for="kontak_sekolah" class="form-label">Sekolah</label>
@@ -35,22 +35,16 @@ Master User
     </div> 
 
     <div class="mb-3">
-        <label for="E_mail" class="form-label">E_mail</label>
-        <input type="text" class="form-control" id="E_mail" name="E_mail" required>
+        <label for="Nama_link" class="form-label">Nama Link</label>
+        <input type="text" class="form-control" id="Nama_link" name="Nama_link" required>
     </div>
-
-    <div class="mb-3">
-        <label for="E_mail" class="form-label">No Hp</label>
-        <input type="text" class="form-control" id="E_mail" name="E_mail" required>
-    </div>
-
     
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header border-bottom-0">
                     <div class="card-title">
-                        Isi Konten
+                        Isi Link
                     </div>
                 </div>
                 <div class="card-body">
