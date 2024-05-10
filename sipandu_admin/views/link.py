@@ -13,11 +13,11 @@ def Indexkontak(request):
         ig = request.POST.get ('ig')
 
         
-        dt_link = Data_link.objects.create(kontak=_sekolah)
+        dt_link = Data_link.objects.create(kontak=link_sekolah)
 
         print(kontak_sekolah,no_hp,e_mail,fb,tw,ig)
 
-        dt_kontak = Data_kontak.objects.create(
+        dt_kontak = Data_link.objects.create(
                                                 kontak_sekolah=Master_sekolah.objects.get(sekolah_id=kontak_sekolah),
                                                 no_hp=no_hp,
                                                 email=e_mail,
