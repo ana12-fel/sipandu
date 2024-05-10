@@ -40,7 +40,7 @@ Master User
                     </div>
                     <div class="card-body">
                         <div class="example">
-                            <table class="table border-top table-bordered mb-0">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="datakontenResponsiveDatatable">
                                 <thead>
                                     <tr>
                                         <th class="text-center border-bottom-0">No</th>
@@ -125,6 +125,15 @@ Master User
         }
     });
 }
+    $(function(){
+        $('#datakontenResponsiveDatatable').DataTable({
+		scrollX: "100%",
+		language: {
+			searchPlaceholder: 'Search...',
+			sSearch: '',
+		}
+	});
+    })
 
 </script>
 

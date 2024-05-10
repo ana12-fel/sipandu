@@ -7,20 +7,23 @@ def IndexSekolah(request):
         sekolah_nama = request.POST.get('sekolah_nama') 
         sekolah_npsn = request.POST.get('sekolah_npsn')
         sekolah_jenis = request.POST.get('sekolah_jenis')
-        sekolah_wilayah = request.POST.get ('sekolah_wilayah')
         sekolah_jenjang = request.POST.get('sekolah_jenjang')
+        sekolah_provinsi = request.POST.get('sekolah_provinsi')
+        sekolah_kabupaten = request.POST.get('sekolah_kabupaten')
+        sekolah_kecamatan = request.POST.get('sekolah_kecamatan')
 
-        
-        print (sekolah_jenjang)
+        print (sekolah_jenjang, sekolah_provinsi, sekolah_kabupaten, sekolah_kecamatan)
         dt_sekolah = Master_sekolah.objects.create(
             sekolah_nama=sekolah_nama,
             sekolah_npsn=sekolah_npsn,
             sekolah_jenis=sekolah_jenis,
-            sekolah_wilayah=Master_wilayah.objects.get(wilayah_id = sekolah_wilayah),
-            sekolah_jenjang=Master_jenjang.objects.get(jenjang_id = sekolah_jenjang),
+            sekolah_provinsi=Master_wilayah.objects.get(wilayah_id = sekolah_provinsi),
+            sekolah_kabupaten=Master_wilayah.objects.get(wilayah_id = sekolah_kabupaten),
+            sekolah_kecamatan=Master_wilayah.objects.get(wilayah_id = sekolah_kecamatan),
+            sekolah_jenjang=Master_jenjang.objects.get(jenjang_id = sekolah_jenjang)
         )
 
-        print(sekolah_nama, sekolah_npsn, sekolah_jenis, sekolah_jenjang, sekolah_wilayah)
+        print(sekolah_nama, sekolah_npsn, sekolah_jenis, sekolah_jenjang, sekolah_provinsi,sekolah_kabupaten,sekolah_kecamatan)
         return redirect('sipandu_admin:index_sekolah')
     
     else:
@@ -53,11 +56,18 @@ def edit_sekolah(request, sekolah_id):
     if request.method == 'POST':
         dt_sekolah = Master_sekolah.objects.get(sekolah_id=sekolah_id)
 
+        sekolah_provinsi = request.POST.get('sekolah_provinsi')
+        sekolah_kabupaten = request.POST.get('sekolah_kabupaten')
+        sekolah_kecamatan = request.POST.get('sekolah_kecamatan')
         sekolah_nama = request.POST.get('sekolah_nama')
         sekolah_npsn = request.POST.get('sekolah_npsn')
         sekolah_jenis = request.POST.get('sekolah_jenis')
         sekolah_jenjang = request.POST.get('sekolah_jenjang')
 
+
+        dt_sekolah.sekolah_provinsi=Master_wilayah.objects.get(wilayah_id = sekolah_provinsi)
+        dt_sekolah.sekolah_kabupaten=Master_wilayah.objects.get(wilayah_id = sekolah_kabupaten)
+        dt_sekolah.sekolah_kecamatan=Master_wilayah.objects.get(wilayah_id = sekolah_kecamatan)
         dt_sekolah.sekolah_nama=sekolah_nama
         dt_sekolah.sekolah_npsn=sekolah_npsn
         dt_sekolah.sekolah_jenis=sekolah_jenis
@@ -69,7 +79,9 @@ def edit_sekolah(request, sekolah_id):
     
     else:
         dt_sekolah = Master_sekolah.objects.get(sekolah_id=sekolah_id)
-        return render(request, 'admin/master/edit_sekolah.html', {"dt_sekolah": dt_sekolah, "id_sekolah": sekolah_id })
+        data_prov = Master_wilayah.objects.filter(wilayah_level='1')
+        data_wilayah = Master_wilayah.objects.all()
+        return render(request, 'admin/master/edit_sekolah.html', {"dt_sekolah": dt_sekolah, "id_sekolah": sekolah_id, "data_prov" : data_prov, "data_wilayah" : data_wilayah })
 
     
 def delete_sekolah(request, sekolah_id):

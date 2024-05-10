@@ -18,13 +18,6 @@ Master User
                     <li class="breadcrumb-item active" aria-current="page">kategori</li>
                 </ol>
             </div>
-            <div class="ms-auto pageheader-btn">
-                <a href="#" class="btn btn-success btn-icon text-white">
-                    <span>
-                        <i class="fe fe-log-in"></i>
-                    </span> Export
-                </a>
-            </div>
         </div>
         <!-- PAGE-HEADER END -->
     
@@ -130,20 +123,6 @@ Master User
                                 </tbody>
                             </table>
                         </div>
-                        <!-- Paginasi untuk Kategori -->
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item" id="kategoriPrevBtn">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                                </li>
-                                {% for i in 1..kategoriNumPages %}
-                                <li class="page-item"><a class="page-link" href="#" onclick="showKategoriPage({{ i }})">{{ i }}</a></li>
-                                {% endfor %}
-                                <li class="page-item" id="kategoriNextBtn">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
             </div>
@@ -240,20 +219,6 @@ Master User
                                 </tbody>
                             </table>
                         </div>
-                        <!-- Paginasi untuk Sub Kategori -->
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item" id="subkategoriPrevBtn">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                                </li>
-                                {% for i in 1..subkategoriNumPages %}
-                                <li class="page-item"><a class="page-link" href="#" onclick="showSubKategoriPage({{ i }})">{{ i }}</a></li>
-                                {% endfor %}
-                                <li class="page-item" id="subkategoriNextBtn">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
             </div>
@@ -319,9 +284,7 @@ Master User
                     }
                 });
             }
-</script>
 
-<script>
     function deleteSubKategori(subkategori_) {
     var deleteUrl = "{% url 'sipandu_admin:delete_sub_kategori' 'sub_kategori_id' %}".replace("sub_kategori_id", subkategori_);  
     swal({
@@ -362,81 +325,26 @@ Master User
                     }
                 });
             }
+    
+    $(function(){
+        $('#kategoriResponsiveDatatable').DataTable({
+		scrollX: "100%",
+		language: {
+			searchPlaceholder: 'Search...',
+			sSearch: '',
+		}
+	});
+    })
+    $(function(){
+        $('#subkategoriResponsiveDatatable').DataTable({
+		scrollX: "100%",
+		language: {
+			searchPlaceholder: 'Search...',
+			sSearch: '',
+		}
+	});
+    })
+
 </script>
 
-<script>
-    $(document).ready(function() {
-        var rowsShown = 10;
-
-        // Kategori
-        var kategoriRows = $('#kategoriResponsiveDatatable tbody tr');
-        var kategoriRowsTotal = kategoriRows.length;
-        var kategoriNumPages = Math.ceil(kategoriRowsTotal / rowsShown);
-        var kategoriCurrentPage = 0;
-
-        // Sub Kategori
-        var subkategoriRows = $('#subkategoriResponsiveDatatable tbody tr');
-        var subkategoriRowsTotal = subkategoriRows.length;
-        var subkategoriNumPages = Math.ceil(subkategoriRowsTotal / rowsShown);
-        var subkategoriCurrentPage = 0;
-
-        showKategoriPage(1);
-        showSubKategoriPage(1);
-
-        function showKategoriPage(page) {
-            kategoriCurrentPage = page;
-            var start = (page - 1) * rowsShown;
-            var end = start + rowsShown;
-            kategoriRows.hide();
-            kategoriRows.slice(start, end).show();
-            // Mengatur status tombol Previous dan Next
-            $('#kategoriPrevBtn').prop('disabled', page === 1);
-            $('#kategoriNextBtn').prop('disabled', page === kategoriNumPages);
-        }
-
-        // Fungsi untuk menampilkan halaman untuk Sub Kategori
-        function showSubKategoriPage(page) {
-            subkategoriCurrentPage = page;
-            var start = (page - 1) * rowsShown;
-            var end = start + rowsShown;
-            subkategoriRows.hide();
-            subkategoriRows.slice(start, end).show();
-            // Mengatur status tombol Previous dan Next
-            $('#subkategoriPrevBtn').prop('disabled', page === 1);
-            $('#subkategoriNextBtn').prop('disabled', page === subkategoriNumPages);
-        }
-
-        // Event handler saat tombol "Previous" diklik untuk Kategori
-        $('#kategoriPrevBtn').on('click', function() {
-            if (kategoriCurrentPage > 1) {
-                showKategoriPage(kategoriCurrentPage - 1);
-            }
-        });
-
-        // Event handler saat tombol "Next" diklik untuk Kategori
-        $('#kategoriNextBtn').on('click', function() {
-            if (kategoriCurrentPage < kategoriNumPages) {
-                showKategoriPage(kategoriCurrentPage + 1);
-            }
-        });
-
-        // Event handler saat tombol "Previous" diklik untuk Sub Kategori
-        $('#subkategoriPrevBtn').on('click', function() {
-            if (subkategoriCurrentPage > 1) {
-                showSubKategoriPage(subkategoriCurrentPage - 1);
-            }
-        });
-
-        // Event handler saat tombol "Next" diklik untuk Sub Kategori
-        $('#subkategoriNextBtn').on('click', function() {
-            if (subkategoriCurrentPage < subkategoriNumPages) {
-                showSubKategoriPage(subkategoriCurrentPage + 1);
-            }
-        });
-
-        let searchParams = new URLSearchParams(window.location.search)
-        // console.log()
-        $('#tema_id').val(searchParams.get('tema_id'))
-    });
-</script>
 {% endblock %}

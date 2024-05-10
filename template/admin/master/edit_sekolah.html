@@ -11,34 +11,28 @@
                 <form method="post" action="{% url 'sipandu_admin:edit_sekolah' dt_sekolah.sekolah_id %}">
 
                     {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="sekolah_provinsi" class="form-label">Provinsi</label>
-                        <select class="form-select" id="sekolah_wilayah" name="wilayah_provinsi">
-                            <option value="" selected disabled>Pilih Provinsi</option>
-                            {% for provinsi in data_wilayah %}
-                            <option value="{{ provinsi.wilayah_id }}" {% if dt_sekolah.sekolah_wilayah_id == provinsi.wilayah_provinsi %} selected {% endif %}>{{ provinsi.wilayah_provinsi.upper }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>  
-                    
-                    <div class="mb-3">
-                        <label for="kabupaten" class="form-label">Kabupaten</label>
-                        <select class="form-select" id="sekolah_provinsi" name="sekolah_provinsi">
-                            <option value="" selected disabled>Pilih Kabupaten</option>
-                            {% for kabupaten in data_wilayah %}
-                            <option value="{{kabupaten.wilayah_id}}">{{kabupaten.wilayah_kabupaten.upper}}</option>
+                    <div class="mb-3" id="div_prov_edit_{{dt_sekolah.sekolah_id}}">
+                        <label for="role">Provinsi</label>
+                        <select name="sekolah_provinsi" id="prov_edit_{{dt_sekolah.sekolah_id}}" data-level="prov_edit" class="form-control" onchange="render_kab_edit(this)">
+                            <option value="">- Pilih Provinsi -</option>
+                            {% for provinsi in data_prov %}
+                            <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_nama.upper}}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="distrik" class="form-label">Distrik</label>
-                        <select class="form-select" id="sekolah_provinsi" name="sekolah_provinsi">
-                            <option value="" selected disabled>Pilih Kabupaten</option>
-                            {% for distrik in data_wilayah %}
-                            <option value="{{kabupaten.wilayah_id}}">{{distrik.wilayah_distrik.upper}}</option>
-                            {% endfor %}
+                    <div class="mb-3" id="div_kab_edit_{{dt_sekolah.sekolah_id}}">
+                        <label for="role">Kabupaten</label>
+                        <select name="sekolah_kabupaten" id="kab_edit_{{dt_sekolah.sekolah_id}}" data-level="kab_edit" class="form-control" onchange="render_kab_edit(this)">
+                            <option value="">- Pilih Kabupaten -</option>
                         </select>
                     </div>
+                    <div class="mb-3" id="div_kec_edit_{{dt_sekolah.sekolah_id}}">
+                        <label for="role">Kecamatan</label>
+                        <select name="sekolah_kecamatan" id="kec_edit_{{dt_sekolah.sekolah_id}}" data-level="kec_edit" class="form-control">
+                            <option value="">- Pilih Kecamatan -</option>
+                            <option value="test" selected disabled>Pilih Kecamatan</option>
+                        </select>
+                    </div>   
                     <div class="mb-3">
                         <label for="sekolah_nama" class="form-label">Nama Sekolah</label>
                         <input type="text" value="{{ dt_sekolah.sekolah_nama }}" class="form-control" name="sekolah_nama" placeholder="Masukkan Nama Sekolah">
@@ -73,3 +67,35 @@
     </div>
 </div>
 <!-- Modal Edit Data Sekolah End -->
+
+<script>
+    function render_kab_edit(e) {
+        var level_wilayah = $(e).data('level');
+
+        $.ajax({
+            url: "{% url 'sipandu_admin:get_wilayah_by_level' %}",
+            type: "GET",
+            data: {
+                'level': $('#wilayah_level_edit_' + e.id.split("_").pop()).val(),
+                'wilayah_id': $(e).val()
+            },
+            success: function(response) {
+                if (level_wilayah == 'prov_edit') {
+                    var elem = $(`#kab_edit_${$(e).attr('id').split("_").pop()}`);
+                } else if (level_wilayah == 'kab_edit') {
+                    var elem = $(`#kec_edit_${$(e).attr('id').split("_").pop()}`);
+                }
+
+                elem.html('');
+                var opt_label = '<option value="">- Pilih Kabupaten -</option>';
+                for (var i = 0; i < response.data_wilayah.length; i++) {
+                    elem.append(`<option value="${response.data_wilayah[i]['wilayah_id']}">${response.data_wilayah[i]['wilayah_nama']}</option>`);
+                }
+                elem.val('');
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+</script>

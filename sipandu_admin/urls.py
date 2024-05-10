@@ -1,6 +1,6 @@
 from django.urls import path, include
 from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,kategori_views
-from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,transaksi_view,galeri
+from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,transaksi_view,galeri,kontak_sekolah
 from django.contrib.auth import views as auth_views
 
 
@@ -50,6 +50,15 @@ urlpatterns = [
     path('delete_konten/<str:id_data_konten>/delete', konten_views.DeleteKonten, name='delete_konten'),
     
     path('galeri/', galeri.Indexgaleri, name='index_galeri'),
+    path('tambah_galeri/', galeri.Tambahgaleri, name='tambah_galeri'),
+    path('edit_galeri/<str:id_data_galeri>/', galeri.Editgaleri, name='edit_galeri'),
+    path('delete_galeri/<str:id_data_galeri>/delete', galeri.Deletegaleri, name='delete_galeri'),
+    
+    
+    path('kontak/', kontak_sekolah.Indexkontak, name='index_kontak'),
+    path('tambah_kontak/', kontak_sekolah.TambahKontak, name='tambah_kontak'),
+    path('edit_kontak/<str:id_data_kontak>/', kontak_sekolah.EditKontak, name='edit_kontak'),
+    path('delete_kontak/<str:id_data_kontak>/delete', kontak_sekolah.DeleteKontak, name='delete_kontak'),
 
 
 
