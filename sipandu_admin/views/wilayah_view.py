@@ -51,8 +51,6 @@ def get_wilayah_by_level(request):
         return JsonResponse({"data_wilayah": list(wilayah_list)})
     return JsonResponse({'error': 'Invalid request'})
 
-    
-from django.shortcuts import get_object_or_404
 
 def edit_wilayah(request, wilayah_id):
     # Mengambil objek wilayah yang akan diedit

@@ -1,5 +1,6 @@
 {% extends 'admin/base/base_index.html' %}
 {% load static %}
+
 {% block title %}
 Master User
 {% endblock %}
@@ -39,7 +40,7 @@ Master User
                     </div>
                     <div class="card-body">
                         <div class="example">
-                            <table class="table border-top table-bordered mb-0">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" >
                                 <thead>
                                     <tr>
                                         <th class="text-center border-bottom-0">No</th>
@@ -54,10 +55,9 @@ Master User
                                     {% for dt_galeri in data_galeri %}
                                     <tr>
                                         <td>{{ forloop.counter }}</td>
-                                        <td>{{ dt_galeri.created_at }}</td>
                                         <td>{{ dt_galeri.created_at}}</td>
                                         <td class="text-nowrap align-middle">{{ dt_sekolah.sekolah_nama }}</td>
-                                        <td class="text-center align-middle"><span>{% if dt_galeri.status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
+                                        <!-- <td class="text-center align-middle"><span>{% if dt_galeri.status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td> -->
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_galeri.id_data_galeri}}">Edit</a> &nbsp;

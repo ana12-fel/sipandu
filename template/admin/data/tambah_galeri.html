@@ -22,43 +22,43 @@ Master User
                         <h3 class="card-title">Tambah Galeri</h3>
                     </div>
                 <div class="card-body">
-<form method="post" action="{% url 'sipandu_admin:tambah_galeri' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="mb-3">
-        <label for="konten_sekolah" class="form-label">Sekolah</label>
-        <select class="form-select" id="konten_sekolah" name="konten_sekolah">
-            <option value="test" selected disabled>Pilih Sekolah</option>
-            {% for sekolah in data_sekolah %}
-            <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
-            {% endfor %}
-        </select>
-    </div> 
+                <form method="post" action="{% url 'sipandu_admin:tambah_galeri' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="konten_sekolah" class="form-label">Sekolah</label>
+                        <select class="form-select" id="konten_sekolah" name="konten_sekolah">
+                            <option value="test" selected disabled>Pilih Sekolah</option>
+                            {% for sekolah in data_sekolah %}
+                            <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
+                            {% endfor %}
+                        </select>
+                    </div> 
 
-    <div class="mb-3">
-        <label for="image" class="form-label">Image</label>
-        <input type="file" class="form-control" id="image" name="galeri_image" accept="image/*" onchange="previewImage(event)">
-    </div>
-    <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> 
-    
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header border-bottom-0">
-                    <div class="card-title">
-                        Video
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image</label>
+                        <input type="file" class="form-control" id="image" name="galeri_image" accept="image/*" onchange="previewImage(event)">
                     </div>
-                </div>
-                <div class="card-body">
-                    <textarea id="editor" name="isi_konten" ></textarea>
-                </div>
+                    <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> 
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header border-bottom-0">
+                                    <div class="card-title">
+                                        Video
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <textarea id="editor" name="Video" ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </form>
             </div>
         </div>
     </div>
-
-    <button type="submit" class="btn btn-primary">Simpan</button>
-</form>
-</div>
-</div>
 </div>
 
 {% endblock %}
