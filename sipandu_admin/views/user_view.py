@@ -52,9 +52,10 @@ def IndexUser(request):
     else:
         data_user = Master_user.objects.all()
         data_wilayah = Master_wilayah.objects.all()
-        data_prov = Master_wilayah.objects.filter(wilayah_level='1')  
+        data_prov = Master_wilayah.objects.filter(wilayah_level='1')
+        data_sekolah = Master_sekolah.objects.all()  
         print (data_prov)
-        return render(request, 'admin/master/index_master_user.html', {"data_user": data_user, 'role_choices': ROLE_CHOICE, 'wilayah': data_wilayah, 'prov': data_prov})
+        return render(request, 'admin/master/index_master_user.html', {"data_user": data_user, 'role_choices': ROLE_CHOICE, 'wilayah': data_wilayah, 'prov': data_prov,'sekolah':data_sekolah})
         
 # @login_required(login_url='sipandu_admin:login_index')
 def edit_user(request, user_id):
@@ -131,14 +132,17 @@ def delete_user(request, user_id):
         return JsonResponse(data, status=400)
     
 
-def get_user_by_level(request):
+def get_user_by_role(request):
     if request.method == 'GET':
-        level = request.GET.get('level')
+        role = request.GET.get('role')
+        user_sekolah_id = request.GET.get('user_sekolah_id')
         wilayah_id = request.GET.get('wilayah_id')
         
         # Sesuaikan dengan nama kolom yang ada di model
-        if level == 'prov':
-            wilayah_list = Master_user.objects.filter(wilayah_parent_id=wilayah_id).values('wilayah_id', 'wilayah_nama')
+        if role == 'admin_kabupaten':
+            wilayah_list = Master_wilayah.objects.filter(wilayah_parent_id=wilayah_id).values('wilayah_id', 'wilayah_nama')
+        elif role == 'admin_sekolah':
+            sekolah_list = Master_sekolah.objects.filter(sekolah_id=user_sekolah_id).values('sekolah_id','sekolah_nama')
         else:
             wilayah_list = Master_wilayah.objects.none()
         

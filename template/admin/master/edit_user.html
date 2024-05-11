@@ -31,7 +31,7 @@
                     <!-- Tambahkan div untuk kabupaten -->
                     <div class="mb-3 d-none" id="div_kab_edit_{{dt_user.user_id}}">
                         <label for="kab_edit">Kabupaten</label>
-                        <select name="kab_edit" id="kab_edit_{{dt_user.user_id}}" class="form-control" data-role="kab_edit">
+                        <select name="kab_edit" id="kab_edit_{{dt_user.user_id}}" class="form-control" onchange="render_kab_edit(this)" data-role="kab_edit">
                             <option value="">- Pilih Kabupaten -</option>
                         </select>
                     </div>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="mb-3 d-none" id="div_sekolah_edit_{{dt_user.user_id}}">
                         <label for="sekolah_edit">Sekolah</label>
-                        <select name="sekolah_edit" id="sekolah_edit_{{dt_user.user_id}}" class="form-control" data-role="sekolah_edit">
+                        <select name="user_sekolah_edit" id="sekolah_edit_{{dt_user.user_id}}" class="form-control" data-role="sekolah_edit">
                             <option value="">- Pilih Sekolah-</option>
                         </select>
                     </div>
@@ -117,36 +117,39 @@
         div_kec.trigger('change');
     }
 
-    function render_kab_edit(e) {
+    function render_kab(e) {
         var level_wilayah = $(e).data('level');
 
         $.ajax({
-            url: "{% url 'sipandu_admin:get_user_by_level' %}",
+            url: "{% url 'sipandu_admin:get_wilayah_by_level' %}",
             type: "GET",
             data: {
-                'level': $('#wilayah_level_edit_' + e.id.split("_").pop()).val(),
+                'level': $('#wilayah_level').val(),
                 'wilayah_id': $(e).val()
             },
             success: function(response) {
-                if (level_wilayah == 'prov_edit') {
-                    var elem = $('#kab_edit_' + e.id.split("_").pop());
-                } else if (level_wilayah == 'kab_edit') {
-                    var elem = $('#kec_edit_' + e.id.split("_").pop());
-                } else if (level_wilayah == 'kec_edit') {
-                    var elem = $('#sekolah_edit_' + e.id.split("_").pop());
+                console.log(response, level_wilayah)
+                if (level_wilayah == 'prov') {
+                    var elem = $('#kab')
+                } else if (level_wilayah == 'kab') {
+                    var elem = $('#kec')
                 }
 
                 elem.html('');
-                var opt_label = '<option value="">- Pilih Kabupaten -</option>';
+                var opt_label = '<option value="">- Pilih Kabupaten -</option>'
                 for (var i = 0; i < response.data_wilayah.length; i++) {
-                    elem.append(`<option value="${response.data_wilayah[i]['wilayah_id']}">${response.data_wilayah[i]['wilayah_nama']}</option>`);
+                    elem.append(`<option value="${response.data_wilayah[i]['wilayah_id']}">${response.data_wilayah[i]['wilayah_nama']}</option>`)
+                    console.log(response.data_wilayah[i]['wilayah_nama'])
                 }
                 elem.val('');
+
             },
             error: function(xhr, status, error) {
                 console.error(error);
             }
         });
     }
+</script>
+
 
 </script>

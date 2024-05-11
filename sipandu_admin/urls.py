@@ -15,7 +15,7 @@ urlpatterns = [
     path('index-master-user/', user_view.IndexUser, name='index_user'),
     path('edit_user/<str:user_id>/', user_view.edit_user, name='edit_user'),
     path('user/delete/<str:user_id>/', user_view.delete_user, name='delete_user'),
-    path('get_user_by_level/', user_view.get_user_by_level, name='get_user_by_level'),
+    path('get_user_by_role/', user_view.get_user_by_role, name='get_user_by_role'),
 
 
     path('index-master-wilayah/', wilayah_view.IndexWilayah, name='index_wilayah'),
