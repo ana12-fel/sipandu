@@ -36,7 +36,7 @@ Master User
             <div class="col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data Posting galeri</h3>
+                        <h3 class="card-title">Data Posting Galeri</h3>
                     </div>
                     <div class="card-body">
                         <div class="example">
@@ -55,20 +55,21 @@ Master User
                                     {% for dt_galeri in data_galeri %}
                                     <tr>
                                         <td>{{ forloop.counter }}</td>
-                                        <td>{{ dt_galeri.created_at}}</td>
-                                        <td class="text-nowrap align-middle">{{ dt_sekolah.sekolah_nama }}</td>
-                                        <!-- <td class="text-center align-middle"><span>{% if dt_galeri.status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td> -->
+                                        <td>{{ dt_galeri.created_at }}</td>
+                                        <td>{{ dt_galeri.galeri_sekolah.sekolah_nama }}</td>
+                                        <td><img src="{% if dt_galeri.gambar %}{{ dt_galeri.gambar.url }}{% endif %}" alt="{{ dt_galeri.gambar }}" style="max-width: 100px;"></td>
+                                        <td>
+                                            <iframe width="100%" height="100%" src="{{ dt_galeri.video }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
-                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_galeri.id_data_galeri}}">Edit</a> &nbsp;
+                                                <a href="{% url 'sipandu_admin:edit_galeri' dt_galeri.id_data_galeri %}" class="btn btn-sm btn-primary badge">Edit</a>
                                                 <button onclick="deletegaleri('{{ dt_galeri.id_data_galeri }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
                                             </div>
                                         </td> 
-                                        <!-- <td><button type="button" class="btn btn-success"><i class="fa fa-check"></i> Aktif</button></td> --> 
                                     </tr>
-                                    {% include 'admin/data/edit_galeri.html' %}
                                     {% endfor %}
                                 </tbody>
+                                
                             </table>
                         </div>
                     </div>
@@ -100,7 +101,7 @@ Master User
             $.ajax({
                 headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
                 url: deleteUrl,
-                type: "DELETE",
+                type: "GET",
                 success: function (response) {
                     console.log('berhasil');
                     swal({

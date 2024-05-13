@@ -12,11 +12,7 @@ def Indexkontak(request):
         tw = request.POST.get ('tw')
         ig = request.POST.get ('ig')
 
-        
-        dt_kontak = Data_kontak.objects.create(kontak=kontak_sekolah)
-
         print(kontak_sekolah,no_hp,e_mail,fb,tw,ig)
-
         dt_kontak = Data_kontak.objects.create(
                                                 kontak_sekolah=Master_sekolah.objects.get(sekolah_id=kontak_sekolah),
                                                 no_hp=no_hp,
@@ -39,9 +35,8 @@ def TambahKontak(request):
         fb = request.POST.get ('fb')
         tw = request.POST.get ('tw')
         ig = request.POST.get ('ig')
+        print(request.POST)
 
-        
-        dt_kontak = Data_kontak.objects.create(kontak=kontak_sekolah)
 
         print(kontak_sekolah,no_hp,e_mail,fb,tw,ig)
 
@@ -52,6 +47,8 @@ def TambahKontak(request):
                                                 fb=fb,
                                                 tw=tw,
                                                 ig=ig)
+        
+        dt_kontak.save()
 
         return redirect('sipandu_admin:index_kontak')
     else:
@@ -67,6 +64,7 @@ def EditKontak(request):
         fb = request.POST.get ('fb')
         tw = request.POST.get ('tw')
         ig = request.POST.get ('ig')
+        print(request.POST)
 
         
         dt_kontak = Data_kontak.objects.create(kontak=kontak_sekolah)
