@@ -51,7 +51,8 @@ Master Wilayah
                             </div>
                             <div class="mb-3 d-none" id="div_prov">
                                 <label for="role">Provinsi</label>
-                                <select name="prov" id="prov" data-level="prov" class="form-control" onchange="render_kab(this)">
+                                <select name="prov" id="prov" data-level="prov" class="form-control" onchange="render_kab(this) "  >
+                                 
                                     <option value="">- Pilih Provinsi -</option>
                                     {% for prov in data_prov %}
                                         <option value="{{ prov.wilayah_id }}">{{ prov.wilayah_nama }}</option>
@@ -78,7 +79,7 @@ Master Wilayah
                             </div>
                             <div class="mb-3">
                                 <label for="kode" class="form-label">Kode</label>
-                                <input type="text" class="form-control" name="wilayah_kode" placeholder="Masukkan Status kode">
+                                <input type="text" class="form-control" name="wilayah_kode" placeholder="Masukkan Status kode" required>
                             </div>
                             <div class="mb-3 d-none">
                                 <label for="wilayah" class="form-label">Wilayah</label>
@@ -91,7 +92,7 @@ Master Wilayah
                             </div>
                             <div class="mb-3">
                                 <label for="wilayah_nama" class="form-label">Nama Wilayah</label>
-                                <input type="text" class="form-control" id="wilayah_nama" name="wilayah_nama" placeholder="Masukkan Nama Wilayah">
+                                <input type="text" class="form-control" id="wilayah_nama" name="wilayah_nama" placeholder="Masukkan Nama Wilayah" required>
                             </div>
                                 <!-- Input wilayah_status secara default -->
                             <div class="mb-3">
