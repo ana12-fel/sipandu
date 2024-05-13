@@ -220,8 +220,11 @@ class Data_konten(models.Model):
 class Data_galeri(models.Model):
     id_data_galeri= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     galeri_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
-    gambar = models.ImageField(upload_to='image_galeri/')
-    video = models.ImageField(upload_to='video_galeri/', default='default_video.mp4')
+    gambar = models.ImageField(upload_to='galeri_thumbnail/')
+    video = models.TextField(null=True, default=None)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
 
 class Data_kontak(models.Model):
     id_data_kontak= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)

@@ -1,60 +1,53 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.http import JsonResponse, HttpResponse
-from sipandu_app.models import Data_kontak,Master_sekolah
+from sipandu_app.models import Data_link,Master_sekolah
 from django.urls import reverse
 
 def Indexkontak(request):
     if request.method == 'POST':
-        kontak_sekolah = request.POST.get('kontak_sekolah')
-        no_hp = request.POST.get ('no_hp')
-        e_mail = request.POST.get ('e-mail')
-        fb = request.POST.get ('fb')
-        tw = request.POST.get ('tw')
-        ig = request.POST.get ('ig')
+        link_sekolah = request.POST.get('link_sekolah')
+        nama_link = request.POST.get ('nama_link')
+        link = request.POST.get ('link')
+        
 
-        print(kontak_sekolah,no_hp,e_mail,fb,tw,ig)
-        dt_kontak = Data_kontak.objects.create(
-                                                kontak_sekolah=Master_sekolah.objects.get(sekolah_id=kontak_sekolah),
-                                                no_hp=no_hp,
-                                                email=e_mail,
-                                                fb=fb,
-                                                tw=tw,
-                                                ig=ig)
+        
+        dt_link = Data_link.objects.create(kontak=link_sekolah)
+
+        print(link_sekolah,nama_link,link)
+
+        dt_kontak = Data_link.objects.create(
+                                                link_sekolah=Master_sekolah.objects.get(sekolah_id=link_sekolah),
+                                                nama_link=nama_link,
+                                                link=link)
 
         return redirect('sipandu_admin:index_kontak')
     else:
-        dt_kontak = Data_kontak.objects.all()
+        dt_link = Data_link.objects.all()
         data_sekolah = Master_sekolah.objects.all()
-        return render(request, 'admin/data/kontak_sekolah.html', {"data_kontak": dt_kontak, "data_sekolah" : data_sekolah})
+        return render(request, 'admin/data/kontak_sekolah.html', {"data_link": dt_link, "data_sekolah" : data_sekolah})
     
 def TambahKontak(request):
     if request.method == 'POST':
-        kontak_sekolah = request.POST.get('kontak_sekolah')
-        no_hp = request.POST.get ('no_hp')
-        e_mail = request.POST.get ('e-mail')
-        fb = request.POST.get ('fb')
-        tw = request.POST.get ('tw')
-        ig = request.POST.get ('ig')
-        print(request.POST)
-
-
-        print(kontak_sekolah,no_hp,e_mail,fb,tw,ig)
-
-        dt_kontak = Data_kontak.objects.create(
-                                                kontak_sekolah=Master_sekolah.objects.get(sekolah_id=kontak_sekolah),
-                                                no_hp=no_hp,
-                                                email=e_mail,
-                                                fb=fb,
-                                                tw=tw,
-                                                ig=ig)
+        link_sekolah = request.POST.get('link_sekolah')
+        nama_link = request.POST.get ('nama_link')
+        link = request.POST.get ('link')
         
-        dt_kontak.save()
+
+        
+        dt_link = Data_link.objects.create(kontak=link_sekolah)
+
+        print(link_sekolah,nama_link,link)
+
+        dt_kontak = Data_link.objects.create(
+                                                link_sekolah=Master_sekolah.objects.get(sekolah_id=link_sekolah),
+                                                nama_link=nama_link,
+                                                link=link)
 
         return redirect('sipandu_admin:index_kontak')
     else:
-        dt_kontak = Data_kontak.objects.all()
+        dt_link = Data_link.objects.all()
         data_sekolah = Master_sekolah.objects.all()
-        return render(request, 'admin/data/tambah_kontak.html', {"data_kontak": dt_kontak, "data_sekolah" : data_sekolah})
+        return render(request, 'admin/data/kontak_sekolah.html', {"data_link": dt_link, "data_sekolah" : data_sekolah})
 
 def EditKontak(request):
     if request.method == 'POST':
@@ -64,7 +57,6 @@ def EditKontak(request):
         fb = request.POST.get ('fb')
         tw = request.POST.get ('tw')
         ig = request.POST.get ('ig')
-        print(request.POST)
 
         
         dt_kontak = Data_kontak.objects.create(kontak=kontak_sekolah)

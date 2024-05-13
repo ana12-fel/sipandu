@@ -38,8 +38,9 @@ def IndexWilayah(request):
     else:
         data_wilayah = Master_wilayah.objects.all()
         data_prov = Master_wilayah.objects.filter(wilayah_level='1')
+        data_kab = Master_wilayah.objects.filter(wilayah_level='2')
         return render(request, 'admin/master/index_master_wilayah.html', {'data_wilayah': data_wilayah, 'wilayah_level': LEVEL_WILAYAH,
-            "data_prov": data_prov})
+            "data_prov": data_prov, "kab" : data_kab})
 
 def get_wilayah_by_level(request):
     if request.method == 'GET':
@@ -51,8 +52,6 @@ def get_wilayah_by_level(request):
         return JsonResponse({"data_wilayah": list(wilayah_list)})
     return JsonResponse({'error': 'Invalid request'})
 
-    
-from django.shortcuts import get_object_or_404
 
 def edit_wilayah(request, wilayah_id):
     # Mengambil objek wilayah yang akan diedit

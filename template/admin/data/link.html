@@ -1,6 +1,5 @@
 {% extends 'admin/base/base_index.html' %}
 {% load static %}
-
 {% block title %}
 Master User
 {% endblock %}
@@ -21,7 +20,7 @@ Master User
             </div>
             
             <div class="ms-auto pageheader-btn">
-                <a href="{% url 'sipandu_admin:tambah_galeri'%}" class="btn btn-primary btn-icon text-white me-2" >
+                <a href="{% url 'sipandu_admin:tambah_link'%}" class="btn btn-primary btn-icon text-white me-2" >
                     <span>
                         <i class="fe fe-plus"></i>
                     </span> Tambahkan galeri
@@ -36,50 +35,39 @@ Master User
             <div class="col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data Posting Galeri</h3>
+                        <h3 class="card-title">Data Posting galeri</h3>
                     </div>
                     <div class="card-body">
                         <div class="example">
-                            <table class="table table-bordered text-nowrap border-bottom w-100" >
+                            <table class="table border-top table-bordered mb-0">
                                 <thead>
                                     <tr>
                                         <th class="text-center border-bottom-0">No</th>
                                         <th class="text-center border-bottom-0">Tanggal</th>
                                         <th class="text-center border-bottom-0">Nama Sekolah</th>
-                                        <th class="text-center border-bottom-0">Image</th>
-                                        <th class="text-center border-bottom-0">Video</th>
+                                        <th class="text-center border-bottom-0">Judul</th>
                                         <th class="text-center border-bottom-0">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for dt_galeri in data_galeri %}
+                                    {% for dt_link in data_link %}
                                     <tr>
                                         <td>{{ forloop.counter }}</td>
-<<<<<<< HEAD
-                                        <td>{{ dt_galeri.created_at}}</td>
-                                        <td>{{ dt_sekolah.galeri_sekolah.sekolah_nama }}</td>
-                                        <td><img src="{% if dt_galeri.gambar %}{{MEDIA_URL}}{{ dt_galeri.gambar.url }}{% endif %}" alt="{{ dt_galeri.id_data_galeri }}" style="max-width: 100px;"></td>
-=======
-                                        <td>{{ dt_galeri.created_at }}</td>
-                                        <td>{{ dt_galeri.galeri_sekolah.sekolah_nama }}</td>
-                                        <td><img src="{% if dt_galeri.gambar %}{{ dt_galeri.gambar.url }}{% endif %}" alt="{{ dt_galeri.gambar }}" style="max-width: 100px;"></td>
-                                        <td>
-                                            <iframe width="100%" height="100%" src="{{ dt_galeri.video }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></td>
->>>>>>> 476ec938d440417cc6bb141a53b8d9a2f9642a14
+                                        <td>{{ dt_link.created_at }}</td>
+                                        <td>{{ dt_link.judul }}</td>
+                                        <td class="text-nowrap align-middle">{{ dt_sekolah.sekolah_nama }}</td>
+                                        <td class="text-center align-middle"><span>{% if dt_link.status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
-                                                <a href="{% url 'sipandu_admin:edit_galeri' dt_galeri.id_data_galeri %}" class="btn btn-sm btn-primary badge">Edit</a>
-                                                <button onclick="deletegaleri('{{ dt_galeri.id_data_galeri }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_link.id_data_link}}">Edit</a> &nbsp;
+                                                <button onclick="deletegaleri('{{ dt_link.id_data_link }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
                                             </div>
                                         </td> 
+                                        <!-- <td><button type="button" class="btn btn-success"><i class="fa fa-check"></i> Aktif</button></td> --> 
                                     </tr>
-<<<<<<< HEAD
-                                    <!-- {% include 'admin/data/edit_galeri.html' %} -->
-=======
->>>>>>> 476ec938d440417cc6bb141a53b8d9a2f9642a14
+                                    {% include 'admin/data/edit_link.html' %}
                                     {% endfor %}
                                 </tbody>
-                                
                             </table>
                         </div>
                     </div>
@@ -93,7 +81,7 @@ Master User
 
 <script>
     function deletegaleri(galeri_) {
-    var deleteUrl = "{% url 'sipandu_admin:delete_galeri' 'id_data_galeri' %}".replace("id_data_galeri", galeri_);
+    var deleteUrl = "{% url 'sipandu_admin:delete_link' 'id_data_link' %}".replace("id_data_link", link_);
 
     swal({
         title: "Apakah Anda yakin?",
@@ -111,7 +99,7 @@ Master User
             $.ajax({
                 headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
                 url: deleteUrl,
-                type: "GET",
+                type: "DELETE",
                 success: function (response) {
                     console.log('berhasil');
                     swal({

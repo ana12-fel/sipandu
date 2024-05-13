@@ -77,9 +77,9 @@ def TambahKonten(request):
        
 def EditKonten(request, id_data_konten):
     if request.method == 'POST':
-        dt_konten = Data_konten.objects.get(id_data_konten=id_data_konten)
+        dt_konten = Data_konten.objects.get(dt_konten= Data_konten)
 
-        id_data_konten = request.POST.get('id_data_konten')
+        
         konten_sekolah = request.POST.get('konten_sekolah')
         konten_kategori = request.POST.get ('konten_kategori')
         konten_sub_kategori = request.POST.get ('konten_sub_kategori')
@@ -103,7 +103,7 @@ def EditKonten(request, id_data_konten):
 
         return redirect('sipandu_admin:index_konten')
     else:
-        dt_konten = get_object_or_404( Data_konten , id_data_konten=id_data_konten)
+        dt_konten = get_object_or_404( Data_konten , dt_konten=Data_konten)
         data_sekolah = Master_sekolah.objects.all()
         data_kategori = Master_kategori.objects.all()
         data_sub_kategori = Sub_kategori.objects.all()

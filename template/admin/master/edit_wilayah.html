@@ -32,28 +32,35 @@
                         <label for="role">Kabupaten</label>
                         <select name="kab_edit" id="kab_edit_{{dt_wilayah.wilayah_id}}" data-level="kab_edit" class="form-control" onchange="render_kab_edit(this)">
                             <option value="">- Pilih Kabupaten -</option>
+                            {% for kabupaten in kab %}
+                            <option value="{{ kabupaten.wilayah_id }}">{{ kabupaten.wilayah_nama }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="mb-3 d-none" id="div_kec_edit_{{dt_wilayah.wilayah_id}}">
                         <label for="role">Kecamatan</label>
                         <select name="kec_edit" id="kec_edit_{{dt_wilayah.wilayah_id}}" data-level="kec_edit" class="form-control">
                             <option value="">- Pilih Kecamatan -</option>
-                            {% for key_level, display_level in wilayah_level %}
+                            <!-- {% for key_level, display_level in wilayah_level %}
                                 <option value="{{ key_level }}">{{ display_level }}</option>
-                            {% endfor %}
+                            {% endfor %} -->
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="kode" class="form-label">Kode</label>
-                        <input type="text" class="form-control" name="wilayah_kode_edit" placeholder="Masukkan Status kode">
+                        <input type="text" class="form-control" name="wilayah_kode_edit" placeholder="Masukkan Status kode" required>
                     </div>
                     <div class="mb-3">
                         <label for="wilayah_nama_edit" class="form-label">Nama Wilayah</label>
-                        <input type="text" class="form-control" id="wilayah_nama_edit_{{dt_wilayah.wilayah_id}}" name="wilayah_nama_edit" placeholder="Masukkan Nama Wilayah">
+                        <input type="text" class="form-control" id="wilayah_nama_edit_{{dt_wilayah.wilayah_id}}" name="wilayah_nama_edit" placeholder="Masukkan Nama Wilayah" required>
                     </div>
                     <!-- Input wilayah_status secara default -->
                     <div class="mb-3">
-                        <input type="hidden" name="wilayah_status_edit" value="True">
+                        <label for="user_status_edit" class="form-label">Status</label>
+                        <select class="form-select" name="user_status_edit" aria-label="Default select example">
+                            <option value="1">Aktif</option>
+                            <option value="0">Tidak Aktif</option>
+                        </select>
                     </div>
                     
                     <div class="modal-footer">
