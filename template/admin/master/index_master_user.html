@@ -81,8 +81,11 @@ Master User
                             <!-- Tambahkan div untuk sekolah -->
                             <div class="mb-3 d-none" id="div_sekolah">
                                 <label for="sekolah">Sekolah</label>
-                                <select name="sekolah" id="sekolah" class="form-control" data-level="sekolah">
+                                <select name="user_sekolah" id="sekolah_id" class="form-control" data-level="sekolah">
                                     <option value="">- Pilih Sekolah-</option>
+                                    {% for dt_sekolah in sekolah %}
+                                        <option value="{{ dt_sekolah.sekolah_id }}">{{ dt_sekolah.sekolah_nama }}</option>
+                                {% endfor %}
                                 </select>
                             </div>
                             <div class="mb-3">

@@ -17,7 +17,7 @@ def IndexUser(request):
         
         kab = request.POST.get('kab')
         
-
+        print(user_sekolah_id)
         # Resolve user_kabupaten based on the user's role and location
         
         if  user_role == 'admin_kabupaten': 
@@ -29,6 +29,7 @@ def IndexUser(request):
         else:
             user_kabupaten = None
             user_sekolah = None
+            
 
         dt_user = Master_user.objects.create(
             user_first_name=user_first_name,
@@ -38,7 +39,7 @@ def IndexUser(request):
             password=user_password,
             user_status=user_status,
             user_kabupaten=user_kabupaten,
-            user_sekolah=user_sekolah_id  # Change to user_sekolah_id
+            user_sekolah=user_sekolah   # Change to user_sekolah_id
         )
 
         dt_user.set_password(user_password)
@@ -71,13 +72,13 @@ def edit_user(request, user_id):
         user_sekolah_id = request.POST.get('user_sekolah_edit')  # Change to user_sekolah_id
 
         
-        kab = request.POST.get('kab_edit')
+        kab_edit = request.POST.get('kab_edit')
         
 
         # Resolve user_kabupaten based on the user's role and location
         
         if  user_role == 'admin_kabupaten': 
-            user_kabupaten =  get_object_or_404(Master_wilayah,wilayah_id=kab)
+            user_kabupaten =  get_object_or_404(Master_wilayah,wilayah_id=kab_edit)
             user_sekolah = None
         elif user_role == 'admin_sekolah': 
             user_kabupaten = None
@@ -93,8 +94,8 @@ def edit_user(request, user_id):
             dt_user.user_role=user_role
             dt_user.password=user_password
             dt_user.user_status=user_status
-            dt_user.user_kabupaten=user_kabupaten
-            dt_user.user_sekolah=user_sekolah_id  # Change to user_sekolah_id
+            dt_user.user_kabupaten=Master_wilayah.objects.get(wilayah_id=kab_edit)
+            dt_user.user_sekolah=Master_sekolah.objects.get(sekolah_id = user_sekolah_id) # Change to user_sekolah_id
     
 
        
@@ -132,19 +133,12 @@ def delete_user(request, user_id):
         return JsonResponse(data, status=400)
     
 
-def get_user_by_role(request):
+def get_wilayah_by_level(request):
     if request.method == 'GET':
-        role = request.GET.get('role')
-        user_sekolah_id = request.GET.get('user_sekolah_id')
+        level = request.GET.get('level')
         wilayah_id = request.GET.get('wilayah_id')
         
-        # Sesuaikan dengan nama kolom yang ada di model
-        if role == 'admin_kabupaten':
-            wilayah_list = Master_wilayah.objects.filter(wilayah_parent_id=wilayah_id).values('wilayah_id', 'wilayah_nama')
-        elif role == 'admin_sekolah':
-            sekolah_list = Master_sekolah.objects.filter(sekolah_id=user_sekolah_id).values('sekolah_id','sekolah_nama')
-        else:
-            wilayah_list = Master_wilayah.objects.none()
+        wilayah_list = Master_wilayah.objects.filter(wilayah_parent=wilayah_id).values('wilayah_id', 'wilayah_nama')
         
         return JsonResponse({"data_wilayah": list(wilayah_list)})
     return JsonResponse({'error': 'Invalid request'})
