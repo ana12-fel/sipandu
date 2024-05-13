@@ -56,17 +56,16 @@ Master User
                                     <tr>
                                         <td>{{ forloop.counter }}</td>
                                         <td>{{ dt_galeri.created_at}}</td>
-                                        <td class="text-nowrap align-middle">{{ dt_sekolah.sekolah_nama }}</td>
-                                        <!-- <td class="text-center align-middle"><span>{% if dt_galeri.status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td> -->
+                                        <td>{{ dt_sekolah.galeri_sekolah.sekolah_nama }}</td>
+                                        <td><img src="{% if dt_galeri.gambar %}{{MEDIA_URL}}{{ dt_galeri.gambar.url }}{% endif %}" alt="{{ dt_galeri.id_data_galeri }}" style="max-width: 100px;"></td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_galeri.id_data_galeri}}">Edit</a> &nbsp;
                                                 <button onclick="deletegaleri('{{ dt_galeri.id_data_galeri }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
                                             </div>
                                         </td> 
-                                        <!-- <td><button type="button" class="btn btn-success"><i class="fa fa-check"></i> Aktif</button></td> --> 
                                     </tr>
-                                    {% include 'admin/data/edit_galeri.html' %}
+                                    <!-- {% include 'admin/data/edit_galeri.html' %} -->
                                     {% endfor %}
                                 </tbody>
                             </table>
