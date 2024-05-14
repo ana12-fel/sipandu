@@ -42,13 +42,13 @@ Master User
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="jenjang" class="form-label">Jenjang</label>
-                                <input type="text" class="form-control" name="jenjang_nama" placeholder="Masukkan Status Jenjang">
+                                <input type="text" class="form-control" id="jenjang_nama" name="jenjang_nama" placeholder="Masukkan Status Jenjang">
                                 <!-- Input jenjang_status secara default -->
-                                <input type="hidden" name="jenjang_status" value="True">
+                                <input type="hidden" name="jenjang_status" id="jenjang_status" value="True">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
                             </div>
                         </form>
                     
@@ -114,6 +114,43 @@ Master User
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
 <script>
+   
+   function submitForm() {
+        // Mengambil nilai input dari formulir
+        var jenjangNama = document.getElementById("jenjang_nama").value;
+        var jenjangStatus = document.getElementById("jenjang_status").value;
+
+        // Mengirim data ke server menggunakan Ajax
+        $.ajax({
+            url: "{% url 'sipandu_admin:index_jenjang' %}",
+            type: "POST",
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                jenjang_nama: jenjangNama,
+                jenjang_status: jenjangStatus
+            },
+            success: function(response) {
+                // Handle response dari server
+                // Misalnya, tampilkan notifikasi atau muat ulang halaman
+                console.log(response);
+                $('#addDataModal').modal('hide'); // Tutup modal setelah berhasil
+                // window.location.reload(); // Muat ulang halaman untuk memperbarui data
+                setTimeout(function() { 
+                    window.location.reload();
+                }, 2000);
+            },
+            error: function(xhr, status, error) {
+                // Handle error jika terjadi kesalahan saat mengirimkan data
+                console.error("Terjadi kesalahan:", error);
+                swal({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Jenjang sudah terinput sebelumnya!',
+                });
+            }
+        });
+    }
+
     function deleteJenjang(jenjang_) {
     var deleteUrl = "{% url 'sipandu_admin:delete_jenjang' 'jenjang_id' %}".replace("jenjang_id", jenjang_);
 

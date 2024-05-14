@@ -44,7 +44,7 @@ class Master_wilayah(models.Model):
 
 class Master_jenjang(models.Model):
     jenjang_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    jenjang_nama = models.TextField()
+    jenjang_nama = models.TextField(unique=True)
     jenjang_status = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

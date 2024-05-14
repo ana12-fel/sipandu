@@ -40,7 +40,7 @@ Master User
                     </div>
                     <div class="card-body">
                         <div class="example">
-                            <table class="table table-bordered text-nowrap border-bottom w-100" >
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="datakontenResponsiveDatatable">
                                 <thead>
                                     <tr>
                                         <th class="text-center border-bottom-0">No</th>
@@ -55,17 +55,11 @@ Master User
                                     {% for dt_galeri in data_galeri %}
                                     <tr>
                                         <td>{{ forloop.counter }}</td>
-<<<<<<< HEAD
-                                        <td>{{ dt_galeri.created_at}}</td>
-                                        <td>{{ dt_sekolah.galeri_sekolah.sekolah_nama }}</td>
-                                        <td><img src="{% if dt_galeri.gambar %}{{MEDIA_URL}}{{ dt_galeri.gambar.url }}{% endif %}" alt="{{ dt_galeri.id_data_galeri }}" style="max-width: 100px;"></td>
-=======
                                         <td>{{ dt_galeri.created_at }}</td>
                                         <td>{{ dt_galeri.galeri_sekolah.sekolah_nama }}</td>
                                         <td><img src="{% if dt_galeri.gambar %}{{ dt_galeri.gambar.url }}{% endif %}" alt="{{ dt_galeri.gambar }}" style="max-width: 100px;"></td>
                                         <td>
                                             <iframe width="100%" height="100%" src="{{ dt_galeri.video }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></td>
->>>>>>> 476ec938d440417cc6bb141a53b8d9a2f9642a14
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <a href="{% url 'sipandu_admin:edit_galeri' dt_galeri.id_data_galeri %}" class="btn btn-sm btn-primary badge">Edit</a>
@@ -73,10 +67,6 @@ Master User
                                             </div>
                                         </td> 
                                     </tr>
-<<<<<<< HEAD
-                                    <!-- {% include 'admin/data/edit_galeri.html' %} -->
-=======
->>>>>>> 476ec938d440417cc6bb141a53b8d9a2f9642a14
                                     {% endfor %}
                                 </tbody>
                                 
@@ -136,6 +126,16 @@ Master User
     });
 }
 
+    $(function(){
+            $('#datakontenResponsiveDatatable').DataTable({
+            scrollX: "100%",
+            language: {
+                searchPlaceholder: 'Search...',
+                sSearch: '',
+            }
+        });
+        })
+        
 </script>
 
 
