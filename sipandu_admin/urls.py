@@ -61,8 +61,6 @@ urlpatterns = [
     path('delete_kontak/<str:id_data_kontak>/delete', kontak_sekolah.DeleteKontak, name='delete_kontak'),
 
 
-
-
     path('transanksi-situs/', admin_views.TransanksiSitus, name='transanksi_situs'),
     path('index-transaksi/', transaksi_view.IndexTransaksi, name='index_transaksi'),
     path('edit-transaksi/<str:transanksi_id>/', transaksi_view.edit_transaksi, name='edit_transaksi'),

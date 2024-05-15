@@ -234,12 +234,15 @@ class Data_kontak(models.Model):
     tw = models.CharField(max_length=100, blank=True, null=True, verbose_name="Twitter")
     ig = models.CharField(max_length=100, blank=True, null=True, verbose_name="Instagram")
     no_hp = models.CharField(max_length=15, blank=True, null=True, verbose_name="Nomor HP")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class Data_link(models.Model):
     id_data_link= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     link_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
     Nama_link = models.CharField(max_length=200)
     link = models.CharField(max_length=200)
+    
 
     
 
