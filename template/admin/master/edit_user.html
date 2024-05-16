@@ -12,7 +12,7 @@
                     {% csrf_token %}
                     <div class="mb-3" id="div_level_{{dt_user.user_id}}">
                         <label for="role_edit">Level</label>
-                        <select name="role_edit" id="role_edit_{{dt_user.user_id}}" data-level_user="{{dt_user.user_role}}" class="form-control frm_level" onchange="pilih_role_edit(this)" required>
+                        <select name="role_edit" id="role_edit_{{dt_user.user_id}}" data-level_user="{{dt_user.user_role}}" class="form-control frm_level" onchange="pilih_role_edit(this)" >
                             <option value="">- Pilih Role -</option>
                             {% for role_key_edit, role_display_edit in role_choices %}
                                 <option value="{{ role_key_edit }}">{{ role_display_edit }}</option>
@@ -21,7 +21,7 @@
                     </div>
                     <div class="mb-3 d-none" id="div_prov_edit_{{dt_user.user_id}}">
                         <label for="prov_edit">Provinsi</label>
-                        <select name="prov_edit" id="prov_edit_{{dt_user.user_id}}" class="form-control" data-prov_user="{% if dt_user.user_role == 'admin_kabupaten' %}{{dt_user.user_kabupaten.wilayah_parent.wilayah_id}} {% else %}{{ dt_user.user_sekolah.sekolah_kabupaten.wilayah_parent.wilayah_id }}{% endif %}" onchange="render_kab_edit(this)" data-role="prov_edit" required>
+                        <select name="prov_edit" id="prov_edit_{{dt_user.user_id}}" class="form-control" data-prov_user="{% if dt_user.user_role == 'admin_kabupaten' %}{{dt_user.user_kabupaten.wilayah_parent.wilayah_id}} {% else %}{{ dt_user.user_sekolah.sekolah_kabupaten.wilayah_parent.wilayah_id }}{% endif %}" onchange="render_kab_edit(this)" data-role="prov_edit" >
                             <option value="">- Pilih Provinsi -</option>
                             {% for provinsi_edit in prov %}
                             <option value="{{ provinsi_edit.wilayah_id }}">{{ provinsi_edit.wilayah_nama }}</option>
@@ -31,20 +31,20 @@
                     <!-- Tambahkan div untuk kabupaten -->
                     <div class="mb-3 d-none" id="div_kab_edit_{{dt_user.user_id}}">
                         <label for="kab_edit">Kabupaten</label>
-                        <select name="kab_edit" id="kab_edit_{{dt_user.user_id}}" class="form-control" data-initiate_data="{% if dt_user.user_role == 'admin_kabupaten' %}{{dt_user.user_kabupaten.wilayah_parent.wilayah_id}}{% else %}{{ dt_user.user_sekolah.sekolah_kabupaten.wilayah_id }}{% endif %}" onchange="render_kab_edit(this)" data-role="kab_edit" required>
+                        <select name="kab_edit" id="kab_edit_{{dt_user.user_id}}" class="form-control" data-initiate_data="{% if dt_user.user_role == 'admin_kabupaten' %}{{dt_user.user_kabupaten.wilayah_parent.wilayah_id}}{% else %}{{ dt_user.user_sekolah.sekolah_kabupaten.wilayah_id }}{% endif %}" onchange="render_kab_edit(this)" data-role="kab_edit" >
                             <option value="">- Pilih Kabupaten -</option>
                         </select>
                     </div>
                     <!-- Tambahkan div untuk kecamatan -->
                     <div class="mb-3 d-none" id="div_kec_edit_{{dt_user.user_id}}">
                         <label for="kec_edit">Kecamatan</label>
-                        <select name="kec_edit" id="kec_edit_{{dt_user.user_id}}" data-level="kecamatan" data-initiate_data="{{ dt_user.user_sekolah.sekolah_kecamatan.wilayah_id }}"  onchange="render_kab_edit(this)" class="form-control" data-role="kec_edit" required>
+                        <select name="kec_edit" id="kec_edit_{{dt_user.user_id}}" data-level="kecamatan" data-initiate_data="{{ dt_user.user_sekolah.sekolah_kecamatan.wilayah_id }}"  onchange="render_kab_edit(this)" class="form-control" data-role="kec_edit" >
                             <option value="">- Pilih Kecamatan -</option>
                         </select>
                     </div>
                     <div class="mb-3 d-none" id="div_sekolah_edit_{{dt_user.user_id}}">
                         <label for="sekolah_edit">Sekolah</label>
-                        <select name="user_sekolah_edit" id="sekolah_edit_{{dt_user.user_id}}" data-initiate_data="{{ dt_user.user_sekolah.sekolah_id }}" class="form-control" data-role="sekolah_edit" required>
+                        <select name="user_sekolah_edit" id="sekolah_edit_{{dt_user.user_id}}" data-initiate_data="{{ dt_user.user_sekolah.sekolah_id }}" class="form-control" data-role="sekolah_edit" >
                             <option value="">- Pilih Sekolah-</option>
                         </select>
                     </div>

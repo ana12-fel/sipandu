@@ -33,7 +33,7 @@ Master Wilayah
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addDataModalLabel">Tambah Data wilayah</h5>
+                        <h5 class="modal-title" id="addDataModalLabel">Tambah Data Wilayah</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -42,7 +42,7 @@ Master Wilayah
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="role">Level</label>
-                                <select name="wilayah_level" id="wilayah_level" class="form-control" onchange="pilih_level(this)"required>
+                                <select name="wilayah_level" id="wilayah_level" class="form-control" onchange="pilih_level(this)" >
                                     <option value="">- Pilih Level Wilayah -</option>
                                     {% for level_key, level_display in wilayah_level %}
                                         <option value="{{ level_key }}">{{ level_display }}</option>
@@ -50,9 +50,8 @@ Master Wilayah
                                 </select>
                             </div>
                             <div class="mb-3 d-none" id="div_prov">
-                                <label for="role">Provinsi</label>
-                                <select name="prov" id="prov" data-level="prov" class="form-control" onchange="render_kab(this) " required >
-                                 
+                                <label for="prov">Provinsi</label>
+                                <select name="prov" id="prov" class="form-control" onchange="render_kab(this)" >
                                     <option value="">- Pilih Provinsi -</option>
                                     {% for prov in data_prov %}
                                         <option value="{{ prov.wilayah_id }}">{{ prov.wilayah_nama }}</option>
@@ -60,55 +59,38 @@ Master Wilayah
                                 </select>
                             </div>
                             <div class="mb-3 d-none" id="div_kab">
-                                <label for="role">Kabupaten</label>
-                                <select name="kab" id="kab" data-level="kab" class="form-control" onchange="render_kab(this)" required>
+                                <label for="kab">Kabupaten</label>
+                                <select name="kab" id="kab" class="form-control" onchange="render_kec(this)" >
                                     <option value="">- Pilih Kabupaten -</option>
-                                    {% for level_key, level_display in wilayah_level %}
-                                        <option value="{{ level_key }}">{{ level_display }}</option>
-                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="mb-3 d-none" id="div_kec">
-                                <label for="role">Kecamatan</label>
-                                <select name="kec" id="kec" data-level="kec" class="form-control" >
+                                <label for="kec">Kecamatan</label>
+                                <select name="kec" id="kec" class="form-control" >
                                     <option value="">- Pilih Kecamatan -</option>
-                                    <!-- {% for level_key, level_display in wilayah_level %}
-                                        <option value="{{ level_key }}">{{ level_display }}</option>
-                                    {% endfor %} -->
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="kode" class="form-label">Kode</label>
-                                <input type="text" class="form-control" name="wilayah_kode" placeholder="Masukkan Status kode" oninput="cekKodeUnik(this)" required>
-                            </div>
-                            <div class="mb-3 d-none">
-                                <label for="wilayah" class="form-label">Wilayah</label>
-                                <select name="level" id="wilayah_nama" class="form-control" required>
-                                    {% for level, level_display in level_wilayah %}
-                                        <option value="{{ level }}">{{ level_display }}</option>
-                                    {% endfor %}
-                                    <!-- Options will be populated dynamically -->
-                                </select>
+                                <input type="text" class="form-control" name="wilayah_kode" placeholder="Masukkan Kode Wilayah" required>
                             </div>
                             <div class="mb-3">
                                 <label for="wilayah_nama" class="form-label">Nama Wilayah</label>
                                 <input type="text" class="form-control" id="wilayah_nama" name="wilayah_nama" placeholder="Masukkan Nama Wilayah" required>
                             </div>
-                                <!-- Input wilayah_status secara default -->
                             <div class="mb-3">
                                 <input type="hidden" name="wilayah_status" value="True">
                             </div>
-                            
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
-                    
                     </div>
                 </div>
             </div>
         </div>
+        
         <!-- Modal Tambah Data End -->
 
         <!-- ROW OPEN -->
@@ -263,49 +245,6 @@ Master Wilayah
             }
         });
     }
-     function deleteWilayah(wilayah_) {
-        var deleteUrl = "{% url 'sipandu_admin:delete_wilayah' 'wilayah_id' %}".replace("wilayah_id", wilayah_);
-
-        swal({
-            title: "Apakah Anda yakin?",
-            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Ya, hapus!",
-            cancelButtonText: "Batal",
-            closeOnConfirm: false,
-            closeOnCancel: false
-        },
-        function (isConfirm) {
-            if (isConfirm) {
-                $.ajax({
-                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
-                    url: deleteUrl,
-                    type: "DELETE",
-                    success: function (response) {
-                        console.log('berhasil');
-                        swal({
-                            title: "Data berhasil dihapus!",
-                            icon: "success",
-                            buttons: false, // Tidak menampilkan tombol OK
-                            timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
-                        });
-                        window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
-                    },
-                    error: function (xhr, status, error) {
-                        // Terjadi kesalahan saat menghapus data
-                        swal("Terjadi kesalahan saat menghapus data!", {
-                            icon: "error",
-                        });
-                    }
-                });
-            } else {
-                // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
-                swal("Tindakan dibatalkan", "", "info");
-            }
-        });
-    }
 
     function pilih_level(e){
         // 1 = provinsi, 2 = kab, 3 = kec
@@ -354,7 +293,7 @@ Master Wilayah
                 }else if(level_wilayah == 'kab'){
                     var elem = $('#kec')
                 }
-
+                
                 elem.html('');
                 var opt_label = '<option value="">- Pilih Kabupaten -</option>'
                 for (var i = 0; i < response.data_wilayah.length; i++) {
