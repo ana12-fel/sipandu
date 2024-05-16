@@ -116,4 +116,13 @@ def delete_wilayah(request, wilayah_id):
             'message': 'Wilayah tidak ditemukan'
         }
         return JsonResponse(data, status=404)
+    
+
+
+def cek_kode_wilayah(request):
+    kode = request.GET.get('kode', None)
+    data = {
+        'is_unique': not Master_wilayah.objects.filter(wilayah_kode=kode).exists()
+    }
+    return JsonResponse(data)
 
