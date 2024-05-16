@@ -242,6 +242,17 @@ class Data_link(models.Model):
     link_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
     Nama_link = models.CharField(max_length=200)
     link = models.CharField(max_length=200)
+
+class Data_siswa(models.Model):
+    id_data_siswa = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    siswa_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
+    total_siswa = models.TextField(null=True, default=None)
+    keterangan_siswa = models.TextField(default=None, null=True)
+    icon_siswa = models.TextField(default=None, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    
     
 
     
