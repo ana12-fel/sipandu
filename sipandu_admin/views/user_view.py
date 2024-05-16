@@ -71,56 +71,50 @@ def edit_user(request, user_id):
         user_password = request.POST.get('password_edit')
         user_email = request.POST.get('email_edit')
         user_status = request.POST.get('user_status_edit')
-        user_sekolah_id = request.POST.get('sekolah_edit')  # Change to user_sekolah_id
+        user_sekolah_id = request.POST.get('user_sekolah_edit')
         
         kab_edit = request.POST.get('kab_edit')
         print(user_role, kab_edit, user_sekolah_id)
         
-        # Initialize variables
-        
-       
+        # Inisialisasi variabel dengan nilai default None
+        user_kabupaten = None
+        user_sekolah = None
 
-        # Resolve user_kabupaten or user_sekolah based on the user's role and location
+        # Tentukan user_kabupaten atau user_sekolah berdasarkan peran dan lokasi pengguna
         if user_role == 'admin_kabupaten': 
-            user_kabupaten = kab_edit
-            user_sekolah = None
+            user_kabupaten = Master_wilayah.objects.filter(wilayah_id=kab_edit).first()
         elif user_role == 'admin_sekolah': 
-            user_sekolah = user_sekolah_id
-            print(user_sekolah)
-            user_kabupaten = None
-            
+            user_sekolah = Master_sekolah.objects.filter(sekolah_id=user_sekolah_id).first()
 
-        
-
-        # Update user details
+        # Update detail pengguna
         dt_user.user_first_name = user_first_name
         dt_user.user_last_name = user_last_name
         dt_user.user_email = user_email
         dt_user.user_role = user_role
-        dt_user.password = user_password  # It's better to hash passwords before saving
+        dt_user.password = user_password  # Sebaiknya hash password sebelum menyimpan
         dt_user.user_status = user_status
-        dt_user.user_kabupaten_id = user_kabupaten
-        dt_user.user_sekolah_id = user_sekolah
+        dt_user.user_kabupaten = user_kabupaten
+        dt_user.user_sekolah = user_sekolah
 
         dt_user.set_password(user_password)
         dt_user.save()
-        
 
         return redirect('sipandu_admin:index_user')
 
     else:
         data_user = Master_user.objects.all()
         data_wilayah = Master_wilayah.objects.all()
-        data_prov = Master_wilayah.objects.filter(wilayah_level='1')  
+        data_prov = Master_wilayah.objects.filter(wilayah_level='1')
         data_kab = Master_wilayah.objects.filter(wilayah_level='2')
         
         return render(request, 'admin/master/edit_user.html', {
-            "data_user": data_user, 
-            'role_choices': ROLE_CHOICE, 
-            'wilayah': data_wilayah, 
+            "data_user": data_user,
+            'role_choices': ROLE_CHOICE,
+            'wilayah': data_wilayah,
             'prov': data_prov,
-            'kab' : data_kab
+            'kab': data_kab
         })
+
 
         
 

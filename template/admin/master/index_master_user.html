@@ -40,7 +40,7 @@ Master User
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="role">Level</label>
-                                <select name="role" id="role" class="form-control" onchange="pilih_role(this)" required >
+                                <select name="role" id="role" class="form-control" onchange="pilih_role(this)" >
                                     <option value="">- Pilih Role -</option>
                                     {% for role_key, role_display in role_choices %}
                                         <option value="{{ role_key }}">{{ role_display }}</option>
@@ -49,7 +49,7 @@ Master User
                             </div>
                             <div class="mb-3 d-none" id="div_prov">
                                 <label for="prov">Provinsi</label>
-                                <select name="prov" id="prov" class="form-control" onchange="render_kab(this)" data-level="prov" required >
+                                <select name="prov" id="prov" class="form-control" onchange="render_kab(this)" data-level="prov" >
                                     <option value="">- Pilih Provinsi -</option>
                                     {% for provinsi in prov %}
                                         <option value="{{ provinsi.wilayah_id }}">{{ provinsi.wilayah_nama }}</option>
@@ -59,7 +59,7 @@ Master User
                             <!-- Tambahkan div untuk kabupaten -->
                             <div class="mb-3 d-none" id="div_kab">
                                 <label for="kab">Kabupaten</label>
-                                <select name="kab" id="kab" class="form-control" onchange="render_kab(this)" data-level="kab" required >
+                                <select name="kab" id="kab" class="form-control" onchange="render_kab(this)" data-level="kab" >
                                     <option value="">- Pilih Kabupaten -</option>
                                     {% for level_key, level_display in wilayah_level %}
                                         <option value="{{ level_key }}">{{ level_display }}</option>
