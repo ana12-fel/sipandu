@@ -71,21 +71,26 @@ def edit_user(request, user_id):
         user_password = request.POST.get('password_edit')
         user_email = request.POST.get('email_edit')
         user_status = request.POST.get('user_status_edit')
-        user_sekolah_id = request.POST.get('user_sekolah_edit')  # Change to user_sekolah_id
+        user_sekolah_id = request.POST.get('sekolah_edit')  # Change to user_sekolah_id
         
         kab_edit = request.POST.get('kab_edit')
+        print(user_role, kab_edit, user_sekolah_id)
         
         # Initialize variables
+        
        
 
         # Resolve user_kabupaten or user_sekolah based on the user's role and location
         if user_role == 'admin_kabupaten': 
-            user_kabupaten = get_object_or_404(Master_wilayah, wilayah_id=kab_edit)
+            user_kabupaten = kab_edit
+            user_sekolah = None
         elif user_role == 'admin_sekolah': 
-            user_sekolah = get_object_or_404(Master_sekolah, sekolah_id=user_sekolah_id)
+            user_sekolah = user_sekolah_id
+            print(user_sekolah)
+            user_kabupaten = None
+            
 
-        user_kabupaten = None
-        user_sekolah = None
+        
 
         # Update user details
         dt_user.user_first_name = user_first_name
@@ -94,8 +99,8 @@ def edit_user(request, user_id):
         dt_user.user_role = user_role
         dt_user.password = user_password  # It's better to hash passwords before saving
         dt_user.user_status = user_status
-        dt_user.user_kabupaten = user_kabupaten
-        dt_user.user_sekolah = user_sekolah
+        dt_user.user_kabupaten_id = user_kabupaten
+        dt_user.user_sekolah_id = user_sekolah
 
         dt_user.set_password(user_password)
         dt_user.save()
@@ -145,6 +150,7 @@ def get_user_by_level(request):
     if request.method == 'GET':
         level = request.GET.get('level')
         wilayah_id = request.GET.get('wilayah_id')
+
         print('level', level)
         if level == 'kecamatan':
             print('wilayah_id', wilayah_id)

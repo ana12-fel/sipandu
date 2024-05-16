@@ -13,7 +13,7 @@ urlpatterns = [
     path('logout/', login_view.logout_views, name='logout'),
 
     path('index-master-user/', user_view.IndexUser, name='index_user'),
-    path('edit_user/<str:user_id>/', user_view.edit_user, name='edit_user'),
+    path('edit_user_test/<str:user_id>/', user_view.edit_user, name='edit_user_sekolah'),
     path('user/delete/<str:user_id>/', user_view.delete_user, name='delete_user'),
     path('get-user-by-level/', user_view.get_user_by_level, name='get_user_by_level'),
 

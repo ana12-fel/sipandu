@@ -42,7 +42,7 @@ Master Wilayah
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="role">Level</label>
-                                <select name="wilayah_level" id="wilayah_level" class="form-control" onchange="pilih_level(this)">
+                                <select name="wilayah_level" id="wilayah_level" class="form-control" onchange="pilih_level(this)" >
                                     <option value="">- Pilih Level Wilayah -</option>
                                     {% for level_key, level_display in wilayah_level %}
                                         <option value="{{ level_key }}">{{ level_display }}</option>
@@ -72,7 +72,7 @@ Master Wilayah
                             </div>
                             <div class="mb-3">
                                 <label for="kode" class="form-label">Kode</label>
-                                <input type="text" class="form-control" name="wilayah_kode" placeholder="Masukkan Status kode" >
+                                <input type="text" class="form-control" name="wilayah_kode" placeholder="Masukkan Status kode" oninput="cekKodeUnik(this)">
                             </div>
                             <div class="mb-3">
                                 <label for="wilayah_nama" class="form-label">Nama Wilayah</label>
@@ -151,6 +151,62 @@ Master Wilayah
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
 <script>
+    function cekKodeUnik(input) {
+        var kode = $(input).val();
+        if (kode) {
+            $.ajax({
+                url: "{% url 'sipandu_admin:cek_kode_wilayah' %}",  // Buat URL ini di views.py
+                type: "GET",
+                data: {
+                    'kode': kode
+                },
+                success: function(response) {
+                    if (!response.is_unique) {
+                        swal({
+                            title: "Kode sudah ada!",
+                            text: "Kode wilayah yang Anda masukkan sudah digunakan.",
+                            icon: "warning",
+                            button: "OK",
+                        });
+                        $(input).val('');  // Kosongkan input jika kode sudah ada
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    }
+
+    $('#addWilayahForm').on('submit', function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var kode = form.find('input[name="wilayah_kode"]').val();
+
+        $.ajax({
+            url: "{% url 'sipandu_admin:cek_kode_wilayah' %}",
+            type: "GET",
+            data: {
+                'kode': kode
+            },
+            success: function(response) {
+                if (response.is_unique) {
+                    form.off('submit').submit();  // Lanjutkan submit form jika kode unik
+                } else {
+                    swal({
+                        title: "Kode sudah ada!",
+                        text: "Kode wilayah yang Anda masukkan sudah digunakan.",
+                        icon: "warning",
+                        button: "OK",
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+
      function deleteWilayah(wilayah_) {
         var deleteUrl = "{% url 'sipandu_admin:delete_wilayah' 'wilayah_id' %}".replace("wilayah_id", wilayah_);
 
