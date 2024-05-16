@@ -36,7 +36,7 @@ Master User
                     </div>
                     <div class="modal-body">
                         <!-- Form untuk tambah data -->
-                        <form method="POST" action="{% url 'sipandu_admin:index_tema' %}" enctype="multipart/form-data">
+                        <form method="POST" action="{% url 'sipandu_admin:index_siswa' %}" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama Tema</label>
@@ -167,15 +167,12 @@ Master User
                     url: deleteUrl,
                     type: "DELETE",
                     success: function (response) {
-                    console.log('berhasil');
-                    swal({
-                        title: "Data berhasil dihapus!",
-                        icon: "success",
-                        buttons: false, 
-                        timer: 1500 
-                    });
-                    window.location.reload(); 
-                },
+                        swal("Data berhasil dihapus!", {
+                            icon: "success",
+                        }).then(() => {
+                            window.location.reload(); // Contoh: Refresh halaman
+                        });
+                    },
                     error: function (xhr, status, error) {
                         swal("Terjadi kesalahan saat menghapus data!", {
                             icon: "error",

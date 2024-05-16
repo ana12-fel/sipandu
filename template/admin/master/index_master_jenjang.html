@@ -181,17 +181,16 @@ Master User
                     });
                     window.location.reload(); 
                 },
-                error: function (xhr, status, error) {
-                    swal("Terjadi kesalahan saat menghapus data!", {
-                        icon: "error",
+                    error: function (xhr, status, error) {
+                            swal("Terjadi kesalahan saat menghapus data!", {
+                                icon: "error",
+                            });
+                        }
                     });
+                } else {
+                    swal("Tindakan dibatalkan", "", "info");
                 }
-            });
-        } else {
-            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
-            swal("Tindakan dibatalkan", "", "info");
-        }
-    });
+        });
 }
     $(function(){
         $('#jenjangResponsiveDatatable').DataTable({
