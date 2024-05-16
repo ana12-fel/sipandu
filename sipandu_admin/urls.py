@@ -69,6 +69,8 @@ urlpatterns = [
     
     path('laporan-data-sekolah/', admin_views.LaporanDataSekolah, name='laporan_data_sekolah'),
     path('index-siswa/', siswa_views.IndexSiswa, name='index_siswa'),
+    path('edit_siswa/<str:id_data_siswa>/', siswa_views.EditSiswa, name='edit_siswa'),
+    path('delete_siswa/<str:id_data_siswa>/delete', siswa_views.DeleteSiswa, name='delete_siswa')
 
   
 

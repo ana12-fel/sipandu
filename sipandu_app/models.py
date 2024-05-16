@@ -25,6 +25,11 @@ ROLE_CHOICE =[
     ('admin_sekolah', 'Admin Sekolah')
 ]
 
+STATUS_KEPEGAWAIAN =[
+    ('guru', 'Guru'),
+    ('kepala_sekolah', 'Kepala Sekolah')
+]
+
 JENIS_SEKOLAH =(('negeri','Negeri'),('swasta','Swasta'))
 STATUS_KEPEMILIKAN_SEKOLAH = (('pemda','Pemerintah Daerah'),('pribadi','Pribadi'),('yayasan','Yayasan'))
 AKREDITASI_SEKOLAH = (('belum','Belum Terakreditasi'),('a','A'),('b','B'),('c','C'))
@@ -247,10 +252,21 @@ class Data_siswa(models.Model):
     id_data_siswa = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     siswa_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
     total_siswa = models.TextField(null=True, default=None)
-    keterangan_siswa = models.TextField(default=None, null=True)
-    icon_siswa = models.TextField(default=None, null=True)
+    keterangan_siswa = models.TextField(max_length=200, null=True)
+    icon_siswa = models.TextField(null=True, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class Data_guru(models.Model):
+    id_data_guru = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    guru_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
+    nama_guru = models.CharField(max_length=200)
+    nip_guru = models.TextField(max_length=30, null=True)
+    mata_pelajaran = models.TextField(max_length=200, null=True)
+    pendidikan = models.TextField(max_length=200, null=True)
+    guru_image = models.ImageField(upload_to='image_guru/')
+    tahun_guru = models.CharField(max_length=10)
+    status_kepegawaian = models.TextField(choices=STATUS_KEPEGAWAIAN)
 
     
     
