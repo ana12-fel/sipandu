@@ -45,7 +45,7 @@ Master User
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="role">Level</label>
-                                <select name="role" id="role" class="form-control" onchange="pilih_role(this)">
+                                <select name="role" id="role" class="form-control" onchange="pilih_role(this)" required>
                                     <option value="">- Pilih Role -</option>
                                     {% for role_key, role_display in role_choices %}
                                         <option value="{{ role_key }}">{{ role_display }}</option>
@@ -54,7 +54,7 @@ Master User
                             </div>
                             <div class="mb-3 d-none" id="div_prov">
                                 <label for="prov">Provinsi</label>
-                                <select name="prov" id="prov" class="form-control" onchange="render_kab(this)" data-level="prov">
+                                <select name="prov" id="prov" class="form-control" onchange="render_kab(this)" data-level="prov" required>
                                     <option value="">- Pilih Provinsi -</option>
                                     {% for provinsi in prov %}
                                         <option value="{{ provinsi.wilayah_id }}">{{ provinsi.wilayah_nama }}</option>
@@ -64,7 +64,7 @@ Master User
                             <!-- Tambahkan div untuk kabupaten -->
                             <div class="mb-3 d-none" id="div_kab">
                                 <label for="kab">Kabupaten</label>
-                                <select name="kab" id="kab" class="form-control" onchange="render_kab(this)" data-level="kab">
+                                <select name="kab" id="kab" class="form-control" onchange="render_kab(this)" data-level="kab" required>
                                     <option value="">- Pilih Kabupaten -</option>
                                     {% for level_key, level_display in wilayah_level %}
                                         <option value="{{ level_key }}">{{ level_display }}</option>
@@ -74,40 +74,34 @@ Master User
                             <!-- Tambahkan div untuk kecamatan -->
                             <div class="mb-3 d-none" id="div_kec">
                                 <label for="kec">Kecamatan</label>
-                                <select name="kec" id="kec" class="form-control" data-level="kec">
+                                <select name="kec" id="kec" class="form-control" data-level="kecamatan" onchange="render_kab(this)" required>
                                     <option value="">- Pilih Kecamatan -</option>
                                 </select>
                             </div>
                             <!-- Tambahkan div untuk sekolah -->
                             <div class="mb-3 d-none" id="div_sekolah">
                                 <label for="sekolah">Sekolah</label>
-                                <select name="user_sekolah" id="sekolah_id" class="form-control" data-level="sekolah">
+                                <select name="user_sekolah" id="sekolah_id" class="form-control" data-level="sekolah" required>
                                     <option value="">- Pilih Sekolah-</option>
-                                    {% for dt_sekolah in sekolah %}
-                                        <option value="{{ dt_sekolah.sekolah_id }}">{{ dt_sekolah.sekolah_nama }}</option>
-                                {% endfor %}
+                                    
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="first_name" class="form-label">Nama Depan</label>
-                                <input type="text" class="form-control" id="user_first_name" name="first_name">
+                                <input type="text" class="form-control" id="user_first_name" name="first_name" placeholder="Masukkan Nama Depan" required>
                             </div>
                             <div class="mb-3">
                                 <label for="last_name" class="form-label">Nama Belakang</label>
-                                <input type="text" class="form-control" id="user_last_name" name="last_name">
-                            </div>
-                            <!-- Ubah id dan name sesuai -->
-                            <div class="mb-3">
-                                <input type="hidden" name="user_status" value="1">
-                               
+                                <input type="text" class="form-control" id="user_last_name" name="last_name" placeholder="Masukkan Nama Belakang" required>
+                                <input type="hidden" name="user_status" value="True">
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password" required>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="user_email" name="email">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email" required>
                             </div>
 
                             <div class="modal-footer">
@@ -273,22 +267,33 @@ function pilih_role(e) {
             url: "{% url 'sipandu_admin:get_wilayah_by_level' %}",
             type: "GET",
             data: {
-                'level': $('#wilayah_level').val(),
+                'level': level_wilayah,
                 'wilayah_id': $(e).val()
             },
             success: function(response) {
+                var elem, opt_label;
                 console.log(response, level_wilayah)
                 if (level_wilayah == 'prov') {
                     var elem = $('#kab')
+                    var opt_label = '<option value="">- Pilih Kabupaten -</option>';
                 } else if (level_wilayah == 'kab') {
                     var elem = $('#kec')
+                    var opt_label = '<option value="">- Pilih Kecamatan -</option>';
+                }else if (level_wilayah == 'kecamatan') {
+                    var elem = $('#sekolah_id')
+                    var opt_label = '<option value="">- Pilih Sekolah -</option>';
                 }
 
-                elem.html('');
-                var opt_label = '<option value="">- Pilih Kabupaten -</option>'
-                for (var i = 0; i < response.data_wilayah.length; i++) {
-                    elem.append(`<option value="${response.data_wilayah[i]['wilayah_id']}">${response.data_wilayah[i]['wilayah_nama']}</option>`)
-                    console.log(response.data_wilayah[i]['wilayah_nama'])
+                elem.html(opt_label);
+                var opt_label = '<option value="">- Pilih Sekolah -</option>'
+                if(level_wilayah != 'kecamatan'){
+                    for (var i = 0; i < response.data_wilayah.length; i++) {
+                        elem.append(`<option value="${response.data_wilayah[i]['wilayah_id']}">${response.data_wilayah[i]['wilayah_nama']}</option>`)
+                    }
+                }else{
+                    for (var i = 0; i < response.data_wilayah.length; i++) {
+                        elem.append(`<option value="${response.data_wilayah[i]['sekolah_id']}">${response.data_wilayah[i]['sekolah_nama']}</option>`)
+                    }
                 }
                 elem.val('');
 
@@ -298,6 +303,10 @@ function pilih_role(e) {
             }
         });
     }
+
+    $( ".modal_edit" ).on('shown.bs.modal', function(){
+        generate_data(this)
+    });
 </script>
 
 {% endblock %}

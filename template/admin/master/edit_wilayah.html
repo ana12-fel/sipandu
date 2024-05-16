@@ -1,5 +1,5 @@
 <!-- Modal Edit Data -->
-<div class="modal fade" id="editdata_{{dt_wilayah.wilayah_id}}" tabindex="-1" aria-labelledby="editdata_{{dt_wilayah.wilayah_id}}Label" aria-hidden="true">
+<div class="modal fade modal_edit" id="editdata_{{dt_wilayah.wilayah_id}}" tabindex="-1" aria-labelledby="editdata_{{dt_wilayah.wilayah_id}}Label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -12,7 +12,7 @@
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="role">Level</label>
-                        <select name="wilayah_level_edit" id="wilayah_level_edit_{{dt_wilayah.wilayah_id}}" class="form-control" onchange="pilih_level_edit(this)">
+                        <select name="wilayah_level_edit" id="wilayah_level_edit_{{dt_wilayah.wilayah_id}}" class="form-control" onchange="pilih_level_edit(this) " required>
                             <option value="">- Pilih Level Wilayah -</option>
                             {% for key_level, display_level in wilayah_level %}
                                 <option value="{{ key_level }}">{{ display_level }}</option>
@@ -21,7 +21,7 @@
                     </div>
                     <div class="mb-3 d-none" id="div_prov_edit_{{dt_wilayah.wilayah_id}}">
                         <label for="role">Provinsi</label>
-                        <select name="prov_edit" id="prov_edit_{{dt_wilayah.wilayah_id}}" data-level="prov_edit" class="form-control" onchange="render_prov_edit(this)">
+                        <select name="prov_edit" id="prov_edit_{{dt_wilayah.wilayah_id}}" data-level="prov_edit" class="form-control" onchange="render_prov_edit(this)" required>
                             <option value="">- Pilih Provinsi -</option>
                             {% for provinsi in data_prov %}
                                 <option value="{{ provinsi.wilayah_id }}">{{ provinsi.wilayah_nama }}</option>
@@ -30,7 +30,7 @@
                     </div>
                     <div class="mb-3 d-none" id="div_kab_edit_{{dt_wilayah.wilayah_id}}">
                         <label for="role">Kabupaten</label>
-                        <select name="kab_edit" id="kab_edit_{{dt_wilayah.wilayah_id}}" data-level="kab_edit" class="form-control" onchange="render_kab_edit(this)">
+                        <select name="kab_edit" id="kab_edit_{{dt_wilayah.wilayah_id}}" data-level="kab_edit" class="form-control" onchange="render_kab_edit(this)" required>
                             <option value="">- Pilih Kabupaten -</option>
                             {% for kabupaten in kab %}
                             <option value="{{ kabupaten.wilayah_id }}">{{ kabupaten.wilayah_nama }}</option>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="mb-3 d-none" id="div_kec_edit_{{dt_wilayah.wilayah_id}}">
                         <label for="role">Kecamatan</label>
-                        <select name="kec_edit" id="kec_edit_{{dt_wilayah.wilayah_id}}" data-level="kec_edit" class="form-control">
+                        <select name="kec_edit" id="kec_edit_{{dt_wilayah.wilayah_id}}" data-level="kec_edit" class="form-control"required>
                             <option value="">- Pilih Kecamatan -</option>
                             <!-- {% for key_level, display_level in wilayah_level %}
                                 <option value="{{ key_level }}">{{ display_level }}</option>
@@ -57,7 +57,7 @@
                     <!-- Input wilayah_status secara default -->
                     <div class="mb-3">
                         <label for="user_status_edit" class="form-label">Status</label>
-                        <select class="form-select" name="user_status_edit" aria-label="Default select example">
+                        <select class="form-select" name="user_status_edit" aria-label="Default select example" required>
                             <option value="1">Aktif</option>
                             <option value="0">Tidak Aktif</option>
                         </select>
@@ -105,7 +105,9 @@
     }
 
     function render_kab_edit(e) {
-        var level_wilayah = $(e).data('level');
+        var level_wilayah = $(e).data('role');
+        var level_kec = $(e).data('level');
+        console.log('ni id ' , level_kec)
 
         $.ajax({
             url: "{% url 'sipandu_admin:get_wilayah_by_level' %}",
@@ -132,5 +134,21 @@
                 console.error(error);
             }
         });
+    }
+
+    function generate_data(e){
+        element_level = $(`#role_edit_${$(e).data('id')}`)
+        element_prov = $(`#prov_edit_${$(e).data('id')}`)
+        element_kab = $(`#kab_edit_${$(e).data('id')}`)
+        element_kec = $(`#kec_edit_${$(e).data('id')}`)
+
+        element_level.val(element_level.data('level_user'))
+        element_level.trigger('change');
+        var provuser = $(e).data('prov_user');
+        console.log(provuser)
+
+        element_prov.val(element_prov.data('prov_user'));
+        console.log('test : ', element_prov)
+        element_prov.trigger('change')
     }
 </script>

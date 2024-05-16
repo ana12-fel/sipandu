@@ -1,5 +1,5 @@
 <!-- Modal Edit Data User -->
-<div class="modal fade" id="editUserModal_{{dt_user.user_id}}" tabindex="-1" aria-labelledby="editDataModalLabel" aria-hidden="true">
+<div class="modal fade modal_edit"   id="editUserModal_{{dt_user.user_id}}" data-id="{{dt_user.user_id}}" tabindex="-1" aria-labelledby="editDataModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,9 +10,9 @@
                 <!-- Form edit data di sini -->
                 <form id="editWilayahForm_{{dt_user.user_id}}" method="post" action="{% url 'sipandu_admin:edit_user' dt_user.user_id %}">
                     {% csrf_token %}
-                    <div class="mb-3">
+                    <div class="mb-3" id="div_level_{{dt_user.user_id}}">
                         <label for="role_edit">Level</label>
-                        <select name="role_edit" id="role_edit_{{dt_user.user_id}}" class="form-control" onchange="pilih_role_edit(this)">
+                        <select name="role_edit" id="role_edit_{{dt_user.user_id}}" data-level_user="{{dt_user.user_role}}" class="form-control frm_level" onchange="pilih_role_edit(this)" required>
                             <option value="">- Pilih Role -</option>
                             {% for role_key_edit, role_display_edit in role_choices %}
                                 <option value="{{ role_key_edit }}">{{ role_display_edit }}</option>
@@ -21,55 +21,61 @@
                     </div>
                     <div class="mb-3 d-none" id="div_prov_edit_{{dt_user.user_id}}">
                         <label for="prov_edit">Provinsi</label>
-                        <select name="prov_edit" id="prov_edit_{{dt_user.user_id}}" class="form-control" onchange="render_kab_edit(this)" data-role="prov_edit">
+                        <select name="prov_edit" id="prov_edit_{{dt_user.user_id}}" class="form-control" data-prov_user="{% if dt_user.user_role == 'admin_kabupaten' %}{{dt_user.user_kabupaten.wilayah_parent.wilayah_id}} {% else %}{{ dt_user.user_sekolah.sekolah_kabupaten.wilayah_parent.wilayah_id }}{% endif %}" onchange="render_kab_edit(this)" data-role="prov_edit" required>
                             <option value="">- Pilih Provinsi -</option>
                             {% for provinsi_edit in prov %}
-                                <option value="{{ provinsi_edit.wilayah_id }}">{{ provinsi_edit.wilayah_nama }}</option>
+                            <option value="{{ provinsi_edit.wilayah_id }}">{{ provinsi_edit.wilayah_nama }}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <!-- Tambahkan div untuk kabupaten -->
                     <div class="mb-3 d-none" id="div_kab_edit_{{dt_user.user_id}}">
                         <label for="kab_edit">Kabupaten</label>
-                        <select name="kab_edit" id="kab_edit_{{dt_user.user_id}}" class="form-control" onchange="render_kab_edit(this)" data-role="kab_edit">
+                        <select name="kab_edit" id="kab_edit_{{dt_user.user_id}}" class="form-control" data-initiate_data="{% if dt_user.user_role == 'admin_kabupaten' %}{{dt_user.user_kabupaten.wilayah_parent.wilayah_id}}{% else %}{{ dt_user.user_sekolah.sekolah_kabupaten.wilayah_id }}{% endif %}" onchange="render_kab_edit(this)" data-role="kab_edit" required>
                             <option value="">- Pilih Kabupaten -</option>
                         </select>
                     </div>
                     <!-- Tambahkan div untuk kecamatan -->
                     <div class="mb-3 d-none" id="div_kec_edit_{{dt_user.user_id}}">
                         <label for="kec_edit">Kecamatan</label>
-                        <select name="kec_edit" id="kec_edit_{{dt_user.user_id}}" class="form-control" data-role="kec_edit">
+                        <select name="kec_edit" id="kec_edit_{{dt_user.user_id}}" data-level="kecamatan" data-initiate_data="{{ dt_user.user_sekolah.sekolah_kecamatan.wilayah_id }}"  onchange="render_kab_edit(this)" class="form-control" data-role="kec_edit" required>
                             <option value="">- Pilih Kecamatan -</option>
                         </select>
                     </div>
                     <div class="mb-3 d-none" id="div_sekolah_edit_{{dt_user.user_id}}">
                         <label for="sekolah_edit">Sekolah</label>
-                        <select name="user_sekolah_edit" id="sekolah_edit_{{dt_user.user_id}}" class="form-control" data-role="sekolah_edit">
+                        <select name="user_sekolah_edit" id="sekolah_edit_{{dt_user.user_id}}" data-initiate_data="{{ dt_user.user_sekolah.sekolah_id }}" class="form-control" data-role="sekolah_edit" required>
                             <option value="">- Pilih Sekolah-</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="first_name_edit" class="form-label">Nama Depan</label>
-                        <input type="text" class="form-control" id="first_name_edit_{{dt_user.user_id}}" name="first_name_edit">
+                        <input type="text" class="form-control" value="{{dt_user.user_first_name}}" id="first_name_edit_{{dt_user.user_first_name}}" name="first_name_edit" required>
                     </div>
                     <div class="mb-3">
                         <label for="last_name_edit" class="form-label">Nama Belakang</label>
-                        <input type="text" class="form-control" id="last_name_edit_{{dt_user.user_id}}" name="last_name_edit">
+                        <input type="text" class="form-control" value="{{dt_user.user_last_name}}" id="last_name_edit_{{dt_user.user_last_name}}" name="last_name_edit" required>
                     </div>
                     <div class="mb-3">
-                        <label for="user_status_edit" class="form-label">Status</label>
-                        <select class="form-select" name="user_status_edit" aria-label="Default select example">
-                            <option value="1">Aktif</option>
-                            <option value="0">Tidak Aktif</option>
-                        </select>
+                        <label>Status</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="user_status_edit" id="statusAktif" value="True"
+                                   {% if dt_user.user_status_edit == "True" or not dt_user.user_status_edit %} checked {% endif %} required>
+                            <label class="form-check-label" for="statusAktif">Aktif</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="user_status_edit" id="statusTidakAktif" value="False"
+                                   {% if dt_user.user_status_edit == "False" %} checked {% endif %} required>
+                            <label class="form-check-label" for="statusTidakAktif">Tidak Aktif</label>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="password_edit" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password_edit_{{dt_user.user_id}}" name="password_edit">
+                        <input type="password" class="form-control" id="password_edit_{{dt_user.user_id}}" name="password_edit" required>
                     </div>
                     <div class="mb-3">
                         <label for="email_edit" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email_edit_{{dt_user.user_id}}" name="email_edit">
+                        <input type="email" class="form-control"  value="{{dt_user.user_email}}"  id="email_edit_{{dt_user.user_id}}" name="email_edit" required>
                     </div>
 
                     <div class="modal-footer">
@@ -82,6 +88,7 @@
     </div>
 </div>
 
+{% block js %}
 <script>
     function pilih_role_edit(e) {
         var level = $(e).val();
@@ -112,44 +119,83 @@
             div_sekolah.removeClass('d-none');
         }
 
+
         div_prov.trigger('change');
         div_kab.trigger('change');
         div_kec.trigger('change');
     }
 
-    function render_kab_(e) {
-        var level_wilayah = $(e).data('level');
+    function render_kab_edit(e) {
+        var level_wilayah = $(e).data('role');
+        var level_kec = $(e).data('level');
+        console.log('ni id ' , level_kec)
+
 
         $.ajax({
             url: "{% url 'sipandu_admin:get_wilayah_by_level' %}",
             type: "GET",
             data: {
-                'level': $('#wilayah_level').val(),
+                'level': level_kec,
                 'wilayah_id': $(e).val()
             },
             success: function(response) {
-                console.log(response, level_wilayah)
-                if (level_wilayah == 'prov') {
-                    var elem = $('#kab')
-                } else if (level_wilayah == 'kab') {
-                    var elem = $('#kec')
+                if (level_wilayah == 'prov_edit') {
+                    var elem = $('#kab_edit_' + e.id.split("_").pop());
+                    var opt_label = '<option value="">- Pilih Kabupaten -</option>';
+                } else if (level_wilayah == 'kab_edit') {
+                    var elem = $('#kec_edit_' + e.id.split("_").pop());
+                    var opt_label = '<option value="">- Pilih Kecamatan -</option>';
+                } else if (level_wilayah == 'kec_edit') {
+                    var elem = $('#sekolah_edit_' + e.id.split("_").pop());
                 }
 
-                elem.html('');
-                var opt_label = '<option value="">- Pilih Kabupaten -</option>'
-                for (var i = 0; i < response.data_wilayah.length; i++) {
-                    elem.append(`<option value="${response.data_wilayah[i]['wilayah_id']}">${response.data_wilayah[i]['wilayah_nama']}</option>`)
-                    console.log(response.data_wilayah[i]['wilayah_nama'])
+                elem.html('opt_label');
+                if (level_kec == 'kecamatan'){
+                    var opt_label = '<option value="">- Pilih Sekolah -</option>';
+                    elem.append(opt_label)
+                    for (var i = 0; i < response.data_wilayah.length; i++) {
+                        elem.append(`<option value="${response.data_wilayah[i]['sekolah_id']}">${response.data_wilayah[i]['sekolah_nama']}</option>`);
+                        console.log('ini kecamatan')
+                    }
+                }else{
+                    elem.append(opt_label)
+                    for (var i = 0; i < response.data_wilayah.length; i++) {
+                        elem.append(`<option value="${response.data_wilayah[i]['wilayah_id']}">${response.data_wilayah[i]['wilayah_nama']}</option>`);
+                    }
+                    console.log('ini selain kecamatan')
                 }
-                elem.val('');
-
+                elem.val(elem.data('initiate_data'));
+                elem.trigger('change')
+                console.log(elem.data('initiate_data'))
             },
             error: function(xhr, status, error) {
                 console.error(error);
             }
         });
     }
-</script>
+
+    function generate_data(e){
+        element_level = $(`#role_edit_${$(e).data('id')}`)
+        element_prov = $(`#prov_edit_${$(e).data('id')}`)
+        element_kab = $(`#kab_edit_${$(e).data('id')}`)
+        element_kec = $(`#kec_edit_${$(e).data('id')}`)
+
+        element_level.val(element_level.data('level_user'))
+        element_level.trigger('change');
+        var provuser = $(e).data('prov_user');
+        console.log(provuser)
+
+        element_prov.val(element_prov.data('prov_user'));
+        console.log('test : ', element_prov)
+        element_prov.trigger('change')
+
+        // element_kab.trigger('change');
+        // element_kec.trigger('change')
+
+        
+    }
+    
 
 
 </script>
+{% endblock %}
