@@ -86,6 +86,7 @@ Transaksi Situs
                             <table class="table table-bordered text-nowrap border-bottom w-100" id="situsResponsiveDatatable">
                                 <thead>
                                     <tr>
+                                        <th class="text-center border-bottom-0">NO</th>
                                         <th class="text-center border-bottom-0">SEKOLAH</th>
                                         <th class="text-center border-bottom-0">TEMA</th>
                                         <th class="text-center border-bottom-0">DOMAIN</th>
@@ -96,11 +97,12 @@ Transaksi Situs
                                 <tbody>
                                     {% for dt_transaksi in data_transaksi %}
                                         <tr>
+                                            <td>{{ forloop.counter }}</td>
                                             <td>{{ dt_transaksi.sekolah_id.sekolah_nama }}</td>
                                             <td>{{ dt_transaksi.tema_id.tema_nama }}</td>
                                             <td>{{ dt_transaksi.domain }}</td>
                                             <td>
-                                                <img src="{% if dt_transaksi.tema_id.tema_thumbnail %}{{ MEDIA_URL }}{{ dt_transaksi.tema_id.tema_thumbnail.url }}{% endif %}" alt="{{ dt_transaksi.tema_id.tema_nama }}" style="max-width: 100px;">
+                                                <img src="{% if dt_transaksi.tema_id.tema_thumbnail %}{{ dt_transaksi.tema_id.tema_thumbnail.url }}{% endif %}" alt="{{ dt_transaksi.tema_id.tema_nama }}" style="max-width: 100px;">
                                             </td>
                                             <td class="text-center align-middle">
                                                 <div class="btn-group align-top">

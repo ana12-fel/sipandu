@@ -1,0 +1,64 @@
+<div class="card">
+    <div class="card-header border-bottom-0 p-4">
+        <div class="page-options d-flex justify-content-end">
+        </div>
+    </div>
+    <div class="e-table px-5 pb-5">
+        <div class="table-responsive table-lg">
+            <form id="deleteForm" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id_data_kontak" id="id_data_kontak">
+            </form>
+            <table class="table border-top table-bordered mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-center border-bottom-0">No</th>
+                        <th class="text-center border-bottom-0">Tanggal</th>
+                        <th class="text-center border-bottom-0">Nama Sekolah</th>
+                        <th class="text-center border-bottom-0">No Hp</th>
+                        <th class="text-center border-bottom-0">E-mail</th>
+                        <th class="text-center border-bottom-0">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dt_edit in edit_kontak %}
+                    <tr>
+                        <td class="align-middle text-center">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" id="item-{{ dt_kontak.id_data_kontak }}" type="checkbox"> 
+                                <label class="custom-control-label" for="item-{{ dt_kontak.id_data_kontak }}"></label>
+                            </div>
+                        </td>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ dt_kontak.created_at }}</td>
+                        <td>{{ dt_kontak.kontak_sekolah.sekolah_nama }}</td>
+                        <td class="text-center align-middle"><span>{% if dt_kontak.status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
+                        <div class="btn-group align-top">
+                            <button class="btn btn-sm btn-danger badge" onclick="prepareDelete('{{ dt_edit.id_data_kontak }}')" type="button">Delete Kontak</button>
+                        </div>
+                        
+                        <form id="deleteForm{{ dt_kontak.id_data_kontak}}" action="{% url 'delete_kontak' dt_kontak.id_data_sekolah %}">
+                            {% csrf_token %}
+                        </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% block js %}
+<script>
+    function prepareDelete(id_data_konten) {
+        var confirmation = confirm("Apakah Anda yakin ingin menghapus data ini?");
+        if (confirmation) {
+            document.getElementById("id_data_kontak").value = id_data_konten;
+            document.getElementById("deleteForm").submit();
+        } else {
+        }
+    }
+</script>
+
+{% endblock %}
+
+

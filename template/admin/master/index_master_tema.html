@@ -59,7 +59,7 @@ Master User
                                 <label for="thumbnail" class="form-label">Thumbnail</label>
                                 <input type="file" class="form-control" id="tema_thumbnail" name="tema_thumbnail" accept="image/*" onchange="previewThumbnail(event)">
                             </div>
-                            <div id="thumbnail-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> <!-- Container untuk menampilkan preview thumbnail -->
+                            <div id="thumbnail-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> 
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </form>
                     </div>
@@ -80,6 +80,7 @@ Master User
                             <table class="table table-bordered text-nowrap border-bottom w-100" id="temaResponsiveDatatable">
                                 <thead>
                                     <tr>
+                                        <th class="text-center border-bottom-0">NO</th>
                                         <th class="text-center border-bottom-0">NAMA TEMA</th>
                                         <th class="text-center border-bottom-0">JENJANG</th>
                                         <th class="text-center border-bottom-0">NAMA FOLDER</th>
@@ -91,6 +92,7 @@ Master User
                                     {% for dt_tema in data_tema %}
                                     
                                     <tr>
+                                        <td>{{ forloop.counter }}</td>
                                         <td>{{ dt_tema.tema_nama }}</td>
                                         <td>{{ dt_tema.tema_jenjang.jenjang_nama }}</td>
                                         <td>{{ dt_tema.tema_folder_name }}</td>
@@ -165,23 +167,19 @@ Master User
                     url: deleteUrl,
                     type: "DELETE",
                     success: function (response) {
-                        // Data berhasil dihapus
                         swal("Data berhasil dihapus!", {
                             icon: "success",
                         }).then(() => {
-                            // Refresh halaman atau lakukan aksi lain
                             window.location.reload(); // Contoh: Refresh halaman
                         });
                     },
                     error: function (xhr, status, error) {
-                        // Terjadi kesalahan saat menghapus data
                         swal("Terjadi kesalahan saat menghapus data!", {
                             icon: "error",
                         });
                     }
                 });
             } else {
-                // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
                 swal("Tindakan dibatalkan", "", "info");
             }
         });

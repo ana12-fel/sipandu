@@ -12,10 +12,10 @@ Master User
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <div>
-                <h1 class="page-title">DATA GALERI</h1>
+                <h1 class="page-title">DATA LINK</h1>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">data galeri</li>
+                    <li class="breadcrumb-item active" aria-current="page">data link</li>
                 </ol>
             </div>
             
@@ -23,7 +23,7 @@ Master User
                 <a href="{% url 'sipandu_admin:tambah_link'%}" class="btn btn-primary btn-icon text-white me-2" >
                     <span>
                         <i class="fe fe-plus"></i>
-                    </span> Tambahkan galeri
+                    </span> Tambahkan link
                 </a>
             </div>
         </div>
@@ -35,7 +35,7 @@ Master User
             <div class="col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data Posting galeri</h3>
+                        <h3 class="card-title">Data Posting Link</h3>
                     </div>
                     <div class="card-body">
                         <div class="example">
@@ -46,7 +46,8 @@ Master User
                                         <th class="text-center border-bottom-0">Tanggal</th>
                                         <th class="text-center border-bottom-0">Nama Sekolah</th>
                                         <th class="text-center border-bottom-0">Judul</th>
-                                        <th class="text-center border-bottom-0">Aksi</th>
+                                        <th class="text-center border-bottom-0">Link</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,8 +56,9 @@ Master User
                                         <td>{{ forloop.counter }}</td>
                                         <td>{{ dt_link.created_at }}</td>
                                         <td>{{ dt_link.judul }}</td>
+
                                         <td class="text-nowrap align-middle">{{ dt_sekolah.sekolah_nama }}</td>
-                                        <td class="text-center align-middle"><span>{% if dt_link.status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
+
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_link.id_data_link}}">Edit</a> &nbsp;
@@ -65,7 +67,6 @@ Master User
                                         </td> 
                                         <!-- <td><button type="button" class="btn btn-success"><i class="fa fa-check"></i> Aktif</button></td> --> 
                                     </tr>
-                                    {% include 'admin/data/edit_link.html' %}
                                     {% endfor %}
                                 </tbody>
                             </table>
@@ -80,7 +81,7 @@ Master User
 {% block js %}
 
 <script>
-    function deletegaleri(galeri_) {
+    function deletelink(link_) {
     var deleteUrl = "{% url 'sipandu_admin:delete_link' 'id_data_link' %}".replace("id_data_link", link_);
 
     swal({

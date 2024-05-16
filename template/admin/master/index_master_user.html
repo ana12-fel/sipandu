@@ -22,11 +22,6 @@ Master User
                         <i class="fe fe-plus"></i>
                     </span> Tambah User
                 </a>
-                <a href="#" class="btn btn-success btn-icon text-white">
-                    <span>
-                        <i class="fe fe-log-in"></i>
-                    </span> Export
-                </a>
             </div>
         </div>
         <!-- PAGE-HEADER END -->
@@ -125,7 +120,7 @@ Master User
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="datakontenResponsiveDatatable">
                                 <thead>
                                     <tr>
                                         <th class="text-center border-bottom-0">USER</th>
@@ -303,6 +298,16 @@ function pilih_role(e) {
             }
         });
     }
+
+    $(function(){
+        $('#datakontenResponsiveDatatable').DataTable({
+		scrollX: "100%",
+		language: {
+			searchPlaceholder: 'Search...',
+			sSearch: '',
+		}
+	});
+    })
 
     $( ".modal_edit" ).on('shown.bs.modal', function(){
         generate_data(this)

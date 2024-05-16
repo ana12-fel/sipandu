@@ -1,25 +1,28 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
+from django.db import IntegrityError
 from sipandu_app.models import Master_jenjang
 from django.urls import reverse
 
 def IndexJenjang(request):
     if request.method == 'POST':
-        jenjang_id = request.POST.get ('jenjang_id')
         jenjang_nama = request.POST.get('jenjang_nama')
         jenjang_status = request.POST.get('jenjang_status')
-
-
-        dt_jenjang = Master_jenjang.objects.create(jenjang_id=jenjang_id,jenjang_nama=jenjang_nama, jenjang_status=jenjang_status)
-        
-        print(jenjang_id,jenjang_nama, jenjang_status)
-
-        return redirect('sipandu_admin:index_jenjang')
+        data = {}
+        try:
+            dt_jenjang = Master_jenjang.objects.create(jenjang_nama=jenjang_nama, jenjang_status=jenjang_status)
+            # Lakukan sesuatu jika penyimpanan berhasil
+            print(jenjang_nama, jenjang_status)
+            # return redirect('sipandu_admin:index_jenjang')
+            return JsonResponse(data, status = 201)
+        except IntegrityError:
+            # Tangani kasus ketika data sudah ada di dalam basis data
+            print("Data dengan nama jenjang tersebut sudah ada")
+            return JsonResponse(data, status = 400)
 
     else:
         data_jenjang = Master_jenjang.objects.all()
-
-        return render(request, 'admin/master/index_master_jenjang.html', {"data_jenjang" : data_jenjang})
+        return render(request, 'admin/master/index_master_jenjang.html', {"data_jenjang": data_jenjang})
 
 
 def edit_jenjang(request, jenjang_id):
