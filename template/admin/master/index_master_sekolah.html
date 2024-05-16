@@ -31,7 +31,7 @@ Master Sekolah
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addDataModalLabel">Tambah Data Jenjang</h5>
+                        <h5 class="modal-title" id="addDataModalLabel">Tambah Data Sekolah</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -62,13 +62,14 @@ Master Sekolah
                                 </select>
                             </div>   
                             <div class="mb-3">
-                                <label for="sekolah_nama" class="form-label">Nama Sekolah</label>
-                                <input type="text" class="form-control" id="sekolah_nama" name="sekolah_nama" placeholder="Masukkan Nama Sekolah">
-                            </div>
-                            <div class="mb-3">
-                                <label for="sekolah_npsn" class="form-label">NPSN</label>
-                                <input type="text" class="form-control" id="sekolah_npsn" name="sekolah_npsn" placeholder="Nomor NPSN">
-                            </div>
+                                <label for="sekolah_jenjang" class="form-label">Jenjang</label>
+                                <select class="form-select" id="sekolah_jenjang" name="sekolah_jenjang">
+                                    <option value="" selected disabled>Pilih jenjang</option>
+                                    {% for jenjang in data_jenjang %}
+                                    <option value="{{jenjang.jenjang_id}}">{{jenjang.jenjang_nama.upper}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>  
                             <div class="mb-3">
                                 <label for="sekolah_jenis" class="form-label">Jenis</label>
                                 <select class="form-select" id="sekolah_jenis" name="sekolah_jenis">
@@ -78,14 +79,13 @@ Master Sekolah
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="sekolah_jenjang" class="form-label">Jenjang</label>
-                                <select class="form-select" id="sekolah_jenjang" name="sekolah_jenjang">
-                                    <option value="" selected disabled>Pilih jenjang</option>
-                                    {% for jenjang in data_jenjang %}
-                                    <option value="{{jenjang.jenjang_id}}">{{jenjang.jenjang_nama.upper}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>                           
+                                <label for="sekolah_nama" class="form-label">Nama Sekolah</label>
+                                <input type="text" class="form-control" id="sekolah_nama" name="sekolah_nama" placeholder="Masukkan Nama Sekolah">
+                            </div>
+                            <div class="mb-3">
+                                <label for="sekolah_npsn" class="form-label">NPSN</label>
+                                <input type="text" class="form-control" id="sekolah_npsn" name="sekolah_npsn" placeholder="Nomor NPSN">
+                            </div>                     
                             <!-- Tambahkan pilihan lainnya sesuai kebutuhan -->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -132,7 +132,7 @@ Master Sekolah
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_jenjang.jenjang_nama }}</td>
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_npsn }}</td>
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_jenis }}</td>
-                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_status }}</td>
+                                            <td class="text-center align-middle"><span>{% if dt_sekolah.sekolah_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
                                             
                                             <td class="text-center align-middle">
                                                 <div class="btn-group align-top">

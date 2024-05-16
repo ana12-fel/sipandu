@@ -11,10 +11,10 @@ Master User
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <div>
-                <h1 class="page-title">TEMA WEB</h1>
+                <h1 class="page-title">Data Siswa</h1>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Tema Web</li>
+                    <li class="breadcrumb-item active" aria-current="page">Data Siswa</li>
                 </ol>
             </div>
             <div class="ms-auto pageheader-btn">
@@ -31,35 +31,35 @@ Master User
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Data Siswa</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <!-- Form untuk tambah data -->
                         <form method="POST" action="{% url 'sipandu_admin:index_siswa' %}" enctype="multipart/form-data">
                             {% csrf_token %}
+                            
                             <div class="mb-3">
-                                <label for="nama" class="form-label">Nama Tema</label>
-                                <input type="text" class="form-control" id="nama" name="tema_nama" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="sekolah_jenjang" class="form-label">Jenjang</label>
-                                <select class="form-select" id="sekolah_jenjang" name="tema_jenjang">
-                                    <option value="" selected disabled>Pilih jenjang</option>
-                                    {% for jenjang in data_jenjang %}
-                                    <option value="{{jenjang.jenjang_id}}">{{jenjang.jenjang_nama.upper}}</option>
+                                <label for="siswa_sekolah" class="form-label">Sekolah</label>
+                                <select class="form-select" id="siswa_sekolah" name="siswa_sekolah">
+                                    <option value="" selected disabled>Pilih Sekolah</option>
+                                    {% for sekolah in data_sekolah %}
+                                    <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
                                     {% endfor %}
                                 </select>
                             </div>      
                             <div class="mb-3">
-                                <label for="folder" class="form-label">Nama Folder</label>
-                                <input type="text" class="form-control" id="folder" name="tema_folder_name" >
+                                <label for="total_siswa" class="form-label">Total Siswa</label>
+                                <input type="text" class="form-control" id="total_siswa" name="total_siswa" required>
                             </div>
                             <div class="mb-3">
-                                <label for="thumbnail" class="form-label">Thumbnail</label>
-                                <input type="file" class="form-control" id="thumbnail" name="tema_thumbnail" accept="image/*" onchange="previewThumbnail(event)">
+                                <label for="keterangan_siswa" class="form-label">Keterangan</label>
+                                <input type="text" class="form-control" id="keterangan_siswa" name="keterangan_siswa" required>
                             </div>
-                            <div id="thumbnail-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> 
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Icon</label>
+                                <input type="text" class="form-control" id="nama" name="icon_siswa" required>
+                            </div>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </form>
                     </div>
@@ -73,38 +73,38 @@ Master User
             <div class="col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">DATA TEMA</h3>
+                        <h3 class="card-title">DATA SISWA</h3>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap border-bottom w-100" id="temaResponsiveDatatable">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="siswaResponsiveDatatable">
                                 <thead>
                                     <tr>
                                         <th class="text-center border-bottom-0">NO</th>
-                                        <th class="text-center border-bottom-0">NAMA TEMA</th>
-                                        <th class="text-center border-bottom-0">JENJANG</th>
-                                        <th class="text-center border-bottom-0">NAMA FOLDER</th>
-                                        <th class="text-center border-bottom-0">THUMBNAIL</th>
+                                        <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
+                                        <th class="text-center border-bottom-0">TOTAL SISWA</th>
+                                        <th class="text-center border-bottom-0">KETERANGAN</th>
+                                        <th class="text-center border-bottom-0">ICON</th>
                                         <th class="text-center border-bottom-0">AKSI</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for dt_tema in data_tema %}
+                                    {% for dt_siswa in data_siswa %}
                                     
                                     <tr>
                                         <td>{{ forloop.counter }}</td>
-                                        <td>{{ dt_tema.tema_nama }}</td>
-                                        <td>{{ dt_tema.tema_jenjang.jenjang_nama }}</td>
-                                        <td>{{ dt_tema.tema_folder_name }}</td>
-                                        <td><img src="{% if dt_tema.tema_thumbnail %}{{ dt_tema.tema_thumbnail.url }}{% endif %}" alt="{{ dt_tema.tema_nama }}" style="max-width: 100px;"></td>
+                                        <td>{{ dt_siswa.siswa_sekolah.sekolah_nama }}</td>
+                                        <td>{{ dt_siswa.total_siswa }}</td>
+                                        <td>{{ dt_siswa.keterangan_siswa }}</td>
+                                        <td>{{ dt_siswa.icon_siswa }}</td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
-                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_tema.tema_id}}">Edit</a> &nbsp;
-                                                <button onclick="deleteTema('{{ dt_tema.tema_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_siswa.id_data_siswa}}">Edit</a> &nbsp;
+                                                <button onclick="deleteSiswa('{{ dt_siswa.id_data_siswa }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
                                             </div>
                                         </td> 
                                     </tr>
-                                    {% include 'admin/master/edit_tema.html' %}
+                                    {% include 'admin/data/edit_siswa.html' %}
                                     {% endfor %}
                                 </tbody>
                             </table>
@@ -121,33 +121,9 @@ Master User
 {% block js %}
 
 <script>
-    function previewThumbnail(event) {
-        var input = event.target;
-        var preview = document.getElementById('thumbnail-preview');
-        
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
 
-            reader.onload = function(e) {
-                // Menghapus preview thumbnail sebelumnya jika ada
-                while (preview.firstChild) {
-                    preview.removeChild(preview.firstChild);
-                }
-
-                // Menambahkan elemen img untuk menampilkan preview thumbnail
-                var img = document.createElement('img');
-                img.src = e.target.result;
-                img.style.maxWidth = '300px';
-                img.alt = 'Thumbnail Preview';
-                preview.appendChild(img);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    function deleteTema(tema_) {
-        var deleteUrl = "{% url 'sipandu_admin:delete_tema' 'tema_id' %}".replace("tema_id",tema_);
+    function deleteSiswa(siswa_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_siswa' 'id_data_siswa' %}".replace("id_data_siswa",siswa_);
 
         swal({
             title: "Apakah Anda yakin?",
@@ -167,17 +143,21 @@ Master User
                     url: deleteUrl,
                     type: "DELETE",
                     success: function (response) {
-                        swal("Data berhasil dihapus!", {
-                            icon: "success",
-                        }).then(() => {
-                            window.location.reload(); // Contoh: Refresh halaman
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        swal("Terjadi kesalahan saat menghapus data!", {
-                            icon: "error",
-                        });
-                    }
+                        console.log('berhasil');
+                    swal({
+                        title: "Data berhasil dihapus!",
+                        icon: "success",
+                        buttons: false, // Tidak menampilkan tombol OK
+                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                    });
+                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                },
+                error: function (xhr, status, error) {
+                    // Terjadi kesalahan saat menghapus data
+                    swal("Terjadi kesalahan saat menghapus data!", {
+                        icon: "error",
+                    });
+                }
                 });
             } else {
                 swal("Tindakan dibatalkan", "", "info");
@@ -186,7 +166,7 @@ Master User
     }
 
     $(function(){
-        $('#temaResponsiveDatatable').DataTable({
+        $('#siswaResponsiveDatatable').DataTable({
 		scrollX: "100%",
 		language: {
 			searchPlaceholder: 'Search...',
