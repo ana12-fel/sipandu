@@ -12,7 +12,7 @@
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="role">Level</label>
-                        <select name="wilayah_level_edit" id="wilayah_level_edit_{{dt_wilayah.wilayah_id}}" class="form-control" onchange="pilih_level_edit(this) " required>
+                        <select name="wilayah_level_edit" id="wilayah_level_edit_{{dt_wilayah.wilayah_id}}" class="form-control" onchange="pilih_level_edit(this) " >
                             <option value="">- Pilih Level Wilayah -</option>
                             {% for key_level, display_level in wilayah_level %}
                                 <option value="{{ key_level }}">{{ display_level }}</option>
@@ -21,7 +21,7 @@
                     </div>
                     <div class="mb-3 d-none" id="div_prov_edit_{{dt_wilayah.wilayah_id}}">
                         <label for="role">Provinsi</label>
-                        <select name="prov_edit" id="prov_edit_{{dt_wilayah.wilayah_id}}" data-level="prov_edit" class="form-control" onchange="render_prov_edit(this)" required>
+                        <select name="prov_edit" id="prov_edit_{{dt_wilayah.wilayah_id}}" data-level="prov_edit" class="form-control" onchange="render_prov_edit(this)" >
                             <option value="">- Pilih Provinsi -</option>
                             {% for provinsi in data_prov %}
                                 <option value="{{ provinsi.wilayah_id }}">{{ provinsi.wilayah_nama }}</option>
@@ -30,7 +30,7 @@
                     </div>
                     <div class="mb-3 d-none" id="div_kab_edit_{{dt_wilayah.wilayah_id}}">
                         <label for="role">Kabupaten</label>
-                        <select name="kab_edit" id="kab_edit_{{dt_wilayah.wilayah_id}}" data-level="kab_edit" class="form-control" onchange="render_kab_edit(this)" required>
+                        <select name="kab_edit" id="kab_edit_{{dt_wilayah.wilayah_id}}" data-level="kab_edit" class="form-control" onchange="render_kab_edit(this)" >
                             <option value="">- Pilih Kabupaten -</option>
                             {% for kabupaten in kab %}
                             <option value="{{ kabupaten.wilayah_id }}">{{ kabupaten.wilayah_nama }}</option>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="mb-3 d-none" id="div_kec_edit_{{dt_wilayah.wilayah_id}}">
                         <label for="role">Kecamatan</label>
-                        <select name="kec_edit" id="kec_edit_{{dt_wilayah.wilayah_id}}" data-level="kec_edit" class="form-control"required>
+                        <select name="kec_edit" id="kec_edit_{{dt_wilayah.wilayah_id}}" data-level="kec_edit" class="form-control">
                             <option value="">- Pilih Kecamatan -</option>
                             <!-- {% for key_level, display_level in wilayah_level %}
                                 <option value="{{ key_level }}">{{ display_level }}</option>
@@ -48,16 +48,16 @@
                     </div>
                     <div class="mb-3">
                         <label for="kode" class="form-label">Kode</label>
-                        <input type="text" class="form-control" name="wilayah_kode_edit" placeholder="Masukkan Status kode" required>
+                        <input type="text" class="form-control" name="wilayah_kode_edit" placeholder="Masukkan Status kode" >
                     </div>
                     <div class="mb-3">
                         <label for="wilayah_nama_edit" class="form-label">Nama Wilayah</label>
-                        <input type="text" class="form-control" id="wilayah_nama_edit_{{dt_wilayah.wilayah_id}}" name="wilayah_nama_edit" placeholder="Masukkan Nama Wilayah" required>
+                        <input type="text" class="form-control" id="wilayah_nama_edit_{{dt_wilayah.wilayah_id}}" name="wilayah_nama_edit" placeholder="Masukkan Nama Wilayah" >
                     </div>
                     <!-- Input wilayah_status secara default -->
                     <div class="mb-3">
                         <label for="user_status_edit" class="form-label">Status</label>
-                        <select class="form-select" name="user_status_edit" aria-label="Default select example" required>
+                        <select class="form-select" name="user_status_edit" aria-label="Default select example" >
                             <option value="1">Aktif</option>
                             <option value="0">Tidak Aktif</option>
                         </select>
