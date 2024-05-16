@@ -44,38 +44,38 @@
                     </div>
                     <div class="mb-3 d-none" id="div_sekolah_edit_{{dt_user.user_id}}">
                         <label for="sekolah_edit">Sekolah</label>
-                        <select name="user_sekolah_edit" id="sekolah_edit_{{dt_user.user_id}}" data-initiate_data="{{ dt_user.user_sekolah.sekolah_id }}" class="form-control" data-role="sekolah_edit" >
+                        <select name="sekolah_edit" id="sekolah_edit_{{dt_user.user_id}}" data-initiate_data="{{ dt_user.user_sekolah.sekolah_id }}" class="form-control" data-role="sekolah_edit" >
                             <option value="">- Pilih Sekolah-</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="first_name_edit" class="form-label">Nama Depan</label>
-                        <input type="text" class="form-control" value="{{dt_user.user_first_name}}" id="first_name_edit_{{dt_user.user_first_name}}" name="first_name_edit" required>
+                        <input type="text" class="form-control" value="{{dt_user.user_first_name}}" id="first_name_edit_{{dt_user.user_first_name}}" name="first_name_edit" >
                     </div>
                     <div class="mb-3">
                         <label for="last_name_edit" class="form-label">Nama Belakang</label>
-                        <input type="text" class="form-control" value="{{dt_user.user_last_name}}" id="last_name_edit_{{dt_user.user_last_name}}" name="last_name_edit" required>
+                        <input type="text" class="form-control" value="{{dt_user.user_last_name}}" id="last_name_edit_{{dt_user.user_last_name}}" name="last_name_edit" >
                     </div>
                     <div class="mb-3">
                         <label>Status</label>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="user_status_edit" id="statusAktif" value="True"
-                                   {% if dt_user.user_status_edit == "True" or not dt_user.user_status_edit %} checked {% endif %} required>
+                                   {% if dt_user.user_status_edit == "True" or not dt_user.user_status_edit %} checked {% endif %} >
                             <label class="form-check-label" for="statusAktif">Aktif</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="user_status_edit" id="statusTidakAktif" value="False"
-                                   {% if dt_user.user_status_edit == "False" %} checked {% endif %} required>
+                                   {% if dt_user.user_status_edit == "False" %} checked {% endif %} >
                             <label class="form-check-label" for="statusTidakAktif">Tidak Aktif</label>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="password_edit" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password_edit_{{dt_user.user_id}}" name="password_edit" required>
+                        <input type="password" class="form-control" id="password_edit_{{dt_user.user_id}}" name="password_edit" >
                     </div>
                     <div class="mb-3">
                         <label for="email_edit" class="form-label">Email</label>
-                        <input type="email" class="form-control"  value="{{dt_user.user_email}}"  id="email_edit_{{dt_user.user_id}}" name="email_edit" required>
+                        <input type="email" class="form-control"  value="{{dt_user.user_email}}"  id="email_edit_{{dt_user.user_id}}" name="email_edit" >
                     </div>
 
                     <div class="modal-footer">

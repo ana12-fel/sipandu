@@ -259,7 +259,7 @@ function pilih_role(e) {
         var level_wilayah = $(e).data('level');
 
         $.ajax({
-            url: "{% url 'sipandu_admin:get_wilayah_by_level' %}",
+            url: "{% url 'sipandu_admin:get_user_by_level' %}",
             type: "GET",
             data: {
                 'level': level_wilayah,

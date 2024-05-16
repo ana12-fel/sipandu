@@ -141,10 +141,10 @@ def delete_user(request, user_id):
         return JsonResponse(data, status=400)
     
 
-def get_wilayah_by_level(request):
+def get_user_by_level(request):
     if request.method == 'GET':
         level = request.GET.get('level')
-        wilayah_id = 'f996b1fc-03a7-4dbf-b1f0-705d7ed9de6b'
+        wilayah_id = request.GET.get('wilayah_id')
         print('level', level)
         if level == 'kecamatan':
             print('wilayah_id', wilayah_id)
