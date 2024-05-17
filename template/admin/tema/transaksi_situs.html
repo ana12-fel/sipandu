@@ -41,7 +41,7 @@ Transaksi Situs
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="sekolah_jenjang" class="form-label">Sekolah</label>
-                                <select class="form-select" id="sekolah_id" name="sekolah_nama">
+                                <select class="form-select" id="sekolah_id" name="sekolah_nama" required>
                                     <option value="test" selected disabled>Pilih Sekolah</option>
                                     {% for sekolah in data_sekolah %}
                                     <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>

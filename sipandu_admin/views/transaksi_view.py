@@ -37,11 +37,11 @@ def edit_transaksi(request, transanksi_id):
     if request.method == 'POST':
         
 
-        sekolah_id = request.POST.get('sekolah_nama')
-        tema_id = request.POST.get('tema_nama')
-        domain = request.POST.get('domain')
+        sekolah_id = request.POST.get('sekolah_nama_edit')
+        tema_id = request.POST.get('tema_nama_edit')
+        domain = request.POST.get('domain_edit')
 
-        dt_transaksi.sekolah_id = sekolah_id
+        dt_transaksi.sekolah_id_id = sekolah_id
         dt_transaksi.tema_id_id = tema_id
         dt_transaksi.domain = domain
 
@@ -50,7 +50,11 @@ def edit_transaksi(request, transanksi_id):
         return redirect('sipandu_admin:index_transaksi')
     
     else:
-        return render(request, 'admin/tema/edit_transaksi.html', {"dt_transaksi": dt_transaksi, "id_transanksi": transanksi_id })
+        data_tema = Master_tema.objects.all()
+        data_sekolah = Master_sekolah.objects.all()
+        data_transaksi= Transanksi_situs.objects.all()
+
+        return render(request, 'admin/tema/edit_transaksi.html', {"data_tema": data_tema, "data_sekolah": data_sekolah,"data_transaksi": data_transaksi })
     
 
 def delete_transaksi(request, transanksi_id):

@@ -25,4 +25,4 @@ def login_index(request):
 # Halaman untuk logout
 def logout_views(request):
     logout(request)
-    return redirect('sipandu_admin:admin_index')  # Ganti 'login' dengan nama fungsi login Anda
+    return redirect('sipandu_admin:login_index')  # Ganti 'login' dengan nama fungsi login Anda
