@@ -9,6 +9,7 @@ from django.contrib.auth import views as auth_views
 app_name = 'sipandu_admin'
 urlpatterns = [
     path('', base_views.admin_index, name='admin_index'),
+    
     path('login/', login_view.login_index, name='login_index'),
     path('logout/', login_view.logout_views, name='logout'),
 
@@ -16,6 +17,7 @@ urlpatterns = [
     path('edit_user_test/<str:user_id>/', user_view.edit_user, name='edit_user_sekolah'),
     path('user/delete/<str:user_id>/', user_view.delete_user, name='delete_user'),
     path('get-user-by-level/', user_view.get_user_by_level, name='get_user_by_level'),
+    path('cek_user_email/', user_view.cek_user_email, name='cek_user_email'),
 
 
     path('index-master-wilayah/', wilayah_view.IndexWilayah, name='index_wilayah'),
@@ -62,7 +64,6 @@ urlpatterns = [
     path('delete_kontak/<str:id_data_kontak>/delete', kontak_sekolah.DeleteKontak, name='delete_kontak'),
 
 
-    path('transanksi-situs/', admin_views.TransanksiSitus, name='transanksi_situs'),
     path('index-transaksi/', transaksi_view.IndexTransaksi, name='index_transaksi'),
     path('edit-transaksi/<str:transanksi_id>/', transaksi_view.edit_transaksi, name='edit_transaksi'),
     path('delete-transaksi/<str:transanksi_id>/delete/',  transaksi_view.delete_transaksi, name='delete_transaksi'),

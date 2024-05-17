@@ -156,3 +156,10 @@ def get_user_by_level(request):
         return JsonResponse({"data_wilayah": list(wilayah_list)})
     return JsonResponse({'error': 'Invalid request'})
 
+def cek_user_email(request):
+    email = request.GET.get('email', None)
+    data = {
+        'is_unique': not Master_user.objects.filter(user_email=email).exists()
+    }
+    return JsonResponse(data)
+

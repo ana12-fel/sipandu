@@ -40,7 +40,7 @@ Master User
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="role">Level</label>
-                                <select name="role" id="role" class="form-control" onchange="pilih_role(this)" >
+                                <select name="role" id="role" class="form-control" onchange="pilih_role(this)" required >
                                     <option value="">- Pilih Role -</option>
                                     {% for role_key, role_display in role_choices %}
                                         <option value="{{ role_key }}">{{ role_display }}</option>
@@ -83,20 +83,20 @@ Master User
                             </div>
                             <div class="mb-3">
                                 <label for="first_name" class="form-label">Nama Depan</label>
-                                <input type="text" class="form-control" id="user_first_name" name="first_name" placeholder="Masukkan Nama Depan" >
+                                <input type="text" class="form-control" id="user_first_name" name="first_name" placeholder="Masukkan Nama Depan" required >
                             </div>
                             <div class="mb-3">
                                 <label for="last_name" class="form-label">Nama Belakang</label>
-                                <input type="text" class="form-control" id="user_last_name" name="last_name" placeholder="Masukkan Nama Belakang" >
+                                <input type="text" class="form-control" id="user_last_name" name="last_name" placeholder="Masukkan Nama Belakang" required>
                                 <input type="hidden" name="user_status" value="True">
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password" >
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password" required >
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email" >
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email" required>
                             </div>
 
                             <div class="modal-footer">
@@ -123,6 +123,7 @@ Master User
                             <table class="table table-bordered text-nowrap border-bottom w-100" id="datakontenResponsiveDatatable">
                                 <thead>
                                     <tr>
+                                        <th class="text-center border-bottom-0">NO</th>
                                         <th class="text-center border-bottom-0">USER</th>
                                         <th class="text-center border-bottom-0">ROLE</th>
                                         <th class="text-center border-bottom-0">LOGIN TERAKHIR</th>
@@ -134,6 +135,7 @@ Master User
                                 <tbody>
                                     {% for dt_user in data_user %}
                                         <tr>
+                                            <td class="text-center align-middle">{{ forloop.counter }}</td>
                                             <td class="text-center align-middle">{{ dt_user.user_first_name }}</td>
                                             <td class="text-center align-middle">{{ dt_user.user_role }}</td>
                                             <td class="text-center align-middle">{{ dt_user.user_last_login }}</td>
@@ -175,6 +177,36 @@ Master User
 
 {% block js %}
 <script>
+
+$('#addUserForm').on('submit', function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var email = form.find('input[name="email"]').val();
+
+        $.ajax({
+            url: "{% url 'sipandu_admin:cek_user_email' %}",
+            type: "GET",
+            data: {
+                'email': email
+            },
+            success: function(response) {
+                if (response.is_unique) {
+                    form.off('submit').submit();  // Lanjutkan submit form jika kode unik
+                } else {
+                    swal({
+                        title: "Email sudah ada!",
+                        text: "Email yang Anda masukkan sudah digunakan.",
+                        icon: "warning",
+                        button: "OK",
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+
     function deleteUser(user_) {
     var deleteUrl = "{% url 'sipandu_admin:delete_user' 'user_id' %}".replace("user_id", user_);
 

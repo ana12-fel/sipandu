@@ -72,7 +72,7 @@ Master Wilayah
                             </div>
                             <div class="mb-3">
                                 <label for="kode" class="form-label">Kode</label>
-                                <input type="text" class="form-control" name="wilayah_kode" placeholder="Masukkan Status kode" oninput="cekKodeUnik(this)">
+                                <input type="text" class="form-control" name="wilayah_kode" placeholder="Masukkan Status kode">
                             </div>
                             <div class="mb-3">
                                 <label for="wilayah_nama" class="form-label">Nama Wilayah</label>
@@ -108,6 +108,7 @@ Master Wilayah
                             <table class="table table-bordered text-nowrap border-bottom w-100" id="wilayahResponsiveDatatable">
                                 <thead>
                                     <tr>
+                                        <th class="text-center border-bottom-0">NO</th>
                                         <th class="text-center">KODE</th>
                                         <th class="text-center">WILAYAH</th>
                                         <th class="text-center">PARENT</th>
@@ -120,6 +121,7 @@ Master Wilayah
                                     {% for dt_wilayah in data_wilayah %}
                                         <!-- Iterasi melalui setiap objek dt_wilayah -->
                                         <tr>
+                                            <td class="text-center align-middle">{{ forloop.counter }}</td>
                                             <td class="text-center align-middle">{{ dt_wilayah.wilayah_kode }}</td>
                                             <td class="text-center align-middle">{{ dt_wilayah.wilayah_nama }}</td>
                                             <td class="text-center align-middle">{{ dt_wilayah.wilayah_parent.wilayah_nama }}</td>
@@ -151,32 +153,7 @@ Master Wilayah
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
 <script>
-    function cekKodeUnik(input) {
-        var kode = $(input).val();
-        if (kode) {
-            $.ajax({
-                url: "{% url 'sipandu_admin:cek_kode_wilayah' %}",  // Buat URL ini di views.py
-                type: "GET",
-                data: {
-                    'kode': kode
-                },
-                success: function(response) {
-                    if (!response.is_unique) {
-                        swal({
-                            title: "Kode sudah ada!",
-                            text: "Kode wilayah yang Anda masukkan sudah digunakan.",
-                            icon: "warning",
-                            button: "OK",
-                        });
-                        $(input).val('');  // Kosongkan input jika kode sudah ada
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        }
-    }
+
 
     $('#addWilayahForm').on('submit', function(e) {
         e.preventDefault();
