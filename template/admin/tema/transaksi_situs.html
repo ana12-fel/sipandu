@@ -97,11 +97,11 @@ Transaksi Situs
                                 <tbody>
                                     {% for dt_transaksi in data_transaksi %}
                                         <tr>
-                                            <td>{{ forloop.counter }}</td>
-                                            <td>{{ dt_transaksi.sekolah_id.sekolah_nama }}</td>
-                                            <td>{{ dt_transaksi.tema_id.tema_nama }}</td>
-                                            <td>{{ dt_transaksi.domain }}</td>
-                                            <td>
+                                            <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                            <td class="text-center align-middle">{{ dt_transaksi.sekolah_id.sekolah_nama }}</td>
+                                            <td class="text-center align-middle">{{ dt_transaksi.tema_id.tema_nama }}</td>
+                                            <td class="text-center align-middle">{{ dt_transaksi.domain }}</td>
+                                            <td class="text-center align-middle">
                                                 <img src="{% if dt_transaksi.tema_id.tema_thumbnail %}{{ dt_transaksi.tema_id.tema_thumbnail.url }}{% endif %}" alt="{{ dt_transaksi.tema_id.tema_nama }}" style="max-width: 100px;">
                                             </td>
                                             <td class="text-center align-middle">

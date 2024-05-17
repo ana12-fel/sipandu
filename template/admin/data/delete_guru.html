@@ -1,0 +1,72 @@
+<div class="card">
+    <div class="card-header border-bottom-0 p-4">
+        <div class="page-options d-flex justify-content-end">
+        </div>
+    </div>
+    <div class="e-table px-5 pb-5">
+        <div class="table-responsive table-lg">
+            <form id="deleteForm" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id_data_guru" id="id_data_guru">
+            </form>
+            <table class="table border-top table-bordered mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-center border-bottom-0">NO</th>
+                        <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
+                        <th class="text-center border-bottom-0">NAMA GURU</th>
+                        <th class="text-center border-bottom-0">NIP</th>
+                        <th class="text-center border-bottom-0">MATA PELAJARAN</th>
+                        <th class="text-center border-bottom-0">PENDIDIKAN</th>
+                        <th class="text-center border-bottom-0">STATUS </th>
+                        <th class="text-center border-bottom-0">TAHUN</th>
+                        <th class="text-center border-bottom-0">FOTO</th>
+                        <th class="text-center border-bottom-0">AKSI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dt_guru in data_guru %}
+                    <tr>
+                        <td class="align-middle text-center">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" id="item-{{ dt_guru.id_data_guru }}" type="checkbox"> 
+                                <label class="custom-control-label" for="item-{{ dt_guru.id_data_guru }}"></label>
+                            </div>
+                        </td>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ dt_guru.guru_sekolah.sekolah_nama }}</td>
+                        <td>{{ dt_guru.nama_guru }}</td>
+                        <td>{{ dt_guru.nip_guru }}</td>
+                        <td>{{ dt_guru.mata_pelajaran }}</td>
+                        <td>{{ dt_guru.pendidikan }}</td>
+                        <td>{{ dt_guru.status_kepegawaian }}</td>
+                        <td>{{ dt_guru.tahun_guru }}</td>
+                        <td><img src="{% if dt_guru.guru_image %}{{ dt_guru.guru_image.url }}{% endif %}" alt="{{ dt_guru.nama_guru }}" style="max-width: 100px;"></td>
+                        <td class="text-center align-middle">
+                            <div class="btn-group align-top">
+                                <button class="btn btn-sm btn-danger badge" onclick="prepareDelete('{{ dt_guru.id_data_guru }}')" type="button">Delete Guru</button>
+                            </div>
+                        </td>
+                        <form id="deleteForm{{ dt_guru.id_data_guru }}" method="post" action="{% url 'delete_guru' dt_guru.id_data_guru %}">
+                            {% csrf_token %}
+                        </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% block js %}
+<script>
+    function prepareDelete(id_data_guru) {
+        var confirmation = confirm("Apakah Anda yakin ingin menghapus data ini?");
+        if (confirmation) {
+            document.getElementById("id_data_guru").value = id_data_guru;
+            document.getElementById("deleteForm" + id_data_guru).submit();
+        } else {
+        }
+    }
+</script>
+{% endblock %}

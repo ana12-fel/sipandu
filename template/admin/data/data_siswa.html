@@ -92,11 +92,11 @@ Master User
                                     {% for dt_siswa in data_siswa %}
                                     
                                     <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>{{ dt_siswa.siswa_sekolah.sekolah_nama }}</td>
-                                        <td>{{ dt_siswa.total_siswa }}</td>
-                                        <td>{{ dt_siswa.keterangan_siswa }}</td>
-                                        <td>{{ dt_siswa.icon_siswa }}</td>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_siswa.siswa_sekolah.sekolah_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_siswa.total_siswa }}</td>
+                                        <td class="text-center align-middle">{{ dt_siswa.keterangan_siswa }}</td>
+                                        <td class="text-center align-middle"><span class="{{ dt_siswa.icon_siswa}}"></span></td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_siswa.id_data_siswa}}">Edit</a> &nbsp;

@@ -1,6 +1,5 @@
 from django.urls import path, include
-from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,kategori_views,siswa_views
-from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,transaksi_view,galeri,kontak_sekolah
+from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,kategori_views,siswa_views,transaksi_view,kontak_sekolah,galeri,guru_views,link_views
 from django.contrib.auth import views as auth_views
 
 
@@ -68,11 +67,19 @@ urlpatterns = [
     path('delete-transaksi/<str:transanksi_id>/delete/',  transaksi_view.delete_transaksi, name='delete_transaksi'),
     
     path('laporan-data-sekolah/', admin_views.LaporanDataSekolah, name='laporan_data_sekolah'),
+
     path('index-siswa/', siswa_views.IndexSiswa, name='index_siswa'),
     path('edit_siswa/<str:id_data_siswa>/', siswa_views.EditSiswa, name='edit_siswa'),
-    path('delete_siswa/<str:id_data_siswa>/delete', siswa_views.DeleteSiswa, name='delete_siswa')
+    path('delete_siswa/<str:id_data_siswa>/delete', siswa_views.DeleteSiswa, name='delete_siswa'),
 
-  
+    path('index_guru/', guru_views.IndexGuru, name='index_guru'),
+    path('edit-guru/<str:id_data_guru>/', guru_views.EditGuru, name='edit_guru'),
+    path('delete-guru/<str:id_data_guru>/', guru_views.DeleteGuru, name='delete_guru'),
+
+    path('index_link/', link_views.IndexLink, name='index_link'),
+    path('edit_link/<str:id_link>/', link_views.EditLink, name='edit_link'),
+    path('delete_link/<str:id_link>/', link_views.DeleteLink, name='delete_link')
+
 
 ]
 

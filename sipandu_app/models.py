@@ -190,14 +190,14 @@ class Master_kategori(models.Model):
     kategori_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     kategori_tema = models.ForeignKey(Master_tema, on_delete=models.PROTECT,default=None, null=True)
     kategori_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
-    kategori_uraian = models.TextField()
+    kategori_uraian = models.TextField(unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 class Sub_kategori(models.Model):
     sub_kategori_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     kategori_id = models.ForeignKey(Master_kategori, on_delete=models.PROTECT,default=None, null=True)
-    sub_kategori_uraian = models.TextField()
+    sub_kategori_uraian = models.TextField(unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -216,7 +216,7 @@ class Data_konten(models.Model):
     konten_sub_kategori = models.ForeignKey(Sub_kategori, on_delete=models.PROTECT,default=None, null=True)
     judul = models.CharField(max_length=200)
     isi_konten = models.TextField(default=None, null=True)
-    status = models.CharField(max_length=100, null=True)
+    status = models.BooleanField(default=True)
     konten_image = models.ImageField(upload_to='image_konten/')
     konten_tag = models.TextField(max_length=25)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -243,10 +243,12 @@ class Data_kontak(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class Data_link(models.Model):
-    id_data_link= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    id_link= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     link_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
-    Nama_link = models.CharField(max_length=200)
-    link = models.CharField(max_length=200)
+    nama_link = models.CharField(max_length=200)
+    judul_link = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class Data_siswa(models.Model):
     id_data_siswa = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -265,7 +267,7 @@ class Data_guru(models.Model):
     mata_pelajaran = models.TextField(max_length=200, null=True)
     pendidikan = models.TextField(max_length=200, null=True)
     guru_image = models.ImageField(upload_to='image_guru/')
-    tahun_guru = models.CharField(max_length=10)
+    tahun_guru = models.CharField(max_length=10, null=True)
     status_kepegawaian = models.TextField(choices=STATUS_KEPEGAWAIAN)
 
     

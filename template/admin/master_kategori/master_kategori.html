@@ -8,6 +8,14 @@ Master User
 <!--app-content open-->
 <div class="app-content">
     <div class="side-app">
+        
+        {% if messages %}
+            <ul class="messages error-duplicate ">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
         <!-- PAGE-HEADER -->
         <div class="page-header">
@@ -77,7 +85,7 @@ Master User
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary" >Submit</button>
                             </div>
                         </form>
                     </div>
@@ -107,8 +115,8 @@ Master User
                                     <!-- Isi tabel Kategori -->
                                     {% for dt_kategori in data_kategori %}
                                     <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>{{ dt_kategori.kategori_uraian }}</td>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_kategori.kategori_uraian }}</td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <!-- Tombol edit -->
@@ -173,7 +181,7 @@ Master User
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary" onclick="submitForm()">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -204,9 +212,9 @@ Master User
                                     <!-- Isi tabel Sub Kategori -->
                                     {% for dt_sub_kategori in data_sub_kategori %}
                                     <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>{{ dt_sub_kategori.kategori_id.kategori_uraian}}</td>
-                                        <td>{{ dt_sub_kategori.sub_kategori_uraian }}</td>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_sub_kategori.kategori_id.kategori_uraian}}</td>
+                                        <td class="text-center align-middle">{{ dt_sub_kategori.sub_kategori_uraian }}</td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_sub_kategori.sub_kategori_id}}">Edit</a> &nbsp;
@@ -232,6 +240,52 @@ Master User
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
 <script>
+
+document.addEventListener('DOMContentLoaded', function () {
+        var errorMessages = document.querySelectorAll('.error-duplicate');
+        if (errorMessages.length > 0) {
+            var messages = [];
+            errorMessages.forEach(function (element) {
+                messages.push(element.innerText);
+            });
+            swal("Error!", messages.join("\n"), "error");
+        }
+    });
+function submitForm() {
+    var kategoriUraian = document.getElementById("kategori_uraian").value;
+    var subkategoriUraian = document.getElementById("sub_kategori_uraian").value;
+    var form_sub_input = document.getElementById("form_tema_id").value;
+
+    // Mengirim data ke server menggunakan Ajax
+    $.ajax({
+        url: "{% url 'sipandu_admin:sub_kategori' %}",
+        type: "POST",
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            kategori_uraian: kategoriUraian,
+            sub_kategori_uraian: subkategoriUraian,
+            form_sub: form_sub_input,
+        },
+        success: function(response) {
+            console.log('sukses')
+            $('#addDataModal').modal('hide'); 
+            setTimeout(function() { 
+                window.location.reload();
+            }, 2000);
+        },
+        error: function(xhr, status, error) {
+            console.error("Terjadi kesalahan:", error);
+            swal({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Data sudah terinput sebelumnya!',
+            });
+        }
+    });
+}
+
+
+
     function ubah_pilihan_tema(e){
         var tema_id = e.value;
         var tema_nama = e.options[e.selectedIndex].text;

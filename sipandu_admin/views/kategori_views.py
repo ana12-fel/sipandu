@@ -1,5 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse, JsonResponse
+from django.db import IntegrityError
+from django.contrib import messages
 from sipandu_app.models import Master_tema,Master_kategori,Sub_kategori 
 
 def MasterKategori(request):
@@ -73,18 +75,22 @@ def SubKategori(request):
         Sub_kategori_uraian = request.POST.get ('sub_kategori_uraian')
         kategori_tema= request.POST.get ('form_sub')
 
-        dt_sub_kategori = Sub_kategori.objects.create(kategori_id_id=kategori_id_id,sub_kategori_uraian=Sub_kategori_uraian)
+        try:
+            dt_sub_kategori = Sub_kategori.objects.create(kategori_id_id=kategori_id_id,sub_kategori_uraian=Sub_kategori_uraian)
+            print('sukses')
+            messages.success(request, 'Data berhasil di inputkan!')
+            redirect_url = f'/admin/master-kategori?tema_id={kategori_tema}'
+            return redirect(redirect_url)
+        except IntegrityError:
+            messages.error(request, 'Data sudah di inputkan!')
+            redirect_url = f'/admin/master-kategori?tema_id={kategori_tema}'
+            return redirect(redirect_url)
 
-        print(kategori_id_id,Sub_kategori_uraian)
-
-        redirect_url = f'/admin/master-kategori?tema_id={kategori_tema}'
-        return redirect(redirect_url)
-    
      else:
         data_tema = Master_tema.objects.all()
         data_kategori = Master_kategori.objects.all()
         data_sub_kategori = Sub_kategori.objects.all()
-        return render(request, 'admin/sub_kategori/master_kategori.html', {'data_tema': data_tema, 'data_kategori' : data_kategori, 'data_sub_kategori' : data_sub_kategori})
+        return render(request, 'admin/master_kategori/master_kategori.html', {'data_tema': data_tema, 'data_kategori' : data_kategori, 'data_sub_kategori' : data_sub_kategori})
      
 def edit_sub_kategori(request, sub_kategori_id_):
     if request.method == 'POST':

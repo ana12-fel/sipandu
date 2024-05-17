@@ -62,14 +62,14 @@ def delete_tema(request, tema_id):
 
         data = {
                 'status': 'success',
-                'message': 'data sekolah berhasil dihapus'
+                'message': 'data tema berhasil dihapus'
         }
         return JsonResponse(data, status=200)
 
     except Master_tema.DoesNotExist:
         data = {
                 'status': 'error',
-                'message': 'data sekolah gagal dihapus, data sekolah tidak ditemukan'
+                'message': 'data tema gagal dihapus, data tema tidak ditemukan'
         }
         return JsonResponse(data, status=400)
     
