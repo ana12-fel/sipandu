@@ -5,7 +5,6 @@ Master User
 {% endblock %}
 
 {% block content %}
-<!-- tambah_konten_form.html -->
 <div class="app-content">
     <div class="side-app">
 
@@ -17,70 +16,79 @@ Master User
         </div>
 
         <div class="col-lg-12 col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Tambah Kontak</h3>
-                    </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Tambah Kontak</h3>
+                </div>
                 <div class="card-body">
-<form method="post" action="{% url 'sipandu_admin:tambah_kontak' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="mb-3">
-        <label for="kontak_sekolah" class="form-label">Sekolah</label>
-        <select class="form-select" id="kontak_sekolah" name="kontak_sekolah">
-            <option value="test" selected disabled>Pilih Sekolah</option>
-            {% for sekolah in data_sekolah %}
-            <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
-            {% endfor %}
-        </select>
-    </div> 
+                    <form method="post" action="{% url 'sipandu_admin:tambah_kontak' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="kontak_sekolah" class="form-label">Sekolah</label>
+                            <select class="form-select" id="kontak_sekolah" name="kontak_sekolah">
+                                <option value="" selected disabled>Pilih Sekolah</option>
+                                {% for sekolah in data_sekolah %}
+                                <option value="{{ sekolah.sekolah_id }}">{{ sekolah.sekolah_nama.upper }}</option>
+                                {% endfor %}
+                            </select>
+                        </div> 
 
-    <div class="mb-3">
-        <label for="E_mail" class="form-label">E_mail</label>
-        <input type="text" class="form-control" id="E_mail" name="E_mail" required>
+                        <div class="mb-3">
+                            <label for="E_mail" class="form-label">E_mail</label>
+                            <input type="email" class="form-control" id="E_mail" name="E_mail" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="no_hp" class="form-label">No Hp</label>
+                            <input type="text" class="form-control" id="no_hp" name="no_hp" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="alamat" class="form-label">Alamat</label>
+                            <input type="text" class="form-control" id="alamat" name="alamat" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="link_map" class="form-label">Link Map</label>
+                            <input type="url" class="form-control" id="link_map" name="link_map" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="fb" class="form-label">Facebook</label>
+                            <input type="url" class="form-control" id="fb" name="fb">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="tw" class="form-label">Twitter</label>
+                            <input type="url" class="form-control" id="tw" name="tw">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ig" class="form-label">Instagram</label>
+                            <input type="url" class="form-control" id="ig" name="ig">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="mb-3">
-        <label for="no hp" class="form-label">No Hp</label>
-        <input type="text" class="form-control" id="no hp" name="no_hp" required>
-    </div>
-
-    <div class="mb-3">
-        <label for="fb"_ class="form-label">fb</label>
-        <input type="text" class="form-control" id="fb" name="fb" required>
-    </div>
-
-    <div class="mb-3">
-        <label for="tw" class="form-label">tw</label>
-        <input type="text" class="form-control" id="tw" name="tw" required>
-    </div>
-
-    <div class="mb-3">
-        <label for="ig" class="form-label">ig</label>
-        <input type="text" class="form-control" id="ig" name="ig" required>
-    </div>
-
-
-    
-    <button type="submit" class="btn btn-primary">Simpan</button>
-</form>
 </div>
-</div>
-</div>
-
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'admin/js/ckeditor.js'%}"></script>
+<script src="{% static 'admin/js/ckeditor.js' %}"></script>
 
 <script>
     ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .then( editor => {
-                console.log( editor );
-        } )
-        .catch( error => {
-                console.error( error );
-        } );
+        .create(document.querySelector('#editor'))
+        .then(editor => {
+            console.log(editor);
+        })
+        .catch(error => {
+            console.error(error);
+        });
         
     function previewImage(event) {
         var input = event.target;
@@ -99,13 +107,12 @@ Master User
                 var img = document.createElement('img');
                 img.src = e.target.result;
                 img.style.maxWidth = '300px';
-                img.alt = ' Preview';
+                img.alt = 'Preview';
                 preview.appendChild(img);
             }
 
             reader.readAsDataURL(input.files[0]);
         }
     }
-
 </script>
 {% endblock %}

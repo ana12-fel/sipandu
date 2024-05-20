@@ -234,6 +234,8 @@ class Data_kontak(models.Model):
     tw = models.CharField(max_length=100, blank=True, null=True, verbose_name="Twitter")
     ig = models.CharField(max_length=100, blank=True, null=True, verbose_name="Instagram")
     no_hp = models.CharField(max_length=15, blank=True, null=True, verbose_name="Nomor HP")
+    alamat = models.TextField(null=True, default=None)  # Field untuk alamat
+    link_map = models.TextField(null=True, default=None)  # Field untuk link peta
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
