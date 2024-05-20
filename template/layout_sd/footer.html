@@ -17,13 +17,13 @@
                 </p>
             </div>
             <div class="col-lg-2">
-                <h4 class="font-weight-bold text-color-light">Navigation</h4>
+                <h4 class="font-weight-bold text-color-light">Navigasi</h4>
                 <ul class="list list-unstyled mb-0">
-                    <li class="mb-0"><a href="index.html" class="text-decoration-none text-3-5">- Home</a></li>
-                    <li class="mb-0"><a href="about.html" class="text-decoration-none text-3-5">- About</a></li>
-                    <li class="mb-0"><a href="services.html" class="text-decoration-none text-3-5">- Services</a></li>
-                    <li class="mb-0"><a href="word.html" class="text-decoration-none text-3-5">- Work</a></li>
-                    <li class="mb-0"><a href="contact.html" class="text-decoration-none text-3-5">- Contact</a></li>
+                    <li class="mb-0"><a href="{% url 'sipandu:home' %}" class="text-decoration-none text-3-5">- Beranda</a></li>
+                    <li class="mb-0"><a href="{% url 'sipandu:home' %}" class="text-decoration-none text-3-5">- Profil</a></li>
+                    <li class="mb-0"><a href="{% url 'sipandu:berita' %}" class="text-decoration-none text-3-5">- Berita</a></li>
+                    <li class="mb-0"><a href="{% url 'sipandu:galeri' %}" class="text-decoration-none text-3-5">- Galeri</a></li>
+                    <li class="mb-0"><a href="{% url 'sipandu:kontak' %}" class="text-decoration-none text-3-5">- Kontak</a></li>
                 </ul>
             </div>
             <div class="col-lg-2">
@@ -34,13 +34,19 @@
                 </ul>
             </div>
             <div class="col-lg-3">
-                <h4 class="font-weight-bold text-color-light">Latest Post</h4>
-                <ul class="list-unstyled mb-0">
-                    <li class="mb-2 pb-1">
-                        <a href="#">
-                            <p class="text-3 mb-0">- <strong class="font-weight-regular">Lorem ipsum dolor sit amet.</strong></p>
-                            <p class="text-2 mb-0 opacity-8">12:55 AM Dec 19th</p>
-                        </a>
+                <h4 class="font-weight-bold text-color-light">Kontak</h4>
+                <ul class="list list-unstyled mb-4">
+                    <li>
+                        <i class="icons icon-phone text-color-primary text-5-5 position-relative top-2 me-2"></i>
+                        <a href="tel:0123456789" class="text-color-light font-weight-bold text-decoration-none text-5">(800) 123-4657</a>
+                    </li>
+                    <li class="mb-3">
+                        <i class="icons icon-envelope text-color-primary text-6 position-relative top-6 me-2"></i>
+                        <a href="mailto:porto@portotheme.com" class="text-color-light text-decoration-none text-4">porto@portotheme.com</a>
+                    </li>
+                    <li class="text-color-light text-4">
+                        <i class="icons icon-calendar text-color-primary text-5 position-relative top-3 me-2"></i>
+                        Mon - Fri 9am - 6pm
                     </li>
                 </ul>
             </div>

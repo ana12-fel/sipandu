@@ -61,21 +61,24 @@
                         <hr class="my-2">
                     </div>
                     <div class="px-3 mt-4">
-                        <h3 class="text-color-quaternary text-capitalize font-weight-bold text-5 m-0">Categories</h3>
+                        <h3 class="text-color-quaternary text-capitalize font-weight-bold text-5 m-0">KATEGORI</h3>
                         <ul class="nav nav-list flex-column mt-2 mb-0 p-relative right-9">
-                            <li class="nav-item"><a class="nav-link bg-transparent border-0" href="#">Design (2)</a></li>
                             <li class="nav-item">
-                                <a class="nav-link bg-transparent border-0 active" href="#">Photos (4)</a>
-                                <ul>
-                                    <li class="nav-item"><a class="nav-link bg-transparent border-0" href="#">Animals</a></li>
-                                    <li class="nav-item"><a class="nav-link bg-transparent border-0 active" href="#">Business</a></li>
-                                    <li class="nav-item"><a class="nav-link bg-transparent border-0" href="#">Sports</a></li>
-                                    <li class="nav-item"><a class="nav-link bg-transparent border-0" href="#">People</a></li>
-                                </ul>
+                                <a class="nav-link bg-transparent border-0 active" href="{% url 'sipandu:pengumuman' %}">Pengumuman</a>
                             </li>
-                            <li class="nav-item"><a class="nav-link bg-transparent border-0" href="#">Videos (3)</a></li>
-                            <li class="nav-item"><a class="nav-link bg-transparent border-0" href="#">Lifestyle (2)</a></li>
-                            <li class="nav-item"><a class="nav-link bg-transparent border-0" href="#">Technology (1)</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link bg-transparent border-0 active" href="{% url 'sipandu:kegiatan' %}">Kegiatan</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link bg-transparent border-0 active" href="{% url 'sipandu:bursa_kerja' %}">Bursa Kerja</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link bg-transparent border-0 active" href="#">Beasiswa</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link bg-transparent border-0 active" href="{% url 'sipandu:berita' %}" </a>
+                            </li>
+                            
                         </ul>
                     </div>
                 </aside>
@@ -92,7 +95,7 @@
                         <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="400">
                             <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
                                 <div class="thumb-info-wrapper rounded-0">
-                                    <img src="{% static 'img/demos/digital-agency/projects/project-1.jpg' %}" class="img-fluid rounded-0" alt="" />
+                                    <img src="{% static 'logo/foto-1.jpg' %}" class="img-fluid rounded-0" alt="" />
                                     <div class="thumb-info-action">
                                         <a href="{% url 'sipandu:detail' %}" aria-label="">
                                             <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
@@ -108,9 +111,9 @@
                         <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="600">
                             <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
                                 <div class="thumb-info-wrapper rounded-0">
-                                    <img src="{% static 'img/demos/digital-agency/projects/project-2.jpg' %}" class="img-fluid rounded-0" alt="" />
+                                    <img src="{% static 'logo/foto-1.jpg' %}" class="img-fluid rounded-0" alt="" />
                                     <div class="thumb-info-action">
-                                        <a href="{% static 'portfolio-single-wide-slider.html' %}" aria-label="">
+                                        <a href="{% url 'sipandu:detail' %}"  aria-label="">
                                             <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
                                         </a>
                                     </div>
@@ -124,9 +127,9 @@
                         <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="800">
                             <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
                                 <div class="thumb-info-wrapper rounded-0">
-                                    <img src="{% static 'img/demos/digital-agency/projects/project-3.jpg' %}" class="img-fluid rounded-0" alt="" />
+                                    <img src="{% static 'logo/foto-1.jpg' %}" class="img-fluid rounded-0" alt="" />
                                     <div class="thumb-info-action">
-                                        <a href="{% static 'portfolio-single-wide-slider.html' %}" aria-label="">
+                                        <a href="{% url 'sipandu:detail' %}"  aria-label="">
                                             <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
                                         </a>
                                     </div>
@@ -140,9 +143,9 @@
                         <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="200">
                             <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
                                 <div class="thumb-info-wrapper rounded-0">
-                                    <img src="{% static 'img/demos/digital-agency/projects/project-4.jpg' %}" class="img-fluid rounded-0" alt="" />
+                                    <img src="{% static 'logo/foto-1.jpg' %}" class="img-fluid rounded-0" alt="" />
                                     <div class="thumb-info-action">
-                                        <a href="{% static 'portfolio-single-wide-slider.html' %}" aria-label="">
+                                        <a href="{% url 'sipandu:detail' %}"  aria-label="">
                                             <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
                                         </a>
                                     </div>
@@ -156,9 +159,9 @@
                         <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="200">
                             <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
                                 <div class="thumb-info-wrapper rounded-0">
-                                    <img src="{% static 'img/demos/digital-agency/projects/project-5.jpg' %}" class="img-fluid rounded-0" alt="" />
+                                    <img src="{% static 'logo/foto-1.jpg' %}" class="img-fluid rounded-0" alt="" />
                                     <div class="thumb-info-action">
-                                        <a href="{% static 'portfolio-single-wide-slider.html' %}" aria-label="">
+                                        <a href="{% url 'sipandu:detail' %}"  aria-label="">
                                             <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
                                         </a>
                                     </div>
@@ -172,9 +175,9 @@
                         <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="200">
                             <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
                                 <div class="thumb-info-wrapper rounded-0">
-                                    <img src="{% static 'img/demos/digital-agency/projects/project-6.jpg' %}" class="img-fluid rounded-0" alt="" />
+                                    <img src="{% static 'logo/foto-1.jpg' %}" class="img-fluid rounded-0" alt="" />
                                     <div class="thumb-info-action">
-                                        <a href="{% static 'portfolio-single-wide-slider.html' %}" aria-label="">
+                                        <a href="{% url 'sipandu:detail' %}"  aria-label="">
                                             <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
                                         </a>
                                     </div>
