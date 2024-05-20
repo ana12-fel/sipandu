@@ -29,8 +29,16 @@
                     </div>
                     <div class="mb-3">
                         <label for="tema_thumbnail" class="form-label">Thumbnail</label>
-                        <input type="file" class="form-control" name="tema_thumbnail" accept="image/*">
+                        <input type="file" class="form-control" name="tema_thumbnail" accept="image/*"  onchange="previewImage(event)">
                     </div>
+                    <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;">
+                        {% if dt_tema.tema_thumbnail %}
+                            <img id="image-preview-img" src="{{ dt_tema.tema_thumbnail.url }}" alt="Tema Thumbnail" style="max-width: 100%;">
+                        {% else %}
+                            <img id="image-preview-img" src="#" alt="Pratinjau Gambar" style="display: none; max-width: 100%;">
+                        {% endif %}
+                    </div>
+                
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -41,3 +49,21 @@
     </div>
 </div>
 <!-- Modal Edit Data Tema End -->
+<script>
+    function previewImage(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function(){
+            var dataURL = reader.result;
+            var previewImg = document.getElementById('image-preview-img');
+            previewImg.src = dataURL;
+            previewImg.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+
+</script>
+
+
+
+

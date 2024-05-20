@@ -12,23 +12,23 @@
 
                     {% csrf_token %}
                     <div class="mb-3" id="div_prov_edit_{{dt_sekolah.sekolah_id}}">
-                        <label for="role">Provinsi</label>
-                        <select name="sekolah_provinsi" id="prov_edit_{{dt_sekolah.sekolah_id}}" data-level="prov_edit" class="form-control" onchange="render_kab_edit(this)">
+                        <label for="role_edit">Provinsi</label>
+                        <select name="sekolah_provinsi" id="prov_edit_{{dt_sekolah.sekolah_id}}" data-level="prov_edit" class="form-select" onchange="render_kab_edit(this)">
                             <option value="">- Pilih Provinsi -</option>
                             {% for provinsi in data_prov %}
-                            <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_nama.upper}}</option>
+                            <option value="{{provinsi.wilayah_id}}" {% if dt_sekolah.sekolah_provinsi_id == wilayah.wilayah.id %} selected {% endif %}>{{provinsi.wilayah_nama.upper}}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="mb-3" id="div_kab_edit_{{dt_sekolah.sekolah_id}}">
-                        <label for="role">Kabupaten</label>
-                        <select name="sekolah_kabupaten" id="kab_edit_{{dt_sekolah.sekolah_id}}" data-level="kab_edit" class="form-control" onchange="render_kab_edit(this)">
+                        <label for="role" class="form-label">Kabupaten</label>
+                        <select name="sekolah_kabupaten" id="kab_edit_{{dt_sekolah.sekolah_id}}" data-level="kab_edit" class="form-select" onchange="render_kab_edit(this)">
                             <option value="">- Pilih Kabupaten -</option>
                         </select>
                     </div>
                     <div class="mb-3" id="div_kec_edit_{{dt_sekolah.sekolah_id}}">
-                        <label for="role">Kecamatan</label>
-                        <select name="sekolah_kecamatan" id="kec_edit_{{dt_sekolah.sekolah_id}}" data-level="kec_edit" class="form-control">
+                        <label for="role" class="form-label">Kecamatan</label>
+                        <select name="sekolah_kecamatan" id="kec_edit_{{dt_sekolah.sekolah_id}}" data-level="kec_edit" class="form-select">
                             <option value="">- Pilih Kecamatan -</option>
                             <option value="test" selected disabled>Pilih Kecamatan</option>
                         </select>

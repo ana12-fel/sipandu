@@ -9,7 +9,7 @@ def IndexKonten(request):
         konten_kategori = request.POST.get ('konten_kategori')
         konten_sub_kategori = request.POST.get ('konten_sub_kategori')
         judul = request.POST.get ('judul')
-        is_active = request.POST.get('status')  
+        is_active = request.POST.get('status') == 'True'
         isi_konten = request.POST.get('isi_konten')
         konten_image = request.FILES.get('konten_image')
         konten_tag = request.POST.get('konten_tag')
@@ -45,7 +45,7 @@ def TambahKonten(request):
         konten_kategori = request.POST.get ('konten_kategori')
         konten_sub_kategori = request.POST.get ('konten_sub_kategori')
         judul = request.POST.get ('judul')
-        status = request.POST.get ('status')
+        is_active = request.POST.get('status') == 'True'
         isi_konten = request.POST.get('isi_konten')
         konten_image = request.FILES.get('konten_image')
         konten_tag = request.POST.get('konten_tag')
@@ -58,7 +58,7 @@ def TambahKonten(request):
                                             konten_kategori=Master_kategori.objects.get(kategori_id = konten_kategori),
                                             konten_sub_kategori=Sub_kategori.objects.get(sub_kategori_id = konten_sub_kategori),
                                             judul=judul,
-                                            status=status,
+                                            status=is_active,
                                             isi_konten=isi_konten,
                                             konten_image=konten_image,
                                             konten_tag=konten_tag)
@@ -83,7 +83,7 @@ def EditKonten(request, id_data_konten):
         konten_kategori = request.POST.get('konten_kategori')
         konten_sub_kategori = request.POST.get('konten_sub_kategori')
         judul = request.POST.get('judul')
-        status = request.POST.get('status')
+        is_active = request.POST.get('status') == 'True'
         isi_konten = request.POST.get('isi_konten')
         konten_image = request.FILES.get('konten_image')
         konten_tag = request.POST.get('konten_tag')
@@ -92,7 +92,7 @@ def EditKonten(request, id_data_konten):
         dt_konten.konten_kategori = Master_kategori.objects.get(kategori_id=konten_kategori)
         dt_konten.konten_sub_kategori = Sub_kategori.objects.get(sub_kategori_id=konten_sub_kategori)
         dt_konten.judul = judul
-        dt_konten.status = status
+        dt_konten.status = is_active
         dt_konten.isi_konten = isi_konten
         if konten_image:
             dt_konten.konten_image = konten_image

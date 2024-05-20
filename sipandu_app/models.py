@@ -10,18 +10,16 @@ LEVEL_WILAYAH = (
     (3, 'Kecamatan'),
 )
 
-WARNA = (
-    (1, 'merah putih'),
-    (2, 'putih biru'),
-    (3, 'putih abu'),
-    (4, 'biru putih')
-)
-
 ROLE_CHOICE =[
     ('superadmin', 'Superadmin'),
     ('admin', 'Admin'),
     ('admin_kabupaten', 'Admin Kabupaten'),
     ('admin_sekolah', 'Admin Sekolah')
+]
+
+STATUS_KEPEGAWAIAN =[
+    ('guru', 'Guru'),
+    ('kepala_sekolah', 'Kepala sekolah'),
 ]
 
 JENIS_SEKOLAH =(('negeri','Negeri'),('swasta','Swasta'))
@@ -173,7 +171,6 @@ class Master_user(AbstractBaseUser):
 class Master_tema(models.Model):
     tema_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     tema_jenjang = models.ForeignKey(Master_jenjang, on_delete=models.PROTECT,default=None, null=True)
-    tema_warna = models.CharField(default=None, choices=WARNA, max_length=1, null=True)
     tema_nama = models.CharField(max_length=200)
     tema_folder_name = models.CharField(max_length=200)
     tema_thumbnail = models.ImageField(upload_to='thumbnails_tema/')
@@ -184,7 +181,7 @@ class Master_kategori(models.Model):
     kategori_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     kategori_tema = models.ForeignKey(Master_tema, on_delete=models.PROTECT,default=None, null=True)
     kategori_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
-    kategori_uraian = models.TextField(unique=True)
+    kategori_uraian = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -210,7 +207,7 @@ class Data_konten(models.Model):
     konten_sub_kategori = models.ForeignKey(Sub_kategori, on_delete=models.PROTECT,default=None, null=True)
     judul = models.CharField(max_length=200)
     isi_konten = models.TextField(default=None, null=True)
-    status = models.BooleanField(default=True)
+    status = models.BooleanField(default=True)   
     konten_image = models.ImageField(upload_to='image_konten/')
     konten_tag = models.TextField(max_length=25)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -253,7 +250,6 @@ class Data_siswa(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-<<<<<<< HEAD
 class Data_guru(models.Model):
     id_data_guru = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     guru_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
@@ -265,8 +261,6 @@ class Data_guru(models.Model):
     tahun_guru = models.CharField(max_length=10, null=True)
     status_kepegawaian = models.TextField(choices=STATUS_KEPEGAWAIAN)
 
-=======
->>>>>>> 337edb9070b07e553afcaf264cd5cf2c7e4cb956
     
     
 

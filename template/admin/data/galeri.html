@@ -54,11 +54,11 @@ Master User
                                 <tbody>
                                     {% for dt_galeri in data_galeri %}
                                     <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>{{ dt_galeri.created_at }}</td>
-                                        <td>{{ dt_galeri.galeri_sekolah.sekolah_nama }}</td>
-                                        <td><img src="{% if dt_galeri.gambar %}{{ dt_galeri.gambar.url }}{% endif %}" alt="{{ dt_galeri.gambar }}" style="max-width: 100px;"></td>
-                                        <td>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_galeri.created_at }}</td>
+                                        <td class="text-center align-middle">{{ dt_galeri.galeri_sekolah.sekolah_nama }}</td>
+                                        <td class="text-center align-middle"><img src="{% if dt_galeri.gambar %}{{ dt_galeri.gambar.url }}{% endif %}" alt="{{ dt_galeri.gambar }}" style="max-width: 100px;"></td>
+                                        <td class="text-center align-middle">
                                             <iframe width="100%" height="100%" src="{{ dt_galeri.video }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
