@@ -1,0 +1,39 @@
+<!-- Modal Edit Data Tema -->
+<div class="modal fade" id="editdata_{{dt_link.id_link}}" tabindex="-1" aria-labelledby="editDataModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editDataModalLabel">Edit Data Tema</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form edit data di sini -->
+                <form method="post" enctype="multipart/form-data" action="{% url 'sipandu_admin:edit_link' dt_link.id_link %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="link_sekolah" class="form-label">Sekolah</label>
+                        <select class="form-select" id="link_sekolah" name="link_sekolah">
+                            <option value="test" selected disabled>Pilih Sekolah</option>
+                            {% for sekolah in data_sekolah %}
+                            <option value="{{sekolah.sekolah_id}}" {% if dt_link.link_sekolah_id == sekolah.sekolah.id %} selected {% endif %}>{{sekolah.sekolah_nama.upper}}</option>
+                            {% endfor %}
+                        </select>
+                    </div> 
+                    <div class="mb-3">
+                        <label for="judul_link" class="form-label">Judul</label>
+                        <input type="text" value="{{dt_link.judul_link}}" class="form-control" id="judul_link" name="judul_link" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nama_link" class="form-label">Link</label>
+                        <input type="text" value="{{dt_link.nama_link}}" class="form-control" id="nama_link" name="nama_link" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Edit Data Tema End -->

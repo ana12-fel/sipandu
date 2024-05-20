@@ -11,12 +11,9 @@ def IndexJenjang(request):
         data = {}
         try:
             dt_jenjang = Master_jenjang.objects.create(jenjang_nama=jenjang_nama, jenjang_status=jenjang_status)
-            # Lakukan sesuatu jika penyimpanan berhasil
             print(jenjang_nama, jenjang_status)
-            # return redirect('sipandu_admin:index_jenjang')
             return JsonResponse(data, status = 201)
         except IntegrityError:
-            # Tangani kasus ketika data sudah ada di dalam basis data
             print("Data dengan nama jenjang tersebut sudah ada")
             return JsonResponse(data, status = 400)
 

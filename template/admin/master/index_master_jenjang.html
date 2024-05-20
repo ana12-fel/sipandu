@@ -42,7 +42,7 @@ Master User
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="jenjang" class="form-label">Jenjang</label>
-                                <input type="text" class="form-control" id="jenjang_nama" name="jenjang_nama" placeholder="Masukkan Status Jenjang">
+                                <input type="text" class="form-control" id="jenjang_nama" name="jenjang_nama" placeholder="Masukkan Status Jenjang" required>
                                 <!-- Input jenjang_status secara default -->
                                 <input type="hidden" name="jenjang_status" id="jenjang_status" value="True">
                             </div>
@@ -117,8 +117,15 @@ Master User
    
    function submitForm() {
         // Mengambil nilai input dari formulir
-        var jenjangNama = document.getElementById("jenjang_nama").value;
+        var jenjangNama = document.getElementById("jenjang_nama").value.trim();
         var jenjangStatus = document.getElementById("jenjang_status").value;
+
+        // Periksa apakah input kosong
+        if (jenjangNama === "") {
+            // Tampilkan pesan error jika input kosong
+            alert("Jenjang harus diisi!");
+            return false; // Menghentikan proses submit
+        }
 
         // Mengirim data ke server menggunakan Ajax
         $.ajax({
@@ -134,7 +141,6 @@ Master User
                 // Misalnya, tampilkan notifikasi atau muat ulang halaman
                 console.log(response);
                 $('#addDataModal').modal('hide'); // Tutup modal setelah berhasil
-                // window.location.reload(); // Muat ulang halaman untuk memperbarui data
                 setTimeout(function() { 
                     window.location.reload();
                 }, 2000);
@@ -181,17 +187,16 @@ Master User
                     });
                     window.location.reload(); 
                 },
-                error: function (xhr, status, error) {
-                    swal("Terjadi kesalahan saat menghapus data!", {
-                        icon: "error",
+                    error: function (xhr, status, error) {
+                            swal("Terjadi kesalahan saat menghapus data!", {
+                                icon: "error",
+                            });
+                        }
                     });
+                } else {
+                    swal("Tindakan dibatalkan", "", "info");
                 }
-            });
-        } else {
-            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
-            swal("Tindakan dibatalkan", "", "info");
-        }
-    });
+        });
 }
     $(function(){
         $('#jenjangResponsiveDatatable').DataTable({

@@ -26,10 +26,7 @@
             </ul>
         </li>
         <li class="slide">
-            <a class="side-menu__item" data-bs-toggle="slide" href="#"></i><span class="side-menu__label">Transaksi</span><i class="angle fa fa-angle-right"></i></a>
-            <ul class="slide-menu">
-                <li><a href="{% url 'sipandu_admin:index_transaksi' %}" class="slide-item">Transanksi Situs</a></li>
-            </ul>
+            <a class="side-menu__item"  data-bs-toggle="slide" href="{% url 'sipandu_admin:index_transaksi' %}"></i><span class="side-menu__label">Transaksi Situs</span></a>
         </li>
         <li class="slide">
             <a class="side-menu__item"  data-bs-toggle="slide" href="{% url 'sipandu_admin:master_kategori' %}"></i><span class="side-menu__label">Master Kategori</span></a>
@@ -47,7 +44,14 @@
                 <li><a href="{% url 'sipandu_admin:index_kontak' %}" class="slide-item">Kontak Sekolah</a></li>
             </ul>
             <ul class="slide-menu">
-                <li><a href="{% url 'sipandu_admin:index_kontak' %}" class="slide-item">Link</a></li>
+                <li><a href="{% url 'sipandu_admin:index_link' %}" class="slide-item">Link</a></li>
+            </ul>
+            <ul class="slide-menu">
+                <li><a href="{% url 'sipandu_admin:index_siswa' %}" class="slide-item">Data Siswa</a></li>
+            </ul>
+            <ul class="slide-menu">
+                <li><a href="{% url 'sipandu_admin:index_guru' %}" class="slide-item">Data Guru</a></li>
+
             </ul>
         </li>
        
@@ -57,7 +61,7 @@
                 <li><a href="{% url 'sipandu_admin:laporan_data_sekolah' %}" class="slide-item"> Laporan Data Sekolah</a></li>
             </ul>
         </li>
-        <li><h3>Custom & Error Pages</h3></li>
+        <!-- <li><h3>Custom & Error Pages</h3></li>
         <li class="slide">
             <a class="side-menu__item" data-bs-toggle="slide" href="#"><i class="side-menu__icon fe fe-settings"></i><span class="side-menu__label">Custom Pages</span><i class="angle fa fa-angle-right"></i></a>
             <ul class="slide-menu">
@@ -66,7 +70,7 @@
                 <li><a href="forgot-password.html" class="slide-item"> Forgot Password</a></li>
                 <li><a href="lockscreen.html" class="slide-item"> Lock screen</a></li>
             </ul>
-        </li>
+        </li> -->
         <!-- <li class="slide">
             <a class="side-menu__item" data-bs-toggle="slide" href="#"><i class="side-menu__icon fe fe-info"></i><span class="side-menu__label">Error Pages</span><i class="angle fa fa-angle-right"></i></a>
             <ul class="slide-menu">

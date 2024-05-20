@@ -1,0 +1,244 @@
+{% extends 'admin/base/base_index.html' %}
+{% load static %}
+{% block title %}
+Master User
+{% endblock %}
+
+{% block content %}
+<!--app-content open-->
+<div class="app-content">
+    <div class="side-app">
+        <!-- PAGE-HEADER -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">DATA KEPEGAWAIAN</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data Guru/Kepala Sekolah</li>
+                </ol>
+            </div>
+            <div class="ms-auto pageheader-btn">
+                <!-- Tombol untuk membuka modal tambah data -->
+                <button type="button" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#tambahModal">
+                    <span><i class="fe fe-plus"></i></span> Tambahkan
+                </button>
+            </div>
+        </div>
+        <!-- PAGE-HEADER END -->
+
+        <!-- Modal untuk tambah data -->
+        <div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Data Guru</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form untuk tambah data -->
+                        <form method="POST" action="{% url 'sipandu_admin:index_guru' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="guru_sekolah" class="form-label">Sekolah</label>
+                                <select class="form-select" id="guru_sekolah" name="guru_sekolah">
+                                    <option value="" selected disabled>Pilih Sekolah</option>
+                                    {% for sekolah in data_sekolah %}
+                                    <option value="{{ sekolah.sekolah_id }}">{{ sekolah.sekolah_nama.upper }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>  
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama Guru</label>
+                                <input type="text" class="form-control" id="nama" name="nama_guru" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nip_guru" class="form-label">Nip</label>
+                                <input type="text" class="form-control" id="nip_guru" name="nip_guru" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Mata Pelajaran</label>
+                                <input type="text" class="form-control" id="nama" name="mata_pelajaran" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Pendidikan</label>
+                                <input type="text" class="form-control" id="nama" name="pendidikan" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="status_kepegawaian" class="form-label">Status Kepegawaian</label>
+                                <select class="form-select" id="status_kepegawaian" name="status_kepegawaian" onchange="toggleTahunForm()">
+                                    <option value="" selected disabled>Pilih Status Kepegawaian</option>
+                                    <option value="guru">Guru</option>
+                                    <option value="kepala_sekolah">Kepala Sekolah</option>
+                                </select>
+                            </div>
+                            <div id="tahun_guru" style="display: none;">
+                                <div class="mb-3">
+                                    <label for="tahun_guru" class="form-label">Tahun Jabatan Kepala Sekolah</label>
+                                    <input type="text" class="form-control" id="tahun_guru" name="tahun_guru">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="thumbnail" class="form-label">Foto</label>
+                                <input type="file" class="form-control" id="guru_image" name="guru_image" accept="image/*" onchange="previewThumbnail(event)">
+                            </div>
+                            <div id="thumbnail-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> 
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal end -->
+
+        <!-- ROW-1 OPEN -->
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">DATA GURU/KEPALA SEKOLAH</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="guruResponsiveDatatable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center border-bottom-0">NO</th>
+                                        <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
+                                        <th class="text-center border-bottom-0">NAMA GURU</th>
+                                        <th class="text-center border-bottom-0">NIP</th>
+                                        <th class="text-center border-bottom-0">MATA PELAJARAN</th>
+                                        <th class="text-center border-bottom-0">PENDIDIKAN</th>
+                                        <th class="text-center border-bottom-0">STATUS </th>
+                                        <th class="text-center border-bottom-0">TAHUN</th>
+                                        <th class="text-center border-bottom-0">FOTO</th>
+                                        <th class="text-center border-bottom-0">AKSI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for dt_guru in data_guru %}
+                                    
+                                    <tr>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_guru.guru_sekolah.sekolah_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_guru.nama_guru }}</td>
+                                        <td class="text-center align-middle">{{ dt_guru.nip_guru }}</td>
+                                        <td class="text-center align-middle">{{ dt_guru.mata_pelajaran }}</td>
+                                        <td class="text-center align-middle">{{ dt_guru.pendidikan }}</td>
+                                        <td class="text-center align-middle">{{ dt_guru.status_kepegawaian }}</td>
+                                        <td class="text-center align-middle">{{ dt_guru.tahun_guru }}</td>
+                                        <td class="text-center align-middle"><img src="{% if dt_guru.guru_image %}{{ dt_guru.guru_image.url }}{% endif %}" alt="{{ dt_guru.nama_guru }}" style="max-width: 100px;"></td>
+                                        <td class="text-center align-middle">
+                                            <div class="btn-group align-top">
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_guru.id_data_guru}}">Edit</a> &nbsp;
+                                                <button onclick="deleteGuru('{{ dt_guru.id_data_guru }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                            </div>
+                                        </td> 
+                                    </tr>
+                                    {% include 'admin/data/edit_guru.html' %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ROW-1 END -->
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+
+<script>
+    function toggleTahunForm() {
+        var statusKepegawaian = document.getElementById("status_kepegawaian").value;
+        var tahun_guru = document.getElementById("tahun_guru");
+
+        if (statusKepegawaian === "kepala_sekolah") {
+            tahun_guru.style.display = "block";
+        } else {
+            tahun_guru.style.display = "none";
+        }
+    }
+    function previewThumbnail(event) {
+        var input = event.target;
+        var preview = document.getElementById('thumbnail-preview');
+        
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                // Menghapus preview thumbnail sebelumnya jika ada
+                while (preview.firstChild) {
+                    preview.removeChild(preview.firstChild);
+                }
+
+                // Menambahkan elemen img untuk menampilkan preview thumbnail
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '300px';
+                img.alt = 'Thumbnail Preview';
+                preview.appendChild(img);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function deleteGuru(guru_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_guru' 'id_data_guru' %}".replace("id_data_guru",guru_);
+
+        swal({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                $.ajax({
+                    headers : { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "DELETE",
+                    success: function (response) {
+                    console.log('berhasil');
+                    swal({
+                        title: "Data berhasil dihapus!",
+                        icon: "success",
+                        buttons: false, 
+                        timer: 1500 
+                    });
+                    window.location.reload(); 
+                },
+                    error: function (xhr, status, error) {
+                        swal("Terjadi kesalahan saat menghapus data!", {
+                            icon: "error",
+                        });
+                    }
+                });
+            } else {
+                swal("Tindakan dibatalkan", "", "info");
+            }
+        });
+    }
+
+    $(function(){
+        $('#guruResponsiveDatatable').DataTable({
+		scrollX: "100%",
+		language: {
+			searchPlaceholder: 'Search...',
+			sSearch: '',
+		}
+	});
+    })
+
+</script>
+
+{% endblock %}
+

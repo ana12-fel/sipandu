@@ -1,6 +1,5 @@
 from django.urls import path, include
-from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,kategori_views
-from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,transaksi_view,galeri,kontak_sekolah
+from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,kategori_views,siswa_views,transaksi_view,kontak_sekolah,galeri,guru_views,link_views
 from django.contrib.auth import views as auth_views
 
 
@@ -9,19 +8,22 @@ from django.contrib.auth import views as auth_views
 app_name = 'sipandu_admin'
 urlpatterns = [
     path('', base_views.admin_index, name='admin_index'),
+    
     path('login/', login_view.login_index, name='login_index'),
     path('logout/', login_view.logout_views, name='logout'),
 
     path('index-master-user/', user_view.IndexUser, name='index_user'),
-    path('edit_user/<str:user_id>/', user_view.edit_user, name='edit_user'),
+    path('edit_user_test/<str:user_id>/', user_view.edit_user, name='edit_user_sekolah'),
     path('user/delete/<str:user_id>/', user_view.delete_user, name='delete_user'),
-    path('get-wilayah-by-level/', user_view.get_wilayah_by_level, name='get_wilayah_by_level'),
+    path('get-user-by-level/', user_view.get_user_by_level, name='get_user_by_level'),
+    path('cek_user_email/', user_view.cek_user_email, name='cek_user_email'),
 
 
     path('index-master-wilayah/', wilayah_view.IndexWilayah, name='index_wilayah'),
     path('edit_wilayah/<str:wilayah_id>/', wilayah_view.edit_wilayah, name='edit_wilayah'),
     path('wilayah/<str:wilayah_id>/delete/', wilayah_view.delete_wilayah, name='delete_wilayah'),
     path('get-wilayah-by-level/', wilayah_view.get_wilayah_by_level, name='get_wilayah_by_level'),
+    path('cek_kode_wilayah/', wilayah_view.cek_kode_wilayah, name='cek_kode_wilayah'),
 
     path('index-master-jenjang/', jenjang_view.IndexJenjang, name='index_jenjang'),
     path('edit_jenjang/<str:jenjang_id>/', jenjang_view.edit_jenjang, name='edit_jenjang'),
@@ -61,13 +63,24 @@ urlpatterns = [
     path('delete_kontak/<str:id_data_kontak>/delete', kontak_sekolah.DeleteKontak, name='delete_kontak'),
 
 
-    path('transanksi-situs/', admin_views.TransanksiSitus, name='transanksi_situs'),
     path('index-transaksi/', transaksi_view.IndexTransaksi, name='index_transaksi'),
     path('edit-transaksi/<str:transanksi_id>/', transaksi_view.edit_transaksi, name='edit_transaksi'),
     path('delete-transaksi/<str:transanksi_id>/delete/',  transaksi_view.delete_transaksi, name='delete_transaksi'),
     
     path('laporan-data-sekolah/', admin_views.LaporanDataSekolah, name='laporan_data_sekolah'),
-  
-]
 
+    path('index-siswa/', siswa_views.IndexSiswa, name='index_siswa'),
+    path('edit_siswa/<str:id_data_siswa>/', siswa_views.EditSiswa, name='edit_siswa'),
+    path('delete_siswa/<str:id_data_siswa>/delete', siswa_views.DeleteSiswa, name='delete_siswa'),
+
+    path('index_guru/', guru_views.IndexGuru, name='index_guru'),
+    path('edit-guru/<str:id_data_guru>/', guru_views.EditGuru, name='edit_guru'),
+    path('delete-guru/<str:id_data_guru>/', guru_views.DeleteGuru, name='delete_guru'),
+
+    path('index_link/', link_views.IndexLink, name='index_link'),
+    path('edit_link/<str:id_link>/', link_views.EditLink, name='edit_link'),
+    path('delete_link/<str:id_link>/', link_views.DeleteLink, name='delete_link')
+
+
+]
 

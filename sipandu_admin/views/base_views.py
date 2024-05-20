@@ -8,6 +8,8 @@ from sipandu_app.models import Transanksi_situs
 # @login_required(login_url='sipandu_admin:login_index')
 # @require_http_methods(["GET"])
 
+# @login_required(login_url='sipandu_admin:login_index')
+# @require_http_methods(["GET"])
 def admin_index(request):
    # Mengambil data transaksi situs
    transaksi_situs = Transanksi_situs.objects.all()

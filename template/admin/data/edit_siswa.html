@@ -1,0 +1,49 @@
+
+ <!-- Modal Tambah Data -->
+ 
+ <div class="modal fade" id="editdata_{{dt_siswa.id_data_siswa}}" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addDataModalLabel">Edit Data Siswa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form tambah data di sini -->
+                <form method="post" action="{% url 'sipandu_admin:edit_siswa' dt_siswa.id_data_siswa %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="siswa_sekolah" class="form-label">Sekolah</label>
+                        <select class="form-select" id="siswa_sekolah" name="siswa_sekolah" >
+                            <option value="test" selected disabled>Pilih Sekolah</option>
+                            {% for sekolah in data_sekolah %}
+                            <option value="{{ sekolah.sekolah_id }}" {% if dt_siswa.id_data_siswa == sekolah.sekolah_id %} selected {% endif %}>{{ sekolah.sekolah_nama.upper }}</option>
+                            {% endfor %}
+                        </select>
+                    </div> 
+                    <div class="mb-3">
+                        <label for="nama" class="form-label">Total Siswa</label>
+                        <input type="text" value="{{ dt_siswa.total_siswa}}" class="form-control" id="total_siswa" name="total_siswa" required>
+                    </div>
+                    <div class="mb-3">
+                            <label for="nama" class="form-label">Keterangan</label>
+                            <input type="text" value="{{ dt_siswa.keterangan_siswa }}" class="form-control" id="keterangan_siswa" name="keterangan_siswa" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nama" class="form-label">Icon</label>
+                        <input type="text" value="{{ dt_siswa.icon_siswa }}" class="form-control" id="icon_siswa" name="icon_siswa" required>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Tambah Data End -->
+
+                            

@@ -57,7 +57,7 @@ Master User
                             </div>
                             <div class="mb-3">
                                 <label for="thumbnail" class="form-label">Thumbnail</label>
-                                <input type="file" class="form-control" id="thumbnail" name="tema_thumbnail" accept="image/*" onchange="previewThumbnail(event)">
+                                <input type="file" class="form-control" id="tema_thumbnail" name="tema_thumbnail" accept="image/*" onchange="previewThumbnail(event)">
                             </div>
                             <div id="thumbnail-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> 
                             <button type="submit" class="btn btn-primary">Simpan</button>
@@ -92,11 +92,11 @@ Master User
                                     {% for dt_tema in data_tema %}
                                     
                                     <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>{{ dt_tema.tema_nama }}</td>
-                                        <td>{{ dt_tema.tema_jenjang.jenjang_nama }}</td>
-                                        <td>{{ dt_tema.tema_folder_name }}</td>
-                                        <td><img src="{% if dt_tema.tema_thumbnail %}{{ dt_tema.tema_thumbnail.url }}{% endif %}" alt="{{ dt_tema.tema_nama }}" style="max-width: 100px;"></td>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_tema.tema_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_tema.tema_jenjang.jenjang_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_tema.tema_folder_name }}</td>
+                                        <td class="text-center align-middle"><img src="{% if dt_tema.tema_thumbnail %}{{ dt_tema.tema_thumbnail.url }}{% endif %}" alt="{{ dt_tema.tema_nama }}" style="max-width: 100px;"></td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_tema.tema_id}}">Edit</a> &nbsp;
@@ -167,12 +167,15 @@ Master User
                     url: deleteUrl,
                     type: "DELETE",
                     success: function (response) {
-                        swal("Data berhasil dihapus!", {
-                            icon: "success",
-                        }).then(() => {
-                            window.location.reload(); // Contoh: Refresh halaman
-                        });
-                    },
+                    console.log('berhasil');
+                    swal({
+                        title: "Data berhasil dihapus!",
+                        icon: "success",
+                        buttons: false, 
+                        timer: 1500 
+                    });
+                    window.location.reload(); 
+                },
                     error: function (xhr, status, error) {
                         swal("Terjadi kesalahan saat menghapus data!", {
                             icon: "error",

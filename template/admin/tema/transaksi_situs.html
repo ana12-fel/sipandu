@@ -41,7 +41,7 @@ Transaksi Situs
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="sekolah_jenjang" class="form-label">Sekolah</label>
-                                <select class="form-select" id="sekolah_id" name="sekolah_nama">
+                                <select class="form-select" id="sekolah_id" name="sekolah_nama" required>
                                     <option value="test" selected disabled>Pilih Sekolah</option>
                                     {% for sekolah in data_sekolah %}
                                     <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
@@ -97,11 +97,11 @@ Transaksi Situs
                                 <tbody>
                                     {% for dt_transaksi in data_transaksi %}
                                         <tr>
-                                            <td>{{ forloop.counter }}</td>
-                                            <td>{{ dt_transaksi.sekolah_id.sekolah_nama }}</td>
-                                            <td>{{ dt_transaksi.tema_id.tema_nama }}</td>
-                                            <td>{{ dt_transaksi.domain }}</td>
-                                            <td>
+                                            <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                            <td class="text-center align-middle">{{ dt_transaksi.sekolah_id.sekolah_nama }}</td>
+                                            <td class="text-center align-middle">{{ dt_transaksi.tema_id.tema_nama }}</td>
+                                            <td class="text-center align-middle">{{ dt_transaksi.domain }}</td>
+                                            <td class="text-center align-middle">
                                                 <img src="{% if dt_transaksi.tema_id.tema_thumbnail %}{{ dt_transaksi.tema_id.tema_thumbnail.url }}{% endif %}" alt="{{ dt_transaksi.tema_id.tema_nama }}" style="max-width: 100px;">
                                             </td>
                                             <td class="text-center align-middle">

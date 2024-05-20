@@ -42,7 +42,7 @@ Master Wilayah
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="role">Level</label>
-                                <select name="wilayah_level" id="wilayah_level" class="form-control" onchange="pilih_level(this)">
+                                <select name="wilayah_level" id="wilayah_level" class="form-control" onchange="pilih_level(this)" >
                                     <option value="">- Pilih Level Wilayah -</option>
                                     {% for level_key, level_display in wilayah_level %}
                                         <option value="{{ level_key }}">{{ level_display }}</option>
@@ -51,8 +51,7 @@ Master Wilayah
                             </div>
                             <div class="mb-3 d-none" id="div_prov">
                                 <label for="role">Provinsi</label>
-                                <select name="prov" id="prov" data-level="prov" class="form-control" onchange="render_kab(this) "  >
-                                 
+                                <select name="prov" id="prov" data-level="prov" class="form-control" onchange="render_kab(this)">
                                     <option value="">- Pilih Provinsi -</option>
                                     {% for prov in data_prov %}
                                         <option value="{{ prov.wilayah_id }}">{{ prov.wilayah_nama }}</option>
@@ -63,36 +62,21 @@ Master Wilayah
                                 <label for="role">Kabupaten</label>
                                 <select name="kab" id="kab" data-level="kab" class="form-control" onchange="render_kab(this)">
                                     <option value="">- Pilih Kabupaten -</option>
-                                    {% for level_key, level_display in wilayah_level %}
-                                        <option value="{{ level_key }}">{{ level_display }}</option>
-                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="mb-3 d-none" id="div_kec">
                                 <label for="role">Kecamatan</label>
                                 <select name="kec" id="kec" data-level="kec" class="form-control">
                                     <option value="">- Pilih Kecamatan -</option>
-                                    <!-- {% for level_key, level_display in wilayah_level %}
-                                        <option value="{{ level_key }}">{{ level_display }}</option>
-                                    {% endfor %} -->
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="kode" class="form-label">Kode</label>
-                                <input type="text" class="form-control" name="wilayah_kode" placeholder="Masukkan Status kode" required>
-                            </div>
-                            <div class="mb-3 d-none">
-                                <label for="wilayah" class="form-label">Wilayah</label>
-                                <select name="level" id="wilayah_nama" class="form-control">
-                                    {% for level, level_display in level_wilayah %}
-                                        <option value="{{ level }}">{{ level_display }}</option>
-                                    {% endfor %}
-                                    <!-- Options will be populated dynamically -->
-                                </select>
+                                <input type="text" class="form-control" name="wilayah_kode" placeholder="Masukkan Status kode">
                             </div>
                             <div class="mb-3">
                                 <label for="wilayah_nama" class="form-label">Nama Wilayah</label>
-                                <input type="text" class="form-control" id="wilayah_nama" name="wilayah_nama" placeholder="Masukkan Nama Wilayah" required>
+                                <input type="text" class="form-control" id="wilayah_nama" name="wilayah_nama" placeholder="Masukkan Nama Wilayah" >
                             </div>
                                 <!-- Input wilayah_status secara default -->
                             <div class="mb-3">
@@ -124,6 +108,7 @@ Master Wilayah
                             <table class="table table-bordered text-nowrap border-bottom w-100" id="wilayahResponsiveDatatable">
                                 <thead>
                                     <tr>
+                                        <th class="text-center border-bottom-0">NO</th>
                                         <th class="text-center">KODE</th>
                                         <th class="text-center">WILAYAH</th>
                                         <th class="text-center">PARENT</th>
@@ -136,6 +121,7 @@ Master Wilayah
                                     {% for dt_wilayah in data_wilayah %}
                                         <!-- Iterasi melalui setiap objek dt_wilayah -->
                                         <tr>
+                                            <td class="text-center align-middle">{{ forloop.counter }}</td>
                                             <td class="text-center align-middle">{{ dt_wilayah.wilayah_kode }}</td>
                                             <td class="text-center align-middle">{{ dt_wilayah.wilayah_nama }}</td>
                                             <td class="text-center align-middle">{{ dt_wilayah.wilayah_parent.wilayah_nama }}</td>
@@ -167,6 +153,37 @@ Master Wilayah
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
 <script>
+
+
+    $('#addWilayahForm').on('submit', function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var kode = form.find('input[name="wilayah_kode"]').val();
+
+        $.ajax({
+            url: "{% url 'sipandu_admin:cek_kode_wilayah' %}",
+            type: "GET",
+            data: {
+                'kode': kode
+            },
+            success: function(response) {
+                if (response.is_unique) {
+                    form.off('submit').submit();  // Lanjutkan submit form jika kode unik
+                } else {
+                    swal({
+                        title: "Kode sudah ada!",
+                        text: "Kode wilayah yang Anda masukkan sudah digunakan.",
+                        icon: "warning",
+                        button: "OK",
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+
      function deleteWilayah(wilayah_) {
         var deleteUrl = "{% url 'sipandu_admin:delete_wilayah' 'wilayah_id' %}".replace("wilayah_id", wilayah_);
 
@@ -248,7 +265,7 @@ Master Wilayah
             url: "{% url 'sipandu_admin:get_wilayah_by_level' %}",
             type: "GET",
             data: {
-                'level': $('#wilayah_level').val(),
+                'level': level_wilayah,
                 'wilayah_id': $(e).val()
             },
             success: function(response) {

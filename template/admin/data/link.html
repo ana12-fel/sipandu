@@ -1,5 +1,6 @@
 {% extends 'admin/base/base_index.html' %}
 {% load static %}
+
 {% block title %}
 Master User
 {% endblock %}
@@ -20,53 +21,88 @@ Master User
             </div>
             
             <div class="ms-auto pageheader-btn">
-                <a href="{% url 'sipandu_admin:tambah_link'%}" class="btn btn-primary btn-icon text-white me-2" >
-                    <span>
-                        <i class="fe fe-plus"></i>
-                    </span> Tambahkan link
-                </a>
+                <!-- Tombol untuk membuka modal tambah data -->
+                <button type="button" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#tambahModal">
+                    <span><i class="fe fe-plus"></i></span> Tambahkan
+                </button>
             </div>
         </div>
         
         <!-- PAGE-HEADER END -->
+
+        <!-- Modal untuk tambah data -->
+        <div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form untuk tambah data -->
+                        <form method="POST" action="{% url 'sipandu_admin:index_link' %}" >
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="link_sekolah" class="form-label">Sekolah</label>
+                                <select class="form-select" id="link_sekolah" name="link_sekolah">
+                                    <option value="test" selected disabled>Pilih Sekolah</option>
+                                    {% for sekolah in data_sekolah %}
+                                    <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div> 
+                            <div class="mb-3">
+                                <label for="judul_link" class="form-label">Judul</label>
+                                <input type="text" class="form-control" id="judul_link" name="judul_link" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nama_link" class="form-label">Link</label>
+                                <input type="text" class="form-control" id="nama_link" name="nama_link" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal end -->
 
         <!-- ROW-1 OPEN -->
         <div class="row">
             <div class="col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data Posting Link</h3>
+                        <h3 class="card-title">Data Link</h3>
                     </div>
                     <div class="card-body">
                         <div class="example">
-                            <table class="table border-top table-bordered mb-0">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="datakontenResponsiveDatatable">
                                 <thead>
                                     <tr>
-                                        <th class="text-center border-bottom-0">No</th>
-                                        <th class="text-center border-bottom-0">Tanggal</th>
-                                        <th class="text-center border-bottom-0">Nama Sekolah</th>
-                                        <th class="text-center border-bottom-0">Judul</th>
-                                        <th class="text-center border-bottom-0">Link</th>
-
+                                        <th class="text-center border-bottom-0">NO</th>
+                                        <th class="text-center border-bottom-0">TANGGAL</th>
+                                        <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
+                                        <th class="text-center border-bottom-0">JUDUL</th>
+                                        <th class="text-center border-bottom-0">LINK</th>
+                                        <th class="text-center border-bottom-0">AKSI</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for dt_link in data_link %}
                                     <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>{{ dt_link.created_at }}</td>
-                                        <td>{{ dt_link.judul }}</td>
-
-                                        <td class="text-nowrap align-middle">{{ dt_sekolah.sekolah_nama }}</td>
-
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_link.created_at }}</td>
+                                        <td class="text-center align-middle">{{ dt_link.link_sekolah.sekolah_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_link.judul_link }}</td>
+                                        <td class="text-center align-middle">{{ dt_link.nama_link }}</td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
-                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_link.id_data_link}}">Edit</a> &nbsp;
-                                                <button onclick="deletegaleri('{{ dt_link.id_data_link }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_link.id_link}}">Edit</a> &nbsp;
+                                                <button onclick="deleteLink('{{ dt_link.id_link }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
                                             </div>
                                         </td> 
-                                        <!-- <td><button type="button" class="btn btn-success"><i class="fa fa-check"></i> Aktif</button></td> --> 
                                     </tr>
+                                    {% include 'admin/data/edit_link.html' %}
                                     {% endfor %}
                                 </tbody>
                             </table>
@@ -81,8 +117,8 @@ Master User
 {% block js %}
 
 <script>
-    function deletelink(link_) {
-    var deleteUrl = "{% url 'sipandu_admin:delete_link' 'id_data_link' %}".replace("id_data_link", link_);
+    function deleteLink(link_) {
+    var deleteUrl = "{% url 'sipandu_admin:delete_link' 'id_link' %}".replace("id_link", link_);
 
     swal({
         title: "Apakah Anda yakin?",
@@ -98,9 +134,8 @@ Master User
     function (isConfirm) {
         if (isConfirm) {
             $.ajax({
-                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
                 url: deleteUrl,
-                type: "DELETE",
+                type: "GET",
                 success: function (response) {
                     console.log('berhasil');
                     swal({
@@ -124,8 +159,16 @@ Master User
         }
     });
 }
+    $(function(){
+        $('#datakontenResponsiveDatatable').DataTable({
+		scrollX: "100%",
+		language: {
+			searchPlaceholder: 'Search...',
+			sSearch: '',
+		}
+	});
+    })
 
 </script>
-
 
 {% endblock %}

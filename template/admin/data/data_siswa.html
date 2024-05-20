@@ -1,0 +1,181 @@
+{% extends 'admin/base/base_index.html' %}
+{% load static %}
+{% block title %}
+Master User
+{% endblock %}
+
+{% block content %}
+<!--app-content open-->
+<div class="app-content">
+    <div class="side-app">
+        <!-- PAGE-HEADER -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Data Siswa</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data Siswa</li>
+                </ol>
+            </div>
+            <div class="ms-auto pageheader-btn">
+                <!-- Tombol untuk membuka modal tambah data -->
+                <button type="button" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#tambahModal">
+                    <span><i class="fe fe-plus"></i></span> Tambahkan
+                </button>
+            </div>
+        </div>
+        <!-- PAGE-HEADER END -->
+
+        <!-- Modal untuk tambah data -->
+        <div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Data Siswa</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form untuk tambah data -->
+                        <form method="POST" action="{% url 'sipandu_admin:index_siswa' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            <div class="mb-3">
+                                <label for="siswa_sekolah" class="form-label">Sekolah</label>
+                                <select class="form-select" id="siswa_sekolah" name="siswa_sekolah">
+                                    <option value="" selected disabled>Pilih Sekolah</option>
+                                    {% for sekolah in data_sekolah %}
+                                    <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>      
+                            <div class="mb-3">
+                                <label for="total_siswa" class="form-label">Total Siswa</label>
+                                <input type="text" class="form-control" id="total_siswa" name="total_siswa" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="keterangan_siswa" class="form-label">Keterangan</label>
+                                <input type="text" class="form-control" id="keterangan_siswa" name="keterangan_siswa" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Icon</label>
+                                <input type="text" class="form-control" id="nama" name="icon_siswa" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal end -->
+
+        <!-- ROW-1 OPEN -->
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">DATA SISWA</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="siswaResponsiveDatatable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center border-bottom-0">NO</th>
+                                        <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
+                                        <th class="text-center border-bottom-0">TOTAL SISWA</th>
+                                        <th class="text-center border-bottom-0">KETERANGAN</th>
+                                        <th class="text-center border-bottom-0">ICON</th>
+                                        <th class="text-center border-bottom-0">AKSI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for dt_siswa in data_siswa %}
+                                    
+                                    <tr>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_siswa.siswa_sekolah.sekolah_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_siswa.total_siswa }}</td>
+                                        <td class="text-center align-middle">{{ dt_siswa.keterangan_siswa }}</td>
+                                        <td class="text-center align-middle"><span class="{{ dt_siswa.icon_siswa}}"></span></td>
+                                        <td class="text-center align-middle">
+                                            <div class="btn-group align-top">
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_siswa.id_data_siswa}}">Edit</a> &nbsp;
+                                                <button onclick="deleteSiswa('{{ dt_siswa.id_data_siswa }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                            </div>
+                                        </td> 
+                                    </tr>
+                                    {% include 'admin/data/edit_siswa.html' %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ROW-1 END -->
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+
+<script>
+
+    function deleteSiswa(siswa_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_siswa' 'id_data_siswa' %}".replace("id_data_siswa",siswa_);
+
+        swal({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                $.ajax({
+                    headers : { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "DELETE",
+                    success: function (response) {
+                        console.log('berhasil');
+                    swal({
+                        title: "Data berhasil dihapus!",
+                        icon: "success",
+                        buttons: false, // Tidak menampilkan tombol OK
+                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                    });
+                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                },
+                error: function (xhr, status, error) {
+                    // Terjadi kesalahan saat menghapus data
+                    swal("Terjadi kesalahan saat menghapus data!", {
+                        icon: "error",
+                    });
+                }
+                });
+            } else {
+                swal("Tindakan dibatalkan", "", "info");
+            }
+        });
+    }
+
+    $(function(){
+        $('#siswaResponsiveDatatable').DataTable({
+		scrollX: "100%",
+		language: {
+			searchPlaceholder: 'Search...',
+			sSearch: '',
+		}
+	});
+    })
+
+</script>
+
+{% endblock %}
+
