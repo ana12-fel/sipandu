@@ -16,3 +16,5 @@ def detail_fasilitas_smp(request):
    return render(request, f'{JENJANG}/{TEMPLATE_NAME}/profile/detail_fasilitas_smp.html', )
 def datagtk(request):
    return render(request, f'{JENJANG}/{TEMPLATE_NAME}/profile/datagtk.html', )
+def detail_guru(request):
+   return render(request, f'{JENJANG}/{TEMPLATE_NAME}/profile/detail_guru.html', )

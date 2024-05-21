@@ -82,7 +82,8 @@ urlpatterns = [
     path('delete_link/<str:id_link>/', link_views.DeleteLink, name='delete_link'),
 
     path('index_profile/', profile.IndexProfile, name='index_profile'),
-
+    path('profile/edit/', profile.edit_profile, name='edit_profile'),
+    
 
 ]
 

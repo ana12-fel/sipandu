@@ -52,11 +52,11 @@ Master User
                                 <tbody>
                                     {% for dt_kontak in data_kontak %}
                                     <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>{{ dt_kontak.created_at }}</td>
-                                        <td>{{ dt_kontak.kontak_sekolah.sekolah_nama }}</td>
-                                        <td>{{dt_kontak.no_hp}}</td>
-                                        <td>{{dt_kontak.email}}</td>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_kontak.created_at }}</td>
+                                        <td class="text-center align-middle">{{ dt_kontak.kontak_sekolah.sekolah_nama }}</td>
+                                        <td class="text-center align-middle">{{dt_kontak.no_hp}}</td>
+                                        <td class="text-center align-middle">{{dt_kontak.email}}</td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <a href="{% url 'sipandu_admin:edit_kontak' dt_kontak.id_data_kontak %}" class="btn btn-sm btn-primary badge">Edit</a>

@@ -13,12 +13,12 @@
                     <div class="mb-3">
                         <label for="guru_sekolah" class="form-label">Sekolah</label>
                         <select class="form-select" id="guru_sekolah" name="guru_sekolah">
-                            <option value="" selected disabled>Pilih Sekolah</option>
+                            <option value="test" selected disabled>Pilih Sekolah</option>
                             {% for sekolah in data_sekolah %}
-                            <option value="{{sekolah.sekolah_id}}" {% if dt_guru.guru_sekolah_id == sekolah.sekolah_id %} {% endif %}>{{sekolah.sekolah_nama.upper}}</option>
+                            <option value="{{ sekolah.sekolah_id }}" {% if dt_guru.guru_sekolah_id == sekolah.sekolah_id %} selected {% endif %}>{{ sekolah.sekolah_nama.upper }}</option>
                             {% endfor %}
                         </select>
-                    </div>   
+                    </div> 
                     <div class="mb-3">
                         <label for="nama" class="form-label">Nama Guru</label>
                         <input type="text" value="{{dt_guru.nama_guru}}" class="form-control" id="nama" name="nama_guru" required>
@@ -43,16 +43,24 @@
                             <option value="kepala_sekolah">Kepala Sekolah</option>
                         </select>
                     </div>
-                    <div id="tahunForm" style="display: none;">
+                    <div id="tahun_guru" style="display: none;">
                         <div class="mb-3">
                             <label for="tahun_guru" class="form-label">Tahun Jabatan Kepala Sekolah</label>
-                            <input type="text" value="{{dt_guru.tahun_guru}}" class="form-control" id="tahun_guru" name="tahun_guru">
+                            <input type="text" class="form-control" id="tahun_guru" name="tahun_guru">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="thumbnail" class="form-label">Foto</label>
-                        <input type="file" class="form-control" id="guru_image" name="guru_image" accept="image/*">
+                        <input type="file" class="form-control" id="guru_image" name="guru_image" accept="image/*" onchange="previewImage(event)">
                     </div>
+                    <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;">
+                        {% if dt_guru.guru_image %}
+                            <img id="image-preview-img" src="{{ dt_guru.guru_image.url }}" alt="Gambar Konten" style="max-width: 100%;">
+                        {% else %}
+                            <img id="image-preview-img" src="#" alt="Pratinjau Gambar" style="display: none; max-width: 100%;">
+                        {% endif %}
+                    </div>
+                
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -74,4 +82,17 @@
             tahun_guru.style.display = "none";
         }
     }
+    function previewImage(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function(){
+            var dataURL = reader.result;
+            var previewImg = document.getElementById('image-preview-img');
+            previewImg.src = dataURL;
+            previewImg.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+
 </script>
+

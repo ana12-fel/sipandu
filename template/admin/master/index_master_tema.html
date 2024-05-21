@@ -31,7 +31,7 @@ Master User
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Data Tema</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -68,54 +68,36 @@ Master User
         </div>
         <!-- Modal end -->
 
-        <!-- ROW-1 OPEN -->
+        <!-- Container untuk menampilkan card -->
         <div class="row">
-            <div class="col-md-12 col-lg-12">
+            {% for dt_tema in data_tema %}
+            <div class="col-md-4">
                 <div class="card">
+                    <img src="{% if dt_tema.tema_thumbnail %}{{ dt_tema.tema_thumbnail.url }}{% endif %}" class="card-img-top br-tr-7 br-tl-7" alt="{{ dt_tema.tema_nama }}">
                     <div class="card-header">
-                        <h3 class="card-title">DATA TEMA</h3>
+                        <h5 class="card-title">{{ dt_tema.tema_nama }}</h5>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap border-bottom w-100" id="temaResponsiveDatatable">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center border-bottom-0">NO</th>
-                                        <th class="text-center border-bottom-0">NAMA TEMA</th>
-                                        <th class="text-center border-bottom-0">JENJANG</th>
-                                        <th class="text-center border-bottom-0">NAMA FOLDER</th>
-                                        <th class="text-center border-bottom-0">THUMBNAIL</th>
-                                        <th class="text-center border-bottom-0">AKSI</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for dt_tema in data_tema %}
-                                    
-                                    <tr>
-                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
-                                        <td class="text-center align-middle">{{ dt_tema.tema_nama }}</td>
-                                        <td class="text-center align-middle">{{ dt_tema.tema_jenjang.jenjang_nama }}</td>
-                                        <td class="text-center align-middle">{{ dt_tema.tema_folder_name }}</td>
-                                        <td class="text-center align-middle"><img src="{% if dt_tema.tema_thumbnail %}{{ dt_tema.tema_thumbnail.url }}{% endif %}" alt="{{ dt_tema.tema_nama }}" style="max-width: 100px;"></td>
-                                        <td class="text-center align-middle">
-                                            <div class="btn-group align-top">
-                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_tema.tema_id}}">Edit</a> &nbsp;
-                                                <button onclick="deleteTema('{{ dt_tema.tema_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
-                                            </div>
-                                        </td> 
-                                    </tr>
-                                    {% include 'admin/master/edit_tema.html' %}
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                        <p class="card-text">Jenjang : {{ dt_tema.tema_jenjang.jenjang_nama }}</p>
+                        <p class="card-text">Nama Folder : {{ dt_tema.tema_folder_name }}</p>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editdata_{{ dt_tema.tema_id }}">
+                            Edit
+                        </button>
+                        <!-- Button trigger delete confirmation -->
+                        <button type="button" class="btn btn-danger" onclick="deleteTema('{{ dt_tema.tema_id }}')">
+                            Delete
+                        </button>
                     </div>
                 </div>
             </div>
+            {% include 'admin/master/edit_tema.html' %}
+            {% endfor %}
         </div>
-        <!-- ROW-1 END -->
+        <!-- Container untuk menampilkan card end -->
     </div>
 </div>
+
 {% endblock %}
 
 {% block js %}

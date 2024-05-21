@@ -14,10 +14,10 @@
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="siswa_sekolah" class="form-label">Sekolah</label>
-                        <select class="form-select" id="siswa_sekolah" name="siswa_sekolah" >
+                        <select class="form-select" id="siswa_sekolah" name="siswa_sekolah">
                             <option value="test" selected disabled>Pilih Sekolah</option>
                             {% for sekolah in data_sekolah %}
-                            <option value="{{ sekolah.sekolah_id }}" {% if dt_siswa.id_data_siswa == sekolah.sekolah_id %} selected {% endif %}>{{ sekolah.sekolah_nama.upper }}</option>
+                            <option value="{{ sekolah.sekolah_id }}" {% if dt_siswa.siswa_sekolah_id == sekolah.sekolah_id %} selected {% endif %}>{{ sekolah.sekolah_nama.upper }}</option>
                             {% endfor %}
                         </select>
                     </div> 

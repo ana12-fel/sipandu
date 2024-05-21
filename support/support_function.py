@@ -3,9 +3,10 @@ def global_var():
          #'jenjang': 'smp',
          #'template_name': 'smp_01'
 
-        #  'jenjang': 'sd',
-        #  'template_name': 'sd_01'
+        #'jenjang': 'sd',
+        #'template_name': 'sd_01'
 
+        
         'jenjang': 'sma',
         'template_name': 'sma_01'
     }
