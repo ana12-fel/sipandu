@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,kategori_views,siswa_views,transaksi_view,kontak_sekolah,galeri,guru_views,link_views
+from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,kategori_views,siswa_views,transaksi_view,kontak_sekolah,galeri,guru_views,link_views,profile
 from django.contrib.auth import views as auth_views
 
 
@@ -79,7 +79,9 @@ urlpatterns = [
 
     path('index_link/', link_views.IndexLink, name='index_link'),
     path('edit_link/<str:id_link>/', link_views.EditLink, name='edit_link'),
-    path('delete_link/<str:id_link>/', link_views.DeleteLink, name='delete_link')
+    path('delete_link/<str:id_link>/', link_views.DeleteLink, name='delete_link'),
+
+    path('index_profile/', profile.IndexProfile, name='index_profile'),
 
 
 ]

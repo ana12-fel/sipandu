@@ -4,14 +4,34 @@
         <div class="d-flex">
             <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="#"></a><!-- sidebar-toggle-->
             <a class="header-brand1 d-flex d-md-none" href="index.html">
-                <img src="{% static 'admin/images/brand/logo.png' %}" class="header-brand-img desktop-logo" alt="logo">
-                <img src="{% static 'admin/images/brand/logo-1.png' %}" class="header-brand-img toggle-logo" alt="logo">
-                <img src="{% static 'admin/images/brand/logo-2.png' %}" class="header-brand-img light-logo" alt="logo">
-                <img src="{% static 'admin/images/brand/logo-3.png' %}" class="header-brand-img light-logo1" alt="logo">
+                <img src="{% static 'admin/images/brand/logo-papua.png' %}" class="header-brand-img desktop-logo" alt="logo">
+                <img src="{% static 'admin/images/brand/logo-papua.png' %}" class="header-brand-img toggle-logo" alt="logo">
+                <img src="{% static 'admin/images/brand/logo-papua.png' %}" class="header-brand-img light-logo" alt="logo">
+                <img src="{% static 'admin/images/brand/logo-papua.png' %}" class="header-brand-img light-logo1" alt="logo">
             </a><!-- LOGO -->
+
             <!-- <div class="main-header-center ms-3 d-none d-md-block">
-                <input class="form-control" placeholder="Search for anything..." type="search"> <button class="btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                <input class="form-control" placeholder="Search for anything..." type="search">
+                <button class="btn"><i class="fa fa-search" aria-hidden="true"></i></button>
             </div> -->
+
+            <div class="dropdown d-md-flex">
+                <a class="nav-link icon theme-layout nav-link-bg layout-setting">
+                    <span class="dark-layout" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Dark Theme">
+                        <i class="fe fe-moon"></i>
+                    </span>
+                    <span class="light-layout" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Light Theme">
+                        <i class="fe fe-sun"></i>
+                    </span>
+                </a>
+            </div>
+
+            <div class="dropdown d-md-flex">
+                <a class="nav-link icon full-screen-link nav-link-bg">
+                    <i class="fe fe-minimize fullscreen-button"></i>
+                </a>
+            </div>
+
             <div class="d-flex order-lg-2 ms-auto header-right-icons">
                 <div class="dropdown d-lg-none d-md-block d-none">
                     <a href="#" class="nav-link icon" data-bs-toggle="dropdown">
@@ -25,91 +45,149 @@
                             </div>
                         </div>
                     </div>
-                
-                       
-                </div><!-- MESSAGE-BOX -->
-                <div class="dropdown d-none d-md-flex profile-1">
-                    <a href="#" data-bs-toggle="dropdown" class="nav-link pe-2 leading-none d-flex">
-                        <span>
-                            <img src="{% static 'admin/images/users/8.jpg' %}" alt="profile-user" class="avatar  profile-user brround cover-image">
-                        </span>
+                </div><!-- PROFILE -->
+
+                <div class="dropdown d-md-flex header-settings">
+                    <a href="#" class="nav-link icon" data-bs-toggle="sidebar-right" data-target=".sidebar-right">
+                        <i class="fe fe-menu"></i>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <div class="drop-heading">
-                            <div class="text-center">
-                                <h5 class="text-dark mb-0">Elizabeth Dyer</h5>
-                                <small class="text-muted">Administrator</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="sidebar sidebar-right sidebar-animate">
+    <div class="panel panel-primary card mb-0 shadow-none border-0">
+        <div class="tab-menu-heading border-0 d-flex p-3">
+            <div class="card-title mb-0">Notifications</div>
+            <div class="card-options ms-auto">
+                <a href="#" class="sidebar-icon text-end float-end me-1" data-bs-toggle="sidebar-right" data-target=".sidebar-right">
+                    <i class="fe fe-x text-white"></i>
+                </a>
+            </div>
+        </div>
+        
+            <div class="tab-content">
+                <div class="tab-pane active" id="side1">
+                    <div class="card-body text-center">
+                        <div class="dropdown user-pro-body">
+                            <div class="">
+                                <img alt="user-img" class="avatar avatar-xl brround mx-auto text-center" src="../../assets/images/faces/6.jpg">
+                                <span class="avatar-status profile-status bg-green"></span>
+                            </div>
+                            <div class="user-info mg-t-20">
+                                <h6 class="fw-semibold mt-2 mb-0">Mintrona Pechon</h6>
+                                <span class="mb-0 text-muted fs-12">Premium Member</span>
                             </div>
                         </div>
-                        <div class="dropdown-divider m-0"></div>
-                        <a class="dropdown-item" href="profile.html">
-                            <i class="dropdown-icon fe fe-user"></i> Profile
-                        </a>
-                        <a class="dropdown-item" href="{% url 'sipandu_admin:logout' %}">
-                            <i class="dropdown-icon fe fe-alert-circle"></i> Sign out
-                        </a>
+                    </div>
+                    <a class="dropdown-item d-flex border-bottom border-top" href="{% url 'sipandu_admin:index_profile'%}">
+                        <div class="d-flex">
+                            <i class="fe fe-user me-3 tx-20 text-muted"></i>
+                            <div class="pt-1">
+                                <h6 class="mb-0">My Profile</h6>
+                                <p class="tx-12 mb-0 text-muted">Profile Personal information</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="dropdown-item d-flex border-bottom" href="editprofile.html">
+                        <div class="d-flex">
+                            <i class="fe fe-settings me-3 tx-20 text-muted"></i>
+                            <div class="pt-1">
+                                <h6 class="mb-0">Account Settings</h6>
+                                <p class="tx-12 mb-0 text-muted">Settings Information</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="dropdown-item d-flex border-bottom" href="{% url 'sipandu_admin:logout' %}">
+                        <div class="d-flex">
+                            <i class="fe fe-power me-3 tx-20 text-muted"></i>
+                            <div class="pt-1">
+                                <h6 class="mb-0">Sign Out</h6>
+                                <p class="tx-12 mb-0 text-muted">Account Signout</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="tab-pane" id="side2">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex align-items-center">
+                            <div class="me-2">
+                                <span class="avatar avatar-md brround cover-image" data-bs-image-src="../../assets/images/faces/9.jpg">
+                                    <span class="avatar-status bg-success"></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- SIDE-MENU -->
+                <div class="tab-pane" id="side3">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex align-items-center">
+                            <div class="me-2">
+                                <span class="avatar avatar-md brround cover-image" data-bs-image-src="../../assets/images/faces/9.jpg">
+                                    <span class="avatar-status bg-success"></span>
+                                </span>
+                            </div>
+                            <div class="">
+                                <h6 class="mb-1">Airi Satou</h6>
+                                <p class="mb-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="side4">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex align-items-center">
+                            <div class="me-2">
+                                <span class="avatar avatar-md brround cover-image" data-bs-image-src="../../assets/images/faces/2.jpg">
+                                    <span class="avatar-status bg-success"></span>
+                                </span>
+                            </div>
+                            <div class="">
+                                <h6 class="mb-1">Airi Satou</h6>
+                                <p class="mb-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="side5">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex align-items-center">
+                            <div class="me-2">
+                                <span class="avatar avatar-md brround cover-image" data-bs-image-src="../../assets/images/faces/4.jpg">
+                                    <span class="avatar-status bg-success"></span>
+                                </span>
+                            </div>
+                            <div class="">
+                                <h6 class="mb-1">Airi Satou</h6>
+                                <p class="mb-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<div class="mb-1 navbar navbar-expand-lg  responsive-navbar navbar-dark d-md-none bg-white">
-    <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
-        <div class="d-flex order-lg-2 ms-auto">
-            <div class="dropdown d-sm-flex">
-                <a href="#" class="nav-link icon" data-bs-toggle="dropdown">
-                    <i class="fe fe-search"></i>
-                </a>
-                <div class="dropdown-menu header-search dropdown-menu-start">
-                    <div class="input-group w-100 p-2">
-                        <input type="text" class="form-control" placeholder="Search....">
-                        <div class="input-group-text btn btn-primary">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- SEARCH -->
-            <div class="dropdown d-md-flex">
-                <a class="nav-link icon theme-layout nav-link-bg layout-setting">
-                    <span class="dark-layout" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Dark Theme"><i class="fe fe-moon"></i></span>
-                    <span class="light-layout" data-bs-placement="bottom" data-bs-toggle="tooltip" title="Light Theme"><i class="fe fe-sun"></i></span>
-                </a>
-            </div><!-- Theme-Layout -->
-            <div class="dropdown d-md-flex">
-                <a class="nav-link icon full-screen-link nav-link-bg">
-                    <i class="fe fe-minimize fullscreen-button"></i>
-                </a>
-            </div><!-- FULL-SCREEN -->
-            <div class="dropdown d-md-flex profile-1">
-                <a href="#" data-bs-toggle="dropdown" class="nav-link pe-2 leading-none d-flex">
-                    <span>
-                        <img src="{% static 'admin/images/users/8.jpg' %}" alt="profile-user" class="avatar  profile-user brround cover-image">
-                    </span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <div class="drop-heading">
-                        <div class="text-center">
-                            <h5 class="text-dark mb-0">Elizabeth Dyer</h5>
-                            <small class="text-muted">Administrator</small>
-                        </div>
-                    </div>
-<<<<<<< HEAD
-                    <div class="dropdown-divider m-0"></div>
-                    <a class="dropdown-item" href="#">
-                        <i class="dropdown-icon fe fe-user"></i> Profile
-                    </a>
-=======
->>>>>>> 337edb9070b07e553afcaf264cd5cf2c7e4cb956
-                    <a class="dropdown-item" href="login.html">
-                        <i class="dropdown-icon fe fe-alert-circle"></i> Sign out
-                    </a>
-                </div>
-            </div>
-            <div class="dropdown d-md-flex header-settings">
-                
-            </div><!-- SIDE-MENU -->
-        </div>
-    </div>
-</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Toggle dark mode
+        document.querySelector('.theme-layout').addEventListener('click', function() {
+            document.body.classList.toggle('mode-gelap');
+            document.querySelectorAll('table').forEach(function(table) {
+                table.classList.toggle('mode-gelap');
+            });
+        });
+
+        // Toggle fullscreen mode
+        document.querySelector('.full-screen-link').addEventListener('click', function() {
+            document.querySelectorAll('table').forEach(function(table) {
+                table.classList.toggle('fullscreen-table');
+            });
+            document.querySelector('.fullscreen-button').classList.toggle('fe-maximize');
+            document.querySelector('.fullscreen-button').classList.toggle('fe-minimize');
+        });
+    });
+</script>

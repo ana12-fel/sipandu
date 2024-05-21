@@ -24,6 +24,12 @@ ROLE_CHOICE =[
     ('admin_sekolah', 'Admin Sekolah')
 ]
 
+STATUS_KEPEGAWAIAN= [
+    ('guru','Guru'),
+    ('kepala_sekolah','Kepala Sekolah')
+]
+
+
 JENIS_SEKOLAH =(('negeri','Negeri'),('swasta','Swasta'))
 STATUS_KEPEMILIKAN_SEKOLAH = (('pemda','Pemerintah Daerah'),('pribadi','Pribadi'),('yayasan','Yayasan'))
 AKREDITASI_SEKOLAH = (('belum','Belum Terakreditasi'),('a','A'),('b','B'),('c','C'))
@@ -253,7 +259,6 @@ class Data_siswa(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-<<<<<<< HEAD
 class Data_guru(models.Model):
     id_data_guru = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     guru_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
@@ -265,8 +270,8 @@ class Data_guru(models.Model):
     tahun_guru = models.CharField(max_length=10, null=True)
     status_kepegawaian = models.TextField(choices=STATUS_KEPEGAWAIAN)
 
-=======
->>>>>>> 337edb9070b07e553afcaf264cd5cf2c7e4cb956
+
+
     
     
 
