@@ -56,16 +56,15 @@ Master User
         <input type="text" value="{{ dt_konten.judul }}" class="form-control" name="judul" required>
     </div>
     <div class="mb-3">
-        <label>Status</label>
+        <label for="status">Status</label>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="status" id="statusAktif" value="True" {% if dt_konten.konten_status == "True" %} checked {% endif %}>
+            <input class="form-check-input" type="radio" name="status" id="statusAktif" value="True" {% if dt_konten.status %}checked{% endif %}>
             <label class="form-check-label" for="statusAktif">Aktif</label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="status" id="statusTidakAktif" value="False" {% if dt_konten.konten_status == "False" %} checked {% endif %}>
+            <input class="form-check-input" type="radio" name="status" id="statusTidakAktif" value="False" {% if not dt_konten.status %}checked{% endif %}>
             <label class="form-check-label" for="statusTidakAktif">Tidak Aktif</label>
         </div>
-    </div>
     </div>
 
     <div class="mb-3">
@@ -74,11 +73,18 @@ Master User
     </div>
 
     <div class="mb-3">
-        <label for="image" class="form-label">Image</label>
-        <input type="file" value="{{ dt_konten.konten_image }}" class="form-control" id="image" name="konten_image" accept="image/*" onchange="previewImage(event)">
+        <label for="konten_image" class="form-label">Image</label>
+        <input type="file" class="form-control" id="konten_image" name="konten_image" accept="image/*" onchange="previewImage(event)">
     </div>
-    <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> 
     
+    <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;">
+        {% if dt_konten.konten_image %}
+            <img id="image-preview-img" src="{{ dt_konten.konten_image.url }}" alt="Gambar Konten" style="max-width: 100%;">
+        {% else %}
+            <img id="image-preview-img" src="#" alt="Pratinjau Gambar" style="display: none; max-width: 100%;">
+        {% endif %}
+    </div>
+
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -123,27 +129,14 @@ Master User
         
     function previewImage(event) {
         var input = event.target;
-        var preview = document.getElementById('image-preview');
-        
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function(e) {
-                // Menghapus preview thumbnail sebelumnya jika ada
-                while (preview.firstChild) {
-                    preview.removeChild(preview.firstChild);
-                }
-
-                // Menambahkan elemen img untuk menampilkan preview thumbnail
-                var img = document.createElement('img');
-                img.src = e.target.result;
-                img.style.maxWidth = '300px';
-                img.alt = ' Preview';
-                preview.appendChild(img);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
+        var reader = new FileReader();
+        reader.onload = function(){
+            var dataURL = reader.result;
+            var previewImg = document.getElementById('image-preview-img');
+            previewImg.src = dataURL;
+            previewImg.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
     }
 
 </script>

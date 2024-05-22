@@ -8,7 +8,7 @@ def global_var():
 
         
         'jenjang': 'sma',
-        'template_name': 'sma_01'
+    'template_name': 'sma_01'
     }
     return data
 
