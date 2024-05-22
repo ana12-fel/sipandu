@@ -13,8 +13,9 @@ Master User
             <div>
                 <h1 class="page-title">DATA KONTAK</h1>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">data kontak</li>
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:admin_index' %}">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="#">Data</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data Kontak</li>
                 </ol>
             </div>
             
@@ -34,7 +35,7 @@ Master User
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header border-bottom-0 p-4">
-                        <h3 class="card-title">Data Posting Kontak</h3>
+                        <h3 class="card-title">Data Kontak</h3>
                     </div>
                     <div class="e-table px-5 pb-5">
                         <div class="table-responsive">
@@ -46,6 +47,7 @@ Master User
                                         <th class="text-center border-bottom-0">Nama Sekolah</th>
                                         <th class="text-center border-bottom-0">No Hp</th>
                                         <th class="text-center border-bottom-0">E-mail</th>
+                                        <th class="text-center border-bottom-0">Foto</th>
                                         <th class="text-center border-bottom-0">Aksi</th>
                                     </tr>
                                 </thead>
@@ -57,11 +59,18 @@ Master User
                                         <td class="text-center align-middle">{{ dt_kontak.kontak_sekolah.sekolah_nama }}</td>
                                         <td class="text-center align-middle">{{dt_kontak.no_hp}}</td>
                                         <td class="text-center align-middle">{{dt_kontak.email}}</td>
+                                        <td class="text-center align-middle"><img src="{% if dt_kontak.gambar %}{{ dt_kontak.gambar.url }}{% endif %}" alt="{{ dt_kontak.gambar }}" style="max-width: 100px;"></td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
-                                                <a href="{% url 'sipandu_admin:edit_kontak' dt_kontak.id_data_kontak %}" class="btn btn-sm btn-primary badge">Edit</a>
-                                                <button onclick="deleteKontak('{{ dt_kontak.id_data_kontak }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                <a href="{% url 'sipandu_admin:edit_kontak' dt_kontak.id_data_kontak %}" class="btn btn-sm btn-primary badge">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                                <span style="margin-left: 5px;"></span> <!-- Jarak -->
+                                                <button onclick="deleteKontak('{{ dt_kontak.id_data_kontak }}')" class="btn btn-sm btn-danger badge">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </button>
                                             </div>
+                                            
                                         </td> 
                                     </tr>
                                     

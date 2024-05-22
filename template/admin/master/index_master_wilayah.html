@@ -84,8 +84,8 @@ Master Wilayah
                             </div>
                             
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"> Simpan </i></button>
                             </div>
                         </form>
                     
@@ -130,9 +130,9 @@ Master Wilayah
                                             <td class="text-center align-middle">
                                                 <div class="btn-group align-top">
                                                     <!-- Tombol edit -->
-                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_wilayah.wilayah_id}}">Edit</a> &nbsp;
+                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_wilayah.wilayah_id}}"><i class="fa fa-edit"> Edit </i></a> &nbsp;
                                                     <!-- Tombol delete -->
-                                                    <button onclick="deleteWilayah('{{ dt_wilayah.wilayah_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                    <button onclick="deleteWilayah('{{ dt_wilayah.wilayah_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'><i class="fa fa-trash"> Hapus </i></button>
                                                 </div>
                                             </td>
                                         </tr>

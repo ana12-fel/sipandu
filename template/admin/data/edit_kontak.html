@@ -13,6 +13,11 @@ Master User
         <div class="page-header">
             <div>
                 <h1 class="page-title">EDIT DATA KONTAK</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="#">Data</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data Kontak</li>
+                </ol>
             </div>
         </div>
 
@@ -35,7 +40,7 @@ Master User
     </div> 
 
     <div class="mb-3">
-        <label for="Email" class="form-label">E_mail</label>
+        <label for="Email" class="form-label">E-mail</label>
         <input type="text" value="{{data_kontak.email}}" class="form-control" id="Email" name="email" required>
     </div>
 
@@ -50,28 +55,44 @@ Master User
     </div>
 
     <div class="mb-3">
-        <label for="link_map" class="form-label">link_map </label>
+        <label for="link_map" class="form-label">link Map </label>
         <input type="text" value="{{data_kontak.link_map }}" class="form-control" id="link_map" name="link_map" required>
     </div>
 
     <div class="mb-3">
-        <label for="fb"_ class="form-label">fb</label>
+        <label for="fb"_ class="form-label">Facebook</label>
         <input type="text" value="{{data_kontak.fb}}" class="form-control" id="fb" name="fb" required>
     </div>
 
     <div class="mb-3">
-        <label for="tw" class="form-label">tw</label>
+        <label for="tw" class="form-label">Twitter</label>
         <input type="text" value="{{data_kontak.tw}}" class="form-control" id="tw" name="tw" required>
     </div>
 
     <div class="mb-3">
-        <label for="ig" class="form-label">ig</label>
+        <label for="ig" class="form-label">Instagram</label>
         <input type="text" value="{{data_kontak.ig}}" class="form-control" id="ig" name="ig" required>
     </div>
 
-    
+    <td>
+        <label for="image" class="form-label">Foto</label>
+    </td>
+    <td>
+        {% if data_kontak.gambar %}
+            <input type="file" value="{{ data_kontak.gambar.url }}" class="form-control" id="gambar" name="image_galeri" accept="image/*" onchange="previewImage(event)">
+        {% else %}
+            <input type="file" class="form-control" id="gambar" name="image_galeri" accept="image/*" onchange="previewImage(event)">
+        {% endif %}
+    </td>
+    <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;">
+
+        {% if data_kontak.gambar %}
+        <img src="{{data_kontak.gambar.url}}" alt="">
+        {% endif %}
+    </div>
+
+
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
         <button type="submit" class="btn btn-primary">Simpan</button>
     </div>
 

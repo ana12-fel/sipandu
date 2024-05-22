@@ -17,9 +17,9 @@ ROLE_CHOICE =[
     ('admin_sekolah', 'Admin Sekolah')
 ]
 
-STATUS_KEPEGAWAIAN= [
-    ('guru','Guru'),
-    ('kepala_sekolah','Kepala Sekolah')
+STATUS_KEPEGAWAIAN =[
+    ('guru', 'Guru'),
+    ('kepala_sekolah', 'Kepala sekolah'),
 ]
 
 
@@ -221,6 +221,7 @@ class Data_galeri(models.Model):
     video = models.TextField(null=True, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
     
 
 class Data_kontak(models.Model):
@@ -233,8 +234,10 @@ class Data_kontak(models.Model):
     no_hp = models.CharField(max_length=15, blank=True, null=True, verbose_name="Nomor HP")
     alamat = models.TextField(null=True, default=None)  # Field untuk alamat
     link_map = models.TextField(null=True, default=None)  # Field untuk link peta
+    gambar = models.ImageField(upload_to='galeri_thumbnail/', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
 
 class Data_link(models.Model):
     id_link= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)

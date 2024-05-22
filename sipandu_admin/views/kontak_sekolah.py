@@ -13,6 +13,7 @@ def Indexkontak(request):
         fb = request.POST.get('fb')
         tw = request.POST.get('tw')
         ig = request.POST.get('ig')
+        gambar = request.FILES.get('image_galeri')
 
         print(kontak_sekolah, no_hp, email, alamat, link_map, fb, tw, ig)
         dt_kontak = Data_kontak.objects.create(
@@ -23,7 +24,8 @@ def Indexkontak(request):
             link_map=link_map,
             fb=fb,
             tw=tw,
-            ig=ig
+            ig=ig,
+            gambar=gambar
         )
 
         return redirect('sipandu_admin:index_kontak')
@@ -43,6 +45,7 @@ def TambahKontak(request):
         fb = request.POST.get('fb')
         tw = request.POST.get('tw')
         ig = request.POST.get('ig')
+        gambar = request.FILES.get('image_galeri')
 
         print("POST data:", request.POST)
         print("Extracted data:", kontak_sekolah, no_hp, email, alamat, link_map, fb, tw, ig)
@@ -59,7 +62,8 @@ def TambahKontak(request):
                 link_map=link_map,
                 fb=fb,
                 tw=tw,
-                ig=ig
+                ig=ig,
+                gambar=gambar
             )
             dt_kontak.save()
 
@@ -83,7 +87,9 @@ def EditKontak(request, id_data_kontak):
         fb = request.POST.get('fb')
         tw = request.POST.get('tw')
         ig = request.POST.get('ig')
+        gambar = request.FILES.get('image_galeri')
         print(request.POST)
+
 
         dt_kontak = get_object_or_404(Data_kontak, id_data_kontak=id_data_kontak)
         dt_kontak.kontak_sekolah_id = kontak_sekolah
@@ -94,6 +100,7 @@ def EditKontak(request, id_data_kontak):
         dt_kontak.fb = fb
         dt_kontak.tw = tw
         dt_kontak.ig = ig
+        dt_kontak.gambar=gambar
 
         dt_kontak.save()
 
