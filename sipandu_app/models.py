@@ -17,10 +17,11 @@ ROLE_CHOICE =[
     ('admin_sekolah', 'Admin Sekolah')
 ]
 
-STATUS_KEPEGAWAIAN= [
-    ('guru','Guru'),
-    ('kepala_sekolah','Kepala Sekolah')
+STATUS_KEPEGAWAIAN =[
+    ('guru', 'Guru'),
+    ('kepala_sekolah', 'Kepala sekolah'),
 ]
+
 
 JENIS_SEKOLAH =(('negeri','Negeri'),('swasta','Swasta'))
 STATUS_KEPEMILIKAN_SEKOLAH = (('pemda','Pemerintah Daerah'),('pribadi','Pribadi'),('yayasan','Yayasan'))
@@ -265,6 +266,8 @@ class Data_guru(models.Model):
     guru_image = models.ImageField(upload_to='image_guru/')
     tahun_guru = models.CharField(max_length=10, null=True)
     status_kepegawaian = models.TextField(choices=STATUS_KEPEGAWAIAN)
+
+
 
     
     
