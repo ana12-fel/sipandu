@@ -1,40 +1,51 @@
 {% extends 'admin/base/base_index.html' %}
 {% load static %}
 {% block title %}
-Edit Profile
+Edit Profil
 {% endblock %}
 
 {% block content %}
 <div class="app-content">
     <div class="side-app">
         <div class="page-header">
-            <h1 class="page-title">Edit Profile</h1>
+            <div>
+                <h1 class="page-title">Edit Profil</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:admin_index'%}">Master Data</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:index_profile'%}">Profil</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit Profil</li>
+                </ol>
+            </div>
+            <div class="ms-auto pageheader-btn">
+                <a href="{% url 'sipandu_admin:index_profile'%}" class="btn btn-primary btn-icon text-white me-2">
+                   <i class="fa fa-mail-forward"></i> Kembali
+                </a>
+            </div>
         </div>
 
         <div class="row">
             <div class="col-lg-8 col-xl-8 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Edit Profile</h3>
+                        <h3 class="card-title">Edit Profil</h3>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{% url 'sipandu_admin:edit_profile' %}">
+                        <form id="profile-form" method="POST" action="{% url 'sipandu_admin:edit_profile' %}">
                             {% csrf_token %}
                             <div class="form-group">
-                                <label for="user_first_name">First Name</label>
-                                <input type="text" class="form-control" id="user_first_name" name="user_first_name" value="{{ master_user.user_first_name }}" placeholder="First Name" >
+                                <label for="user_first_name">Nama Awal</label>
+                                <input type="text" class="form-control" id="user_first_name" name="user_first_name" value="{{ master_user.user_first_name }}" placeholder="Masukan nama awal">
                             </div>
                             <div class="form-group">
-                                <label for="user_last_name">Last Name</label>
-                                <input type="text" class="form-control" id="user_last_name" name="user_last_name" value="{{ master_user.user_last_name }}" placeholder="Last Name" >
+                                <label for="user_last_name">Nama Akhir</label>
+                                <input type="text" class="form-control" id="user_last_name" name="user_last_name" value="{{ master_user.user_last_name }}" placeholder="Masukan nama akhir">
                             </div>
                             <div class="form-group">
                                 <label for="user_email">Email</label>
-                                <input type="email" class="form-control" id="user_email" name="user_email" value="{{ master_user.user_email }}" placeholder="Email Address" >
+                                <input type="email" class="form-control" id="user_email" name="user_email" value="{{ master_user.user_email }}" placeholder="Masukan alamat email">
                             </div>
                             <div class="form-footer text-end">
-                                <button type="submit" class="btn btn-success mt-1">Save</button>
-                                <a href="{% url 'sipandu_admin:index_profile' %}" class="btn btn-danger mt-1">Cancel</a>
+                                <button type="submit" class="btn btn-success mt-1"> <i class="fa fa-floppy-o"></i> Simpan </button>
                             </div>
                         </form>
                     </div>
@@ -44,26 +55,25 @@ Edit Profile
             <div class="col-lg-4 col-xl-4 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">Edit Password</div>
+                        <div class="card-title">Edit Kata Sandi</div>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{% url 'sipandu_admin:edit_profile' %}">
+                        <form id="password-form" method="POST" action="{% url 'sipandu_admin:change_password' %}">
                             {% csrf_token %}
                             <div class="form-group">
-                                <label for="password">Current Password</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter Current Password">
+                                <label for="password">Kata Sandi Saat Ini</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Masukan kata sandi saat ini">
                             </div>
                             <div class="form-group">
-                                <label for="new_password">New Password</label>
-                                <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Enter New Password">
+                                <label for="new_password">Kata Sandi Baru</label>
+                                <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Masukan kata sandi baru">
                             </div>
                             <div class="form-group">
-                                <label for="confirm_password">Confirm Password</label>
-                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm New Password">
+                                <label for="confirm_password">Konfirmasi Kata Sandi Baru</label>
+                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Masukan ulang kata sandi baru">
                             </div>
                             <div class="form-footer text-end">
-                                <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="{% url 'sipandu_admin:index_profile' %}" class="btn btn-danger">Cancel</a>
+                                <button type="button" class="btn btn-primary" onclick="submitPasswordForm()"> <i class="fa fa-check-circle-o"></i> Update</button>
                             </div>
                         </form>
                     </div>
@@ -72,4 +82,132 @@ Edit Profile
         </div>
     </div>
 </div>
+{% endblock %}
+{% block js %}
+<script src="{% static 'admin/js/ckeditor.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .then(editor => {
+            console.log(editor);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+    function previewImage(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function() {
+            var dataURL = reader.result;
+            var previewImg = document.getElementById('image-preview-img');
+            previewImg.src = dataURL;
+            previewImg.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+
+    // Function to handle form submission using AJAX for profile
+    function submitProfileForm(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        var form = event.target; // Get the form element
+
+        // Check if form inputs are empty
+        var inputs = form.querySelectorAll('input, textarea, select');
+        var isEmpty = Array.from(inputs).some(input => !input.value.trim());
+
+        if (isEmpty) {
+            // Show warning message if any input is empty
+            swal("Peringatan!", "Silakan lengkapi semua data sebelum mengirimkan formulir.", "warning");
+            return; // Stop further execution
+        }
+
+        var formData = new FormData(form); // Create FormData object
+
+        // Send AJAX request
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}' // Add CSRF token header
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // Show success message using SweetAlert
+                swal("Sukses!", "Profil berhasil diperbarui.", "success");
+                // Redirect to profile page after SweetAlert is closed
+                window.location.href = "{% url 'sipandu_admin:index_profile' %}";
+            } else {
+                // Show error message if request failed
+                swal("Error!", "Gagal memperbarui profil. Silakan coba lagi.", "error");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Show error message if there was an error
+            swal("Error!", "Terjadi kesalahan saat memperbarui profil. Silakan coba lagi.", "error");
+        });
+    }
+
+    // Function to handle form submission using AJAX for changing password
+    function submitPasswordForm() {
+        var form = document.getElementById('password-form'); // Get the form element
+
+        // Check if form inputs are empty
+        var inputs = form.querySelectorAll('input');
+        var isEmpty = Array.from(inputs).some(input => !input.value.trim());
+
+        if (isEmpty) {
+            // Show warning message if any input is empty
+            swal("Peringatan!", "Silakan lengkapi semua data sebelum mengirimkan formulir.", "warning");
+            return; // Stop further execution
+        }
+
+        var formData = new FormData(form); // Create FormData object
+
+        // Send AJAX request
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}' // Add CSRF token header
+            }
+        })
+        .then(response => response.json().then(data => ({ status: response.status, body: data })))
+        .then(({ status, body }) => {
+            if (status === 200) {
+                // Show success message using SweetAlert
+                swal("Sukses!", "Kata sandi berhasil diperbarui. Silakan login kembali.", "success")
+                .then(() => {
+                    // Redirect to login page after SweetAlert is closed
+                    window.location.href = "{% url 'sipandu_admin:login_index' %}";
+                });
+                // Reset password form fields
+                form.reset();
+            } else if (status === 400) {
+                if (body.error === 'Current password is incorrect') {
+                    swal("Error!", "Kata sandi yang Anda masukan salah, mohon coba lagi.", "error");
+                } else if (body.error === 'New password and confirm password do not match') {
+                    swal("Error!", "Kata sandi baru dan konfirmasi kata sandi tidak cocok.", "error");
+                } else {
+                    swal("Error!", "Gagal memperbarui kata sandi. Silakan coba lagi.", "error");
+                }
+            } else {
+                swal("Error!", "Gagal memperbarui kata sandi. Silakan coba lagi.", "error");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Show error message if there was an error
+            swal("Error!", "Terjadi kesalahan saat memperbarui kata sandi. Silakan coba lagi.", "error");
+        });
+    }
+
+    // Add event listener to form submission for profile
+    document.getElementById('profile-form').addEventListener('submit', submitProfileForm);
+</script>
 {% endblock %}

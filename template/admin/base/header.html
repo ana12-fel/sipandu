@@ -119,12 +119,12 @@
                     <div class="card-body text-center">
                         <div class="dropdown user-pro-body">
                             <div class="">
-                                <img alt="user-img" class="avatar avatar-xl brround mx-auto text-center" src="../../assets/images/faces/6.jpg">
+                                <img alt="user-img" class="avatar avatar-xl brround mx-auto text-center" src="{% static 'admin/images/users/user23.png' %}">
                                 <span class="avatar-status profile-status bg-green"></span>
                             </div>
                             <div class="user-info mg-t-20">
-                                <h6 class="fw-semibold mt-2 mb-0">Mintrona Pechon</h6>
-                                <span class="mb-0 text-muted fs-12">Premium Member</span>
+                                <h6 class="fw-semibold mt-2 mb-0">{{ first_name }}</h6>
+                                <span class="mb-0 text-muted fs-12">{{ role|title }}</span>
                             </div>
                         </div>
                     </div>
@@ -137,7 +137,6 @@
                             </div>
                         </div>
                     </a>
-                    
                     <a class="dropdown-item d-flex border-bottom" href="{% url 'sipandu_admin:logout' %}">
                         <div class="d-flex">
                             <i class="fe fe-power me-3 tx-20 text-muted"></i>

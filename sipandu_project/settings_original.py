@@ -145,3 +145,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # URL yang digunakan untuk mengakses file media
 MEDIA_URL = ' /media/'
 
+
+
