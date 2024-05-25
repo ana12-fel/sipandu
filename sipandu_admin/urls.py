@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,kategori_views,siswa_views,transaksi_view,kontak_sekolah,galeri,guru_views,link_views,profile
+from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,kategori_views,siswa_views,transaksi_view,kontak_sekolah,galeri,guru_views,link_views,profile,laporan
 from django.contrib.auth import views as auth_views
 
 
@@ -67,7 +67,6 @@ urlpatterns = [
     path('edit-transaksi/<str:transanksi_id>/', transaksi_view.edit_transaksi, name='edit_transaksi'),
     path('delete-transaksi/<str:transanksi_id>/delete/',  transaksi_view.delete_transaksi, name='delete_transaksi'),
     
-    path('laporan-data-sekolah/', admin_views.LaporanDataSekolah, name='laporan_data_sekolah'),
 
     path('index-siswa/', siswa_views.IndexSiswa, name='index_siswa'),
     path('edit_siswa/<str:id_data_siswa>/', siswa_views.EditSiswa, name='edit_siswa'),
@@ -84,6 +83,11 @@ urlpatterns = [
     path('index_profile/', profile.IndexProfile, name='index_profile'),
     path('profile/change_password/', profile.change_password, name='change_password'),
     path('profile/edit/', profile.edit_profile, name='edit_profile'),
+
+    path('laporan_data_sekolah/', laporan.laporan_sekolah, name='laporan_data_sekolah'),
+    path('laporan_data_transaksi/', laporan.laporan_transaksi, name='laporan_data_transaksi'),
+    
+    
    
     
 

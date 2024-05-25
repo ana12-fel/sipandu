@@ -12,7 +12,8 @@ Master User
             <div>
                 <h1 class="page-title">USER</h1>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Master Data</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:admin_index'%}">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:index_user'%}">Master Data</a></li>
                     <li class="breadcrumb-item active" aria-current="page">User</li>
                 </ol>
             </div>
@@ -100,7 +101,7 @@ Master User
                             </div>
 
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"> <i class="fa fa-save"> Simpan  </i></button>
+                                <button type="submit" class="btn btn-primary"> <i class="fa fa-save"></i> Simpan  </button>
                             </div>
                         </form>
                     </div>
@@ -144,10 +145,10 @@ Master User
 
                                                 <div class="btn-group align-top">
                                                     <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editUserModal_{{dt_user.user_id}}">
-                                                       <i class="fa fa-edit"> Edit </i>
+                                                       <i class="fa fa-edit"> </i> Edit
                                                     </a>&nbsp;
                                                     <button onclick="deleteUser('{{ dt_user.user_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>
-                                                        <i class="fa fa-trash"> Hapus </i>
+                                                        <i class="fa fa-trash"></i> Hapus 
                                                     </button>
                                                 </div>
                      

@@ -268,6 +268,18 @@ class Data_guru(models.Model):
     status_kepegawaian = models.TextField(choices=STATUS_KEPEGAWAIAN)
 
 
+class Laporan(models.Model):
+    judul = models.CharField(max_length=100)
+    deskripsi = models.TextField()
+    laporan_wilayah =  models.ForeignKey(Master_wilayah, default=None, null=True, on_delete=models.PROTECT)
+    laporan_sekolah =  models.ForeignKey(Master_sekolah, default=None, null=True, on_delete=models.PROTECT)
+    laporan_transaksi =  models.ForeignKey(Transanksi_situs, default=None, null=True, on_delete=models.PROTECT)
+    
+
+    def __str__(self):
+        return self.judul
+
+
 
     
     

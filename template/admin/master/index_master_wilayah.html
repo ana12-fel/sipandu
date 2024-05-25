@@ -13,7 +13,8 @@ Master Wilayah
             <div>
                 <h1 class="page-title">WILAYAH</h1>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Master Data</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:admin_index'%}">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:admin_index'%}">Master Data</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Wilayah</li>
                 </ol>
             </div>
@@ -42,7 +43,7 @@ Master Wilayah
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="role">Level</label>
-                                <select name="wilayah_level" id="wilayah_level" class="form-control" onchange="pilih_level(this)" >
+                                <select name="wilayah_level" id="wilayah_level" class="form-control" onchange="pilih_level(this)" required >
                                     <option value="">- Pilih Level Wilayah -</option>
                                     {% for level_key, level_display in wilayah_level %}
                                         <option value="{{ level_key }}">{{ level_display }}</option>
@@ -72,11 +73,11 @@ Master Wilayah
                             </div>
                             <div class="mb-3">
                                 <label for="kode" class="form-label">Kode</label>
-                                <input type="text" class="form-control" name="wilayah_kode" placeholder="Masukkan Status kode">
+                                <input type="text" class="form-control" name="wilayah_kode" placeholder="Masukkan Status kode" required>
                             </div>
                             <div class="mb-3">
                                 <label for="wilayah_nama" class="form-label">Nama Wilayah</label>
-                                <input type="text" class="form-control" id="wilayah_nama" name="wilayah_nama" placeholder="Masukkan Nama Wilayah" >
+                                <input type="text" class="form-control" id="wilayah_nama" name="wilayah_nama" placeholder="Masukkan Nama Wilayah" required>
                             </div>
                                 <!-- Input wilayah_status secara default -->
                             <div class="mb-3">
@@ -85,7 +86,7 @@ Master Wilayah
                             
                             <div class="modal-footer">
                                 
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"> Simpan </i></button>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan </button>
                             </div>
                         </form>
                     
@@ -130,9 +131,9 @@ Master Wilayah
                                             <td class="text-center align-middle">
                                                 <div class="btn-group align-top">
                                                     <!-- Tombol edit -->
-                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_wilayah.wilayah_id}}"><i class="fa fa-edit"> Edit </i></a> &nbsp;
+                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_wilayah.wilayah_id}}"><i class="fa fa-edit"></i> Edit </a> &nbsp;
                                                     <!-- Tombol delete -->
-                                                    <button onclick="deleteWilayah('{{ dt_wilayah.wilayah_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'><i class="fa fa-trash"> Hapus </i></button>
+                                                    <button onclick="deleteWilayah('{{ dt_wilayah.wilayah_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'><i class="fa fa-trash"></i>Hapus </button>
                                                 </div>
                                             </td>
                                         </tr>
