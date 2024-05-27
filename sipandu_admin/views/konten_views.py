@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from sipandu_app.models import Data_konten, Master_kategori,Master_sekolah, Sub_kategori
 from django.urls import reverse
+from django.utils.timezone import now
 from django.conf import settings
 import os
 from django.utils import timezone
@@ -92,9 +93,9 @@ def TambahKonten(request):
         return render(request, 'admin/data/tambah_konten.html', {'data_kategori': data_kategori, 'data_sub_kategori': data_sub_kategori, 'data_konten': data_konten, 'data_sekolah' : data_sekolah})
        
 def EditKonten(request, id_data_konten):
+    dt_konten = get_object_or_404(Data_konten, id_data_konten=id_data_konten)
+    
     if request.method == 'POST':
-        dt_konten = get_object_or_404(Data_konten, id_data_konten=id_data_konten)
-        
         konten_sekolah = request.POST.get('konten_sekolah')
         konten_kategori = request.POST.get('konten_kategori')
         konten_sub_kategori = request.POST.get('konten_sub_kategori')
@@ -104,32 +105,39 @@ def EditKonten(request, id_data_konten):
         konten_image = request.FILES.get('konten_image')
         konten_tag = request.POST.get('konten_tag')
         
-        dt_konten.konten_sekolah = Master_sekolah.objects.get(sekolah_id=konten_sekolah)
-        dt_konten.konten_kategori = Master_kategori.objects.get(kategori_id=konten_kategori)
-        dt_konten.konten_sub_kategori = Sub_kategori.objects.get(sub_kategori_id=konten_sub_kategori)
+        dt_konten.konten_sekolah = get_object_or_404(Master_sekolah, sekolah_id=konten_sekolah)
+        dt_konten.konten_kategori = get_object_or_404(Master_kategori, kategori_id=konten_kategori)
+        dt_konten.konten_sub_kategori = get_object_or_404(Sub_kategori, sub_kategori_id=konten_sub_kategori)
         dt_konten.judul = judul
         dt_konten.status = is_active
         dt_konten.isi_konten = isi_konten
-        if konten_image:
-            dt_konten.konten_image = konten_image
         dt_konten.konten_tag = konten_tag
 
-        dt_konten.save()
+        if konten_image:
+            # Mengubah nama file dengan menambahkan timestamp
+            current_time = now()
+            formatted_time = current_time.strftime("%Y-%m-%d_at_%H.%M.%S")
+            file_extension = konten_image.name.split('.')[-1]
+            new_file_name = f"{konten_image.name.split('.')[0]}_{formatted_time}.{file_extension}"
+            konten_image.name = new_file_name
+            dt_konten.konten_image = konten_image
 
+        dt_konten.save()
         return redirect('sipandu_admin:index_konten')
     else:
-        dt_konten = get_object_or_404(Data_konten, id_data_konten=id_data_konten)
         data_sekolah = Master_sekolah.objects.all()
         data_kategori = Master_kategori.objects.all()
         data_sub_kategori = Sub_kategori.objects.all()
-        return render(request, 'admin/data/edit_konten.html', {
+        
+        context = {
             "dt_konten": dt_konten,
             "id_data_konten": id_data_konten,
             "data_sekolah": data_sekolah,
             "data_kategori": data_kategori,
-            "data_sub_kategori": data_sub_kategori
-        })
-
+            "data_sub_kategori": data_sub_kategori,
+        }
+        return render(request, 'admin/data/edit_konten.html', context)
+    
 def DeleteKonten(request, id_data_konten):
     try:
         dt_konten = get_object_or_404(Data_konten, id_data_konten=id_data_konten)

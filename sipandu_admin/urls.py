@@ -28,7 +28,8 @@ urlpatterns = [
     path('index-master-jenjang/', jenjang_view.IndexJenjang, name='index_jenjang'),
     path('edit_jenjang/<str:jenjang_id>/', jenjang_view.edit_jenjang, name='edit_jenjang'),
     path('jenjang/<str:jenjang_id>/delete/', jenjang_view.delete_jenjang, name='delete_jenjang'),
-    path('archive_jenjang/<int:jenjang_id>/', jenjang_view.archive_jenjang, name='archive_jenjang'),
+    path('archive_jenjang/<str:jenjang_id>/', jenjang_view.archive_jenjang, name='archive_jenjang'),
+    path('unarchive_jenjang/<str:jenjang_id>/', jenjang_view.unarchive_jenjang, name='unarchive_jenjang'),
 
 
 

@@ -9,13 +9,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- {% if messages %}
+                {% if messages %}
                     <ul class="messages">
                         {% for message in messages %}
                             <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                         {% endfor %}
                     </ul>
-                {% endif %} -->
+                {% endif %}
                 <!-- Form tambah data di sini -->
                 <form method="post" action="{% url 'sipandu_admin:edit_siswa' dt_siswa.id_data_siswa %}">
                     {% csrf_token %}
@@ -29,9 +29,9 @@
                         </select>
                     </div> 
                     <div class="mb-3">
-                        <label for="total_siswa" class="form-label">Total Siswa</label>
-                        <input type="text" value="{{ dt_siswa.total_siswa }}" class="form-control" id="total_siswa" name="total_siswa" placeholder="Masukkan Total Siswa" required>
-                        <!-- <div id="error-message-{{ dt_siswa.id_data_siswa }}" style="color: red; display: none;">Hanya angka yang diperbolehkan.</div> -->
+                        <label for="edit_total_siswa" class="form-label">Total Siswa</label>
+                        <input type="text" value="{{ dt_siswa.total_siswa }}" class="form-control" id="edit_total_siswa-{{ dt_siswa.id_data_siswa }}" name="edit_total_siswa" placeholder="Masukkan Total Siswa" required>
+                        <div id="error-message-edit-{{ dt_siswa.id_data_siswa }}" style="color: red; display: none;">Hanya angka yang diperbolehkan.</div>
                     </div>                      
                     <div class="mb-3">
                         <label for="keterangan_siswa" class="form-label">Keterangan</label> 
@@ -63,17 +63,21 @@
 </div>
 <!-- Modal Tambah Data End -->
 <script>
-    // document.getElementById('total_siswa').addEventListener('input', function (e) {
-    //     var errorMessage = document.getElementById('error-message-{{ dt_siswa.id_data_siswa }}');
-    //     if (/\D/.test(this.value)) {
-    //         // Jika ada karakter non-angka
-    //         errorMessage.style.display = 'block';
-    //         this.value = this.value.replace(/\D/g, '');
-    //     } else {
-    //         // Jika hanya angka
-    //         errorMessage.style.display = 'none';
-    //     }
-    // });
+    document.getElementById('edit_total_siswa-{{ dt_siswa.id_data_siswa }}').addEventListener('input', function (e) {
+        var errorMessage = document.getElementById('error-message-edit-{{ dt_siswa.id_data_siswa }}');
+        if (/\D/.test(this.value)) {
+            // Jika ada karakter non-angka
+            console.log('test11')
+            errorMessage.style.display = 'block';
+            this.value = this.value.replace(/\D/g, '');
+        } else {
+            // Jika hanya angka
+            console.log('test')
+            errorMessage.style.display = 'none';
+        }
+    });
+
+    
 
     function changeIconEdit() {
         var keterangan = document.getElementById("keterangan_siswa_edit").value;

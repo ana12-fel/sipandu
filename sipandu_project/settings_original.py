@@ -145,12 +145,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # URL yang digunakan untuk mengakses file media
 MEDIA_URL = ' /media/'
 
-<<<<<<< HEAD
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Set MEDIA_ROOT to the directory where you want to store media files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-=======
->>>>>>> ca211ae76c5ad9ab0adca04b8323e0c348989238
 
 

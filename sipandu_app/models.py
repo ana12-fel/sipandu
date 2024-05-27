@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,Permissi
 import uuid
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+import os
 
 LEVEL_WILAYAH = (
     (1, 'Provinsi'),
@@ -225,6 +226,7 @@ class Data_konten(models.Model):
     konten_tag = models.TextField(max_length=25)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
 
 class Data_galeri(models.Model):
     id_data_galeri= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
