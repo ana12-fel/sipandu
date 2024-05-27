@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
-from support.support_function import JENJANG, TEMPLATE_NAME
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -54,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'middleware.mymiddleware.MyModelMiddleware'
 ]
 
 ROOT_URLCONF = 'sipandu_project.urls'
@@ -70,6 +70,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
+                'support.support_function.global_var',
             ],
         },
     },
@@ -127,10 +128,18 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+list_dir1 = os.listdir(os.path.join(BASE_DIR, f'sipandu_app/static'))
+# print(os.listdir(os.path.join(BASE_DIR, f'sipandu_app/static')))
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, f'sipandu_app/static/{JENJANG}/{TEMPLATE_NAME}'),
+    # os.path.join(BASE_DIR, f'sipandu_app/static/{JENJANG}/{TEMPLATE_NAME}'),
     os.path.join(BASE_DIR, f'sipandu_admin/assets'),
 ]
+
+for x in list_dir1:
+    for xx in os.listdir(os.path.join(BASE_DIR, f'sipandu_app/static/{x}')):
+        STATICFILES_DIRS.append(os.path.join(BASE_DIR, f'sipandu_app/static/{x}/{xx}'))
+
+
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
