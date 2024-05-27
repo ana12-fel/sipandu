@@ -118,7 +118,6 @@ def delete_wilayah(request, wilayah_id):
         return JsonResponse(data, status=404)
     
 
-
 def cek_kode_wilayah(request):
     kode = request.GET.get('kode', None)
     data = {

@@ -15,8 +15,9 @@ Master User
             <div>
                 <h1 class="page-title">DATA GALERI</h1>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">data galeri</li>
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:admin_index' %}">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="#">Data</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Galeri</li>
                 </ol>
             </div>
             
@@ -36,7 +37,7 @@ Master User
             <div class="col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data Posting Galeri</h3>
+                        <h3 class="card-title">Data Galeri</h3>
                     </div>
                     <div class="card-body">
                         <div class="example">
@@ -62,9 +63,14 @@ Master User
                                             <iframe width="100%" height="100%" src="{{ dt_galeri.video }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
-                                                <a href="{% url 'sipandu_admin:edit_galeri' dt_galeri.id_data_galeri %}" class="btn btn-sm btn-primary badge">Edit</a>
-                                                <button onclick="deletegaleri('{{ dt_galeri.id_data_galeri }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                <a href="{% url 'sipandu_admin:edit_galeri' dt_galeri.id_data_galeri %}" class="btn btn-sm btn-primary badge" style="margin-right: 10px;">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                                <button onclick="deletegaleri('{{ dt_galeri.id_data_galeri }}')" class="btn btn-sm btn-danger badge" value="Alert with title">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </button>
                                             </div>
+                                            
                                         </td> 
                                     </tr>
                                     {% endfor %}
@@ -83,60 +89,94 @@ Master User
 
 <script>
     function deletegaleri(galeri_) {
-    var deleteUrl = "{% url 'sipandu_admin:delete_galeri' 'id_data_galeri' %}".replace("id_data_galeri", galeri_);
+        var deleteUrl = "{% url 'sipandu_admin:delete_galeri' 'id_data_galeri' %}".replace("id_data_galeri", galeri_);
 
-    swal({
-        title: "Apakah Anda yakin?",
-        text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Ya, hapus!",
-        cancelButtonText: "Batal",
-        closeOnConfirm: false,
-        closeOnCancel: false
-    },
-    function (isConfirm) {
-        if (isConfirm) {
-            $.ajax({
-                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
-                url: deleteUrl,
-                type: "GET",
-                success: function (response) {
-                    console.log('berhasil');
-                    swal({
-                        title: "Data berhasil dihapus!",
-                        icon: "success",
-                        buttons: false, // Tidak menampilkan tombol OK
-                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
-                    });
-                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
-                },
-                error: function (xhr, status, error) {
-                    // Terjadi kesalahan saat menghapus data
-                    swal("Terjadi kesalahan saat menghapus data!", {
-                        icon: "error",
-                    });
-                }
-            });
-        } else {
-            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
-            swal("Tindakan dibatalkan", "", "info");
-        }
-    });
-}
+        swal({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33", // Merah
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            cancelButtonColor: "#3085d6" // Warna biru default untuk tombol batal
+           
+           
+         
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "GET",
+                    success: function (response) {
+                        console.log('berhasil');
+                        swal({
+                            title: "Data berhasil dihapus!",
+                            icon: "success",
+                            buttons: false, // Tidak menampilkan tombol OK
+                            timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                        });
+                        window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                    },
+                    error: function (xhr, status, error) {
+                        // Terjadi kesalahan saat menghapus data
+                        swal("Terjadi kesalahan saat menghapus data!", {
+                            icon: "error",
+                        });
+                    }
+                });
+            } else {
+                // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+                swal("Tindakan dibatalkan", "", "info");
+            }
+        });
+    }
 
     $(function(){
-            $('#datakontenResponsiveDatatable').DataTable({
+        $('#datakontenResponsiveDatatable').DataTable({
             scrollX: "100%",
             language: {
                 searchPlaceholder: 'Search...',
                 sSearch: '',
             }
         });
-        })
-        
+    });
+
+    // Menambahkan gaya CSS kustom untuk tombol
+    var styles = `
+        .swal-button--confirm {
+            background-color: #28a745 !important; /* Hijau */
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .swal-button--confirm:hover {
+            background-color: #218838 !important; /* Hijau lebih gelap saat dihover */
+        }
+        .swal-button--cancel {
+            background-color: #dc3545 !important; /* Merah */
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .swal-button--cancel:hover {
+            background-color: #c82333 !important; /* Merah lebih gelap saat dihover */
+        }
+    `;
+    var styleSheet = document.createElement("style");
+    styleSheet.type = "text/css";
+    styleSheet.innerText = styles;
+    document.head.appendChild(styleSheet);
 </script>
+
+
 
 
 {% endblock %}

@@ -233,6 +233,7 @@ class Data_galeri(models.Model):
     video = models.TextField(null=True, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
     
 
 class Data_kontak(models.Model):
@@ -245,8 +246,10 @@ class Data_kontak(models.Model):
     no_hp = models.CharField(max_length=15, blank=True, null=True, verbose_name="Nomor HP")
     alamat = models.TextField(null=True, default=None)  # Field untuk alamat
     link_map = models.TextField(null=True, default=None)  # Field untuk link peta
+    gambar = models.ImageField(upload_to='galeri_thumbnail/', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
 
 class Data_link(models.Model):
     id_link= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -276,6 +279,20 @@ class Data_guru(models.Model):
     guru_image = models.ImageField(upload_to='image_guru/')
     tahun_guru = models.CharField(max_length=10, null=True)
     status_kepegawaian = models.TextField(choices=STATUS_KEPEGAWAIAN)
+
+
+class Laporan(models.Model):
+    judul = models.CharField(max_length=100)
+    deskripsi = models.TextField()
+    laporan_wilayah =  models.ForeignKey(Master_wilayah, default=None, null=True, on_delete=models.PROTECT)
+    laporan_sekolah =  models.ForeignKey(Master_sekolah, default=None, null=True, on_delete=models.PROTECT)
+    laporan_transaksi =  models.ForeignKey(Transanksi_situs, default=None, null=True, on_delete=models.PROTECT)
+    
+
+    def __str__(self):
+        return self.judul
+
+
 
     
     

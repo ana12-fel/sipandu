@@ -1,63 +1,35 @@
 {% extends 'admin/base/base_index.html' %}
 {% load static %}
+
 {% block title %}
 Master User
 {% endblock %}
 
 {% block content %}
-<div class="app-content">
-    <div class="side-app">
-        <!-- PAGE-HEADER -->
-        <div class="page-header">
-            <div>
-                <h1 class="page-title">LAPORAN DATA SEKOLAH</h1>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Laporan</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Laporan Data Sekolah</li>
-                </ol>
+<div class="row row-cards">
+    <div class="col-lg-12 col-xl-12">
+        <div class="card">
+            <div class="card-header border-bottom-0 p-4">
+                <div class="page-options d-flex float-end">
+                </div>
             </div>
-        </div>
-    
-        <!-- PAGE-HEADER END -->
-
-        <!-- ROW-1 -->
-        <div class="row row-sm">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title text-center">Laporan Data Sekolah Provinsi Papua Tengah</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">No</th>
-                                        <th class="text-center">Kabupaten</th>
-                                        <th class="text-center">Nama Sekolah</th>
-                                        <th class="text-center">Ket</th>
-                                    </tr>
-                                </thead>
-                                
-                            </table>
-                        </div>
-                    </div>
+            <div class="e-table px-5 pb-5">
+                <div class="table-responsive table-lg">
+                    <table class="table table-bordered text-nowrap border-bottom w-100" id="situsResponsiveDatatable">
+                        <thead>
+                            <tr>
+                                <h1 class="text-center">Unduh Laporan PDF</h1>
+                                <form action="{% url 'sipandu_admin:generate_pdf' %}" method="post" class="text-center">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary"> <i class="fa fa-save"></i> Simpan </button>
+                                </form>
+                            </tr>
+                        </thead>
+                        
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
-{% block js %}
-<script>
-    $(function(){
-        $('#responsive-datatable').DataTable({
-		scrollX: "100%",
-		language: {
-			searchPlaceholder: 'Search...',
-			sSearch: '',
-		}
-	});
-    })
-</script>
 {% endblock %}

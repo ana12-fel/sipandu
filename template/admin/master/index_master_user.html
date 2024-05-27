@@ -10,16 +10,17 @@ Master User
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <div>
-                <h1 class="page-title">MASTER USER</h1>
+                <h1 class="page-title">USER</h1>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Master</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Master User</li>
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:admin_index'%}">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:index_user'%}">Master Data</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">User</li>
                 </ol>
             </div>
             <div class="ms-auto pageheader-btn">
                 <a href="#" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#addUserModal">
                     <span>
-                        <i class="fe fe-plus"></i>
+                        <i class="fe fe-user-plus"></i>
                     </span> Tambah User
                 </a>
             </div>
@@ -100,8 +101,7 @@ Master User
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary"> <i class="fa fa-save"></i> Simpan  </button>
                             </div>
                         </form>
                     </div>
@@ -138,14 +138,20 @@ Master User
                                             <td class="text-center align-middle">{{ forloop.counter }}</td>
                                             <td class="text-center align-middle">{{ dt_user.user_first_name }}</td>
                                             <td class="text-center align-middle">{{ dt_user.user_role }}</td>
-                                            <td class="text-center align-middle">{{ dt_user.user_last_login }}</td>
+                                            <td class="text-center align-middle">{{ dt_user.last_login }}</td>
                                             <td class="text-center align-middle"><span>{% if dt_user.user_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
                                             <td class="text-center align-middle">{{ dt_user.user_email }}</td>
                                             <td class="text-center align-middle">
+
                                                 <div class="btn-group align-top">
-                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editUserModal_{{dt_user.user_id}}">Edit</a>&nbsp;
-                                                    <button onclick="deleteUser('{{ dt_user.user_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editUserModal_{{dt_user.user_id}}">
+                                                       <i class="fa fa-edit"> </i> Edit
+                                                    </a>&nbsp;
+                                                    <button onclick="deleteUser('{{ dt_user.user_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>
+                                                        <i class="fa fa-trash"></i> Hapus 
+                                                    </button>
                                                 </div>
+                     
                                             </td>
                                         </tr>
 
