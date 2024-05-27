@@ -7,11 +7,12 @@ def IndexLink(request):
         link_sekolah = request.POST.get('link_sekolah')
         nama_link = request.POST.get('nama_link')
         judul_link = request.POST.get('judul_link')
+        posisi_link = request.POST.get('posisi_link')
 
         print(link_sekolah)
-        dt_link = Data_link.objects.create(link_sekolah=Master_sekolah.objects.get(sekolah_id = link_sekolah),nama_link=nama_link,judul_link=judul_link)
+        dt_link = Data_link.objects.create(link_sekolah=Master_sekolah.objects.get(sekolah_id = link_sekolah),nama_link=nama_link,judul_link=judul_link, posisi_link=posisi_link)
 
-        print(link_sekolah,nama_link,judul_link)
+        print(link_sekolah,nama_link,judul_link,posisi_link)
 
         return redirect ('sipandu_admin:index_link')
     else:
@@ -29,11 +30,14 @@ def EditLink(request, id_link):
         link_sekolah = request.POST.get('link_sekolah')
         nama_link = request.POST.get('nama_link')
         judul_link = request.POST.get('judul_link')
+        posisi_link = request.POST.get('posisi_link')
+
 
         print(link_sekolah)
         dt_link.link_sekolah=Master_sekolah.objects.get(sekolah_id=link_sekolah)
         dt_link.nama_link=nama_link
         dt_link.judul_link=judul_link
+        dt_link.posisi_link=posisi_link
         
         dt_link.save()
         

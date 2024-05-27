@@ -7,13 +7,30 @@ Master Sekolah
 {% block content %}
 <div class="app-content">
     <div class="side-app">
+        <style>
+            .status-aktif {
+                background-color: #4CAF50;  
+                color: white;  
+                padding: 3px 8px;  
+                border-radius: 6px;  
+                font-size: 0.8em;  
+            }
+    
+            .status-tidak-aktif {
+                background-color: #4CAF50;  
+                color: white;  
+                padding: 3px 8px;  
+                border-radius: 6px;  
+                font-size: 0.8em;  
+            }
+        </style>
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <div>
                 <h1 class="page-title">SEKOLAH</h1>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Master Data</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Sekolah</li>
+                    <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Master Data / Sekolah</li>
                 </ol>
             </div>
             <div class="ms-auto pageheader-btn">
@@ -41,7 +58,7 @@ Master Sekolah
                             {% csrf_token %}
                             <div class="mb-3" id="div_prov">
                                 <label for="role">Provinsi</label>
-                                <select name="sekolah_provinsi" id="prov" data-level="prov" class="form-control" onchange="render_kab(this)">
+                                <select name="sekolah_provinsi" id="prov" data-level="prov" class="form-control" onchange="render_kab(this)" required>
                                     <option value="">- Pilih Provinsi -</option>
                                     {% for provinsi in data_prov %}
                                     <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_nama.upper}}</option>
@@ -50,20 +67,20 @@ Master Sekolah
                             </div>
                             <div class="mb-3" id="div_kab">
                                 <label for="role">Kabupaten</label>
-                                <select name="sekolah_kabupaten" id="kab" data-level="kab" class="form-control" onchange="render_kab(this)">
+                                <select name="sekolah_kabupaten" id="kab" data-level="kab" class="form-control" onchange="render_kab(this)" required>
                                     <option value="">- Pilih Kabupaten -</option>
                                 </select>
                             </div>
                             <div class="mb-3" id="div_kec">
                                 <label for="role">Kecamatan</label>
-                                <select name="sekolah_kecamatan" id="kec" data-level="kec" class="form-control">
+                                <select name="sekolah_kecamatan" id="kec" data-level="kec" class="form-control" required>
                                     <option value="">- Pilih Kecamatan -</option>
                                     <option value="test" selected disabled>Pilih Kecamatan</option>
                                 </select>
                             </div>   
                             <div class="mb-3">
                                 <label for="sekolah_jenjang" class="form-label">Jenjang</label>
-                                <select class="form-select" id="sekolah_jenjang" name="sekolah_jenjang">
+                                <select class="form-select" id="sekolah_jenjang" name="sekolah_jenjang" required>
                                     <option value="" selected disabled>Pilih jenjang</option>
                                     {% for jenjang in data_jenjang %}
                                     <option value="{{jenjang.jenjang_id}}">{{jenjang.jenjang_nama.upper}}</option>
@@ -72,7 +89,7 @@ Master Sekolah
                             </div>  
                             <div class="mb-3">
                                 <label for="sekolah_jenis" class="form-label">Jenis</label>
-                                <select class="form-select" id="sekolah_jenis" name="sekolah_jenis">
+                                <select class="form-select" id="sekolah_jenis" name="sekolah_jenis" required>
                                     <option value="" selected disabled>Pilih Jenis Sekolah</option>
                                     <option value="negeri">Negeri</option>
                                     <option value="swasta">Swasta</option>
@@ -80,16 +97,21 @@ Master Sekolah
                             </div>
                             <div class="mb-3">
                                 <label for="sekolah_nama" class="form-label">Nama Sekolah</label>
-                                <input type="text" class="form-control" id="sekolah_nama" name="sekolah_nama" placeholder="Masukkan Nama Sekolah">
+                                <input type="text" class="form-control" id="sekolah_nama" name="sekolah_nama" placeholder="Masukkan Nama Sekolah" required>
                             </div>
                             <div class="mb-3">
                                 <label for="sekolah_npsn" class="form-label">NPSN</label>
-                                <input type="text" class="form-control" id="sekolah_npsn" name="sekolah_npsn" placeholder="Nomor NPSN">
-                            </div>                     
+                                <input type="text" class="form-control" id="sekolah_npsn" name="sekolah_npsn" placeholder="Nomor NPSN" required>
+                            </div>
+                                                
                             <!-- Tambahkan pilihan lainnya sesuai kebutuhan -->
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <i class="fas fa-times"></i> Close
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i> Submit
+                                </button>
                             </div>
                         </form>
                         <!-- End Form -->
@@ -102,7 +124,7 @@ Master Sekolah
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Daftar Sekolah</h3>
+                        <h3 class="card-title">Data Sekolah</h3>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -132,15 +154,20 @@ Master Sekolah
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_jenjang.jenjang_nama }}</td>
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_npsn }}</td>
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_jenis }}</td>
-                                            <td class="text-center align-middle"><span>{% if dt_sekolah.sekolah_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
-                                            
+                                            <td class="text-center align-middle">
+                                                <span class="{% if dt_sekolah.sekolah_status == 1 %}status-aktif{% else %}status-tidak-aktif{% endif %}">
+                                                    {% if dt_sekolah.sekolah_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}
+                                                </span>
+                                            </td>
                                             <td class="text-center align-middle">
                                                 <div class="btn-group align-top">
-                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_sekolah.sekolah_id}}">Edit</a> &nbsp;
-                                                    <button onclick="deleteSekolah('{{ dt_sekolah.sekolah_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
-
-
-                                                </div>
+                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_sekolah.sekolah_id}}">
+                                                        <i class="fas fa-edit"></i> Edit
+                                                    </a>
+                                                    <button onclick="deleteSekolah('{{ dt_sekolah.sekolah_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>
+                                                        <i class="fas fa-trash-alt"></i> Delete
+                                                    </button>
+                                                </div>                                                
                                             </td>
                                         </tr>
                                         {% include 'admin/master/edit_sekolah.html' %}
@@ -158,6 +185,7 @@ Master Sekolah
 {% endblock %}
 
 {% block js %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script>
     function render_kab(e){
         var level_wilayah = $(e).data('level');  //Mengambil data

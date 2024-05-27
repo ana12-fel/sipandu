@@ -2,34 +2,54 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from sipandu_app.models import Data_konten, Master_kategori,Master_sekolah, Sub_kategori
 from django.urls import reverse
+from django.conf import settings
+import os
+from django.utils import timezone
+
+def upload_and_save_image(request):
+    konten_image = request.FILES.get('konten_image')
+    
+    if konten_image:
+        file_name, file_extension = os.path.splitext(konten_image.name)
+        current_time = timezone.now()
+        formatted_time = current_time.strftime("%Y-%m-%d_%H-%M-%S")
+        new_file_name = f"{file_name}_{formatted_time}{file_extension}"
+        
+        with open(os.path.join(settings.MEDIA_ROOT, new_file_name), 'wb+') as destination:
+            for chunk in konten_image.chunks():
+                destination.write(chunk)
+        
+        return new_file_name  
+    else:
+        return None  
 
 def IndexKonten(request):
     if request.method == 'POST':
         konten_sekolah = request.POST.get('konten_sekolah')
-        konten_kategori = request.POST.get ('konten_kategori')
-        konten_sub_kategori = request.POST.get ('konten_sub_kategori')
-        judul = request.POST.get ('judul')
+        konten_kategori = request.POST.get('konten_kategori')
+        konten_sub_kategori = request.POST.get('konten_sub_kategori')
+        judul = request.POST.get('judul')
         is_active = request.POST.get('status') == 'True'
         isi_konten = request.POST.get('isi_konten')
-        konten_image = request.FILES.get('konten_image')
         konten_tag = request.POST.get('konten_tag')
 
+        konten_image = upload_and_save_image(request)  
 
-        print(konten_kategori, konten_sub_kategori, konten_sekolah)
-        dt_konten = Data_konten.objects.create(
-                                            konten_sekolah=Master_sekolah.objects.get(sekolah_id = konten_sekolah), 
-                                            konten_kategori=Master_kategori.objects.get(kategori_id = konten_kategori),
-                                            konten_sub_kategori=Sub_kategori.objects.get(sub_kategori_id = konten_sub_kategori),
-                                            judul=judul,
-                                            status=is_active,
-                                            isi_konten=isi_konten,
-                                            konten_image=konten_image,
-                                            konten_tag=konten_tag)
-        
-        print(konten_sekolah,konten_kategori,konten_sub_kategori,judul,is_active,isi_konten,konten_image,konten_tag)
+        if konten_image:
+            dt_konten = Data_konten.objects.create(
+                konten_sekolah=Master_sekolah.objects.get(sekolah_id=konten_sekolah), 
+                konten_kategori=Master_kategori.objects.get(kategori_id=konten_kategori),
+                konten_sub_kategori=Sub_kategori.objects.get(sub_kategori_id=konten_sub_kategori),
+                judul=judul,
+                status=is_active,
+                isi_konten=isi_konten,
+                konten_image=konten_image,  
+                konten_tag=konten_tag
+            )
 
-
-        return redirect('sipandu_admin:index_konten')
+            return redirect('sipandu_admin:index_konten')
+        else:
+            return HttpResponse("Gagal mengunggah gambar.", status=400)
     
     else:
         data_sekolah = Master_sekolah.objects.all()
@@ -37,34 +57,30 @@ def IndexKonten(request):
         data_kategori = Master_kategori.objects.all()
         data_konten = Data_konten.objects.all()
         
-        return render(request, 'admin/data/konten.html', {"data_sub_kategori" : data_sub_kategori, "data_kategori": data_kategori, "data_konten" : data_konten, "data_sekolah" : data_sekolah})
-    
+        return render(request, 'admin/data/konten.html', {"data_sub_kategori": data_sub_kategori, "data_kategori": data_kategori, "data_konten": data_konten, "data_sekolah": data_sekolah})
+
 def TambahKonten(request):
     if request.method == 'POST':
         konten_sekolah = request.POST.get('konten_sekolah')
-        konten_kategori = request.POST.get ('konten_kategori')
-        konten_sub_kategori = request.POST.get ('konten_sub_kategori')
-        judul = request.POST.get ('judul')
+        konten_kategori = request.POST.get('konten_kategori')
+        konten_sub_kategori = request.POST.get('konten_sub_kategori')
+        judul = request.POST.get('judul')
         is_active = request.POST.get('status') == 'True'
         isi_konten = request.POST.get('isi_konten')
-        konten_image = request.FILES.get('konten_image')
         konten_tag = request.POST.get('konten_tag')
-        print(request.POST)
 
+        konten_image = upload_and_save_image(request)  
 
-        print(konten_kategori, konten_sub_kategori, konten_sekolah, isi_konten)
         dt_konten = Data_konten.objects.create(
-                                            konten_sekolah_id=konten_sekolah, 
-                                            konten_kategori=Master_kategori.objects.get(kategori_id = konten_kategori),
-                                            konten_sub_kategori=Sub_kategori.objects.get(sub_kategori_id = konten_sub_kategori),
-                                            judul=judul,
-                                            status=is_active,
-                                            isi_konten=isi_konten,
-                                            konten_image=konten_image,
-                                            konten_tag=konten_tag)
-
-       
-        dt_konten.save()
+            konten_sekolah=Master_sekolah.objects.get(sekolah_id=konten_sekolah), 
+            konten_kategori=Master_kategori.objects.get(kategori_id=konten_kategori),
+            konten_sub_kategori=Sub_kategori.objects.get(sub_kategori_id=konten_sub_kategori),
+            judul=judul,
+            status=is_active,
+            isi_konten=isi_konten,
+            konten_image=konten_image,  
+            konten_tag=konten_tag
+        )
 
         return redirect('sipandu_admin:index_konten')
 

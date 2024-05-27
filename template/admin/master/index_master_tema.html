@@ -13,8 +13,8 @@ Master User
             <div>
                 <h1 class="page-title">TEMA WEB</h1>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Tema Web</li>
+                    <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Master Data / Tema</li>
                 </ol>
             </div>
             <div class="ms-auto pageheader-btn">
@@ -40,11 +40,11 @@ Master User
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama Tema</label>
-                                <input type="text" class="form-control" id="nama" name="tema_nama" required>
+                                <input type="text" class="form-control" id="nama" name="tema_nama" placeholder="Masukkan Nama Tema" required>
                             </div>
                             <div class="mb-3">
                                 <label for="sekolah_jenjang" class="form-label">Jenjang</label>
-                                <select class="form-select" id="sekolah_jenjang" name="tema_jenjang">
+                                <select class="form-select" id="sekolah_jenjang" name="tema_jenjang" required>
                                     <option value="" selected disabled>Pilih jenjang</option>
                                     {% for jenjang in data_jenjang %}
                                     <option value="{{jenjang.jenjang_id}}">{{jenjang.jenjang_nama.upper}}</option>
@@ -53,14 +53,21 @@ Master User
                             </div>      
                             <div class="mb-3">
                                 <label for="folder" class="form-label">Nama Folder</label>
-                                <input type="text" class="form-control" id="folder" name="tema_folder_name" >
+                                <input type="text" class="form-control" id="folder" name="tema_folder_name" placeholder="Masukkan Nama Folder" required >
                             </div>
                             <div class="mb-3">
                                 <label for="thumbnail" class="form-label">Thumbnail</label>
-                                <input type="file" class="form-control" id="tema_thumbnail" name="tema_thumbnail" accept="image/*" onchange="previewThumbnail(event)">
+                                <input type="file" class="form-control" id="tema_thumbnail" name="tema_thumbnail" accept="image/*" onchange="previewThumbnail(event)" required>
                             </div>
                             <div id="thumbnail-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> 
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <i class="fas fa-times"></i> Close
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i> Submit
+                                </button>
+                            </div>                        
                         </form>
                     </div>
                 </div>
@@ -74,21 +81,28 @@ Master User
             <div class="col-md-4">
                 <div class="card">
                     <img src="{% if dt_tema.tema_thumbnail %}{{ dt_tema.tema_thumbnail.url }}{% endif %}" class="card-img-top br-tr-7 br-tl-7" alt="{{ dt_tema.tema_nama }}">
+
                     <div class="card-header">
-                        <h5 class="card-title">{{ dt_tema.tema_nama }}</h5>
+                        <h5 class="card-title">
+                            <i class="fa fa-desktop"></i> {{ dt_tema.tema_nama }}
+                        </h5>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Jenjang : {{ dt_tema.tema_jenjang.jenjang_nama }}</p>
-                        <p class="card-text">Nama Folder : {{ dt_tema.tema_folder_name }}</p>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editdata_{{ dt_tema.tema_id }}">
-                            Edit
-                        </button>
-                        <!-- Button trigger delete confirmation -->
-                        <button type="button" class="btn btn-danger" onclick="deleteTema('{{ dt_tema.tema_id }}')">
-                            Delete
-                        </button>
+                        <p class="card-text">
+                            <i class="fa fa-user-graduate"></i> Jenjang : {{ dt_tema.tema_jenjang.jenjang_nama }}
+                        </p>
+                        <p class="card-text">
+                            <i class="fa fa-folder"></i> Nama Folder : {{ dt_tema.tema_folder_name }}
+                        </p>
                     </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editdata_{{ dt_tema.tema_id }}">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="deleteTema('{{ dt_tema.tema_id }}')">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </button>
+                        </div>
                 </div>
             </div>
             {% include 'admin/master/edit_tema.html' %}
@@ -101,6 +115,7 @@ Master User
 {% endblock %}
 
 {% block js %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script>
     function previewThumbnail(event) {

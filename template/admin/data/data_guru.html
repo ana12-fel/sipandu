@@ -11,10 +11,10 @@ Master User
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <div>
-                <h1 class="page-title">DATA KEPEGAWAIAN</h1>
+                <h1 class="page-title">DATA GURU</h1>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Data Guru/Kepala Sekolah</li>
+                    <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data/ Data Guru</li>
                 </ol>
             </div>
             <div class="ms-auto pageheader-btn">
@@ -40,13 +40,13 @@ Master User
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="guru_sekolah" class="form-label">Sekolah</label>
-                                <select class="form-select" id="guru_sekolah" name="guru_sekolah">
+                                <select class="form-select" id="guru_sekolah" name="guru_sekolah" required>
                                     <option value="" selected disabled>Pilih Sekolah</option>
                                     {% for sekolah in data_sekolah %}
                                     <option value="{{ sekolah.sekolah_id }}">{{ sekolah.sekolah_nama.upper }}</option>
                                     {% endfor %}
                                 </select>
-                            </div>  
+                            </div>
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama Guru</label>
                                 <input type="text" class="form-control" id="nama" name="nama_guru" required>
@@ -65,13 +65,13 @@ Master User
                             </div>
                             <div class="mb-3">
                                 <label for="status_kepegawaian" class="form-label">Status Kepegawaian</label>
-                                <select class="form-select" id="status_kepegawaian" name="status_kepegawaian" onchange="toggleTahunForm()">
+                                <select class="form-select" id="status_kepegawaian" name="status_kepegawaian" onchange="toggleTahunForm()" required>
                                     <option value="" selected disabled>Pilih Status Kepegawaian</option>
                                     <option value="guru">Guru</option>
                                     <option value="kepala_sekolah">Kepala Sekolah</option>
                                 </select>
                             </div>
-                            <div id="tahun_guru" style="display: none;">
+                            <div id="tahun_guru_container">
                                 <div class="mb-3">
                                     <label for="tahun_guru" class="form-label">Tahun Jabatan Kepala Sekolah</label>
                                     <input type="text" class="form-control" id="tahun_guru" name="tahun_guru">
@@ -82,7 +82,14 @@ Master User
                                 <input type="file" class="form-control" id="guru_image" name="guru_image" accept="image/*" onchange="previewThumbnail(event)">
                             </div>
                             <div id="thumbnail-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> 
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <i class="fas fa-times"></i> Close
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i> Submit
+                                </button>
+                            </div>                             
                         </form>
                     </div>
                 </div>
@@ -129,9 +136,16 @@ Master User
                                         <td class="text-center align-middle"><img src="{% if dt_guru.guru_image %}{{ dt_guru.guru_image.url }}{% endif %}" alt="{{ dt_guru.nama_guru }}" style="max-width: 100px;"></td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
-                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_guru.id_data_guru}}">Edit</a> &nbsp;
-                                                <button onclick="deleteGuru('{{ dt_guru.id_data_guru }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                <!-- Tombol edit -->
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_guru.id_data_guru}}">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a>
+                                                <!-- Tombol delete -->
+                                                <button onclick="deleteGuru('{{ dt_guru.id_data_guru }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </button>
                                             </div>
+                                            
                                         </td> 
                                     </tr>
                                     {% include 'admin/data/edit_guru.html' %}
@@ -149,6 +163,7 @@ Master User
 {% endblock %}
 
 {% block js %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script>
     function toggleTahunForm() {

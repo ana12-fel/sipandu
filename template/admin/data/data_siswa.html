@@ -13,8 +13,8 @@ Master User
             <div>
                 <h1 class="page-title">Data Siswa</h1>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Data Siswa</li>
+                    <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data / Data Siswa</li>
                 </ol>
             </div>
             <div class="ms-auto pageheader-btn">
@@ -35,13 +35,20 @@ Master User
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
                         <!-- Form untuk tambah data -->
                         <form method="POST" action="{% url 'sipandu_admin:index_siswa' %}" enctype="multipart/form-data">
                             {% csrf_token %}
                             
                             <div class="mb-3">
                                 <label for="siswa_sekolah" class="form-label">Sekolah</label>
-                                <select class="form-select" id="siswa_sekolah" name="siswa_sekolah">
+                                <select class="form-select" id="siswa_sekolah" name="siswa_sekolah" required>
                                     <option value="" selected disabled>Pilih Sekolah</option>
                                     {% for sekolah in data_sekolah %}
                                     <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
@@ -50,17 +57,31 @@ Master User
                             </div>      
                             <div class="mb-3">
                                 <label for="total_siswa" class="form-label">Total Siswa</label>
-                                <input type="text" class="form-control" id="total_siswa" name="total_siswa" required>
-                            </div>
+                                <input type="text" class="form-control" id="total_siswa" name="total_siswa" placeholder="Masukkan Total Siswa" required>
+                                <div id="error-message" style="color: red; display: none;">Hanya angka yang diperbolehkan.</div>
+                            </div>                                                                           
                             <div class="mb-3">
                                 <label for="keterangan_siswa" class="form-label">Keterangan</label>
-                                <input type="text" class="form-control" id="keterangan_siswa" name="keterangan_siswa" required>
+                                <select class="form-control" id="keterangan_siswa" name="keterangan_siswa" required onchange="changeIcon()">
+                                    <option value="">Pilih Keterangan</option>
+                                    <option value="siswa">Siswa</option>
+                                    <option value="guru">Guru</option>
+                                    <option value="pegawai">Pegawai</option>
+                                    <option value="alumni">Alumni</option>
+                                </select>
                             </div>
-                            <div class="mb-3">
-                                <label for="nama" class="form-label">Icon</label>
-                                <input type="text" class="form-control" id="nama" name="icon_siswa" required>
+                            <div class="mb-3" id="icon_div">
+                                <label for="icon" class="form-label">Icon</label>
+                                <input type="text" class="form-control" id="icon" name="icon_siswa" readonly required>
                             </div>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <i class="fas fa-times"></i> Close
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i> Submit
+                                </button>
+                            </div>                         
                         </form>
                     </div>
                 </div>
@@ -99,9 +120,16 @@ Master User
                                         <td class="text-center align-middle"><span class="{{ dt_siswa.icon_siswa}}"></span></td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
-                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_siswa.id_data_siswa}}">Edit</a> &nbsp;
-                                                <button onclick="deleteSiswa('{{ dt_siswa.id_data_siswa }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                <!-- Tombol edit -->
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_siswa.id_data_siswa}}">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a>
+                                                <!-- Tombol delete -->
+                                                <button onclick="deleteSiswa('{{ dt_siswa.id_data_siswa }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </button>
                                             </div>
+                                            
                                         </td> 
                                     </tr>
                                     {% include 'admin/data/edit_siswa.html' %}
@@ -119,8 +147,42 @@ Master User
 {% endblock %}
 
 {% block js %}
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script>
+    document.getElementById('total_siswa').addEventListener('input', function (e) {
+        var errorMessage = document.getElementById('error-message');
+        if (/\D/.test(this.value)) {
+            // Jika ada karakter non-angka
+            errorMessage.style.display = 'block';
+            this.value = this.value.replace(/\D/g, '');
+        } else {
+            // Jika hanya angka
+            errorMessage.style.display = 'none';
+        }
+    });
+
+    function changeIcon() {
+        var keterangan = document.getElementById("keterangan_siswa").value;
+        var iconInput = document.getElementById("icon");
+        var icon = "";
+        switch (keterangan) {
+            case "siswa":
+                icon = "fa fa-graduation-cap fa-3x";
+                break;
+            case "guru":
+                icon = "fa fa-users fa-3x";
+                break;
+            case "pegawai":
+                icon = "fa fa-user-plus fa-3x";
+                break;
+            case "alumni":
+                icon = "fa fa-id-card fa-3x";
+                break;
+            default:
+                icon = "";
+        }
+        iconInput.value = icon;
+    }
 
     function deleteSiswa(siswa_) {
         var deleteUrl = "{% url 'sipandu_admin:delete_siswa' 'id_data_siswa' %}".replace("id_data_siswa",siswa_);

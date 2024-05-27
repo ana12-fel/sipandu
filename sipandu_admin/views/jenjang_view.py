@@ -3,6 +3,8 @@ from django.http import HttpResponse, JsonResponse
 from django.db import IntegrityError
 from sipandu_app.models import Master_jenjang
 from django.urls import reverse
+from django.views.decorators.http import require_POST
+
 
 def IndexJenjang(request):
     if request.method == 'POST':
@@ -56,3 +58,11 @@ def delete_jenjang(request, jenjang_id):
                 'message': 'Jenjang gagal dihapus, jenjang tidak ditemukan'
         }
         return JsonResponse(data, status=400)
+    
+def archive_jenjang(request, jenjang_id):
+    if request.method == "POST":
+        jenjang = get_object_or_404(Master_jenjang, pk=jenjang_id)
+        jenjang.archive()
+        return JsonResponse({"message": "Data berhasil diarsipkan."})
+    else:
+        return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)

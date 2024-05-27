@@ -28,6 +28,9 @@ urlpatterns = [
     path('index-master-jenjang/', jenjang_view.IndexJenjang, name='index_jenjang'),
     path('edit_jenjang/<str:jenjang_id>/', jenjang_view.edit_jenjang, name='edit_jenjang'),
     path('jenjang/<str:jenjang_id>/delete/', jenjang_view.delete_jenjang, name='delete_jenjang'),
+    path('archive_jenjang/<int:jenjang_id>/', jenjang_view.archive_jenjang, name='archive_jenjang'),
+
+
 
     path('index-master-sekolah/', sekolah_view.IndexSekolah, name='index_sekolah'),
     path('edit_sekolah/<str:sekolah_id>/', sekolah_view.edit_sekolah, name='edit_sekolah'),

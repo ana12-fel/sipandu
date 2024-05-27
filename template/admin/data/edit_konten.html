@@ -12,7 +12,11 @@ Master User
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <div>
-                <h1 class="page-title">Edit DATA KONTEN</h1>
+                <h1 class="page-title">EDIT KONTEN</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data / Edit Data Konten</li>
+                </ol>
             </div>
         </div>
 
@@ -59,11 +63,11 @@ Master User
         <label for="status">Status</label>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="status" id="statusAktif" value="True" {% if dt_konten.status %}checked{% endif %}>
-            <label class="form-check-label" for="statusAktif">Aktif</label>
+            <label class="form-check-label" for="statusAktif">Publish</label>
         </div>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="status" id="statusTidakAktif" value="False" {% if not dt_konten.status %}checked{% endif %}>
-            <label class="form-check-label" for="statusTidakAktif">Tidak Aktif</label>
+            <label class="form-check-label" for="statusTidakAktif">Unpublish</label>
         </div>
     </div>
 
@@ -101,12 +105,11 @@ Master User
             </div>
         </div>
     </div>
-
-    
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-primary">Simpan</button>
-    </div>
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-paper-plane"></i> Submit
+        </button>
+    </div> 
 </form>
 </div>
 </div>
@@ -116,6 +119,7 @@ Master User
 
 {% block js %}
 <script src="{% static 'admin/js/ckeditor.js'%}"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script>
     ClassicEditor

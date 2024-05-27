@@ -115,7 +115,7 @@ AUTH_USER_MODEL = 'sipandu_app.Master_user'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Jakarta'
 
 USE_I18N = True
 
@@ -144,4 +144,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # URL yang digunakan untuk mengakses file media
 MEDIA_URL = ' /media/'
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Set MEDIA_ROOT to the directory where you want to store media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 

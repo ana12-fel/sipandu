@@ -15,8 +15,8 @@ Master User
             <div>
                 <h1 class="page-title">DATA KONTEN</h1>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">data konten</li>
+                    <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data/ Data Konten</li>
                 </ol>
             </div>
             
@@ -38,6 +38,23 @@ Master User
                     <div class="card-header">
                         <h3 class="card-title">Data Posting Konten</h3>
                     </div>
+                    <style>
+                        .status-aktif {
+                            background-color: #4CAF50;  
+                            color: white;  
+                            padding: 3px 8px;  
+                            border-radius: 6px;  
+                            font-size: 0.8em;  
+                        }
+                
+                        .status-tidak-aktif {
+                            background-color: #4CAF50;  
+                            color: white;  
+                            padding: 3px 8px;  
+                            border-radius: 6px;  
+                            font-size: 0.8em;  
+                        }
+                    </style>
                     <div class="card-body">
                         <div class="example">
                             <table class="table table-bordered text-nowrap border-bottom w-100" id="datakontenResponsiveDatatable">
@@ -60,14 +77,22 @@ Master User
                                         <td>{{ dt_konten.konten_kategori.kategori_uraian }}</td>
                                         <td>{{ dt_konten.konten_sub_kategori.sub_kategori_uraian }}</td>
                                         <td>{{ dt_konten.judul }}</td>
-                                        <td class="text-center align-middle"><span>{% if dt_konten.status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
+                                        <td class="text-center align-middle">
+                                            <span class="{% if dt_konten.status == 1 %}status-aktif{% else %}status-tidak-aktif{% endif %}">
+                                                {% if dt_konten.status == 1 %} Publish {% else %} Unpublish {% endif %}
+                                            </span>
+                                        </td>                                        
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
-                                                <a href="{% url 'sipandu_admin:edit_konten' dt_konten.id_data_konten %}" class="btn btn-sm btn-primary badge">Edit</a> &nbsp;
-                                                <button onclick="deleteKonten('{{ dt_konten.id_data_konten }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                <a href="{% url 'sipandu_admin:edit_konten' dt_konten.id_data_konten %}" class="btn btn-sm btn-primary badge">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a>
+                                                <button onclick="deleteKonten('{{ dt_konten.id_data_konten }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </button>
                                             </div>
+                                            
                                         </td> 
-                                        <!-- <td><button type="button" class="btn btn-success"><i class="fa fa-check"></i> Aktif</button></td> --> 
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -81,6 +106,7 @@ Master User
 </div>
 {% endblock %}
 {% block js %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script>
     function deleteKonten(konten_) {

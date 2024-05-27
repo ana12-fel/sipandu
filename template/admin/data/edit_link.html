@@ -15,10 +15,10 @@
                         <select class="form-select" id="link_sekolah" name="link_sekolah">
                             <option value="test" selected disabled>Pilih Sekolah</option>
                             {% for sekolah in data_sekolah %}
-                            <option value="{{sekolah.sekolah_id}}" {% if dt_link.link_sekolah_id == sekolah.sekolah.id %} selected {% endif %}>{{sekolah.sekolah_nama.upper}}</option>
+                            <option value="{{sekolah.sekolah_id}}" {% if dt_link.link_sekolah_id == sekolah.sekolah_id %} selected {% endif %}>{{sekolah.sekolah_nama.upper}}</option>
                             {% endfor %}
                         </select>
-                    </div> 
+                    </div>
                     <div class="mb-3">
                         <label for="judul_link" class="form-label">Judul</label>
                         <input type="text" value="{{dt_link.judul_link}}" class="form-control" id="judul_link" name="judul_link" required>
@@ -27,10 +27,19 @@
                         <label for="nama_link" class="form-label">Link</label>
                         <input type="text" value="{{dt_link.nama_link}}" class="form-control" id="nama_link" name="nama_link" required>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    <div class="mb-3">
+                        <label for="posisi_link" class="form-label">Posisi Link</label>
+                        <select class="form-select" id="posisi_link" name="posisi_link" required>
+                            <option value="" selected disabled>Pilih Posisi Link</option>
+                            <option value="kanan" {% if dt_link.posisi_link == 'kanan' %} selected {% endif %}>kanan</option>
+                            <option value="kiri" {% if dt_link.posisi_link == 'kiri' %} selected {% endif %}>kiri</option>
+                        </select>
                     </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit
+                        </button>
+                    </div> 
                 </form>
             </div>
         </div>

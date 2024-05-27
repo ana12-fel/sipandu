@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from sipandu_app.models import Data_siswa,Master_sekolah
+from django.contrib import messages
 
 def IndexSiswa(request):
     if request.method == 'POST':
@@ -9,14 +10,18 @@ def IndexSiswa(request):
         keterangan_siswa = request.POST.get('keterangan_siswa')
         icon_siswa = request.POST.get('icon_siswa')
 
-        print(siswa_sekolah)
+        if not total_siswa.isdigit():
+            messages.error(request, 'Total Siswa harus berupa angka.')
+            data_sekolah = Master_sekolah.objects.all()
+            data_siswa = Data_siswa.objects.all()
+            return render(request, 'admin/data/data_siswa.html', {'data_sekolah': data_sekolah, 'data_siswa': data_siswa})
 
-        dt_siswa = Data_siswa.objects.create( siswa_sekolah=Master_sekolah.objects.get(sekolah_id=siswa_sekolah),
-                                             total_siswa=total_siswa,
-                                             keterangan_siswa=keterangan_siswa,
-                                             icon_siswa=icon_siswa)
-        
-        print(siswa_sekolah,total_siswa,keterangan_siswa,icon_siswa)
+        dt_siswa = Data_siswa.objects.create(
+            siswa_sekolah=Master_sekolah.objects.get(sekolah_id=siswa_sekolah),
+            total_siswa=int(total_siswa),  # Pastikan untuk mengkonversi ke integer
+            keterangan_siswa=keterangan_siswa,
+            icon_siswa=icon_siswa
+        )
 
         return redirect('sipandu_admin:index_siswa')
     
@@ -24,21 +29,29 @@ def IndexSiswa(request):
         data_sekolah = Master_sekolah.objects.all()
         data_siswa = Data_siswa.objects.all()
 
-        return render(request, 'admin/data/data_siswa.html', {'data_sekolah' : data_sekolah, 'data_siswa' : data_siswa})
-    
-def EditSiswa(request, id_data_siswa):
-    if request.method == 'POST':
-        dt_siswa = Data_siswa.objects.get(id_data_siswa=id_data_siswa)
+        return render(request, 'admin/data/data_siswa.html', {'data_sekolah': data_sekolah, 'data_siswa': data_siswa})
 
+def EditSiswa(request, id_data_siswa):
+    dt_siswa = get_object_or_404(Data_siswa, id_data_siswa=id_data_siswa)
+    if request.method == 'POST':
         siswa_sekolah = request.POST.get('siswa_sekolah')
         total_siswa = request.POST.get('total_siswa')
         keterangan_siswa = request.POST.get('keterangan_siswa')
         icon_siswa = request.POST.get('icon_siswa')
 
-        dt_siswa.siswa_sekolah=Master_sekolah.objects.get(sekolah_id=siswa_sekolah)
-        dt_siswa.total_siswa=total_siswa
-        dt_siswa.keterangan_siswa=keterangan_siswa
-        dt_siswa.icon_siswa=icon_siswa
+        # Validasi total_siswa harus berupa angka
+        if not total_siswa.isdigit():
+            messages.error(request, 'Total Siswa harus berupa angka.')
+            data_sekolah = Master_sekolah.objects.all()
+            return render(request, 'admin/data/edit_siswa.html', {
+                'dt_siswa': dt_siswa,
+                'data_sekolah': data_sekolah
+            })
+
+        dt_siswa.siswa_sekolah = Master_sekolah.objects.get(sekolah_id=siswa_sekolah)
+        dt_siswa.total_siswa = int(total_siswa)  # Konversi ke integer
+        dt_siswa.keterangan_siswa = keterangan_siswa
+        dt_siswa.icon_siswa = icon_siswa
 
         dt_siswa.save()
 
@@ -46,9 +59,10 @@ def EditSiswa(request, id_data_siswa):
     
     else:
         data_sekolah = Master_sekolah.objects.all()
-        data_siswa = Data_siswa.objects.all()
-
-        return render(request, 'admin/data/edit_siswa.html', {'data_sekolah' : data_sekolah, 'data_siswa' : data_siswa})
+        return render(request, 'admin/data/edit_siswa.html', {
+            'dt_siswa': dt_siswa,
+            'data_sekolah': data_sekolah
+        })
     
 def DeleteSiswa (request, id_data_siswa):
     try:

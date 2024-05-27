@@ -15,8 +15,8 @@ Master User
             <div>
                 <h1 class="page-title">DATA LINK</h1>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">data link</li>
+                    <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data / data link</li>
                 </ol>
             </div>
             
@@ -53,13 +53,25 @@ Master User
                             </div> 
                             <div class="mb-3">
                                 <label for="judul_link" class="form-label">Judul</label>
-                                <input type="text" class="form-control" id="judul_link" name="judul_link" required>
+                                <input type="text" class="form-control" id="judul_link" name="judul_link" placeholder="Masukkan judul" required>
                             </div>
                             <div class="mb-3">
                                 <label for="nama_link" class="form-label">Link</label>
-                                <input type="text" class="form-control" id="nama_link" name="nama_link" required>
+                                <input type="text" class="form-control" id="nama_link" name="nama_link" placeholder="Masukkan link" required>
                             </div>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <div class="mb-3">
+                                <label for="posisi_link" class="form-label">Posisi Link</label>
+                                <select class="form-control" id="posisi_link" name="posisi_link"  required>
+                                    <option value="">Pilih Posisi Link</option>
+                                    <option value="kanan">kanan</option>
+                                    <option value="kiri">kiri</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i> Submit
+                                </button>
+                            </div>                         
                         </form>
                     </div>
                 </div>
@@ -84,6 +96,7 @@ Master User
                                         <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
                                         <th class="text-center border-bottom-0">JUDUL</th>
                                         <th class="text-center border-bottom-0">LINK</th>
+                                        <th class="text-center border-bottom-0">POSISI LINK</th>
                                         <th class="text-center border-bottom-0">AKSI</th>
                                     </tr>
                                 </thead>
@@ -95,11 +108,17 @@ Master User
                                         <td class="text-center align-middle">{{ dt_link.link_sekolah.sekolah_nama }}</td>
                                         <td class="text-center align-middle">{{ dt_link.judul_link }}</td>
                                         <td class="text-center align-middle">{{ dt_link.nama_link }}</td>
+                                        <td class="text-center align-middle">{{ dt_link.posisi_link}}</td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
-                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_link.id_link}}">Edit</a> &nbsp;
-                                                <button onclick="deleteLink('{{ dt_link.id_link }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_link.id_link}}">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a>
+                                                <button onclick="deleteLink('{{ dt_link.id_link }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </button>
                                             </div>
+                                            
                                         </td> 
                                     </tr>
                                     {% include 'admin/data/edit_link.html' %}
@@ -115,7 +134,7 @@ Master User
 </div>
 {% endblock %}
 {% block js %}
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script>
     function deleteLink(link_) {
     var deleteUrl = "{% url 'sipandu_admin:delete_link' 'id_link' %}".replace("id_link", link_);

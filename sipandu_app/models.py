@@ -22,6 +22,7 @@ STATUS_KEPEGAWAIAN =[
     ('kepala_sekolah', 'Kepala sekolah'),
 ]
 
+
 JENIS_SEKOLAH =(('negeri','Negeri'),('swasta','Swasta'))
 STATUS_KEPEMILIKAN_SEKOLAH = (('pemda','Pemerintah Daerah'),('pribadi','Pribadi'),('yayasan','Yayasan'))
 AKREDITASI_SEKOLAH = (('belum','Belum Terakreditasi'),('a','A'),('b','B'),('c','C'))
@@ -53,6 +54,11 @@ class Master_jenjang(models.Model):
         jenjang_nama='SD',
         jenjang_status=True  # Berikan nilai boolean True atau False
     )
+        
+    def archive(self):
+        self.jenjang_status = False
+        self.deleted_at = timezone.now()
+        self.save()
 
 class Master_sekolah(models.Model):
     sekolah_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -200,6 +206,13 @@ class Transanksi_situs(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+def generate_image_filename(instance, filename):
+    basefilename, file_extension = os.path.splitext(filename)
+    timestamp = timezone.now().strftime("%H-%M-%S")
+    new_filename = f"{basefilename}_{timestamp}{file_extension}"
+    return f"image_konten/{new_filename}"
+
+
 class Data_konten(models.Model):
     id_data_konten = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     konten_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
@@ -208,7 +221,7 @@ class Data_konten(models.Model):
     judul = models.CharField(max_length=200)
     isi_konten = models.TextField(default=None, null=True)
     status = models.BooleanField(default=True)   
-    konten_image = models.ImageField(upload_to='image_konten/')
+    konten_image = models.ImageField(upload_to=generate_image_filename)
     konten_tag = models.TextField(max_length=25)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -240,13 +253,14 @@ class Data_link(models.Model):
     link_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
     nama_link = models.CharField(max_length=200)
     judul_link = models.CharField(max_length=200)
+    posisi_link = models.TextField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 class Data_siswa(models.Model):
     id_data_siswa = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     siswa_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
-    total_siswa = models.TextField(null=True, default=None)
+    total_siswa = models.IntegerField(null=True, default=None)
     keterangan_siswa = models.TextField(default=None, null=True)
     icon_siswa = models.TextField(default=None, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

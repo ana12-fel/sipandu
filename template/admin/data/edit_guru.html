@@ -39,8 +39,8 @@
                         <label for="status_kepegawaian" class="form-label">Status Kepegawaian</label>
                         <select class="form-select" id="status_kepegawaian" name="status_kepegawaian" onchange="toggleTahunForm()">
                             <option value="" selected disabled>Pilih Status Kepegawaian</option>
-                            <option value="guru">Guru</option>
-                            <option value="kepala_sekolah">Kepala Sekolah</option>
+                            <option value="guru" {% if dt_guru.status_kepegawaian == 'guru' %} selected {% endif %}>Guru</option>
+                            <option value="kepala_sekolah" {% if dt_guru.status_kepegawaian == 'kepala_sekolah' %} selected {% endif %}>Kepala Sekolah</option>
                         </select>
                     </div>
                     <div id="tahun_guru" style="display: none;">
@@ -62,9 +62,13 @@
                     </div>
                 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit
+                        </button>
+                    </div>     
                 </form>
             </div>
         </div>
