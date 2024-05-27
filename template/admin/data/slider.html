@@ -1,0 +1,190 @@
+{% extends 'admin/base/base_index.html' %}
+{% load static %}
+
+{% block title %}
+Master User
+{% endblock %}
+
+{% block content %}
+<!--app-content open-->
+<div class="app-content">
+    <div class="side-app">
+
+        <!-- PAGE-HEADER -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">DATA SLIDER</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:admin_index' %}">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="#">Data</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Slider</li>
+                </ol>
+            </div>
+            
+            <div class="ms-auto pageheader-btn">
+                <a href="{% url 'sipandu_admin:tambah_slider'%}" class="btn btn-primary btn-icon text-white me-2" >
+                    <span>
+                        <i class="fe fe-plus"></i>
+                    </span> Tambahkan 
+                </a>
+            </div>
+        </div>
+        
+        <!-- PAGE-HEADER END -->
+
+        <!-- ROW-1 OPEN -->
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Data Slider</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="example">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="datakontenResponsiveDatatable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center border-bottom-0">No</th>
+                                        <th class="text-center border-bottom-0">Tanggal</th>
+                                        <th class="text-center border-bottom-0">Nama Sekolah</th>
+                                        <th class="text-center border-bottom-0">Gambar 1 </th>
+                                        <th class="text-center border-bottom-0">Gambar 2 </th>
+                                        <th class="text-center border-bottom-0">Gambar 3 </th>
+                                        <th class="text-center border-bottom-0">Judul 1 </th>
+                                        <th class="text-center border-bottom-0">Judul 2 </th>
+                                        <th class="text-center border-bottom-0">Judul 3 </th>
+                                        <th class="text-center border-bottom-0">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for dt_slider in data_slider %}
+                                    <tr>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_slider.created_at }}</td>
+                                        <td class="text-center align-middle">{{ dt_slider.slider_sekolah.sekolah_nama }}</td>\
+                                        <td class="text-center align-middle"><img src="{% if dt_slider.gambar1 %}{{ dt_slider.gambar1.url }}{% endif %}" alt="{{ dt_slider.gambar1 }}" style="max-width: 100px;"></td>
+                                        <td class="text-center align-middle"><img src="{% if dt_slider.gambar2 %}{{ dt_slider.gambar2.url }}{% endif %}" alt="{{ dt_slider.gambar2 }}" style="max-width: 100px;"></td>
+                                        <td class="text-center align-middle"><img src="{% if dt_slider.gambar3 %}{{ dt_slider.gambar3.url }}{% endif %}" alt="{{ dt_slider.gambar3 }}" style="max-width: 100px;"></td>
+                                        <td>{{ dt_slider.judul1}}</td>
+                                        <td>{{ dt_slider.judul2}}</td>
+                                        <td>{{ dt_slider.judul3}}</td>
+                                       
+                                        <td class="text-center align-middle">
+                                            <div class="btn-group align-top">
+                                                <a href="{% url 'sipandu_admin:edit_slider' dt_slider.id_data_slider %}" class="btn btn-sm btn-primary badge" style="margin-right: 10px;">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                                <button onclick="deleteslider('{{ data_slider.id_data_slider }}')" class="btn btn-sm btn-danger badge" value="Alert with title">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </button>
+                                            </div>
+                                            
+                                        </td> 
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+
+<script>
+    function deleteslider(slider_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_slider' 'id_data_slider' %}".replace("id_data_slider", slider_);
+
+        swal({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33", // Merah
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            cancelButtonColor: "#3085d6" // Warna biru default untuk tombol batal
+           
+           
+         
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "GET",
+                    success: function (response) {
+                        console.log('berhasil');
+                        swal({
+                            title: "Data berhasil dihapus!",
+                            icon: "success",
+                            buttons: false, // Tidak menampilkan tombol OK
+                            timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                        });
+                        window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
+                    },
+                    error: function (xhr, status, error) {
+                        // Terjadi kesalahan saat menghapus data
+                        swal("Terjadi kesalahan saat menghapus data!", {
+                            icon: "error",
+                        });
+                    }
+                });
+            } else {
+                // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
+                swal("Tindakan dibatalkan", "", "info");
+            }
+        });
+    }
+
+    $(function(){
+        $('#datakontenResponsiveDatatable').DataTable({
+            scrollX: "100%",
+            language: {
+                searchPlaceholder: 'Search...',
+                sSearch: '',
+            }
+        });
+    });
+
+    // Menambahkan gaya CSS kustom untuk tombol
+    var styles = `
+        .swal-button--confirm {
+            background-color: #28a745 !important; /* Hijau */
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .swal-button--confirm:hover {
+            background-color: #218838 !important; /* Hijau lebih gelap saat dihover */
+        }
+        .swal-button--cancel {
+            background-color: #dc3545 !important; /* Merah */
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .swal-button--cancel:hover {
+            background-color: #c82333 !important; /* Merah lebih gelap saat dihover */
+        }
+    `;
+    var styleSheet = document.createElement("style");
+    styleSheet.type = "text/css";
+    styleSheet.innerText = styles;
+    document.head.appendChild(styleSheet);
+</script>
+
+
+
+
+{% endblock %}
