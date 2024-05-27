@@ -35,13 +35,17 @@ def EditSiswa(request, id_data_siswa):
     dt_siswa = get_object_or_404(Data_siswa, id_data_siswa=id_data_siswa)
     if request.method == 'POST':
         siswa_sekolah = request.POST.get('siswa_sekolah')
-        total_siswa = request.POST.get('total_siswa')
+        total_siswa = request.POST.get('edit_total_siswa')
         keterangan_siswa = request.POST.get('keterangan_siswa')
         icon_siswa = request.POST.get('icon_siswa')
 
-        # Validasi total_siswa harus berupa angka
-        if not total_siswa.isdigit():
-            messages.error(request, 'Total Siswa harus berupa angka.')
+        # Validate total_siswa
+        try:
+            total_siswa = int(total_siswa)
+            if total_siswa < 0:
+                raise ValueError("Total Siswa harus positif.")
+        except ValueError:
+            messages.error(request, 'Total Siswa harus berupa bilangan bulat positif.')
             data_sekolah = Master_sekolah.objects.all()
             return render(request, 'admin/data/edit_siswa.html', {
                 'dt_siswa': dt_siswa,
@@ -49,7 +53,7 @@ def EditSiswa(request, id_data_siswa):
             })
 
         dt_siswa.siswa_sekolah = Master_sekolah.objects.get(sekolah_id=siswa_sekolah)
-        dt_siswa.total_siswa = int(total_siswa)  # Konversi ke integer
+        dt_siswa.total_siswa = total_siswa
         dt_siswa.keterangan_siswa = keterangan_siswa
         dt_siswa.icon_siswa = icon_siswa
 

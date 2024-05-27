@@ -12,10 +12,13 @@
             <div class="col-lg-3 mb-5 mb-lg-0">
                 <h5 class="text-transform-none font-weight-bold text-color-light text-5-5 mb-4">Link Terkait</h5>
                 <ul class="list list-unstyled text-3-5 mb-0">
-                    <li class="mb-2"><a href="#">BIDIKMISI</a></li>
-                    <li class="mb-2"><a href="#">LTMPT</a></li>
+                    {% for data in data_link_footer %}
+                    <li class="mb-2"><a href="{{data.nama_link}}" target="_blank">{{data.judul_link}}</a></li>
+                    {% endfor %}
+                    
+                    <!-- <li class="mb-2"><a href="#">LTMPT</a></li>
                     <li class="mb-2"><a href="#">SBMPTN</a></li>
-                    <li class="mb-2"><a href="{% static 'demo-law-firm-2-about.html' %}">SNMPTN</a></li>
+                    <li class="mb-2"><a href="{% static 'demo-law-firm-2-about.html' %}">SNMPTN</a></li> -->
                 </ul>
             </div>
 
