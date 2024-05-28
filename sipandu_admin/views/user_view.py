@@ -71,7 +71,7 @@ def edit_user(request, user_id):
         user_password = request.POST.get('password_edit')
         user_email = request.POST.get('email_edit')
         user_status = request.POST.get('user_status_edit')
-        user_sekolah_id = request.POST.get('user_sekolah_edit')
+        user_sekolah_id = request.POST.get('sekolah_edit')
         
         kab_edit = request.POST.get('kab_edit')
         print(user_role, kab_edit, user_sekolah_id)
@@ -82,9 +82,11 @@ def edit_user(request, user_id):
 
         # Tentukan user_kabupaten atau user_sekolah berdasarkan peran dan lokasi pengguna
         if user_role == 'admin_kabupaten': 
-            user_kabupaten = Master_wilayah.objects.filter(wilayah_id=kab_edit).first()
+            user_kabupaten = Master_wilayah.objects.filter(wilayah_id=kab_edit)
         elif user_role == 'admin_sekolah': 
-            user_sekolah = Master_sekolah.objects.filter(sekolah_id=user_sekolah_id).first()
+            user_sekolah = get_object_or_404(Master_sekolah, sekolah_id=user_sekolah_id)
+
+        print(user_sekolah)
 
         # Update detail pengguna
         dt_user.user_first_name = user_first_name
@@ -95,6 +97,8 @@ def edit_user(request, user_id):
         dt_user.user_status = user_status
         dt_user.user_kabupaten = user_kabupaten
         dt_user.user_sekolah = user_sekolah
+        
+       
 
         dt_user.set_password(user_password)
         dt_user.save()

@@ -61,7 +61,7 @@ def edit_wilayah(request, wilayah_id):
         wilayah_kode = request.POST.get('wilayah_kode_edit') 
         wilayah_nama = request.POST.get('wilayah_nama_edit')
         wilayah_level = request.POST.get('wilayah_level_edit')
-        wilayah_status = request.POST.get('wilayah_status_edit')
+        wilayah_status = request.POST.get('edit_wilayah_status')
         
         prov = request.POST.get('prov_edit')
         kab = request.POST.get('kab_edit')
@@ -81,7 +81,9 @@ def edit_wilayah(request, wilayah_id):
         dt_wilayah.wilayah_kode = wilayah_kode
         dt_wilayah.wilayah_nama = wilayah_nama
         dt_wilayah.wilayah_level = wilayah_level
+        dt_wilayah.wilayah_status = wilayah_status
         dt_wilayah.wilayah_parent = wilayah_parent
+        
 
         # Menyimpan perubahan
         dt_wilayah.save()
