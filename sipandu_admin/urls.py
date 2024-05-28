@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,kategori_views,siswa_views,transaksi_view,kontak_sekolah,galeri,guru_views,link_views,profile,laporan,header_views
+from .views import base_views,admin_views,jenjang_view,user_view, sekolah_view,login_view,wilayah_view,tema_view, konten_views,kategori_views,siswa_views,transaksi_view,kontak_sekolah,galeri,guru_views,link_views,profile,laporan,slider
 from django.contrib.auth import views as auth_views
 
 
@@ -28,7 +28,8 @@ urlpatterns = [
     path('index-master-jenjang/', jenjang_view.IndexJenjang, name='index_jenjang'),
     path('edit_jenjang/<str:jenjang_id>/', jenjang_view.edit_jenjang, name='edit_jenjang'),
     path('jenjang/<str:jenjang_id>/delete/', jenjang_view.delete_jenjang, name='delete_jenjang'),
-    path('archive_jenjang/<int:jenjang_id>/', jenjang_view.archive_jenjang, name='archive_jenjang'),
+    path('archive_jenjang/<str:jenjang_id>/', jenjang_view.archive_jenjang, name='archive_jenjang'),
+    path('unarchive_jenjang/<str:jenjang_id>/', jenjang_view.unarchive_jenjang, name='unarchive_jenjang'),
 
 
 
@@ -87,6 +88,14 @@ urlpatterns = [
     path('profile/change_password/', profile.change_password, name='change_password'),
     path('profile/edit/', profile.edit_profile, name='edit_profile'),
     path('header/', header_views.IndexHeader, name='index_header'),
+
+    path('slider/', slider.Indexslider, name='index_slider'),
+    path('tambah_slider/', slider.Tambahslider, name='tambah_slider'),
+    path('edit_slider/<str:id_data_slider>/', slider.Editslider, name='edit_slider'),
+    path('delete_galeri/<str:id_data_slider>/delete', slider.Deleteslider, name='delete_slider'),
+
+
+
 
     path('laporan_data_sekolah/', laporan.laporan_sekolah, name='laporan_data_sekolah'),
     path('laporan_data_transaksi/', laporan.laporan_transaksi, name='laporan_data_transaksi'),

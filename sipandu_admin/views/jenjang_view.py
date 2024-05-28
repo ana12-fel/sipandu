@@ -20,8 +20,10 @@ def IndexJenjang(request):
             return JsonResponse(data, status = 400)
 
     else:
-        data_jenjang = Master_jenjang.objects.all()
-        return render(request, 'admin/master/index_master_jenjang.html', {"data_jenjang": data_jenjang})
+        data_jenjang = Master_jenjang.objects.filter(deleted_at=None)
+        data_arsip = Master_jenjang.objects.filter(deleted_at__isnull=False)
+
+        return render(request, 'admin/master/index_master_jenjang.html', {"data_jenjang": data_jenjang, "data_arsip": data_arsip})
 
 
 def edit_jenjang(request, jenjang_id):
@@ -66,3 +68,19 @@ def archive_jenjang(request, jenjang_id):
         return JsonResponse({"message": "Data berhasil diarsipkan."})
     else:
         return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
+    
+def unarchive_jenjang(request, jenjang_id):
+    if request.method == 'POST':
+        print('test')
+        try:
+            jenjang = Master_jenjang.objects.get(jenjang_id=jenjang_id)
+            jenjang.jenjang_status = True  # Ubah status menjadi aktif
+
+            print(jenjang)
+            jenjang.deleted_at = None
+            jenjang.save()
+            return JsonResponse({'message': 'Data berhasil diunarsipkan'}, status=200)
+        except Master_jenjang.DoesNotExist:
+            return JsonResponse({'error': 'Data jenjang tidak ditemukan'}, status=404)
+    else:
+        return JsonResponse({'error': 'Metode request tidak diizinkan'}, status=405)

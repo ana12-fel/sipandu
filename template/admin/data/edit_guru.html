@@ -37,16 +37,16 @@
                     </div>
                     <div class="mb-3">
                         <label for="status_kepegawaian" class="form-label">Status Kepegawaian</label>
-                        <select class="form-select" id="status_kepegawaian" name="status_kepegawaian" onchange="toggleTahunForm()">
+                        <select class="form-select" id="edit_status_kepegawaian-{{dt_guru.id_data_guru}}" name="edit_status_kepegawaian-{{dt_guru.id_data_guru}}" onchange="edittoggleTahunForm()">
                             <option value="" selected disabled>Pilih Status Kepegawaian</option>
                             <option value="guru" {% if dt_guru.status_kepegawaian == 'guru' %} selected {% endif %}>Guru</option>
                             <option value="kepala_sekolah" {% if dt_guru.status_kepegawaian == 'kepala_sekolah' %} selected {% endif %}>Kepala Sekolah</option>
                         </select>
                     </div>
-                    <div id="tahun_guru" style="display: none;">
+                    <div id="edit_tahun_guru-{{dt_guru.id_data_guru}}" style="display: none;">
                         <div class="mb-3">
                             <label for="tahun_guru" class="form-label">Tahun Jabatan Kepala Sekolah</label>
-                            <input type="text" class="form-control" id="tahun_guru" name="tahun_guru">
+                            <input type="text" class="form-control" id="edit_tahun_guru-{{dt_guru.id_data_guru}}" name="edit_tahun_guru-{{dt_guru.id_data_guru}}">
                         </div>
                     </div>
                     <div class="mb-3">
@@ -76,16 +76,20 @@
 </div>
 <!-- Modal Edit Data Tema End -->
 <script>
-    function toggleTahunForm() {
-        var statusKepegawaian = document.getElementById("status_kepegawaian").value;
-        var tahun_guru = document.getElementById("tahun_guru");
+    function edittoggleTahunForm() {
+        var statusKepegawaian = document.getElementById("edit_status_kepegawaian-{{dt_guru.id_data_guru}}").value;
+        var tahun_guru = document.getElementById("edit_tahun_guru-{{dt_guru.id_data_guru}}");
 
         if (statusKepegawaian === "kepala_sekolah") {
             tahun_guru.style.display = "block";
+            console.log('berhasil')
         } else {
             tahun_guru.style.display = "none";
+            console.log('gagal')
+
         }
     }
+
     function previewImage(event) {
         var input = event.target;
         var reader = new FileReader();

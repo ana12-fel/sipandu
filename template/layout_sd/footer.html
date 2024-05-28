@@ -29,8 +29,10 @@
             <div class="col-lg-2">
                 <h4 class="font-weight-bold text-color-light">More</h4>
                 <ul class="list list-unstyled mb-0">
-                    <li class="mb-0"><a href="#" class="text-decoration-none text-3-5">- Terms of Use</a></li>
-                    <li class="mb-0"><a href="#" class="text-decoration-none text-3-5">- Privacy Policy</a></li>
+                    {% for data in data_link_footer %}
+                    <li class="mb-0"><a href="{{data.nama_link}}" target="_blank" class="text-decoration-none text-3-5">{{data.judul_link}}</a></li>
+                    {% endfor %}
+                    <!-- <li class="mb-0"><a href="#" class="text-decoration-none text-3-5">- Privacy Policy</a></li> -->
                 </ul>
             </div>
             <div class="col-lg-3">

@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,Permissi
 import uuid
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+import os
 
 LEVEL_WILAYAH = (
     (1, 'Provinsi'),
@@ -226,6 +227,7 @@ class Data_konten(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
 class Data_galeri(models.Model):
     id_data_galeri= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     galeri_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
@@ -279,6 +281,19 @@ class Data_guru(models.Model):
     guru_image = models.ImageField(upload_to='image_guru/')
     tahun_guru = models.CharField(max_length=10, null=True)
     status_kepegawaian = models.TextField(choices=STATUS_KEPEGAWAIAN)
+
+class Data_slider(models.Model):
+    id_data_slider= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    slider_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
+    gambar1 = models.ImageField(upload_to='slider/')
+    gambar2 = models.ImageField(upload_to='slider/')
+    gambar3 = models.ImageField(upload_to='slider/')
+    judul1 = models.CharField(max_length=200)
+    judul2 = models.CharField(max_length=200)
+    judul3 = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
 
 
 class Laporan(models.Model):
