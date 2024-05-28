@@ -79,7 +79,7 @@ Master Wilayah
                                 <label for="wilayah_nama" class="form-label">Nama Wilayah</label>
                                 <input type="text" class="form-control" id="wilayah_nama" name="wilayah_nama" placeholder="Masukkan Nama Wilayah" required>
                             </div>
-                                <!-- Input wilayah_status secara default -->
+                                <!-- Input wilayah_status secara defult -->
                             <div class="mb-3">
                                 <input type="hidden" name="wilayah_status" value="True">
                             </div>
@@ -126,7 +126,11 @@ Master Wilayah
                                             <td class="text-center align-middle">{{ dt_wilayah.wilayah_kode }}</td>
                                             <td class="text-center align-middle">{{ dt_wilayah.wilayah_nama }}</td>
                                             <td class="text-center align-middle">{{ dt_wilayah.wilayah_parent.wilayah_nama }}</td>
-                                            <td class="text-center align-middle"><span>{% if dt_wilayah.wilayah_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
+                                            <td class="text-center align-middle">
+                                                <span class="badge {% if dt_wilayah.wilayah_status == 1 %} badge-success-light{% else %} badge-danger-light {% endif %}">
+                                                    {% if dt_wilayah.wilayah_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}
+                                                </span>
+                                            </td>
                                             <td class="text-center align-middle">{{ dt_wilayah.wilayah_level }}</td>
                                             <td class="text-center align-middle">
                                                 <div class="btn-group align-top">
@@ -333,6 +337,9 @@ Master Wilayah
 		}
 	});
     })
+    $( ".modal_edit" ).on('shown.bs.modal', function(){
+        generate_data(this)
+    });
 
 </script>
 

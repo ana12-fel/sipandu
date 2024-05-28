@@ -87,6 +87,7 @@ urlpatterns = [
     path('index_profile/', profile.IndexProfile, name='index_profile'),
     path('profile/change_password/', profile.change_password, name='change_password'),
     path('profile/edit/', profile.edit_profile, name='edit_profile'),
+    path('header/', header_views.IndexHeader, name='index_header'),
 
     path('slider/', slider.Indexslider, name='index_slider'),
     path('tambah_slider/', slider.Tambahslider, name='tambah_slider'),
