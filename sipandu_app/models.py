@@ -264,6 +264,10 @@ class Data_kontak(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
 
+    def archive(self):
+        self.deleted_at = timezone.now()
+        self.save()
+
 class Data_link(models.Model):
     id_link= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     link_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
@@ -296,12 +300,9 @@ class Data_guru(models.Model):
 class Data_slider(models.Model):
     id_data_slider= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     slider_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
-    gambar1 = models.ImageField(upload_to='slider/')
-    gambar2 = models.ImageField(upload_to='slider/')
-    gambar3 = models.ImageField(upload_to='slider/')
-    judul1 = models.CharField(max_length=200)
-    judul2 = models.CharField(max_length=200)
-    judul3 = models.CharField(max_length=200)
+    gambar = models.ImageField(upload_to='slider/')
+    judul = models.CharField(max_length=200)
+    slider_status = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)

@@ -66,6 +66,8 @@ urlpatterns = [
     path('tambah_kontak/', kontak_sekolah.TambahKontak, name='tambah_kontak'),
     path('edit_kontak/<str:id_data_kontak>/', kontak_sekolah.EditKontak, name='edit_kontak'),
     path('delete_kontak/<str:id_data_kontak>/delete', kontak_sekolah.DeleteKontak, name='delete_kontak'),
+    path('archive_kontak/<str:id_data_kontak>/', kontak_sekolah.archive_kontak, name='archive_kontak'),
+    path('unarchive_kontak/<str:id_data_kontak>/', kontak_sekolah.unarchive_kontak, name='unarchive_kontak'),
 
 
     path('index-transaksi/', transaksi_view.IndexTransaksi, name='index_transaksi'),
@@ -90,12 +92,10 @@ urlpatterns = [
     path('profile/change_password/', profile.change_password, name='change_password'),
     path('profile/edit/', profile.edit_profile, name='edit_profile'),
 
-
-
     path('slider/', slider.Indexslider, name='index_slider'),
     path('tambah_slider/', slider.Tambahslider, name='tambah_slider'),
     path('edit_slider/<str:id_data_slider>/', slider.Editslider, name='edit_slider'),
-    path('delete_galeri/<str:id_data_slider>/delete', slider.Deleteslider, name='delete_slider'),
+    path('delete_slider/<str:id_data_slider>/delete', slider.Deleteslider, name='delete_slider'),
 
     path('laporan_data_sekolah/', laporan.laporan_sekolah, name='laporan_data_sekolah'),
     path('laporan_data_transaksi/', laporan.laporan_transaksi, name='laporan_data_transaksi'),

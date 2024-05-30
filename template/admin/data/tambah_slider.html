@@ -40,84 +40,49 @@ Master User
                 <div class="card-body">
                     <form method="post" action="{% url 'sipandu_admin:tambah_slider' %}" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <table class="table">
-                            <tr>
-                                <td>
-                                    <label for="slider_sekolah" class="form-label">Sekolah</label>
-                                </td>
-                                <td>
-                                    <select class="form-select" id="slider_sekolah" name="slider_sekolah">
-                                        <option value="test" selected disabled>Pilih Sekolah</option>
-                                        {% for sekolah in data_sekolah %}
-                                        <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
-                                        {% endfor %}
-                                    </select>
-                                </td>
-                            </tr>
-                            
-                            <tr>
-                                <td>
-                                    <label for="image" class="form-label">Gambar 1 </label>
-                                </td>
-                                <td>
-                                    <input type="file" class="form-control" id="gambar1" name="image_slider1" accept="image/*" onchange="previewImage1(event)">
-                                </td>
-                            </tr>
-                            
+                        <div class="mb-3">
+                            <label for="slider_sekolah" class="form-label">Sekolah</label>
+                            <select class="form-select" id="slider_sekolah" name="slider_sekolah" required>
+                                <option value="" selected disabled>Pilih Sekolah</option>
+                                {% for sekolah in data_sekolah %}
+                                <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
+                                {% endfor %}
+                            </select>
+                        </div> 
+        
+                        <div class="mb-3">
+                            <label for="judul" class="form-label">Judul </label>
+                            <input type="text" class="form-control" id="judul" name="judul" required>
+                        </div>
+                        
 
-                            <tr>
-                                <td>
-                                    <label for="image" class="form-label">Gambar 2 </label>
-                                </td>
-                                <td>
-                                    <input type="file" class="form-control" id="gambar2" name="image_slider2" accept="image/*" onchange="previewImage2(event)">
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                <label for="image" class="form-label">Gambar </label>
+                            </td>
+                            <td>
+                                <input type="file" class="form-control" id="gambar" name="image_slider1" accept="image/*" onchange="previewImage1(event)">
+                            </td>
+                        </tr>
 
-                            <tr>
-                                <td>
-                                    <label for="image" class="form-label">Gambar 3 </label>
-                                </td>
-                                <td>
-                                    <input type="file" class="form-control" id="gambar2" name="image_slider3" accept="image/*" onchange="previewImage3(event)">
-                                </td>
-                            </tr>
-
-                        </table>
-
-                         <div class="d-flex" style="border: 2px dotted; text-align: center;">
-                                <div id="image-preview1" class="mb-3" style="border: 2px dotted; text-align: center; max-width: 300px;">
-                                    {% if dt_slider.gambar1 %}
-                                    <img src="{{dt_slider.gambar1.url}}" alt="">
-                                    {% endif %}
-                                 </div>
-     
-                                 <div id="image-preview2" class="mb-3" style="border: 2px dotted; text-align: center; max-width: 300px;">
-                                     {% if dt_slider.gambar2 %}
-                                     <img src="{{dt_slider.gambar2.url}}" alt="">
-                                     {% endif %}
-                                  </div>
-     
-                                  <div id="image-preview3" class="mb-3" style="border: 2px dotted; text-align: center; max-width: 300px;">
-                                     {% if dt_slider.gambar3 %}
-                                     <img src="{{dt_slider.gambar3.url}}" alt="">
-                                     {% endif %}
-                                  </div>
+                        <div class="" style="text-align: center;">
+                            <div id="image-preview1" class="mb-3" style="">
+                                {% if dt_slider.gambar %}
+                                <img src="{{dt_slider.gambar.url}}" alt="">
+                                {% endif %}
                             </div>
-
-                        <div class="mb-3">
-                            <label for="judul" class="form-label">Judul 1 </label>
-                            <input type="text" class="form-control" id="judul" name="judul1" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="judul" class="form-label">Judul 2 </label>
-                            <input type="text" class="form-control" id="judul" name="judul2" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="judul" class="form-label">Judul 3 </label>
-                            <input type="text" class="form-control" id="judul" name="judul3" required>
+                            <label for="status">Status</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="status" id="statusAktif" value="True" checked>
+                                <label class="form-check-label" for="statusAktif">Publish</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="status" id="statusTidakAktif" value="False">
+                                <label class="form-check-label" for="statusTidakAktif">Unpublish</label>
+                            </div>
                         </div>
 
                         <div class="modal-footer">
