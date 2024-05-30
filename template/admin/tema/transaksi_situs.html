@@ -24,6 +24,11 @@ Transaksi Situs
                     </span> Tambahkan Data
                 </a>
             </div>
+            <button class="btn btn-secondary btn-icon text-white" onclick="openArchiveModal()">
+                <span>
+                    <i class="fe fe-archive"></i>
+                </span> Arsip Data
+            </button>
         </div>
         <!-- PAGE-HEADER END -->
 
@@ -73,6 +78,61 @@ Transaksi Situs
         </div>
         <!-- Modal Tambah Data End -->
 
+          <!-- Modal Arsip Data -->
+<div class="modal fade" id="archiveDataModal" tabindex="-1" aria-labelledby="archiveDataModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="archiveDataModalLabel">Arsip Data Jenjang</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap border-bottom w-100">
+                        <thead>
+                            <tr>
+                                <th class="text-center border-bottom-0">NO</th>
+                                <th class="text-center border-bottom-0">SEKOLAH</th>
+                                <th class="text-center border-bottom-0">TEMA</th>
+                                <th class="text-center border-bottom-0">DOMAIN</th>
+                                <th class="text-center border-bottom-0">THUMBNAIL</th>
+                                <th class="text-center border-bottom-0">AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dt_arsip in data_arsip %}
+                            <tr>
+                                <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.sekolah_id.sekolah_nama }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.tema_id.tema_nama }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.domain }}</td>
+                                <td class="text-center align-middle">
+                                    <img src="{% if dt_arsip.tema_id.tema_thumbnail %}{{ dt_arsip.tema_id.tema_thumbnail.url }}{% endif %}" alt="{{ dt_arsip.tema_id.tema_nama }}" style="max-width: 100px;">
+                                </td>
+                                <td class="text-center align-middle">
+                                    <button type="button" class="btn btn-danger" onclick="deleteTransaksi('{{ dt_arsip.transanksi_id }}')">
+                                        <i class="fa fa-trash"></i> Delete
+                                    </button>                                   
+                                    <button type="button" class="btn btn-success" onclick="UnarchiveTransaksi('{{ dt_arsip.transanksi_id }}')">
+                                        <i class="mdi mdi-archive"></i> Unarchive
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Arsip Data End -->
+
         <!-- ROW OPEN -->
         <div class="row row-cards">
             <div class="col-lg-12 col-xl-12">
@@ -107,7 +167,9 @@ Transaksi Situs
                                             <td class="text-center align-middle">
                                                 <div class="btn-group align-top">
                                                     <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{ dt_transaksi.transanksi_id }}">Edit</a> &nbsp;
-                                                    <button onclick="deleteTransaksi('{{ dt_transaksi.transanksi_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                    <button onclick="archiveTransaksi('{{ dt_transaksi.transanksi_id }}', '{{ dt_transaksi.sekolah_id.sekolah_nama }}', '{{  dt_transaksi.tema_id.tema_nama }}','{{ dt_transaksi.domain }}')" class="btn btn-sm btn-warning badge" value="Archive">
+                                                        <i class="mdi mdi-archive"></i> Arsip
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -127,50 +189,127 @@ Transaksi Situs
 
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script>
-    function deleteTransaksi(transaksi_) {
-    var deleteUrl = "{% url 'sipandu_admin:delete_transaksi' 'transanksi_id' %}".replace("transanksi_id", transaksi_);
+   function openArchiveModal() {
+    $('#archiveDataModal').modal('show');
+}
+
+function archiveTransaksi(transaksiId, transaksiSekolah, transaksiTema, transaksiDomain) {
+    swal({
+        title: "Apakah Anda yakin?",
+        text: "Anda akan mengarsipkan data ini!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willArchive) => {
+        if (willArchive) {
+            var archiveUrl = "{% url 'sipandu_admin:archive_transaksi' 0 %}".replace('0', transaksiId);
+
+            $.ajax({
+                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                url: archiveUrl,
+                type: "POST",
+                success: function(response) {
+                    swal({
+                        title: "Data berhasil diarsipkan!",
+                        icon: "success",
+                        buttons: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    swal("Terjadi kesalahan saat mengarsipkan data!", {
+                        icon: "error",
+                    });
+                }
+            });
+        }
+    });
+}
+
+function deleteTransaksi(transaksiId) {
+    var deleteUrl = "{% url 'sipandu_admin:delete_transaksi' 0 %}".replace('0', transaksiId);
 
     swal({
         title: "Apakah Anda yakin?",
-        text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Ya, hapus!",
-        cancelButtonText: "Batal",
-        closeOnConfirm: false,
-        closeOnCancel: false
-    },
-    function (isConfirm) {
-        if (isConfirm) {
+        text: "Anda tidak akan dapat mengembalikan data ini!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
             $.ajax({
                 headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
                 url: deleteUrl,
                 type: "DELETE",
-                success: function (response) {
+                success: function(response) {
                     console.log('berhasil');
                     swal({
                         title: "Data berhasil dihapus!",
                         icon: "success",
-                        buttons: false, // Tidak menampilkan tombol OK
-                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                        buttons: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.reload();
                     });
-                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
                 },
-                error: function (xhr, status, error) {
-                    // Terjadi kesalahan saat menghapus data
+                error: function(xhr, status, error) {
                     swal("Terjadi kesalahan saat menghapus data!", {
                         icon: "error",
                     });
                 }
             });
         } else {
-            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
             swal("Tindakan dibatalkan", "", "info");
         }
     });
 }
+
+
+function UnarchiveTransaksi(transaksiId) {
+    var unarchiveUrl = "{% url 'sipandu_admin:unarchive_transaksi' 0 %}".replace('0', transaksiId);
+
+    swal({
+        title: "Apakah Anda yakin?",
+        text: "Anda akan mengembalikan data ini!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willUnarchive) => {
+        if (willUnarchive) {
+            $.ajax({
+                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                url: unarchiveUrl,
+                type: "POST",
+                success: function(response) {
+                    console.log('berhasil');
+                    swal({
+                        title: "Data berhasil dikembalikan!",
+                        icon: "success",
+                        buttons: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    swal("Terjadi kesalahan karena data ini sedang digunakan!", {
+                        icon: "error",
+                    });
+                }
+            });
+        } else {
+            swal("Tindakan dibatalkan", "", "info");
+        }
+    });
+}
+
+
 $(function(){
         $('#situsResponsiveDatatable').DataTable({
 		scrollX: "100%",
