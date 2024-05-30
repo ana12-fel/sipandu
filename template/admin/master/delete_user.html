@@ -31,7 +31,7 @@
                         <input type="email" value="{{ dt_user.user_email }}" class="form-control" name="email" placeholder="Masukkan email">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteUser({{ dt_user.user_id }})">Delete</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteUser('{{ dt_user.user_id }}')">Delete</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
