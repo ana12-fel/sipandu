@@ -6,11 +6,13 @@
                 <a href="{% static 'demo-law-firm-2.html' %}" class="text-decoration-none">
                     <img src="{% static 'logo/logo_sekolah.png' %}" class="img-fluid" style="width: 100px; height: auto;" alt="" />
                 </a>
-                <p class="text-3-5">Jl. Sri Rahayu Jl. H. Abdul Kahar No.127, Sumodaran, Banyuraden, Kec. Gamping, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55293</p>  
+                {% for kontak in data_kontak_footer %}
+                <p class="text-3-5"><a href="{{kontak.link_map}}" target="_blank">{{kontak.alamat}}</a></p>  
+                {% endfor %}
             </div>
 
             <div class="col-lg-3 mb-5 mb-lg-0">
-                <h5 class="text-transform-none font-weight-bold text-color-light text-5-5 mb-4">Link Terkait</h5>
+                <h5 class="text-transform-none font-weight-bold text-color-light text-5-5 mb-4">UNIVERSITAS TERKAIT</h5>
                 <ul class="list list-unstyled text-3-5 mb-0">
                     {% for data in data_link_footer %}
                     <li class="mb-2"><a href="{{data.nama_link}}" target="_blank">{{data.judul_link}}</a></li>
@@ -23,42 +25,44 @@
             </div>
 
             <div class="col-lg-3 mb-5 mb-lg-0">
-                <h5 class="text-transform-none font-weight-bold text-color-light text-5-5 mb-8">universitas Yang Terkait</h5>
+                <h5 class="text-transform-none font-weight-bold text-color-light text-5-5 mb-8">LINK TERKAIT</h5>
                 <ul class="list list-unstyled text-3-5 mb-0">
-                    <li class="mb-2"><a target="_blank" href="https://www.unila.ac.id/">UNILA</a>
-                    <li class="mb-2"><a target="_blank" href="https://polinela.ac.id/">POLINELA</a></li>
+                    {% for data in data_link_footer %}
+                    <li class="mb-2"><a  href="{{data.nama_link}}" target="_blank">{{data.judul_link}}</a></li>
+                    {% endfor %}
+                    
+                    <!-- <li class="mb-2"><a target="_blank" href="https://polinela.ac.id/">POLINELA</a></li>
                     <li class="mb-2"><a target="_blank" href="https://www.radenintan.ac.id/">UIN</a></li>
                     <li class="mb-2"><a target="_blank" href="https://www.itera.ac.id/">ITERA</a></li>
-                    <li class="mb-2"><a target="_blank" href="https://ubl.ac.id/">UBL</a></li>
+                    <li class="mb-2"><a target="_blank" href="https://ubl.ac.id/">UBL</a></li> -->
                 </ul>
             </div>
 
             <div class="col-lg-3">
                 <h5 class="text-transform-none font-weight-bold text-color-light text-5-5 mb-4">Kontak</h5>
                 <ul class="list list-unstyled mb-4">
+                    {% for data in data_kontak_footer %}
                     <li>
                         <i class="icons icon-phone text-color-primary text-5-5 position-relative top-2 me-2"></i>
-                        <a href="tel:0123456789" class="text-color-light font-weight-bold text-decoration-none text-5">(800) 123-4657</a>
+                        <a href="tel:0123456789" class="text-color-light font-weight-bold text-decoration-none text-5"> {{data.no_hp}}</a>
                     </li>
                     <li class="mb-3">
                         <i class="icons icon-envelope text-color-primary text-6 position-relative top-6 me-2"></i>
-                        <a href="mailto:porto@portotheme.com" class="text-color-light text-decoration-none text-4">porto@portotheme.com</a>
+                        <a href="mailto:porto@portotheme.com" class="text-color-light text-decoration-none text-4"> {{data.email}}</a>
                     </li>
-                    <li class="text-color-light text-4">
-                        <i class="icons icon-calendar text-color-primary text-5 position-relative top-3 me-2"></i>
-                        Mon - Fri 9am - 6pm
-                    </li>
+                    {% endfor %}
                 </ul>
+                
                 <ul class="custom-social-icons-style-1 social-icons social-icons-clean">
+                    {% for data in data_kontak_footer %}
                     <li class="social-icons-instagram">
-                        <a href="http://www.instagram.com/" class="no-footer-css" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="http://www.instagram.com/" class="no-footer-css" target="_blank" title="Instagram"><i class="fab fa-instagram text-color-primary"></i> {{data.ig}}</a>
                     </li>
-                    <li class="social-icons-twitter mx-4">
-                        <a href="http://www.twitter.com/" class="no-footer-css" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+
+                    <li class="social-icons-facebook ">
+                        <a href="http://www.facebook.com/" class="no-footer-css" target="_blank" title="Facebook"><i class="fab fa-facebook-f text-color-primary"></i> {{data.fb}}</a>
                     </li>
-                    <li class="social-icons-facebook">
-                        <a href="http://www.facebook.com/" class="no-footer-css" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>

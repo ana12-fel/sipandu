@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect,get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from sipandu_app.models import Data_kontak,Master_sekolah
 from django.urls import reverse
+from django.db import IntegrityError
 
 def Indexkontak(request):
     if request.method == 'POST':
@@ -30,10 +31,11 @@ def Indexkontak(request):
 
         return redirect('sipandu_admin:index_kontak')
     else:
-        dt_kontak = Data_kontak.objects.all()
+        data_arsip = Data_kontak.objects.filter(deleted_at__isnull=False)
+        dt_kontak = Data_kontak.objects.filter(deleted_at=None)
         data_sekolah = Master_sekolah.objects.all()
         print('tes ini kontak')
-        return render(request, 'admin/data/kontak_sekolah.html', {"data_kontak": dt_kontak, "data_sekolah": data_sekolah})
+        return render(request, 'admin/data/kontak_sekolah.html', {"data_kontak": dt_kontak, "data_sekolah": data_sekolah, "data_arsip": data_arsip})
 
 def TambahKontak(request):
     if request.method == 'POST':
@@ -126,3 +128,26 @@ def DeleteKontak(request, id_data_kontak):
             'message': 'Data kontak gagal dihapus, data tidak ditemukan'
         }
         return JsonResponse(data, status=400)
+    
+def archive_kontak(request, id_data_kontak):
+    if request.method == "POST":
+        kontak = get_object_or_404(Data_kontak, pk=id_data_kontak)
+        kontak.archive()
+        return JsonResponse({"message": "Data berhasil diarsipkan."})
+    else:
+        return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
+    
+def unarchive_kontak(request, id_data_kontak):
+    if request.method == 'POST':
+        print('test')
+        try:
+            kontak = Data_kontak.objects.get(id_data_kontak=id_data_kontak)
+        
+            print(kontak)
+            kontak.deleted_at = None
+            kontak.save()
+            return JsonResponse({'message': 'Data berhasil diunarsipkan'}, status=200)
+        except Data_kontak.DoesNotExist:
+            return JsonResponse({'error': 'Data jenjang tidak ditemukan'}, status=404)
+    else:
+        return JsonResponse({'error': 'Metode request tidak diizinkan'}, status=405)

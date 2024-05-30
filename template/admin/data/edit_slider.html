@@ -11,114 +11,88 @@ Master User
       
         
         <!-- ROW-1 OPEN -->
-        <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">DATA SLIDER</h3>
-                    </div>
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">DATA SLIDER</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:admin_index' %}">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:index_slider' %}">Data</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Slider</li>
+                </ol>
+            </div>
+
+            <div class="ms-auto pageheader-btn">
+                <a href="{% url 'sipandu_admin:index_slider' %}" class="btn btn-primary btn-icon text-white me-2" >
+                    <span>
+                        <i class="fa fa-folder"></i>
+                    </span> Daftar Slider
+                </a>
+            </div>
+
+        </div>
+
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Edit Slider</h3>
+                </div>
                     <div class="card-body">
                         <form method="post" action="{% url 'sipandu_admin:edit_slider' dt_slider.id_data_slider %}" enctype="multipart/form-data">
                             {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="slider_sekolah" class="form-label">Sekolah</label>
+                                <select class="form-select" id="slider_sekolah" name="slider_sekolah">
+                                    <option value="test" selected disabled>Pilih Sekolah</option>
+                                    {% for sekolah in data_sekolah %}
+                                    <option value="{{ sekolah.sekolah_id }}" {% if dt_slider.slider_sekolah_id == sekolah.sekolah_id %} selected {% endif %}>{{ sekolah.sekolah_nama.upper }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div> 
 
                             <div class="mb-3">
-                                <label for="judul" class="form-label">Judul 1 </label>
-                                <input type="text" class="form-control" id="judul" name="judul1" required>
+                                <label for="judul" class="form-label">Judul</label>
+                                <input type="text" value="{{ dt_slider.judul }}" class="form-control" name="judul" required>
                             </div>
-    
-                            <div class="mb-3">
-                                <label for="judul" class="form-label">Judul 2 </label>
-                                <input type="text" class="form-control" id="judul" name="judul2" required>
-                            </div>
-    
-                            <div class="mb-3">
-                                <label for="judul" class="form-label">Judul 3 </label>
-                                <input type="text" class="form-control" id="judul" name="judul3" required>
-                            </div>
-
-                            <table class="table">
 
                                 <tr>
                                     <td>
-                                        <label for="slider_sekolah" class="form-label">Sekolah</label>
+                                        <label for="image" class="form-label">Gambar </label>
                                     </td>
                                     <td>
-                                        <select class="form-select" id="slider_sekolah" name="slider_sekolah">
-                                            <option value="test" selected disabled>Pilih Sekolah</option>
-                                            {% for sekolah in data_sekolah %}
-                                            <option {% if sekolah.sekolah_id == dt_slider.slider_sekolah.sekolah_id %} selected {% endif %} value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </td>
-                                </tr>
-
-                                
-                                <tr>
-                                    <td>
-                                        <label for="image" class="form-label">Gambar 1 </label>
-                                    </td>
-                                    <td>
-                                        {% if dt_slider.gambar1%}
-                                            <input type="file" value="{{ dt_slider.gambar1.url }}" class="form-control" id="gambar1" name="image_slider1" accept="image/*" onchange="previewImage1(event)">
+                                        {% if dt_slider.gambar%}
+                                            <input type="file" value="{{ dt_slider.gambar.url }}" class="form-control" id="gambar" name="image_slider1" accept="image/*" onchange="previewImage1(event)">
                                         {% else %}
-                                            <input type="file" class="form-control" id="gambar1" name="image_slider1" accept="image/*" onchange="previewImage1(event)">
+                                            <input type="file" class="form-control" id="gambar" name="image_slider1" accept="image/*" onchange="previewImage1(event)">
                                         {% endif %}
 
                                     </td>
                                 </tr>
 
-                                <tr>
-                                    <td>
-                                        <label for="image" class="form-label">Gambar 2 </label>
-                                    </td>
-                                    <td>
-                                        {% if dt_galeri.gambar2 %}
-                                            <input type="file" value="{{ dt_slider.gambar2.url }}" class="form-control" id="gambar2" name="image_slider2" accept="image/*" onchange="previewImage2(event)">
-                                        {% else %}
-                                            <input type="file" class="form-control" id="gambar2" name="image_slider2" accept="image/*" onchange="previewImage2(event)">
-                                        {% endif %}
-
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <label for="image" class="form-label">Gambar 3 </label>
-                                    </td>
-                                    <td>
-                                        {% if dt_slider.gambar3 %}
-                                            <input type="file" value="{{ dt_slider.gambar3.url }}" class="form-control" id="gambar3" name="image_slider3" accept="image/*" onchange="previewImage3(event)">
-                                        {% else %}
-                                            <input type="file" class="form-control" id="gambar3" name="image_slider3" accept="image/*" onchange="previewImage3(event)">
-                                        {% endif %}
-
-                                    </td>
-                                </tr>
-
-
-                            </table>
-                            <div class="d-flex" style="border: 2px dotted; text-align: center;">
-                                <div id="image-preview1" class="mb-3" style="border: 2px dotted; text-align: center; max-width: 300px;">
-                                    {% if dt_slider.gambar1 %}
-                                    <img src="{{dt_slider.gambar1.url}}" alt="">
+                                <div class="text-center mb-3" style="">
+                                    <div id="image-preview1" class="" style="">
+                                    {% if dt_slider.gambar %}
+                                    <img src="{{dt_slider.gambar.url}}" alt="">
                                     {% endif %}
-                                 </div>
-     
-                                 <div id="image-preview2" class="mb-3" style="border: 2px dotted; text-align: center; max-width: 300px;">
-                                     {% if dt_slider.gambar2 %}
-                                     <img src="{{dt_slider.gambar2.url}}" alt="">
-                                     {% endif %}
-                                  </div>
-     
-                                  <div id="image-preview3" class="mb-3" style="border: 2px dotted; text-align: center; max-width: 300px;">
-                                     {% if dt_slider.gambar3 %}
-                                     <img src="{{dt_slider.gambar3.url}}" alt="">
-                                     {% endif %}
-                                  </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
-                            </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="status" class="form-label">Status</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="statusAktif" value="True" checked>
+                                        <label class="form-check-label" for="statusAktif">Publish</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="statusTidakAktif" value="False">
+                                        <label class="form-check-label" for="statusTidakAktif">Unpublish</label>
+                                    </div>
+                                </div>       
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">
+                               <i class="fa fa-save"></i> Simpan
+                            </button>
+                        </div>
                         </form>
                     </div>
                 </div>
@@ -143,61 +117,9 @@ Master User
         .catch( error => {
                 console.error( error );
         } );
-
-
-
-        
     function previewImage1(event) {
         var input = event.target;
         var preview = document.getElementById('image-preview1');
-        
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function(e) {
-                // Menghapus preview thumbnail sebelumnya jika ada
-                while (preview.firstChild) {
-                    preview.removeChild(preview.firstChild);
-                } 
-
-                // Menambahkan elemen img untuk menampilkan preview thumbnail
-                var img = document.createElement('img');
-                img.src = e.target.result;
-                img.style.maxWidth = '300px';
-                img.alt = ' Preview';
-                preview.appendChild(img);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    function previewImage2(event) {
-        var input = event.target;
-        var preview = document.getElementById('image-preview2');
-        
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function(e) {
-                // Menghapus preview thumbnail sebelumnya jika ada
-                while (preview.firstChild) {
-                    preview.removeChild(preview.firstChild);
-                } 
-
-                // Menambahkan elemen img untuk menampilkan preview thumbnail
-                var img = document.createElement('img');
-                img.src = e.target.result;
-                img.style.maxWidth = '300px';
-                img.alt = ' Preview';
-                preview.appendChild(img);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    function previewImage3(event) {
-        var input = event.target;
-        var preview = document.getElementById('image-preview3');
         
         if (input.files && input.files[0]) {
             var reader = new FileReader();
