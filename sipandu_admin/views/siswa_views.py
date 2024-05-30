@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from sipandu_app.models import Data_siswa,Master_sekolah
 from django.contrib import messages
+from django.urls import reverse
+from django.views.decorators.http import require_POST
 
 def IndexSiswa(request):
     if request.method == 'POST':
@@ -27,9 +29,10 @@ def IndexSiswa(request):
     
     else:
         data_sekolah = Master_sekolah.objects.all()
-        data_siswa = Data_siswa.objects.all()
+        data_siswa = Data_siswa.objects.filter(deleted_at=None)
+        data_arsip = Data_siswa.objects.filter(deleted_at__isnull=False)
 
-        return render(request, 'admin/data/data_siswa.html', {'data_sekolah': data_sekolah, 'data_siswa': data_siswa})
+        return render(request, 'admin/data/data_siswa.html', {'data_sekolah': data_sekolah, 'data_siswa': data_siswa, 'data_arsip':data_arsip})
 
 def EditSiswa(request, id_data_siswa):
     dt_siswa = get_object_or_404(Data_siswa, id_data_siswa=id_data_siswa)
@@ -87,5 +90,26 @@ def DeleteSiswa (request, id_data_siswa):
         }
         return JsonResponse(data, status=400)
     
+def archive_siswa(request, id_data_siswa):
+    if request.method == "POST":
+        siswa = get_object_or_404(Data_siswa, pk=id_data_siswa)
+        siswa.archive()
+        return JsonResponse({"message": "Data berhasil diarsipkan."})
+    else:
+        return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
+    
+def unarchive_siswa(request, id_data_siswa):
+    if request.method == 'POST':
+        print('test')
+        try:
+            siswa = Data_siswa.objects.get(id_data_siswa=id_data_siswa)
 
+            print(siswa)
+            siswa.deleted_at = None
+            siswa.save()
+            return JsonResponse({'message': 'Data berhasil diunarsipkan'}, status=200)
+        except Data_siswa.DoesNotExist:
+            return JsonResponse({'error': 'Data jenjang tidak ditemukan'}, status=404)
+    else:
+        return JsonResponse({'error': 'Metode request tidak diizinkan'}, status=405)
 

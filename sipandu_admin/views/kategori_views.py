@@ -27,7 +27,9 @@ def MasterKategori(request):
         else:
             data_kategori = Master_kategori.objects.all()
             data_sub_kategori = Sub_kategori.objects.all()
-        return render(request, 'admin/master_kategori/master_kategori.html', {'data_tema': data_tema, 'data_kategori' : data_kategori, 'data_sub_kategori' : data_sub_kategori, 'data_kat' : data_kat})
+        
+        
+        return render(request, 'admin/master_kategori/master_kategori.html', {'data_tema': data_tema, 'data_kategori' : data_kategori, 'data_sub_kategori' : data_sub_kategori, 'data_kat' : data_kat, 'tema_id':tema_id})
 
 def edit_kategori(request, kategori_id_):
 
@@ -78,12 +80,11 @@ def SubKategori(request):
             dt_sub_kategori = Sub_kategori.objects.create(kategori_id_id=kategori_id_id,sub_kategori_uraian=Sub_kategori_uraian)
             print('sukses')
             data['status'] = True
-            redirect_url = f'/admin/master-kategori?tema_id={kategori_tema}'
-            return redirect_url({redirect_url , JsonResponse(data)})
-        except IntegrityError:
+            return JsonResponse(data, status = 201)
+        except IntegrityError as e:
+            print('error insert sub kategori', e)
             data['status'] = False
-            redirect_url = f'/admin/master-kategori?tema_id={kategori_tema}'
-            return redirect_url({redirect_url , JsonResponse(data)})
+            return JsonResponse(data, status = 400)
 
      else:
         data_tema = Master_tema.objects.all()

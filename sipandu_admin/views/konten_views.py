@@ -56,9 +56,9 @@ def IndexKonten(request):
         data_sekolah = Master_sekolah.objects.all()
         data_sub_kategori = Sub_kategori.objects.all()
         data_kategori = Master_kategori.objects.all()
-        data_konten = Data_konten.objects.all()
-        
-        return render(request, 'admin/data/konten.html', {"data_sub_kategori": data_sub_kategori, "data_kategori": data_kategori, "data_konten": data_konten, "data_sekolah": data_sekolah})
+        data_konten = Data_konten.objects.filter(deleted_at=None)
+        data_arsip_konten = Data_konten.objects.filter(deleted_at__isnull=False)        
+        return render(request, 'admin/data/konten.html', {"data_sub_kategori": data_sub_kategori, "data_kategori": data_kategori, "data_konten": data_konten, "data_sekolah": data_sekolah, "data_arsip_konten": data_arsip_konten})
 
 def TambahKonten(request):
     if request.method == 'POST':
@@ -90,6 +90,7 @@ def TambahKonten(request):
         data_kategori = Master_kategori.objects.all()
         data_sub_kategori = Sub_kategori.objects.all()
         data_konten = Data_konten.objects.all()
+
         return render(request, 'admin/data/tambah_konten.html', {'data_kategori': data_kategori, 'data_sub_kategori': data_sub_kategori, 'data_konten': data_konten, 'data_sekolah' : data_sekolah})
        
 def EditKonten(request, id_data_konten):
@@ -156,6 +157,30 @@ def DeleteKonten(request, id_data_konten):
                 'message': 'data konten gagal dihapus, data tidak ditemukan'
         }
         return JsonResponse(data, status=400)
+    
+def archive_konten(request, id_data_konten):
+    if request.method == "POST":
+        konten = get_object_or_404(Data_konten, pk=id_data_konten)
+        konten.archive()
+        return JsonResponse({"message": "Data berhasil diarsipkan."})
+    else:
+        return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
+    
+def unarchive_konten(request, id_data_konten):
+    if request.method == 'POST':
+        print('test')
+        try:
+            konten = Data_konten.objects.get(id_data_konten=id_data_konten)
+            konten.status = True  # Ubah status menjadi aktif
+
+            print(konten)
+            konten.deleted_at = None
+            konten.save()
+            return JsonResponse({'message': 'Data berhasil diunarsipkan'}, status=200)
+        except Data_konten.DoesNotExist:
+            return JsonResponse({'error': 'Data jenjang tidak ditemukan'}, status=404)
+    else:
+        return JsonResponse({'error': 'Metode request tidak diizinkan'}, status=405)
     
 
 

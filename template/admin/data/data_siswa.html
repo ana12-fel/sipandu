@@ -18,9 +18,13 @@ Master User
                 </ol>
             </div>
             <div class="ms-auto pageheader-btn">
-                <!-- Tombol untuk membuka modal tambah data -->
                 <button type="button" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#tambahModal">
                     <span><i class="fe fe-plus"></i></span> Tambahkan
+                </button>
+                <button class="btn btn-secondary btn-icon text-white" onclick="openArchiveModal()">
+                    <span>
+                        <i class="fas fa-archive"></i>
+                    </span> Arsip Data
                 </button>
             </div>
         </div>
@@ -78,7 +82,7 @@ Master User
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                     <i class="fas fa-times"></i> Close
                                 </button>
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" onclick="submitForm()">
                                     <i class="fas fa-paper-plane"></i> Submit
                                 </button>
                             </div>                         
@@ -87,7 +91,62 @@ Master User
                 </div>
             </div>
         </div>
-        <!-- Modal end -->
+        <!-- Modal tambah data end -->
+
+        <!-- Modal Arsip Data Siswa -->
+<div class="modal fade" id="archiveDataSiswaModal" tabindex="-1" aria-labelledby="archiveDataSiswaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="card-title" id="archiveDataSiswaModalLabel">Arsip Data Siswa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap border-bottom w-100">
+                        <thead>
+                            <tr>
+                                <th class="text-center">NO</th>
+                                <th class="text-center">NAMA SEKOLAH</th>
+                                <th class="text-center">TOTAL SISWA</th>
+                                <th class="text-center">KETERANGAN</th>
+                                <th class="text-center">ICON</th>
+                                <th class="text-center">AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dt_arsip in data_arsip %}
+                            <tr>
+                                <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.siswa_sekolah.sekolah_nama }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.total_siswa }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.keterangan_siswa }}</td>
+                                <td class="text-center align-middle"><span class="{{ dt_arsip.icon_siswa }}"></span></td>
+                                <td class="text-center align-middle">
+                                    <button type="button" class="btn btn-danger" onclick="deleteSiswa('{{ dt_arsip.id_data_siswa }}')">
+                                        <i class="fas fa-trash-alt"></i> Delete
+                                    </button>                                   
+                                    <button type="button" class="btn btn-success" onclick="UnarchiveSiswa('{{ dt_arsip.id_data_siswa }}')">
+                                        <i class="fas fa-sync-alt"></i> Restore
+                                    </button>
+                                    </td>
+                                </td> 
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Arsip Data Siswa End -->
+
 
         <!-- ROW-1 OPEN -->
         <div class="row">
@@ -120,14 +179,13 @@ Master User
                                         <td class="text-center align-middle"><span class="{{ dt_siswa.icon_siswa}}"></span></td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
-                                                <!-- Tombol edit -->
-                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_siswa.id_data_siswa}}">
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{ dt_siswa.id_data_siswa }}">
                                                     <i class="fas fa-edit"></i> Edit
-                                                </a>
-                                                <!-- Tombol delete -->
-                                                <button onclick="deleteSiswa('{{ dt_siswa.id_data_siswa }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>
-                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </a>&nbsp;
+                                                <button onclick="archiveSiswa('{{ dt_siswa.id_data_siswa }}', '{{ dt_siswa.siswa_sekolah.sekolah_nama }}', '{{ dt_siswa.total_siswa }}', '{{ dt_siswa.keterangan_siswa }}', '{{ dt_siswa.icon_siswa }}')" class="btn btn-sm btn-danger badge" value="Arsip">
+                                                    <i class="fas fa-archive"></i> Arsip
                                                 </button>
+                                                                                                    
                                             </div>
                                             
                                         </td> 
@@ -147,6 +205,8 @@ Master User
 {% endblock %}
 
 {% block js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script>
     document.getElementById('total_siswa').addEventListener('input', function (e) {
@@ -185,49 +245,182 @@ Master User
         iconInput.value = icon;
     }
 
-    function deleteSiswa(siswa_) {
-        var deleteUrl = "{% url 'sipandu_admin:delete_siswa' 'id_data_siswa' %}".replace("id_data_siswa",siswa_);
+    function openArchiveModal() {
+    $('#archiveDataSiswaModal').modal('show');
+}
 
-        swal({
+    function archiveSiswa(idDataSiswa, siswaSekolah, totalSiswa, keteranganSiswa, iconSiswa) {
+        Swal.fire({
             title: "Apakah Anda yakin?",
-            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-            type: "warning",
+            text: "Anda ingin mengarsipkan data ini?",
+            icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Ya, hapus!",
+            confirmButtonText: "Ya, arsipkan!",
             cancelButtonText: "Batal",
-            closeOnConfirm: false,
-            closeOnCancel: false
-        },
-        function(isConfirm){
-            if (isConfirm) {
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var archiveUrl = "{% url 'sipandu_admin:archive_siswa' 0 %}".replace('0', idDataSiswa);
+
                 $.ajax({
-                    headers : { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
-                    url: deleteUrl,
-                    type: "DELETE",
-                    success: function (response) {
-                        console.log('berhasil');
-                    swal({
-                        title: "Data berhasil dihapus!",
-                        icon: "success",
-                        buttons: false, // Tidak menampilkan tombol OK
-                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
-                    });
-                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
-                },
-                error: function (xhr, status, error) {
-                    // Terjadi kesalahan saat menghapus data
-                    swal("Terjadi kesalahan saat menghapus data!", {
-                        icon: "error",
-                    });
-                }
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: archiveUrl,
+                    type: "POST",
+                    success: function(response) {
+                        Swal.fire({
+                            title: "Data berhasil diarsipkan!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan saat mengarsipkan data!",
+                            text: "Mohon coba lagi nanti.",
+                            icon: "error",
+                        });
+                    }
                 });
-            } else {
-                swal("Tindakan dibatalkan", "", "info");
             }
         });
     }
 
+    function submitForm() {
+        // Mengambil nilai input dari formulir
+        var siswaSekolah = document.getElementById("siswa_sekolah").value.trim();
+        var totalSiswa = document.getElementById("total_siswa").value;
+        var keteranganSiswa = document.getElementById("keterangan_siswa").value;
+        var iconSiswa = document.getElementById("icon_siswa").value;
+
+        // Mengirim data ke server menggunakan Ajax
+        $.ajax({
+            url: "{% url 'sipandu_admin:index_siswa' %}",
+            type: "POST",
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                siswa_sekolah: siswaSekolah,
+                total_siswa: totalSiswa,
+                keterangan_siswa: keteranganSiswa,
+                icon_siswa: iconSiswa
+            },
+            success: function(response) {
+                // Handle response dari server
+                // Misalnya, tampilkan notifikasi atau muat ulang halaman
+                console.log(response);
+                $('#addDataModal').modal('hide'); // Tutup modal setelah berhasil
+                setTimeout(function() {
+                // Redirect ke halaman yang sama setelah 2 detik
+                window.location.href = window.location.href;
+            }, 2000);
+            },
+            error: function(xhr, status, error) {
+                // Handle error jika terjadi kesalahan saat mengirimkan data
+                console.error("Terjadi kesalahan:", error);
+                swal({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Data sudah terinput sebelumnya!',
+                });
+            }
+        });
+    }
+
+    function deleteSiswa(siswa_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_siswa' 'id_data_siswa' %}".replace("id_data_siswa", siswa_);
+
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "DELETE",
+                    success: function(response) {
+                        console.log('berhasil');
+                        Swal.fire({
+                            title: "Data berhasil dihapus!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan karena data ini sedang digunakan!",
+                            icon: "error",
+                        });
+                    }
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Tindakan dibatalkan',
+                    '',
+                    'info'
+                );
+            }
+        });
+    }
+
+    function UnarchiveSiswa(idDataSiswa) {
+    var unarchiveUrl = "{% url 'sipandu_admin:unarchive_siswa' 0 %}".replace("0", idDataSiswa);
+
+    Swal.fire({
+        title: "Apakah Anda yakin?",
+        text: "ingin mengembalikan data yang diarsipkan!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#28a745", // Kode warna hijau yang sesuai dengan tombol Bootstrap
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, lanjutkan",
+        cancelButtonText: "Batal",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                url: unarchiveUrl,
+                type: "POST",
+                success: function(response) {
+                    console.log('berhasil');
+                    Swal.fire({
+                        title: "Data berhasil dikembalikan!",
+                        icon: "success",
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: "Terjadi kesalahan karena data ini sedang digunakan!",
+                        icon: "error",
+                    });
+                }
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire(
+                'Tindakan dibatalkan',
+                '',
+                'info'
+            );
+        }
+    });
+}
     $(function(){
         $('#siswaResponsiveDatatable').DataTable({
 		scrollX: "100%",

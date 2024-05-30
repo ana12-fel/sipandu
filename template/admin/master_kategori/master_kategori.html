@@ -22,8 +22,8 @@ Master User
             <div>
                 <h1 class="page-title">DATA KATEGORI</h1>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">kategori</li>
+                    <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Master Kategori</li>
                 </ol>
             </div>
         </div>
@@ -36,7 +36,7 @@ Master User
                         <select class="form-select" id="tema_id" name="tema_id" onchange="ubah_pilihan_tema(this)">
                             <option value="" disabled>Pilih Tema</option>
                             {% for tema in data_tema %}
-                            <option value="{{ tema.tema_id }}">{{ tema.tema_nama.upper }}</option>
+                            <option value="{{ tema.tema_id }}" {% if tema.tema_id == tema_id %} selected {% endif %}>{{ tema.tema_nama.upper }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -120,9 +120,13 @@ Master User
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <!-- Tombol edit -->
-                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_kategori.kategori_id}}">Edit</a> &nbsp;
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_kategori.kategori_id}}">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a> &nbsp;
                                                 <!-- Tombol delete -->
-                                                <button onclick="deleteKategori('{{ dt_kategori.kategori_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                <button onclick="deleteKategori('{{ dt_kategori.kategori_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>
@@ -181,7 +185,7 @@ Master User
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" onclick="submitForm()">Submit</button>
+                                <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -217,8 +221,12 @@ Master User
                                         <td class="text-center align-middle">{{ dt_sub_kategori.sub_kategori_uraian }}</td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
-                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_sub_kategori.sub_kategori_id}}">Edit</a> &nbsp;
-                                                <button onclick="deleteSubKategori('{{ dt_sub_kategori.sub_kategori_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_sub_kategori.sub_kategori_id}}">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a> &nbsp;
+                                                <button onclick="deleteSubKategori('{{ dt_sub_kategori.sub_kategori_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>
@@ -239,6 +247,7 @@ Master User
 
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script>
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -269,6 +278,11 @@ function submitForm() {
         success: function(response) {
             console.log('sukses')
             $('#addDataModal').modal('hide'); 
+            swal({
+                icon: 'success',
+                title: 'Berhasil...',
+                text: 'Data Berhasil Diinput.',
+            });
             setTimeout(function() { 
                 window.location.reload();
             }, 2000);
@@ -278,7 +292,7 @@ function submitForm() {
             swal({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Data sudah terinput sebelumnya!',
+                text: 'Data Sudah Terinput Sebelumnya!....',
             });
         }
     });
@@ -328,7 +342,7 @@ function submitForm() {
                                 window.location.reload(); 
                             },
                             error: function (xhr, status, error) {
-                                swal("Terjadi kesalahan saat menghapus data!", {
+                                swal("Data sedang digunakan!", {
                                     icon: "error",
                                 });
                             }
@@ -382,21 +396,21 @@ function submitForm() {
     
     $(function(){
         $('#kategoriResponsiveDatatable').DataTable({
-		scrollX: "100%",
-		language: {
-			searchPlaceholder: 'Search...',
-			sSearch: '',
-		}
-	});
-    })
-    $(function(){
+            scrollX: "100%",
+            language: {
+                searchPlaceholder: 'Search...',
+                sSearch: '',
+            }
+        });
+
         $('#subkategoriResponsiveDatatable').DataTable({
-		scrollX: "100%",
-		language: {
-			searchPlaceholder: 'Search...',
-			sSearch: '',
-		}
-	});
+            scrollX: "100%",
+            language: {
+                searchPlaceholder: 'Search...',
+                sSearch: '',
+            }
+        });
+
     })
 
 </script>

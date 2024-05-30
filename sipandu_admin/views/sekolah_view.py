@@ -29,9 +29,12 @@ def IndexSekolah(request):
     else:
         data_prov = Master_wilayah.objects.filter(wilayah_level='1')
         data_jenjang = Master_jenjang.objects.all()
-        data_sekolah = Master_sekolah.objects.all()
+        data_sekolah = Master_sekolah.objects.filter(deleted_at=None)
+        data_arsip_sekolah = Master_sekolah.objects.filter(deleted_at__isnull=False)
         data_wilayah = Master_wilayah.objects.all()
-        return render(request, 'admin/master/index_master_sekolah.html', {'data_sekolah': data_sekolah, 'data_wilayah': data_wilayah, "data_jenjang": data_jenjang, "data_prov" : data_prov})
+        data_kabupaten = Master_wilayah.objects.filter(wilayah_level = '2')
+        data_kecamatan = Master_wilayah.objects.filter(wilayah_level = '3')
+        return render(request, 'admin/master/index_master_sekolah.html', {'data_sekolah': data_sekolah, 'data_wilayah': data_wilayah, "data_jenjang": data_jenjang, "data_prov" : data_prov, 'data_kabupaten': data_kabupaten, 'data_kecamatan' : data_kecamatan, 'data_arsip_sekolah': data_arsip_sekolah})
     
 def get_wilayah(request):
     if request.method == 'GET' and request.is_ajax():
@@ -102,6 +105,30 @@ def delete_sekolah(request, sekolah_id):
                 'message': 'data sekolah gagal dihapus, data sekolah tidak ditemukan'
         }
         return JsonResponse(data, status=400)
+    
+def archive_sekolah(request, sekolah_id):
+    if request.method == "POST":
+        sekolah = get_object_or_404(Master_sekolah, pk=sekolah_id)
+        sekolah.sekolah_status = False
+        sekolah.archive()
+        return JsonResponse({"message": "Data berhasil diarsipkan."})
+    else:
+        return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
+
+    
+def unarchive_sekolah(request, sekolah_id):
+    if request.method == 'POST':
+        try:
+            sekolah = Master_sekolah.objects.get(sekolah_id=sekolah_id)
+            sekolah.sekolah_status=True
+            sekolah.deleted_at = None
+            sekolah.save()
+            return JsonResponse({'message': 'Data berhasil diunarsipkan'}, status=200)
+        except Master_sekolah.DoesNotExist:
+            return JsonResponse({'error': 'Data jenjang tidak ditemukan'}, status=404)
+    else:
+        return JsonResponse({'error': 'Metode request tidak diizinkan'}, status=405)
+
     
 
 

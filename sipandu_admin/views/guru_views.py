@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from sipandu_app.models import Data_guru,Master_sekolah
 
+
 def IndexGuru(request):
     if request.method == 'POST':
         guru_sekolah = request.POST.get('guru_sekolah')
@@ -33,9 +34,10 @@ def IndexGuru(request):
     
     else:
         data_sekolah = Master_sekolah.objects.all()
-        data_guru = Data_guru.objects.all()
+        data_guru = Data_guru.objects.filter(deleted_at=None)
+        data_arsip_guru = Data_guru.objects.filter(deleted_at__isnull=False)
 
-        return render(request, 'admin/data/data_guru.html', {'data_sekolah' : data_sekolah, 'data_guru' : data_guru})
+        return render(request, 'admin/data/data_guru.html', {'data_sekolah' : data_sekolah, 'data_guru' : data_guru, 'data_arsip_guru':data_arsip_guru})
     
 def EditGuru(request, id_data_guru):
     dt_guru = get_object_or_404(Data_guru, id_data_guru=id_data_guru)
@@ -100,5 +102,23 @@ def DeleteGuru (request, id_data_guru):
         }
         return JsonResponse(data, status=400)
     
+def archive_guru(request, id_data_guru):
+    if request.method == "POST":
+        guru = get_object_or_404(Data_guru, pk=id_data_guru)
+        guru.archive()
+        return JsonResponse({"message": "Data berhasil diarsipkan."})
+    else:
+        return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
 
-
+    
+def unarchive_guru(request, id_data_guru):
+    if request.method == 'POST':
+        try:
+            guru = Data_guru.objects.get(id_data_guru=id_data_guru)
+            guru.deleted_at = None
+            guru.save()
+            return JsonResponse({'message': 'Data berhasil diunarsipkan'}, status=200)
+        except Data_guru.DoesNotExist:
+            return JsonResponse({'error': 'Data jenjang tidak ditemukan'}, status=404)
+    else:
+        return JsonResponse({'error': 'Metode request tidak diizinkan'}, status=405)

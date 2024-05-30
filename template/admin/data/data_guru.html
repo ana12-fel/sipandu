@@ -18,9 +18,13 @@ Master User
                 </ol>
             </div>
             <div class="ms-auto pageheader-btn">
-                <!-- Tombol untuk membuka modal tambah data -->
                 <button type="button" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#tambahModal">
                     <span><i class="fe fe-plus"></i></span> Tambahkan
+                </button>
+                <button class="btn btn-secondary btn-icon text-white" onclick="openArchiveModal()">
+                    <span>
+                        <i class="fas fa-archive"></i>
+                    </span> Arsip Data
                 </button>
             </div>
         </div>
@@ -97,6 +101,67 @@ Master User
         </div>
         <!-- Modal end -->
 
+        <!-- Modal Arsip Data Guru -->
+<div class="modal fade" id="archiveGuruModal" tabindex="-1" aria-labelledby="archiveGuruModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="card-title" id="archiveGuruModalLabel">Arsip Data Guru</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap border-bottom w-100">
+                        <thead>
+                            <tr>
+                                <th class="text-center border-bottom-0">NO</th>
+                                <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
+                                <th class="text-center border-bottom-0">NAMA GURU</th>
+                                <th class="text-center border-bottom-0">NIP</th>
+                                <th class="text-center border-bottom-0">MATA PELAJARAN</th>
+                                <th class="text-center border-bottom-0">PENDIDIKAN</th>
+                                <th class="text-center border-bottom-0">STATUS </th>
+                                <th class="text-center border-bottom-0">TAHUN</th>
+                                <th class="text-center border-bottom-0">FOTO</th>
+                                <th class="text-center border-bottom-0">AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dt_arsip in data_arsip_guru %}
+                            <tr>
+                                <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.guru_sekolah.sekolah_nama }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.nama_guru }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.nip_guru }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.mata_pelajaran }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.pendidikan }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.status_kepegawaian }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.tahun_guru }}</td>
+                                <td class="text-center align-middle"><img src="{% if dt_arsip.guru_image %}{{ dt_arsip.guru_image.url }}{% endif %}" alt="{{ dt_arsip.nama_guru }}" style="max-width: 100px;"></td>
+                                <td class="text-center align-middle">
+                                    <button type="button" class="btn btn-danger" onclick="deleteGuru('{{ dt_arsip.id_data_guru }}')">
+                                        <i class="fas fa-trash-alt"></i> Delete
+                                    </button>                                   
+                                    <button type="button" class="btn btn-success" onclick="UnarchiveGuru('{{ dt_arsip.id_data_guru }}')">
+                                        <i class="fas fa-sync-alt"></i> Restore
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Arsip Data Guru End -->
+
         <!-- ROW-1 OPEN -->
         <div class="row">
             <div class="col-md-12 col-lg-12">
@@ -136,14 +201,12 @@ Master User
                                         <td class="text-center align-middle"><img src="{% if dt_guru.guru_image %}{{ dt_guru.guru_image.url }}{% endif %}" alt="{{ dt_guru.nama_guru }}" style="max-width: 100px;"></td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
-                                                <!-- Tombol edit -->
-                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_guru.id_data_guru}}">
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{ dt_guru.id_data_guru }}">
                                                     <i class="fas fa-edit"></i> Edit
-                                                </a>
-                                                <!-- Tombol delete -->
-                                                <button onclick="deleteGuru('{{ dt_guru.id_data_guru }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>
-                                                    <i class="fas fa-trash-alt"></i> Delete
-                                                </button>
+                                                </a>&nbsp;
+                                                <button onclick="archiveSiswa('{{ dt_guru.id_data_guru }}', '{{ dt_guru.guru_sekolah.sekolah_nama }}', '{{ dt_guru.nama_guru }}', '{{dt_guru.nip_guru}}', '{{dt_guru.mata_pelajaran}}', '{{dt_guru.pendidikan}}', '{{dt_guru.status_kepegawaian}}', '{{ dt_guru.guru_image }}', '{{ dt_guru.nama_guru }}')" class="btn btn-sm btn-danger badge" value="Archive">
+                                                    <i class="fas fa-archive"></i> Arsip
+                                                </button>                                                    
                                             </div>
                                             
                                         </td> 
@@ -163,6 +226,7 @@ Master User
 {% endblock %}
 
 {% block js %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script>
@@ -201,44 +265,139 @@ Master User
         }
     }
 
-    function deleteGuru(guru_) {
-        var deleteUrl = "{% url 'sipandu_admin:delete_guru' 'id_data_guru' %}".replace("id_data_guru",guru_);
+    function openArchiveModal() {
+    $('#archiveGuruModal').modal('show');
+}
 
-        swal({
+    function archiveSiswa(idDataGuru, guruSekolah, namaGuru, nipGuru, mataPelajaran, pendidikan, tahunGuru, statusKepegawaian, ) {
+        Swal.fire({
             title: "Apakah Anda yakin?",
-            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-            type: "warning",
+            text: "Anda ingin mengarsipkan data ini?",
+            icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Ya, hapus!",
+            confirmButtonText: "Ya, arsipkan!",
             cancelButtonText: "Batal",
-            closeOnConfirm: false,
-            closeOnCancel: false
-        },
-        function(isConfirm){
-            if (isConfirm) {
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var archiveUrl = "{% url 'sipandu_admin:archive_guru' 0 %}".replace('0', idDataGuru);
+
                 $.ajax({
-                    headers : { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
-                    url: deleteUrl,
-                    type: "DELETE",
-                    success: function (response) {
-                    console.log('berhasil');
-                    swal({
-                        title: "Data berhasil dihapus!",
-                        icon: "success",
-                        buttons: false, 
-                        timer: 1500 
-                    });
-                    window.location.reload(); 
-                },
-                    error: function (xhr, status, error) {
-                        swal("Terjadi kesalahan saat menghapus data!", {
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: archiveUrl,
+                    type: "POST",
+                    success: function(response) {
+                        Swal.fire({
+                            title: "Data berhasil diarsipkan!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                            $('#archiveGuruModal').modal('show');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan saat mengarsipkan data!",
                             icon: "error",
                         });
                     }
                 });
-            } else {
-                swal("Tindakan dibatalkan", "", "info");
+            }
+        });
+    }
+
+    function deleteGuru(guru_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_guru' 'id_data_guru' %}".replace("id_data_guru", guru_);
+
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "DELETE",
+                    success: function(response) {
+                        console.log('berhasil');
+                        Swal.fire({
+                            title: "Data berhasil dihapus!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan karena data ini sedang digunakan!",
+                            icon: "error",
+                        });
+                    }
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Tindakan dibatalkan',
+                    '',
+                    'info'
+                );
+            }
+        });
+    }
+
+        function UnarchiveGuru(idDataGuru) {
+        var unarchiveUrl = "{% url 'sipandu_admin:unarchive_guru' 0 %}".replace("0", idDataGuru);
+
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "ingin mengembalikan data yang diarsipkan!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#28a745", // Kode warna hijau yang sesuai dengan tombol Bootstrap
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, lanjutkan",
+            cancelButtonText: "Batal",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: unarchiveUrl,
+                    type: "POST",
+                    success: function(response) {
+                        console.log('berhasil');
+                        Swal.fire({
+                            title: "Data berhasil dikembalikan!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan karena data ini sedang digunakan!",
+                            icon: "error",
+                        });
+                    }
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Tindakan dibatalkan',
+                    '',
+                    'info'
+                );
             }
         });
     }

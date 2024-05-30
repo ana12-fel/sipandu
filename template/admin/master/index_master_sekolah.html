@@ -7,23 +7,6 @@ Master Sekolah
 {% block content %}
 <div class="app-content">
     <div class="side-app">
-        <style>
-            .status-aktif {
-                background-color: #4CAF50;  
-                color: white;  
-                padding: 3px 8px;  
-                border-radius: 6px;  
-                font-size: 0.8em;  
-            }
-    
-            .status-tidak-aktif {
-                background-color: #4CAF50;  
-                color: white;  
-                padding: 3px 8px;  
-                border-radius: 6px;  
-                font-size: 0.8em;  
-            }
-        </style>
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <div>
@@ -39,11 +22,16 @@ Master Sekolah
                         <i class="fe fe-plus"></i>
                     </span> Tambahkan Data
                 </a>
+                <button class="btn btn-secondary btn-icon text-white" onclick="openArchiveModal()">
+                    <span>
+                        <i class="fas fa-archive"></i>
+                    </span> Arsip Data
+                </button>
             </div>
         </div>
         <!-- PAGE-HEADER END -->
 
-        <!-- Modal Form -->
+        <!-- Modal Tambah Data -->
         <div class="modal fade" id="addDataModal" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -114,11 +102,78 @@ Master Sekolah
                                 </button>
                             </div>
                         </form>
-                        <!-- End Form -->
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Modal Tambah Data End -->
+
+        <!-- Modal Arsip Data Sekolah -->
+        <div class="modal fade" id="archiveSekolahModal" tabindex="-1" aria-labelledby="archiveSekolahModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="archiveSekolahModalLabel">Arsip Data Sekolah</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap border-bottom w-100">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center border-bottom-0">NO</th>
+                                        <th class="text-center border-bottom-0">PROVINSI</th>
+                                        <th class="text-center border-bottom-0">KABUPATEN</th>
+                                        <th class="text-center border-bottom-0">KECAMATAN</th>
+                                        <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
+                                        <th class="text-center border-bottom-0">JENJANG</th>
+                                        <th class="text-center border-bottom-0">NPSN</th>
+                                        <th class="text-center border-bottom-0">JENIS</th>
+                                        <th class="text-center border-bottom-0">STATUS</th>
+                                        <th class="text-center border-bottom-0">AKSI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for dt_arsip in data_arsip_sekolah %}
+                                    <tr>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.sekolah_provinsi.wilayah_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.sekolah_kabupaten.wilayah_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.sekolah_kecamatan.wilayah_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.sekolah_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.sekolah_jenjang.jenjang_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.sekolah_npsn }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.sekolah_jenis }}</td>
+                                        <td class="text-center align-middle">
+                                            <span class="badge {% if dt_sekolah.sekolah_status == 1 %} badge-success-light{% else %} badge-orange-light{% endif %}">
+                                                {% if dt_sekolah.sekolah_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}
+                                            </span>
+                                        </td>                                        
+                                        <td class="text-center align-middle">
+                                            <button type="button" class="btn btn-danger" onclick="deleteSekolah('{{ dt_arsip.sekolah_id }}')">
+                                                <i class="fas fa-trash-alt"></i> Delete
+                                            </button>
+                                            <button type="button" class="btn btn-success" onclick="unarchiveSekolah('{{ dt_arsip.sekolah_id }}')">
+                                                <i class="fas fa-sync-alt"></i> Restore
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Modal Arsip Data Sekolah End -->
+
+
         <!-- ROW-1 -->
         <div class="row row-sm">
             <div class="col-lg-12">
@@ -155,19 +210,19 @@ Master Sekolah
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_npsn }}</td>
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_jenis }}</td>
                                             <td class="text-center align-middle">
-                                                <span class="{% if dt_sekolah.sekolah_status == 1 %}status-aktif{% else %}status-tidak-aktif{% endif %}">
+                                                <span class="badge {% if dt_sekolah.sekolah_status == 1 %} badge-success-light{% else %} badge-orange-light{% endif %}">
                                                     {% if dt_sekolah.sekolah_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}
                                                 </span>
                                             </td>
                                             <td class="text-center align-middle">
                                                 <div class="btn-group align-top">
-                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_sekolah.sekolah_id}}">
+                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{ dt_sekolah.sekolah_id }}">
                                                         <i class="fas fa-edit"></i> Edit
-                                                    </a>
-                                                    <button onclick="deleteSekolah('{{ dt_sekolah.sekolah_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>
-                                                        <i class="fas fa-trash-alt"></i> Delete
-                                                    </button>
-                                                </div>                                                
+                                                    </a>&nbsp;
+                                                    <button onclick="archiveSekolah('{{ dt_sekolah.sekolah_id }}', '{{ dt_sekolah.sekolah_provinsi.wilayah_nama }}', '{{ dt_sekolah.sekolah_kabupaten.wilayah_nama  }}', '{{dt_sekolah.sekolah_kecamatan.wilayah_nama}}', '{{dt_sekolah.sekolah_nama}}', '{{dt_sekolah.sekolah_jenjang.jenjang_nama}}', '{{dt_sekolah.sekolah_npsn}}', '{{ dt_sekolah.sekolah_jenis }}', '{{ dt_sekolah.sekolah_status }}')" class="btn btn-sm btn-danger badge" value="Archive">
+                                                        <i class="fas fa-archive"></i> Arsip
+                                                    </button>                                                    
+                                                </div>                                            
                                             </td>
                                         </tr>
                                         {% include 'admin/master/edit_sekolah.html' %}
@@ -186,6 +241,8 @@ Master Sekolah
 
 {% block js %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     function render_kab(e){
         var level_wilayah = $(e).data('level');  //Mengambil data
@@ -225,49 +282,142 @@ Master Sekolah
         });  
     }
 
-function deleteSekolah(sekolah_) {
-    var deleteUrl = "{% url 'sipandu_admin:delete_sekolah' 'sekolah_id' %}".replace("sekolah_id", sekolah_);
+    function openArchiveModal() {
+    $('#archiveSekolahModal').modal('show');
+}
 
-    swal({
+    function archiveSekolah(sekolahId) {
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "Anda ingin mengarsipkan data ini?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, arsipkan!",
+            cancelButtonText: "Batal",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var archiveUrl = "{% url 'sipandu_admin:archive_sekolah' 0 %}".replace('0', sekolahId);
+
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: archiveUrl,
+                    type: "POST",
+                    success: function(response) {
+                        Swal.fire({
+                            title: "Data berhasil diarsipkan!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan saat mengarsipkan data!",
+                            icon: "error",
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    function deleteSekolah(sekolah_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_sekolah' 'sekolah_id' %}".replace("sekolah_id", sekolah_);
+
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "DELETE",
+                    success: function(response) {
+                        console.log('berhasil');
+                        Swal.fire({
+                            title: "Data berhasil dihapus!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan karena data ini sedang digunakan!",
+                            icon: "error",
+                        });
+                    }
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Tindakan dibatalkan',
+                    '',
+                    'info'
+                );
+            }
+        });
+    }
+
+    function unarchiveSekolah(sekolahId) {
+    var unarchiveUrl = "{% url 'sipandu_admin:unarchive_sekolah' 0 %}".replace("0", sekolahId);
+
+    Swal.fire({
         title: "Apakah Anda yakin?",
-        text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-        type: "warning",
+        text: "ingin mengembalikan data yang diarsipkan!",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Ya, hapus!",
+        confirmButtonColor: "#28a745",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, lanjutkan",
         cancelButtonText: "Batal",
-        closeOnConfirm: false,
-        closeOnCancel: false
-    },
-    function (isConfirm) {
-        if (isConfirm) {
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
             $.ajax({
                 headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
-                url: deleteUrl,
-                type: "DELETE",
-                success: function (response) {
-                    console.log('berhasil');
-                    swal({
-                        title: "Data berhasil dihapus!",
+                url: unarchiveUrl,
+                type: "POST",
+                success: function(response) {
+                    Swal.fire({
+                        title: "Data berhasil dikembalikan!",
                         icon: "success",
-                        buttons: false, // Tidak menampilkan tombol OK
-                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.reload();
                     });
-                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
                 },
-                error: function (xhr, status, error) {
-                    // Terjadi kesalahan saat menghapus data
-                    swal("Terjadi kesalahan saat menghapus data!", {
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: "Terjadi kesalahan karena data ini sedang digunakan!",
                         icon: "error",
                     });
                 }
             });
-        } else {
-            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
-            swal("Tindakan dibatalkan", "", "info");
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire(
+                'Tindakan dibatalkan',
+                '',
+                'info'
+            );
         }
     });
 }
+
+
     $(function(){
         $('#sekolahResponsiveDatatable').DataTable({
 		scrollX: "100%",
@@ -277,6 +427,8 @@ function deleteSekolah(sekolah_) {
 		}
 	});
     })
+    
+
 
 </script>
 
