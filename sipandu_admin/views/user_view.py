@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from sipandu_app.models import Master_user, LEVEL_WILAYAH, ROLE_CHOICE,Master_wilayah,Master_sekolah
 from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
 
 # @login_required(login_url='sipandu_admin:login_index')
 def IndexUser(request):
@@ -51,12 +52,13 @@ def IndexUser(request):
         return redirect('sipandu_admin:index_user')
 
     else:
-        data_user = Master_user.objects.all()
+        data_user = Master_user.objects.filter(deleted_at=None)
         data_wilayah = Master_wilayah.objects.all()
         data_prov = Master_wilayah.objects.filter(wilayah_level='1')
         data_sekolah = Master_sekolah.objects.all()  
+        data_arsip = Master_user.objects.filter(deleted_at__isnull=False)
         print (data_prov)
-        return render(request, 'admin/master/index_master_user.html', {"data_user": data_user, 'role_choices': ROLE_CHOICE, 'wilayah': data_wilayah, 'prov': data_prov,'sekolah':data_sekolah})
+        return render(request, 'admin/master/index_master_user.html', {"data_user": data_user, 'role_choices': ROLE_CHOICE, 'wilayah': data_wilayah, 'prov': data_prov,'sekolah':data_sekolah,"data_arsip":data_arsip})
         
 # @login_required(login_url='sipandu_admin:login_index')
 
@@ -95,10 +97,9 @@ def edit_user(request, user_id):
         dt_user.user_role = user_role
         dt_user.password = user_password  # Sebaiknya hash password sebelum menyimpan
         dt_user.user_status = user_status
-        dt_user.user_kabupaten = user_kabupaten
-        dt_user.user_sekolah = user_sekolah
         
-       
+        dt_user.user_kabupaten = user_kabupaten.first()
+        dt_user.user_sekolah = user_sekolah
 
         dt_user.set_password(user_password)
         dt_user.save()
@@ -166,4 +167,34 @@ def cek_user_email(request):
         'is_unique': not Master_user.objects.filter(user_email=email).exists()
     }
     return JsonResponse(data)
+
+def archive_user(request, user_id):
+    if request.method == "POST":
+        try:
+            user = get_object_or_404(Master_user, user_id=user_id)
+            user.archive()
+            return JsonResponse({"message": "Data berhasil diarsipkan."}, status=200)
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({"error": "Terjadi kesalahan saat mengarsipkan data."}, status=500)
+    else:
+        return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
+
+
+def unarchive_user(request, user_id):
+    if request.method == 'POST':
+        print('test')
+        try:
+            user = Master_user.objects.get(user_id=user_id)
+            user.user_status = True
+             # Ubah status menjadi aktif
+
+            print(user)
+            user.deleted_at = None
+            user.save()
+            return JsonResponse({'message': 'Data berhasil diunarsipkan'}, status=200)
+        except Master_user.DoesNotExist:
+            return JsonResponse({'error': 'Data user tidak ditemukan'}, status=404)
+    else:
+        return JsonResponse({'error': 'Metode request tidak diizinkan'}, status=405)
 

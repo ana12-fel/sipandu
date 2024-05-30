@@ -12849,7 +12849,7 @@ html.boxed .nav-secondary.sticky-active {
 	bottom: 0;
 	left: 0;
 	z-index: 2;
-	background: #00a6ff; /*untuk merubah warna pada jumlah siswa dan tentanmg sekolah*/
+	background: ; /*untuk merubah warna pada jumlah siswa dan tentanmg sekolah*/
 	opacity: 0;
 	pointer-events: none;
 	transition: ease opacity 300ms 100ms;

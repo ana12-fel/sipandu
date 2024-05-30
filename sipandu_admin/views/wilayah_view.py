@@ -46,6 +46,7 @@ def get_wilayah_by_level(request):
     if request.method == 'GET':
         level = request.GET.get('level')
         wilayah_id = request.GET.get('wilayah_id')
+        print(level)
         
         wilayah_list = Master_wilayah.objects.filter(wilayah_parent=wilayah_id).values('wilayah_id', 'wilayah_nama')
         

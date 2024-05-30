@@ -23,7 +23,9 @@ Master User
                         <i class="fe fe-user-plus"></i>
                     </span> Tambah User
                 </a>
+                
             </div>
+            
         </div>
         <!-- PAGE-HEADER END -->
 
@@ -95,6 +97,9 @@ Master User
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password" required >
                             </div>
+                             <div class="mb-3">
+                                <input type="hidden" name="wilayah_status" value="True">
+                            </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email" required>
@@ -109,6 +114,63 @@ Master User
             </div>
         </div>
         <!-- modal tambah data end -->
+
+        <!-- <div class="modal fade" id="archiveDataModal" tabindex="-1" aria-labelledby="archiveDataModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="archiveDataModalLabel">Arsip Data User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap border-bottom w-100">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center border-bottom-0">NO</th>
+                                        <th class="text-center border-bottom-0">USER</th>
+                                        <th class="text-center border-bottom-0">ROLE</th>
+                                        <th class="text-center border-bottom-0">LOGIN TERAKHIR</th>
+                                        <th class="text-center border-bottom-0">STATUS</th>
+                                        <th class="text-center border-bottom-0">EMAIL</th>
+                                        <th class="text-center border-bottom-0">AKSI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for dt_arsip in data_arsip %}
+                                    <tr>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.user_first_name }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.user_role }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.last_login }}</td>
+                                        <td class="text-center align-middle">
+                                            <span class="badge {% if dt_arsip.user_status == 1 %} badge-success-light{% else %} badge-danger-light {% endif %}">
+                                                {% if dt_arsip.user_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}
+                                            </span>
+                                        </td>
+                                        <td class="text-center align-middle">{{ dt_arsip.user_email }}</td>
+                                        <td class="text-center align-middle">
+                                        <button onclick="deleteUser('{{ dt_arsip.user_id }}')" class="btn btn-danger" value='Alert with title'>
+                                            <i class="fa fa-trash"></i> Hapus 
+                                        </button>                                   
+                                        <button type="button" class="btn btn-success" onclick="UnarchiveUser('{{ dt_arsip.user_id }}')">
+                                            <i class="fa fa-archive"></i> Unarchive
+                                        </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
 
 
         <!-- ROW-1 -->
@@ -153,7 +215,7 @@ Master User
                                                     </a>&nbsp;
                                                     <button onclick="deleteUser('{{ dt_user.user_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>
                                                         <i class="fa fa-trash"></i> Hapus 
-                                                    </button>
+                                                    </button> 
                                                 </div>
                      
                                             </td>
@@ -186,7 +248,50 @@ Master User
 {% endblock %}
 
 {% block js %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
+
+// function openArchiveModal() {
+//     $('#archiveDataModal').modal('show');
+// }
+
+// function archiveUser(useriId, userFirstName, userRole, userLastLogin, userStatus, userEmail) {
+//     swal({
+//         title: "Apakah Anda yakin?",
+//         text: "Anda akan mengarsipkan data ini!",
+//         icon: "warning",
+//         buttons: true,
+//         dangerMode: true,
+//     }).then((willArchive) => {
+//         if (willArchive) {
+//             var archiveUrl = "{% url 'sipandu_admin:archive_user' 0 %}".replace('0', useriId);
+
+//             $.ajax({
+//                 headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+//                 url: archiveUrl,
+//                 type: "POST",
+//                 success: function(response) {
+//                     swal({
+//                         title: "Data berhasil diarsipkan!",
+//                         icon: "success",
+//                         buttons: false,
+//                         timer: 1500
+//                     }).then(() => {
+//                         window.location.reload();
+//                     });
+//                 },
+//                 error: function(xhr, status, error) {
+//                     swal("Terjadi kesalahan saat mengarsipkan data!", {
+//                         icon: "error",
+//                     });
+//                 }
+//             });
+//         }
+//     });
+// }
+
 
 $('#addUserForm').on('submit', function(e) {
         e.preventDefault();
@@ -217,49 +322,44 @@ $('#addUserForm').on('submit', function(e) {
         });
     });
 
-    function deleteUser(user_) {
-    var deleteUrl = "{% url 'sipandu_admin:delete_user' 'user_id' %}".replace("user_id", user_);
+    function deleteUser(userId) {
+    var deleteUrl = "{% url 'sipandu_admin:delete_user' 0 %}".replace('0', userId);
 
     swal({
         title: "Apakah Anda yakin?",
-        text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Ya, hapus!",
-        cancelButtonText: "Batal",
-        closeOnConfirm: false,
-        closeOnCancel: false
-    },
-    function (isConfirm) {
-        if (isConfirm) {
+        text: "Anda tidak akan dapat mengembalikan data ini!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
             $.ajax({
                 headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
                 url: deleteUrl,
                 type: "DELETE",
-                success: function (response) {
+                success: function(response) {
                     console.log('berhasil');
                     swal({
                         title: "Data berhasil dihapus!",
                         icon: "success",
-                        buttons: false, // Tidak menampilka tombol OK
-                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                        buttons: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.reload();
                     });
-                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
                 },
-                error: function (xhr, status, error) {
-                    // Terjadi kesalahan saat menghapus data
+                error: function(xhr, status, error) {
                     swal("Terjadi kesalahan saat menghapus data!", {
                         icon: "error",
                     });
                 }
             });
         } else {
-            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
             swal("Tindakan dibatalkan", "", "info");
         }
     });
 }
+
 
 function pilih_role(e) {
     var level = $(e).val();
@@ -340,6 +440,45 @@ function pilih_role(e) {
             }
         });
     }
+
+
+//     function UnarchiveUser(userId) {
+//     var unarchiveUrl = "{% url 'sipandu_admin:unarchive_user' 0 %}".replace('0', userId);
+
+//     swal({
+//         title: "Apakah Anda yakin?",
+//         text: "Anda akan mengembalikan data ini!",
+//         icon: "warning",
+//         buttons: true,
+//         dangerMode: true,
+//     }).then((willUnarchive) => {
+//         if (willUnarchive) {
+//             $.ajax({
+//                 headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+//                 url: unarchiveUrl,
+//                 type: "POST",
+//                 success: function(response) {
+//                     console.log('berhasil');
+//                     swal({
+//                         title: "Data berhasil dikembalikan!",
+//                         icon: "success",
+//                         buttons: false,
+//                         timer: 1500
+//                     }).then(() => {
+//                         window.location.reload();
+//                     });
+//                 },
+//                 error: function(xhr, status, error) {
+//                     swal("Terjadi kesalahan karena data ini sedang digunakan!", {
+//                         icon: "error",
+//                     });
+//                 }
+//             });
+//         } else {
+//             swal("Tindakan dibatalkan", "", "info");
+//         }
+//     });
+// }
 
     $(function(){
         $('#datakontenResponsiveDatatable').DataTable({

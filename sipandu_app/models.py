@@ -160,6 +160,7 @@ class Master_user(AbstractBaseUser):
     email_verification_token = models.CharField(max_length=100, default='')
     user_sekolah = models.ForeignKey(Master_sekolah, default=None, null=True, on_delete=models.PROTECT)
     user_kabupaten = models.ForeignKey(Master_wilayah, default=None, null=True, on_delete=models.PROTECT)
+    deleted_at = models.DateTimeField(null=True, blank=True)
 
     objects = AccountManager()
 
@@ -171,6 +172,11 @@ class Master_user(AbstractBaseUser):
 
     def get_short_name(self):
         return self.user_first_name
+    
+    def archive(self):
+        self.user_status = False
+        self.deleted_at = timezone.now()
+        self.save()
 
     # @property
     # def is_anonymous(self):
@@ -237,6 +243,11 @@ class Transanksi_situs(models.Model):
     domain = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
+
+    def archive(self):
+        self.deleted_at = timezone.now()
+        self.save()
 
 def generate_image_filename(instance, filename):
     basefilename, file_extension = os.path.splitext(filename)
@@ -294,6 +305,10 @@ class Data_kontak(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
+
+    def archive(self):
+        self.deleted_at = timezone.now()
+        self.save()
 
 class Data_link(models.Model):
     id_link= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -364,12 +379,9 @@ class Data_guru(models.Model):
 class Data_slider(models.Model):
     id_data_slider= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     slider_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
-    gambar1 = models.ImageField(upload_to='slider/')
-    gambar2 = models.ImageField(upload_to='slider/')
-    gambar3 = models.ImageField(upload_to='slider/')
-    judul1 = models.CharField(max_length=200)
-    judul2 = models.CharField(max_length=200)
-    judul3 = models.CharField(max_length=200)
+    gambar = models.ImageField(upload_to='slider/')
+    judul = models.CharField(max_length=200)
+    slider_status = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)

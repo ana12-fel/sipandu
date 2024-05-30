@@ -47,12 +47,9 @@ Master User
                                         <th class="text-center border-bottom-0">No</th>
                                         <th class="text-center border-bottom-0">Tanggal</th>
                                         <th class="text-center border-bottom-0">Nama Sekolah</th>
-                                        <th class="text-center border-bottom-0">Gambar 1 </th>
-                                        <th class="text-center border-bottom-0">Gambar 2 </th>
-                                        <th class="text-center border-bottom-0">Gambar 3 </th>
-                                        <th class="text-center border-bottom-0">Judul 1 </th>
-                                        <th class="text-center border-bottom-0">Judul 2 </th>
-                                        <th class="text-center border-bottom-0">Judul 3 </th>
+                                        <th class="text-center border-bottom-0">Gambar</th>
+                                        <th class="text-center border-bottom-0">Judul</th>
+                                        <th class="text-center border-bottom-0">Status</th>
                                         <th class="text-center border-bottom-0">Aksi</th>
                                     </tr>
                                 </thead>
@@ -61,20 +58,31 @@ Master User
                                     <tr>
                                         <td class="text-center align-middle">{{ forloop.counter }}</td>
                                         <td class="text-center align-middle">{{ dt_slider.created_at }}</td>
-                                        <td class="text-center align-middle">{{ dt_slider.slider_sekolah.sekolah_nama }}</td>\
-                                        <td class="text-center align-middle"><img src="{% if dt_slider.gambar1 %}{{ dt_slider.gambar1.url }}{% endif %}" alt="{{ dt_slider.gambar1 }}" style="max-width: 100px;"></td>
-                                        <td class="text-center align-middle"><img src="{% if dt_slider.gambar2 %}{{ dt_slider.gambar2.url }}{% endif %}" alt="{{ dt_slider.gambar2 }}" style="max-width: 100px;"></td>
-                                        <td class="text-center align-middle"><img src="{% if dt_slider.gambar3 %}{{ dt_slider.gambar3.url }}{% endif %}" alt="{{ dt_slider.gambar3 }}" style="max-width: 100px;"></td>
-                                        <td>{{ dt_slider.judul1}}</td>
-                                        <td>{{ dt_slider.judul2}}</td>
-                                        <td>{{ dt_slider.judul3}}</td>
-                                       
+                                        <td class="text-center align-middle">{{ dt_slider.slider_sekolah.sekolah_nama }}</td>
+                                        <td class="text-center align-middle"><img src="{% if dt_slider.gambar %}{{ dt_slider.gambar.url }}{% endif %}" alt="{{ dt_slider.gambar }}" style="max-width: 100px;"></td>
+                                        <td class="text-center align-middle">{{ dt_slider.judul}}</td>
+
+                                        <td class="text-center align-middle">
+                                            <span class="{% if dt_slider.slider_status %}status-aktif{% else %}status-tidak-aktif{% endif %}">
+                                                {% if dt_slider.slider_status %}
+                                                    <button class="" style="background-color: #04b60a; border-color: #04b60a; color: white;" disabled>Publish</button>
+                                                {% else %}
+                                                    <button class="" style="background-color: #ff2231; border-color: #fa0e0e; color: white;" disabled>Unpublish</button>
+                                                {% endif %}
+                                            </span>
+                                        </td>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <a href="{% url 'sipandu_admin:edit_slider' dt_slider.id_data_slider %}" class="btn btn-sm btn-primary badge" style="margin-right: 10px;">
                                                     <i class="fa fa-edit"></i> Edit
                                                 </a>
-                                                <button onclick="deleteslider('{{ data_slider.id_data_slider }}')" class="btn btn-sm btn-danger badge" value="Alert with title">
+                                                <button onclick="deleteslider('{{ dt_slider.id_data_slider }}')" class="btn btn-sm btn-danger badge" value="Alert with title">
                                                     <i class="fa fa-trash"></i> Delete
                                                 </button>
                                             </div>
