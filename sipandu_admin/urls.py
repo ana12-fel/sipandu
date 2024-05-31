@@ -38,11 +38,16 @@ urlpatterns = [
     path('edit_sekolah/<str:sekolah_id>/', sekolah_view.edit_sekolah, name='edit_sekolah'),
     path('sekolah/<str:sekolah_id>/delete/', sekolah_view.delete_sekolah, name='delete_sekolah'),
     path('get-wilayah/', sekolah_view.get_wilayah, name='get_wilayah'),
+    path('archive_sekolah/<str:sekolah_id>/', sekolah_view.archive_sekolah, name='archive_sekolah'),
+    path('unarchive_sekolah/<str:sekolah_id>/', sekolah_view.unarchive_sekolah, name='unarchive_sekolah'),
 
 
     path('index-master-tema/', tema_view.IndexTema, name='index_tema'),
     path('edit_tema/<str:tema_id>/', tema_view.edit_tema, name='edit_tema'),
     path('tema/<str:tema_id>/delete/', tema_view.delete_tema, name='delete_tema'),
+    path('archive_tema/<str:tema_id>/', tema_view.archive_tema, name='archive_tema'),
+    path('unarchive_tema/<str:tema_id>/', tema_view.unarchive_tema, name='unarchive_tema'),
+
 
     path('master-kategori/', kategori_views.MasterKategori, name='master_kategori'),
     path('edit_kategori/<str:kategori_id_>/', kategori_views.edit_kategori, name='edit_kategori'),
@@ -55,6 +60,8 @@ urlpatterns = [
     path('tambah_konten/', konten_views.TambahKonten, name='tambah_konten'),
     path('edit_konten/<str:id_data_konten>/edit', konten_views.EditKonten, name='edit_konten'),
     path('delete_konten/<str:id_data_konten>/delete', konten_views.DeleteKonten, name='delete_konten'),
+    path('archive_konten/<str:id_data_konten>/', konten_views.archive_konten, name='archive_konten'),
+    path('unarchive_konten/<str:id_data_konten>/', konten_views.unarchive_konten, name='unarchive_konten'),
     
     path('galeri/', galeri.Indexgaleri, name='index_galeri'),
     path('tambah_galeri/', galeri.Tambahgaleri, name='tambah_galeri'),
@@ -79,14 +86,20 @@ urlpatterns = [
     path('index-siswa/', siswa_views.IndexSiswa, name='index_siswa'),
     path('edit_siswa/<str:id_data_siswa>/', siswa_views.EditSiswa, name='edit_siswa'),
     path('delete_siswa/<str:id_data_siswa>/delete', siswa_views.DeleteSiswa, name='delete_siswa'),
+    path('archive_siswa/<str:id_data_siswa>/', siswa_views.archive_siswa, name='archive_siswa'),
+    path('unarchive_siswa/<str:id_data_siswa>/', siswa_views.unarchive_siswa, name='unarchive_siswa'),
 
     path('index_guru/', guru_views.IndexGuru, name='index_guru'),
     path('edit-guru/<str:id_data_guru>/', guru_views.EditGuru, name='edit_guru'),
     path('delete-guru/<str:id_data_guru>/', guru_views.DeleteGuru, name='delete_guru'),
+    path('archive_guru/<str:id_data_guru>/', guru_views.archive_guru, name='archive_guru'),
+    path('unarchive_guru/<str:id_data_guru>/', guru_views.unarchive_guru, name='unarchive_guru'),
 
     path('index_link/', link_views.IndexLink, name='index_link'),
     path('edit_link/<str:id_link>/', link_views.EditLink, name='edit_link'),
     path('delete_link/<str:id_link>/', link_views.DeleteLink, name='delete_link'),
+    path('archive_link/<str:id_link>/', link_views.archive_link, name='archive_link'),
+    path('unarchive_link/<str:id_link>/', link_views.unarchive_link, name='unarchive_link'),
 
     path('index_profiles/', profile.IndexProfile, name='index_profile'),
     path('profile/change_password/', profile.change_password, name='change_password'),

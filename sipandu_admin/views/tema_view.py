@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from sipandu_app.models import Master_tema, Master_jenjang
+from django.urls import reverse
+from django.views.decorators.http import require_POST
 
 def IndexTema(request):
     if request.method == 'POST':
@@ -23,9 +25,10 @@ def IndexTema(request):
     
     else:
         data_jenjang = Master_jenjang.objects.all()
-        data_tema = Master_tema.objects.all()
+        data_tema = Master_tema.objects.filter(deleted_at=None)
+        data_arsip = Master_tema.objects.filter(deleted_at__isnull=False)
         
-        return render(request, 'admin/master/index_master_tema.html', {"data_tema" : data_tema, "data_jenjang": data_jenjang})
+        return render(request, 'admin/master/index_master_tema.html', {"data_tema": data_tema, "data_arsip": data_arsip, "data_jenjang": data_jenjang})
     
 def edit_tema(request, tema_id):
     if request.method == 'POST':
@@ -72,6 +75,29 @@ def delete_tema(request, tema_id):
                 'message': 'data tema gagal dihapus, data tema tidak ditemukan'
         }
         return JsonResponse(data, status=400)
+    
+def archive_tema(request, tema_id):
+    if request.method == "POST":
+        tema = get_object_or_404(Master_tema, pk=tema_id)
+        tema.archive()
+        return JsonResponse({"message": "Data berhasil diarsipkan."})
+    else:
+        return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
+    
+def unarchive_tema(request, tema_id):
+    if request.method == 'POST':
+        print('test')
+        try:
+            tema = Master_tema.objects.get(tema_id=tema_id)
+
+            print(tema)
+            tema.deleted_at = None
+            tema.save()
+            return JsonResponse({'message': 'Data berhasil diunarsipkan'}, status=200)
+        except Master_tema.DoesNotExist:
+            return JsonResponse({'error': 'Data jenjang tidak ditemukan'}, status=404)
+    else:
+        return JsonResponse({'error': 'Metode request tidak diizinkan'}, status=405)
     
 
 

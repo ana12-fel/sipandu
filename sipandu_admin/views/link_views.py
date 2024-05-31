@@ -17,8 +17,9 @@ def IndexLink(request):
         return redirect ('sipandu_admin:index_link')
     else:
         data_sekolah = Master_sekolah.objects.all()
-        data_link = Data_link.objects.all()
-        return render(request, 'admin/data/link.html', {'data_sekolah' : data_sekolah, 'data_link' : data_link})
+        data_link = Data_link.objects.filter(deleted_at=None)
+        data_arsip_link = Data_link.objects.filter(deleted_at__isnull=False)
+        return render(request, 'admin/data/link.html', {'data_sekolah' : data_sekolah, 'data_link' : data_link, 'data_arsip_link':data_arsip_link})
         
 
 def EditLink(request, id_link):
@@ -65,5 +66,28 @@ def DeleteLink(request, id_link):
                 'message': 'data link gagal dihapus, data link tidak ditemukan'
         }
         return JsonResponse(data, status=400)
+    
+def archive_link(request, id_link):
+    if request.method == "POST":
+        link = get_object_or_404(Data_link, pk=id_link)
+        link.archive()
+        return JsonResponse({"message": "Data berhasil diarsipkan."})
+    else:
+        return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
+    
+def unarchive_link(request, id_link):
+    if request.method == 'POST':
+        print('test')
+        try:
+            link = Data_link.objects.get(id_link=id_link)
+
+            print(link)
+            link.deleted_at = None
+            link.save()
+            return JsonResponse({'message': 'Data berhasil diunarsipkan'}, status=200)
+        except Data_link.DoesNotExist:
+            return JsonResponse({'error': 'Data jenjang tidak ditemukan'}, status=404)
+    else:
+        return JsonResponse({'error': 'Metode request tidak diizinkan'}, status=405)
 
   

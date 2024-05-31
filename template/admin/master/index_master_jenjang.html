@@ -7,23 +7,6 @@ Master User
 {% block content %}
 <div class="app-content">
     <div class="side-app">
-        <style>
-            .status-aktif {
-                background-color: #4CAF50;
-                color: white;
-                padding: 3px 8px;
-                border-radius: 6px;
-                font-size: 0.8em;
-            }
-
-            .status-tidak-aktif {
-                background-color: #f44336;
-                color: white;
-                padding: 3px 8px;
-                border-radius: 6px;
-                font-size: 0.8em;
-            }
-        </style>
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <div>
@@ -41,7 +24,7 @@ Master User
                 </a>
                 <button class="btn btn-secondary btn-icon text-white" onclick="openArchiveModal()">
                     <span>
-                        <i class="fe fe-archive"></i>
+                        <i class="fas fa-archive"></i>
                     </span> Arsip Data
                 </button>
             </div>
@@ -104,8 +87,8 @@ Master User
                                 <td class="text-center align-middle">{{ forloop.counter }}</td>
                                 <td class="text-center align-middle">{{ dt_arsip.jenjang_nama }}</td>
                                 <td class="text-center align-middle">
-                                    <span class="{% if dt_arsip.jenjang_status == 1 %}status-aktif{% else %}status-tidak-aktif{% endif %}">
-                                        {% if dt_jenjang.jenjang_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}
+                                    <span class="badge {% if dt_arsip.jenjang_status == 1 %} badge-success-light {% else %} badge-orange-light{% endif %}">
+                                        {% if dt_arsip.jenjang_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}
                                     </span>
                                 </td>
                                 <td class="text-center align-middle">
@@ -113,7 +96,7 @@ Master User
                                         <i class="fas fa-trash-alt"></i> Delete
                                     </button>                                   
                                     <button type="button" class="btn btn-success" onclick="confirmUnarchive('{{ dt_arsip.jenjang_id }}')">
-                                        <i class="fas fa-archive"></i> Unarchive
+                                        <i class="fas fa-sync-alt"></i> Restore
                                     </button>
                                 </td>
                             </tr>
@@ -157,7 +140,7 @@ Master User
                                             <td class="text-center align-middle">{{ forloop.counter }}</td>
                                             <td class="text-center align-middle">{{ dt_jenjang.jenjang_nama }}</td>
                                             <td class="text-center align-middle">
-                                                <span class="{% if dt_jenjang.jenjang_status == 1 %}status-aktif{% else %}status-tidak-aktif{% endif %}">
+                                                <span class="badge {% if dt_jenjang.jenjang_status == 1 %}badge-success-light{% else %}badge-orange-light{% endif %}">
                                                     {% if dt_jenjang.jenjang_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}
                                                 </span>
                                             </td>
@@ -165,10 +148,10 @@ Master User
                                                 <div class="btn-group align-top">
                                                     <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{ dt_jenjang.jenjang_id }}">
                                                         <i class="fas fa-edit"></i> Edit
-                                                    </a>
-                                                    <button onclick="archiveJenjang('{{ dt_jenjang.jenjang_id }}', '{{ dt_jenjang.jenjang_nama }}', '{{ dt_jenjang.jenjang_status }}')" class="btn btn-sm btn-warning badge" value="Archive">
+                                                    </a>&nbsp;
+                                                    <button onclick="archiveJenjang('{{ dt_jenjang.jenjang_id }}', '{{ dt_jenjang.jenjang_nama }}', '{{ dt_jenjang.jenjang_status }}')" class="btn btn-sm btn-danger badge" value="Archive">
                                                         <i class="fas fa-archive"></i> Arsip
-                                                    </button>
+                                                    </button>                                                    
                                                 </div>
                                             </td>
                                         </tr>
@@ -187,39 +170,52 @@ Master User
 {% endblock %}
 
 {% block js %}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script>
     function openArchiveModal() {
     $('#archiveDataModal').modal('show');
 }
 
-function archiveJenjang(jenjangId, jenjangNama, jenjangStatus) {
-    if (confirm("Apakah Anda yakin ingin mengarsipkan data ini?")) {
-        var archiveUrl = "{% url 'sipandu_admin:archive_jenjang' 0 %}".replace('0', jenjangId);
+    function archiveJenjang(jenjangId, jenjangNama, jenjangStatus) {
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "Anda ingin mengarsipkan data ini?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, arsipkan!",
+            cancelButtonText: "Batal",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var archiveUrl = "{% url 'sipandu_admin:archive_jenjang' 0 %}".replace('0', jenjangId);
 
-        $.ajax({
-            headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
-            url: archiveUrl,
-            type: "POST",
-            success: function(response) {
-                swal({
-                    title: "Data berhasil diarsipkan!",
-                    icon: "success",
-                    buttons: false,
-                    timer: 1500
-                });
-                window.location.reload(); 
-                $('#archiveDataModal').modal('show');
-            },
-            error: function(xhr, status, error) {
-                swal("Terjadi kesalahan saat mengarsipkan data!", {
-                    icon: "error",
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: archiveUrl,
+                    type: "POST",
+                    success: function(response) {
+                        Swal.fire({
+                            title: "Data berhasil diarsipkan!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                            $('#archiveDataModal').modal('show');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan saat mengarsipkan data!",
+                            icon: "error",
+                        });
+                    }
                 });
             }
         });
     }
-}
 
     function submitForm() {
         // Mengambil nilai input dari formulir
@@ -265,86 +261,97 @@ function archiveJenjang(jenjangId, jenjangNama, jenjangStatus) {
     }
 
     function deleteJenjang(jenjang_) {
-        var deleteUrl = "{% url 'sipandu_admin:delete_jenjang' 'jenjang_id' %}".replace("jenjang_id",jenjang_);
+        var deleteUrl = "{% url 'sipandu_admin:delete_jenjang' 'jenjang_id' %}".replace("jenjang_id", jenjang_);
 
-        swal({
+        Swal.fire({
             title: "Apakah Anda yakin?",
             text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-            type: "warning",
+            icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "Ya, hapus!",
             cancelButtonText: "Batal",
-            closeOnConfirm: false,
-            closeOnCancel: false
-        },
-        function(isConfirm){
-            if (isConfirm) {
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
                 $.ajax({
-                    headers : { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
                     url: deleteUrl,
                     type: "DELETE",
-                    success: function (response) {
-                    console.log('berhasil');
-                    swal({
-                        title: "Data berhasil dihapus!",
-                        icon: "success",
-                        buttons: false, 
-                        timer: 1500 
-                    });
-                    window.location.reload(); 
-                },
-                    error: function (xhr, status, error) {
-                        swal("Terjadi kesalahan karena data ini sedang di gunakan!", {
+                    success: function(response) {
+                        console.log('berhasil');
+                        Swal.fire({
+                            title: "Data berhasil dihapus!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan karena data ini sedang digunakan!",
                             icon: "error",
                         });
                     }
                 });
-            } else {
-                swal("Tindakan dibatalkan", "", "info");
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Tindakan dibatalkan',
+                    '',
+                    'info'
+                );
             }
         });
     }
 
     function confirmUnarchive(jenjangId) {
-        var unarchiveUrl = "{% url 'sipandu_admin:unarchive_jenjang' 0 %}".replace("0", jenjangId);
-    swal({
+    var unarchiveUrl = "{% url 'sipandu_admin:unarchive_jenjang' 0 %}".replace("0", jenjangId);
+
+    Swal.fire({
         title: "Apakah Anda yakin?",
         text: "ingin mengembalikan data yang diarsipkan!",
         icon: "warning",
-        buttons: ["Batal", "Ya, lanjutkan"],
-        dangerMode: true,
-    }, function(isConfirmed) {
-        if (isConfirmed) {
+        showCancelButton: true,
+        confirmButtonColor: "#28a745", // Kode warna hijau yang sesuai dengan tombol Bootstrap
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, lanjutkan",
+        cancelButtonText: "Batal",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
             $.ajax({
                 headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
                 url: unarchiveUrl,
                 type: "POST",
-                data: {},
-                success: function (response) {
+                success: function(response) {
                     console.log('berhasil');
-                    swal({
+                    Swal.fire({
                         title: "Data berhasil dikembalikan!",
                         icon: "success",
-                        buttons: false,
-                        timer: 1500
+                        timer: 1500,
+                        showConfirmButton: false
                     }).then(() => {
                         window.location.reload();
                     });
                 },
-                error: function (xhr, status, error) {
-                    swal("Terjadi kesalahan karena data ini sedang digunakan!", {
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: "Terjadi kesalahan karena data ini sedang digunakan!",
                         icon: "error",
                     });
                 }
             });
-        } else {
-            swal("Tindakan dibatalkan", "", "info");
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire(
+                'Tindakan dibatalkan',
+                '',
+                'info'
+            );
         }
     });
 }
-
-
     $(function() {
         $('#jenjangResponsiveDatatable').DataTable({
             scrollX: "100%",

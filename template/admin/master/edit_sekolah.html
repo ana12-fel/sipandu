@@ -1,5 +1,5 @@
 <!-- Modal Edit Data Sekolah -->
-<div class="modal fade" id="editdata_{{dt_sekolah.sekolah_id}}" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
+<div class="modal fade modal_edit" id="editdata_{{dt_sekolah.sekolah_id}}" data-id="{{dt_sekolah.sekolah_id}}"  tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,26 +13,31 @@
                     {% csrf_token %}
                     <div class="mb-3" id="div_prov_edit_{{dt_sekolah.sekolah_id}}">
                         <label for="role_edit">Provinsi</label>
-                        <select name="sekolah_provinsi" id="prov_edit_{{dt_sekolah.sekolah_id}}" data-level="prov_edit" class="form-select" onchange="render_kab_edit(this)">
+                        <select name="sekolah_provinsi" id="prov_edit_{{dt_sekolah.sekolah_id}}" data-level="prov_edit" class="form-select">
                             <option value="">- Pilih Provinsi -</option>
                             {% for provinsi in data_prov %}
-                            <option value="{{provinsi.wilayah_id}}" {% if dt_sekolah.sekolah_provinsi_id == wilayah.wilayah.id %} selected {% endif %}>{{provinsi.wilayah_nama.upper}}</option>
+                            <option value="{{provinsi.wilayah_id}}" {% if dt_sekolah.sekolah_provinsi_id == provinsi.wilayah_id %} selected {% endif %}>{{provinsi.wilayah_nama.upper}}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="mb-3" id="div_kab_edit_{{dt_sekolah.sekolah_id}}">
                         <label for="role" class="form-label">Kabupaten</label>
-                        <select name="sekolah_kabupaten" id="kab_edit_{{dt_sekolah.sekolah_id}}" data-level="kab_edit" class="form-select" onchange="render_kab_edit(this)">
+                        <select name="sekolah_kabupaten" id="kab_edit_{{dt_sekolah.sekolah_id}}" data-level="kab_edit" class="form-select">
                             <option value="">- Pilih Kabupaten -</option>
+                            {% for Kabupaten in data_kabupaten %}
+                            <option value="{{Kabupaten.wilayah_id}}" {% if dt_sekolah.sekolah_kabupaten_id == Kabupaten.wilayah_id %} selected {% endif %}>{{Kabupaten.wilayah_nama.upper}}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="mb-3" id="div_kec_edit_{{dt_sekolah.sekolah_id}}">
                         <label for="role" class="form-label">Kecamatan</label>
                         <select name="sekolah_kecamatan" id="kec_edit_{{dt_sekolah.sekolah_id}}" data-level="kec_edit" class="form-select">
                             <option value="">- Pilih Kecamatan -</option>
-                            <option value="test" selected disabled>Pilih Kecamatan</option>
+                            {% for kecamatan in data_kecamatan %}
+                            <option value="{{kecamatan.wilayah_id}}" {% if dt_sekolah.sekolah_kecamatan_id == kecamatan.wilayah_id %} selected {% endif %}>{{kecamatan.wilayah_nama.upper}}</option>
+                            {% endfor %}
                         </select>
-                    </div>   
+                    </div>
                     <div class="mb-3">
                         <label for="sekolah_nama" class="form-label">Nama Sekolah</label>
                         <input type="text" value="{{ dt_sekolah.sekolah_nama }}" class="form-control" name="sekolah_nama" placeholder="Masukkan Nama Sekolah">
@@ -102,4 +107,19 @@
             }
         });
     }
+    function generate_data(e){
+    element_prov = $(`#prov_edit_${$(e).data('id')}`);
+    element_kab = $(`#kab_edit_${$(e).data('id')}`);
+    element_kec = $(`#kec_edit_${$(e).data('id')}`);
+
+    var provuser = $(e).data('prov_user');
+    console.log(provuser);
+
+    element_prov.val(element_prov.data('prov_user'));
+    console.log('test : ', element_prov);
+    element_prov.trigger('change'); // Pemicu perubahan
+
+    // element_kab.trigger('change');
+    // element_kec.trigger('change');
+}
 </script>

@@ -73,6 +73,18 @@ class Master_sekolah(models.Model):
     sekolah_status = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True) 
     updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
+
+    def archive(self):
+        self.archived = True
+        self.deleted_at = timezone.now()
+        self.save()
+
+    def unarchive(self):
+        self.archived = False
+        self.deleted_at = None
+        self.save()
+
 
     # sekolah_status_kepemilikan = models.TextField(choices=STATUS_KEPEMILIKAN_SEKOLAH, null=True, default=None)
     # sekolah_no_sk_pendirian = models.TextField(null=True, default=None) 
@@ -189,6 +201,18 @@ class Master_tema(models.Model):
     tema_thumbnail = models.ImageField(upload_to='thumbnails_tema/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
+
+    def archive(self):
+        self.archived = True
+        self.deleted_at = timezone.now()
+        self.save()
+
+    def unarchive(self):
+        self.archived = False
+        self.deleted_at = None
+        self.save()
+
     
 class Master_kategori(models.Model):
     kategori_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -197,13 +221,20 @@ class Master_kategori(models.Model):
     kategori_uraian = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
+
 
 class Sub_kategori(models.Model):
     sub_kategori_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     kategori_id = models.ForeignKey(Master_kategori, on_delete=models.PROTECT,default=None, null=True)
-    sub_kategori_uraian = models.TextField(unique=True)
+    sub_kategori_uraian = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ('kategori_id', 'sub_kategori_uraian')
+
     
 class Transanksi_situs(models.Model):
     transanksi_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -237,7 +268,17 @@ class Data_konten(models.Model):
     konten_tag = models.TextField(max_length=25)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
 
+    def archive(self):
+        self.archived = True
+        self.deleted_at = timezone.now()
+        self.save()
+
+    def unarchive(self):
+        self.archived = False
+        self.deleted_at = None
+        self.save()
 
 class Data_galeri(models.Model):
     id_data_galeri= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -247,6 +288,7 @@ class Data_galeri(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
+    
     
 
 class Data_kontak(models.Model):
@@ -276,6 +318,18 @@ class Data_link(models.Model):
     posisi_link = models.TextField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
+
+    def archive(self):
+        self.archived = True
+        self.deleted_at = timezone.now()
+        self.save()
+
+    def unarchive(self):
+        self.archived = False
+        self.deleted_at = None
+        self.save()
+
 
 class Data_siswa(models.Model):
     id_data_siswa = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -285,6 +339,18 @@ class Data_siswa(models.Model):
     icon_siswa = models.TextField(default=None, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
+
+    def archive(self):
+        self.archived = True
+        self.deleted_at = timezone.now()
+        self.save()
+
+    def unarchive(self):
+        self.archived = False
+        self.deleted_at = None
+        self.save()
+
 
 class Data_guru(models.Model):
     id_data_guru = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -296,6 +362,19 @@ class Data_guru(models.Model):
     guru_image = models.ImageField(upload_to='image_guru/')
     tahun_guru = models.CharField(max_length=10, null=True)
     status_kepegawaian = models.TextField(choices=STATUS_KEPEGAWAIAN)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
+
+    def archive(self):
+        self.archived = True
+        self.deleted_at = timezone.now()
+        self.save()
+
+    def unarchive(self):
+        self.archived = False
+        self.deleted_at = None
+        self.save()
 
 class Data_slider(models.Model):
     id_data_slider= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)

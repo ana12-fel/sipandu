@@ -22,6 +22,11 @@ Master User
                 <button type="button" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#tambahModal">
                     <span><i class="fe fe-plus"></i></span> Tambahkan
                 </button>
+                <button class="btn btn-secondary btn-icon text-white" onclick="openArchiveModal()">
+                    <span>
+                        <i class="fas fa-archive"></i>
+                    </span> Arsip Data
+                </button>
             </div>
         </div>
         <!-- PAGE-HEADER END -->
@@ -74,37 +79,82 @@ Master User
             </div>
         </div>
         <!-- Modal end -->
+        
+          <!-- Modal Arsip Tema -->
+<div class="modal fade" id="archiveThemeModal" tabindex="-1" aria-labelledby="archiveThemeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="card-title" id="archiveThemeModalLabel">Arsip Data Tema</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    {% for dt_arsip in data_arsip %}
+                    <div class="col-md-4">
+                        <div class="card" style="height: 450px; display: flex; flex-direction: column; justify-content: space-between;">
+                            <img src="{% if dt_arsip.tema_thumbnail %}{{ dt_arsip.tema_thumbnail.url }}{% endif %}" 
+                                 class="card-img-top br-tr-7 br-tl-7" 
+                                 alt="{{ dt_arsip.tema_nama }}" 
+                                 style="height: 200px; object-fit: cover;">
+                            <div class="card-header">
+                                <h5 class="card-title"><i class="fa fa-desktop"></i> {{ dt_arsip.tema_nama }}</h5>
+                            </div>
+                            <div class="card-body" style="flex-grow: 1;">
+                                <p class="card-text"><i class="fa fa-user-graduate"></i> Jenjang : {{ dt_arsip.tema_jenjang.jenjang_nama }}</p>
+                                <p class="card-text"><i class="fa fa-folder"></i> Nama Folder : {{ dt_arsip.tema_folder_name }}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" onclick="deletetema('{{ dt_arsip.tema_id }}')">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </button>
+                                <button type="button" class="btn btn-success" onclick="confirmUnarchive('{{ dt_arsip.tema_id }}')">
+                                    <i class="fas fa-sync-alt"></i> Restore
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Arsip Tema End -->
+
 
         <!-- Container untuk menampilkan card -->
         <div class="row">
             {% for dt_tema in data_tema %}
             <div class="col-md-4">
-                <div class="card">
-                    <img src="{% if dt_tema.tema_thumbnail %}{{ dt_tema.tema_thumbnail.url }}{% endif %}" class="card-img-top br-tr-7 br-tl-7" alt="{{ dt_tema.tema_nama }}">
-
+                <div class="card" style="height: 450px; display: flex; flex-direction: column; justify-content: space-between;">
+                    <img src="{% if dt_tema.tema_thumbnail %}{{ dt_tema.tema_thumbnail.url }}{% endif %}" 
+                         class="card-img-top br-tr-7 br-tl-7" 
+                         alt="{{ dt_tema.tema_nama }}" 
+                         style="height: 200px; object-fit: cover;">
                     <div class="card-header">
-                        <h5 class="card-title">
-                            <i class="fa fa-desktop"></i> {{ dt_tema.tema_nama }}
-                        </h5>
+                        <h5 class="card-title"><i class="fa fa-desktop"></i> {{ dt_tema.tema_nama }}</h5>
                     </div>
-                    <div class="card-body">
-                        <p class="card-text">
-                            <i class="fa fa-user-graduate"></i> Jenjang : {{ dt_tema.tema_jenjang.jenjang_nama }}
-                        </p>
-                        <p class="card-text">
-                            <i class="fa fa-folder"></i> Nama Folder : {{ dt_tema.tema_folder_name }}
-                        </p>
+                    
+                    <div class="card-body" style="flex-grow: 1;">
+                        <p class="card-text"><i class="fa fa-user-graduate"></i> Jenjang : {{ dt_tema.tema_jenjang.jenjang_nama }}</p>
+                        <p class="card-text"><i class="fa fa-folder"></i> Nama Folder : {{ dt_tema.tema_folder_name }}</p>
                     </div>
-                        <div class="modal-footer">
+                    <div class="modal-footer" >
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editdata_{{ dt_tema.tema_id }}">
                             <i class="fas fa-edit"></i> Edit
                         </button>
-                        <button type="button" class="btn btn-danger" onclick="deleteTema('{{ dt_tema.tema_id }}')">
-                            <i class="fas fa-trash-alt"></i> Delete
+                        <button onclick="archiveTema('{{ dt_tema.tema_id }}', '{{ dt_tema.tema_nama }}', '{{ dt_tema.tema_jenjang.jenjang_nama }}','{{ dt_tema.tema_folder_name }}')" class="btn btn-danger" value="Archive">
+                            <i class="fas fa-archive"></i> Arsip
                         </button>
-                        </div>
+                    </div>
                 </div>
-            </div>
+            </div>            
             {% include 'admin/master/edit_tema.html' %}
             {% endfor %}
         </div>
@@ -115,6 +165,7 @@ Master User
 {% endblock %}
 
 {% block js %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script>
@@ -143,49 +194,147 @@ Master User
         }
     }
 
-    function deleteTema(tema_) {
-        var deleteUrl = "{% url 'sipandu_admin:delete_tema' 'tema_id' %}".replace("tema_id",tema_);
+    function openArchiveModal() {
+    $('#archiveThemeModal').modal('show');
+}
 
-        swal({
+    function archiveTema(temaId, temaNama, temaJenjang, temaFolderName, temaThumbnail) {
+        Swal.fire({
             title: "Apakah Anda yakin?",
-            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-            type: "warning",
+            text: "Anda ingin mengarsipkan data ini?",
+            icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Ya, hapus!",
+            confirmButtonText: "Ya, arsipkan!",
             cancelButtonText: "Batal",
-            closeOnConfirm: false,
-            closeOnCancel: false
-        },
-        function(isConfirm){
-            if (isConfirm) {
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var archiveUrl = "{% url 'sipandu_admin:archive_tema' 0 %}".replace('0', temaId);
+
                 $.ajax({
-                    headers : { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
-                    url: deleteUrl,
-                    type: "DELETE",
-                    success: function (response) {
-                    console.log('berhasil');
-                    swal({
-                        title: "Data berhasil dihapus!",
-                        icon: "success",
-                        buttons: false, 
-                        timer: 1500 
-                    });
-                    window.location.reload(); 
-                },
-                    error: function (xhr, status, error) {
-                        swal("Terjadi kesalahan saat menghapus data!", {
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: archiveUrl,
+                    type: "POST",
+                    data: {
+                        tema_id: temaId // Menambahkan parameter yang diperlukan
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            title: "Data berhasil diarsipkan!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                            $('#archiveDataModal').modal('show');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan saat mengarsipkan data!",
+                            text: "Silakan coba lagi nanti.",
                             icon: "error",
                         });
                     }
                 });
-            } else {
-                swal("Tindakan dibatalkan", "", "info");
             }
         });
     }
 
-    $(function(){
+    function deletetema(tema_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_tema' 'tema_id' %}".replace("tema_id", tema_);
+
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "DELETE",
+                    success: function(response) {
+                        console.log('berhasil');
+                        Swal.fire({
+                            title: "Data berhasil dihapus!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan karena data ini sedang digunakan!",
+                            icon: "error",
+                        });
+                    }
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Tindakan dibatalkan',
+                    '',
+                    'info'
+                );
+            }
+        });
+    }
+
+    function confirmUnarchive(temaId) {
+    var unarchiveUrl = "{% url 'sipandu_admin:unarchive_tema' 0 %}".replace("0", temaId);
+
+    Swal.fire({
+        title: "Apakah Anda yakin?",
+        text: "ingin mengembalikan data yang diarsipkan!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#28a745", // Kode warna hijau yang sesuai dengan tombol Bootstrap
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, lanjutkan",
+        cancelButtonText: "Batal",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                url: unarchiveUrl,
+                type: "POST",
+                success: function(response) {
+                    console.log('berhasil');
+                    Swal.fire({
+                        title: "Data berhasil dikembalikan!",
+                        icon: "success",
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: "Terjadi kesalahan karena data ini sedang digunakan!",
+                        icon: "error",
+                    });
+                }
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire(
+                'Tindakan dibatalkan',
+                '',
+                'info'
+            );
+        }
+    });
+}
+    $(function() {
         $('#temaResponsiveDatatable').DataTable({
 		scrollX: "100%",
 		language: {
