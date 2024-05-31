@@ -2,7 +2,6 @@
 {% block main %}
 {% load static %}
 
-
 <section class="page-header page-header-modern bg-primary custom-page-header">
 
     <div class="custom-svg-style-1 svg-fill-color-primary position-absolute top-0 left-50pct transform3dx-n50 h-100 z-index-0">
@@ -35,43 +34,60 @@
 
     <div class="row mt-4 pt-4 mb-4 pb-4">
         <div class="col-lg-4">
-
             <div class="owl-carousel owl-theme nav-center custom-carousel-dots-style custom-carousel-dots-style-inside mt-1" data-plugin-options="{'items': 1, 'responsive': {'479': {'items': 1}, '979': {'items': 1}, '1199': {'items': 1}}, 'margin': 10, 'loop': false, 'dots': true, 'nav': false, 'autoplay': true, 'autoplayTimeout': 5000}">
+                {% for data in data_kontak_footer %}
                 <div>
-                    <img src="{% static 'logo/FILLIANA.jpg' %}" alt="" class="img-fluid" /> 
+                    <img src="{{ data.gambar.url }}" alt="Gambar {{ data.id_data_kontak }}" class="img-fluid" />
                 </div>
+                {% endfor %}
             </div>
         </div>
+
         <div class="col-lg-8">
             <h5 class="mb-4">HUBUNGI KAMI</h5>
             <div class="row">
-                <div class="col-lg-4">
+                {% for data in data_kontak_footer %}
+                <div class="col-lg-6">
                     <ul class="list list-icons list-icons-style-2 text-color-primary">
-                        <li><i class="fas fa-map-marker-alt"></i>New York - NY</a></li>
-                        <li><i class="fas fa-phone"></i>(123) 456-789</a></li>
-                        <li><a href="demo-photography-2-about-me.html"><i class="far fa-envelope"></i>Biography</a></li>
+                        <li><i class="fas fa-map-marker-alt"></i> 
+                            <a href="{{ data.link_map }}" target="_blank">{{ data.alamat }}</a>
+                        </li>
+                        <li><i class="fas fa-phone"></i> 
+                            <a href="https://wa.me/{{ data.no_hp }}" target="_blank">{{ data.no_hp }}</a>
+                        </li>
+                        <li>
+                            <a href="mailto:{{ data.email }}"><i class="far fa-envelope"></i> {{ data.email }}</a>
+                        </li>
                     </ul>
                 </div>
-                <div class="col-lg-8">
+                <div class="col-lg-6">
                     <ul class="list list-icons list-icons-style-2 text-color-primary">
-                        <li><a target="_blank" href="http://www.facebook.com"><i class="fab fa-facebook-f"></i>Facebook</a></li>
-                        <li><a target="_blank" href="http://www.facebook.com"><i class="fab fa-twitter"></i>Twitter</a></li>
-                        <li><a target="_blank" href="http://www.instagram.com"><i class="fab fa-instagram"></i>Instagram</a></li>
+                        <li>
+                            <a target="_blank" href="https://www.facebook.com/{{ data.fb }}"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="https://www.twitter.com/{{ data.tw }}"><i class="fab fa-twitter"></i> Twitter</a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="https://www.instagram.com/{{ data.ig }}"><i class="fab fa-instagram"></i> Instagram</a>
+                        </li>
                     </ul>
                 </div>
+                {% endfor %}
             </div>
-        </div> 
+        </div>
+        
     </div>
 </div>
-<div class="container"
-<div class="row">
-       <div class="col-md-12">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.936998205257!2d110.3301911740317!3d-7.796495377382501!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7af9480fa3b1a9%3A0xb1ed95e491aa6b49!2sPT.%20Rizq%20Sanjaya%20Teknologi!5e0!3m2!1sid!2sid!4v1713769901673!5m2!1sid!2sid" 
-        width="100%" height="450" style="border:0;" allowfullscreen="" 
-        loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-       </iframe>
-       </div>
-</div>
+
+<div class="container">
+    <div class="row">
+        {% for data in data_kontak_footer %}
+        <div class="col-md-12">
+            <iframe src="{{ data.link_map }}" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        {% endfor %}
+    </div>
+</div> 
 
 {% endblock main %}
-
