@@ -110,8 +110,8 @@ urlpatterns = [
     path('edit_slider/<str:id_data_slider>/', slider.Editslider, name='edit_slider'),
     path('delete_slider/<str:id_data_slider>/delete', slider.Deleteslider, name='delete_slider'),
 
-    path('laporan_data_sekolah/', laporan.laporan_sekolah, name='laporan_data_sekolah'),
-    path('laporan_data_transaksi/', laporan.laporan_transaksi, name='laporan_data_transaksi'),
+    path('laporan_transaksi_sudah/', laporan.laporan_transaksi_sudah, name='laporan_transaksi_sudah'),
+    path('laporan_transaksi_belum/', laporan.laporan_transaksi_belum, name='laporan_transaksi_belum'),
 
 
     

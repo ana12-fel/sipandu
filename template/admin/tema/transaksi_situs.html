@@ -27,7 +27,7 @@ Transaksi Situs
             <button class="btn btn-secondary btn-icon text-white" onclick="openArchiveModal()">
                 <span>
                     <i class="fe fe-archive"></i>
-                </span> Arsip Data
+                </span> <i class="fe fe-archive"></i> Arsip Data
             </button>
         </div>
         <!-- PAGE-HEADER END -->
@@ -67,7 +67,7 @@ Transaksi Situs
                                 <input type="text" class="form-control" name="domain" placeholder="Masukkan Domain">
                             </div>
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                             <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
@@ -166,7 +166,7 @@ Transaksi Situs
                                             </td>
                                             <td class="text-center align-middle">
                                                 <div class="btn-group align-top">
-                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{ dt_transaksi.transanksi_id }}">Edit</a> &nbsp;
+                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{ dt_transaksi.transanksi_id }}"> <i class="fa fa-edit"> </i>Edit</a> &nbsp;
                                                     <button onclick="archiveTransaksi('{{ dt_transaksi.transanksi_id }}', '{{ dt_transaksi.sekolah_id.sekolah_nama }}', '{{  dt_transaksi.tema_id.tema_nama }}','{{ dt_transaksi.domain }}')" class="btn btn-sm btn-warning badge" value="Archive">
                                                         <i class="mdi mdi-archive"></i> Arsip
                                                     </button>
