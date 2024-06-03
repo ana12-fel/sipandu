@@ -22,19 +22,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 mt-5">
-                <h2>
-                    Sejarah Singkat Sekolah
-                </h2>
+                <h2>{{ data_sejarah.judul }}</h2>
+               
                 
-                <p align="justify-content-start">
-                    SMA Negeri 1 Adiluwih didirikan pada tahun 2004. SMA tersebut merupakan SMA Negeri satu-satunya yang ada di Kecamatan Adiluwih. SMA ini berada di Srikaton, Adiluwih. SMA Negeri 1 Adiluwih adalah salah satu SMA Negeri yang ada di Kabupaten Pringsewu.
-                </p>
-                <p align="justify-content-start">
-                    SMA Negeri 1 Adiluwih berdiri pada tahun 2004 berdasarkan Surat Keputusan Menteri Pendidikan dan Kebudayaan Republik Indonesia Nomor: …. tanggal 21 April 2004, yang berada di atas lahan 20.000 M2 yang berada di desa/pekon Adiluwih dan karena ada pemekaran pekon maka SMA Negeri 1 Adiluwih sekarang berada di Pekon Srikaton tepatnya di Jalan Parahyangan Kecamatan Adiluwih Kabupaten Pringsewu.  
-                </p>
-                <p align="justify-content-start">
-                    SMA Negeri 1 Adiluwih terletak 1 Km dari ibu kota Kecamatan Adiluwih dan kurang lebih 30 Km dari Ibu kota Kabupaten dan 52 dari ibu kota Propinsi Lampung. SMA Negeri 1 Adiluwih terletak ditengah-tengah pemukiman penduduk yang sebagian besar mata pencaharian adalah petani.
-                </p>
+                <p>{{ data_sejarah.isi_konten|safe}}</p>
+                
             </div>
             <div class="col-md-6 d-flex align-items-center">
                 <img src="{% static 'logo/RST.jpg' %}" alt="" style="border-radius: 5px;">
