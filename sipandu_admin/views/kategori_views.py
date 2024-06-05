@@ -7,7 +7,8 @@ def MasterKategori(request):
     if request.method == 'POST':
         kategori_nama = request.POST.get ('kategori_nama')
         kategori_tema= request.POST.get ('form_tema_id')
-        kategori_status = request.POST.get('kategori_status')
+        default_status = 'True'
+        kategori_status = request.POST.get('kategori_status', default_status)
 
 
         dt_kategori = Master_kategori.objects.create(kategori_uraian=kategori_nama, kategori_tema_id = kategori_tema, kategori_status = kategori_status )

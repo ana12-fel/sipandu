@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
-from sipandu_app.models import Data_konten, Master_kategori,Master_sekolah, Sub_kategori
+from sipandu_app.models import Data_konten, Master_kategori,Master_sekolah, Sub_kategori, Transanksi_situs
 from django.urls import reverse
 from django.utils.timezone import now
 from django.conf import settings
 import os
 from django.utils import timezone
+from django.views.decorators.http import require_GET
+from django.views.decorators.csrf import csrf_exempt
 
 def upload_and_save_image(request):
     konten_image = request.FILES.get('konten_image')
@@ -59,6 +61,54 @@ def IndexKonten(request):
         data_konten = Data_konten.objects.filter(deleted_at=None)
         data_arsip_konten = Data_konten.objects.filter(deleted_at__isnull=False)        
         return render(request, 'admin/data/konten.html', {"data_sub_kategori": data_sub_kategori, "data_kategori": data_kategori, "data_konten": data_konten, "data_sekolah": data_sekolah, "data_arsip_konten": data_arsip_konten})
+
+@require_GET
+@csrf_exempt
+def get_kategori_by_sekolah(request):
+    sekolah_id = request.GET.get('sekolah_id')
+    
+    try:
+        kategori_list = Master_kategori.objects.filter(
+            kategori_tema=Transanksi_situs.objects.get(sekolah_id = sekolah_id).tema_id
+        ).values('kategori_id', 'kategori_uraian')
+        
+        # Tambahkan debug log
+        print(f"sub_kategori_list: {list(kategori_list)}")
+        
+        return JsonResponse({"data_kategori": list(kategori_list)})
+    except Exception as e:
+        print(f"Error: {e}")
+        return JsonResponse({'error': str(e)}, status=500)
+        
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+ 
+@require_GET
+@csrf_exempt
+def get_sub_kategori(request):
+    if request.is_ajax():
+        sekolah_id = request.GET.get('sekolah_id')
+        kategori_id = request.GET.get('kategori_id')
+        
+        # Tambahkan debug log
+        print(f"sekolah_id: {sekolah_id}, kategori_id: {kategori_id}")
+        
+        if sekolah_id and kategori_id:
+            try:
+                sub_kategori_list = Sub_kategori.objects.filter(
+                    sekolah_id=sekolah_id, 
+                    kategori_id=kategori_id
+                ).values('sub_kategori_id', 'sub_kategori_uraian')
+                
+                # Tambahkan debug log
+                print(f"sub_kategori_list: {list(sub_kategori_list)}")
+                
+                return JsonResponse({"data_sub_kategori": list(sub_kategori_list)})
+            except Exception as e:
+                print(f"Error: {e}")
+                return JsonResponse({'error': str(e)}, status=500)
+        else:
+            return JsonResponse({'error': 'Missing parameters'}, status=400)
+    return JsonResponse({'error': 'Invalid request'}, status=400)
 
 def TambahKonten(request):
     if request.method == 'POST':

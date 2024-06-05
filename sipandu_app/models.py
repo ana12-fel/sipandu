@@ -224,6 +224,13 @@ class Master_kategori(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
 
+    def create_kategori():
+    # Buat instance model Jenjang dengan memberikan nilai yang valid untuk jenjang_status
+        new_kategori = Master_kategori.objects.create(
+        kategori_uraian='BERITA',
+        kategori_status=True  # Berikan nilai boolean True atau False
+    )
+
 
 class Sub_kategori(models.Model):
     sub_kategori_id = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -260,9 +267,10 @@ def generate_image_filename(instance, filename):
 
 class Data_konten(models.Model):
     id_data_konten = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    konten_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
-    konten_kategori = models.ForeignKey(Master_kategori, on_delete=models.PROTECT,default=None, null=True)
-    konten_sub_kategori = models.ForeignKey(Sub_kategori, on_delete=models.PROTECT,default=None, null=True)
+    konten_sekolah = models.ForeignKey(Master_sekolah,related_name='konten_kategori_related', on_delete=models.CASCADE,default=None, null=True)
+    konten_kategori = models.ForeignKey(Master_kategori, related_name='konten_kategori_related', on_delete=models.CASCADE,default=None, null=True)
+    konten_sub_kategori = models.ForeignKey(Sub_kategori, related_name='konten_kategori_related', on_delete=models.CASCADE,default=None, null=True)
+
     judul = models.CharField(max_length=200)
     isi_konten = models.TextField(default=None, null=True)
     status = models.BooleanField(default=True)   

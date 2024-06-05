@@ -30,29 +30,25 @@ Master User
     {% csrf_token %}
     <div class="mb-3">
         <label for="konten_sekolah" class="form-label">Sekolah</label>
-        <select class="form-select" id="konten_sekolah" name="konten_sekolah" required>
+        <select class="form-select" id="konten_sekolah" name="konten_sekolah" onchange="render_kategori(this)" required>
             <option value="" selected disabled>Pilih Sekolah</option>
             {% for sekolah in data_sekolah %}
-            <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
+                <option value="{{ sekolah.sekolah_id }}">{{ sekolah.sekolah_nama | upper }}</option>
             {% endfor %}
         </select>
-    </div> 
+    </div>
     <div class="mb-3">
         <label for="konten_kategori" class="form-label">Kategori</label>
-        <select class="form-select" id="konten_kategori" name="konten_kategori" required>
+        <select class="form-select" id="konten_kategori" name="konten_kategori" onchange="render_tema()" required>
             <option value="" selected disabled>Pilih Kategori</option>
-            {% for kategori in data_kategori %}
-                <option value="{{ kategori.kategori_id }}">{{ kategori.kategori_uraian.upper }}</option>
-            {% endfor %}
+            
         </select>
     </div>
     <div class="mb-3">
         <label for="sub_kategori_uraian" class="form-label">Sub Kategori</label>
         <select class="form-select" id="sub_kategori_uraian" name="konten_sub_kategori" required>
             <option value="" selected disabled>Pilih Sub Kategori</option>
-            {% for sub_kategori in data_sub_kategori %}
-                <option value="{{ sub_kategori.sub_kategori_id }}">{{ sub_kategori.sub_kategori_uraian.upper }}</option>
-            {% endfor %}
+            
         </select>
     </div>
     <div class="mb-3">
@@ -168,14 +164,63 @@ Master User
         }
     }
     
-    // ClassicEditor
-    //     .create( document.querySelector( '#editor' ) )
-    //     .then( editor => {
-    //             console.log( editor );
-    //     } )
-    //     .catch( error => {
-    //             console.error( error );
-    //     } );
-        
+    function render_kategori(e) {
+        var sekolah = $(e).val()
+        console.log(sekolah)
+
+        $.ajax({
+            url: "{% url 'sipandu_admin:get_kategori_by_sekolah' %}",
+            type: "GET",
+            data: {
+                'sekolah_id': sekolah,
+            },
+            success: function(response) {
+                var elem = $('#konten_kategori');
+                elem.html('<option value="" selected disabled>Pilih Kategori</option>');
+
+                response.data_kategori.forEach(function(kategori) {
+                    elem.append('<option value="' + kategori.kategori_id + '">' + kategori.kategori_uraian.toUpperCase() + '</option>');
+                });
+
+                elem.val('');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error: ' + error + ', Status: ' + status);
+            }
+        });
+
+        // var selectedSekolahId = $('#konten_sekolah').val();
+        // var selectedKategoriId = $('#konten_kategori').val();
+
+        // console.log('Sekolah ID: ' + selectedSekolahId + ', Kategori ID: ' + selectedKategoriId);
+
+        // // Cek apakah kedua nilai sudah dipilih sebelum mengirim permintaan AJAX
+        // if (selectedSekolahId && selectedKategoriId) {
+        //     $.ajax({
+        //         url: "{% url 'sipandu_admin:get_sub_kategori' %}",
+        //         type: "GET",
+        //         data: {
+        //             'sekolah_id': selectedSekolahId,
+        //             'kategori_id': selectedKategoriId
+        //         },
+        //         success: function(response) {
+        //             var elem = $('#sub_kategori_uraian');
+        //             elem.html('<option value="" selected disabled>Pilih Sub Kategori</option>');
+
+        //             response.data_sub_kategori.forEach(function(sub_kategori) {
+        //                 elem.append('<option value="' + sub_kategori.sub_kategori_id + '">' + sub_kategori.sub_kategori_uraian.toUpperCase() + '</option>');
+        //             });
+
+        //             elem.val('');
+        //         },
+        //         error: function(xhr, status, error) {
+        //             console.error('Error: ' + error + ', Status: ' + status);
+        //         }
+        //     });
+        // } else {
+        //     console.warn('Sekolah ID atau Kategori ID tidak valid.');
+        // }
+    }
+
 </script>
 {% endblock %}
