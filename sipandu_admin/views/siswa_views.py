@@ -28,7 +28,7 @@ def IndexSiswa(request):
         return redirect('sipandu_admin:index_siswa')
     
     else:
-        data_sekolah = Master_sekolah.objects.all()
+        data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         data_siswa = Data_siswa.objects.filter(deleted_at=None)
         data_arsip = Data_siswa.objects.filter(deleted_at__isnull=False)
 
@@ -65,7 +65,7 @@ def EditSiswa(request, id_data_siswa):
         return redirect('sipandu_admin:index_siswa')
     
     else:
-        data_sekolah = Master_sekolah.objects.all()
+        data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         return render(request, 'admin/data/edit_siswa.html', {
             'dt_siswa': dt_siswa,
             'data_sekolah': data_sekolah

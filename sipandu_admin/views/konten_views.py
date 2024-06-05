@@ -86,7 +86,7 @@ def TambahKonten(request):
         return redirect('sipandu_admin:index_konten')
 
     else:
-        data_sekolah = Master_sekolah.objects.all()
+        data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         data_kategori = Master_kategori.objects.all()
         data_sub_kategori = Sub_kategori.objects.all()
         data_konten = Data_konten.objects.all()
@@ -126,7 +126,7 @@ def EditKonten(request, id_data_konten):
         dt_konten.save()
         return redirect('sipandu_admin:index_konten')
     else:
-        data_sekolah = Master_sekolah.objects.all()
+        data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         data_kategori = Master_kategori.objects.all()
         data_sub_kategori = Sub_kategori.objects.all()
         

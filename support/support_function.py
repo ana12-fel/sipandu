@@ -37,6 +37,10 @@ def global_var(request):
         'data_konten_nav': data_konten_nav,
         'galeri': galeri,
         'sliders': sliders,  # Menggunakan nama variabel 'sliders' untuk membedakannya dari model 'Data_slider'
+        'akses_menu_master' : ["superadmin","admin"],
+        'akses_menu_transaksi_situs' : ["superadmin","admin","admin_kabupaten"],
+        'akses_menu_data' : ["superadmin","admin","admin_sekolah"],
+        'akses_menu_laporan' : ["superadmin","admin","admin_kabupaten"]
     }
     
     return data
