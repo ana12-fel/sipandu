@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'sipandu_app',
     'sipandu_admin',
+    'tinymce',
 
 ]
 

@@ -3,53 +3,26 @@
 {% load static %}
 
 <div role="main" class="main">
-	<div class="owl-carousel owl-carousel-light owl-carousel-light-init-fadeIn owl-theme manual dots-inside dots-horizontal-center show-dots-hover nav-style-diamond nav-with-transparency nav-inside nav-inside-plus nav-dark nav-md nav-font-size-md show-nav-hover mb-0" data-plugin-options="{'autoplay': false, 'autoplayTimeout': 7000}" data-dynamic-height="['700px','700px','600px','500px','410px']" style="height: 700px;">
-		<div class="owl-stage-outer">
-			<div class="owl-stage">
-				<!-- Carousel Slide 1 -->
-				<div class="owl-item position-relative">
-					<div class="background-image-wrapper position-absolute top-0 left-0 right-0 bottom-0" data-appear-animation="kenBurnsToRight" data-appear-animation-duration="30s" data-plugin-options="{'minWindowWidth': 0}" data-carousel-onchange-show style="background-image: url('{% static 'img/jadi.jpeg' %}'); background-size: cover; background-position: center;"></div>
-					<div class="container position-relative z-index-1 h-100">
-						<div class="position-absolute left-100pct bottom-0 transform3dx-n50 w-75 ms-5">
-							<img src="{% static 'img/abang.png' %}"
-							class="img-fluid mw-100 w-auto appear-animation" alt="Engineer Image" data-appear-animation="fadeIn" data-appear-animation-delay="100" />
-						</div>
-						<p class="position-absolute bottom-15 right-0 text-color-light font-weight-bold text-5-5 line-height-3 text-end pb-0 pb-lg-5 mb-0 d-none d-sm-block">
-							SMP NEGERI 1 LAMPUNG
-						</p>
-					</div>
-				</div>
-				<!-- Carousel Slide 2 -->
-				<div class="owl-item position-relative" style="background-image: url('{% static 'img/jadi.jpeg' %}'); background-size: cover; background-position: center;">
-					<div class="container position-relative z-index-1 h-100">
-						<div class="row align-items-center h-100 pt-5">
-							<div class="col-xl-8 position-relative ms-auto mt-5 pt-5">
-								<h2 class="position-relative text-color-light font-weight-bold custom-big-text-style-1 custom-big-text-style-1-variation text-center text-lg-end pt-4 mt-5 appear-animation" data-appear-animation="fadeInRightShorterPlus" data-appear-animation-delay="1000">
-									<span class="d-block position-absolute bottom-100 left-0 transform3dy-p50 w-100 pt-5 ps-5">
-										<span class="d-inline-flex custom-outline-text-style-1 text-2 text-center appear-animation" data-appear-animation="fadeInRightShortePlus" data-appear-animation-delay="2000">
-											<span class="d-block pt-5">MODERNITY</span></span>
-									</span>
-									MODERNITY
-								</h2>
+	<div class="owl-carousel-wrapper" style="height: 845px;">
+		<div class="" style="height: 845px;">
+			<div class="owl-carousel dots-inside dots-horizontal-center show-dots-hover show-dots-xs show-dots-sm show-dots-md nav-style-1 nav-inside nav-inside-plus nav-light nav-lg nav-font-size-lg show-nav-hover mb-0" data-plugin-options="{'responsive': {'0': {'items': 1, 'dots': true, 'nav': false}, '479': {'items': 1, 'dots': true}, '768': {'items': 1, 'dots': true}, '979': {'items': 1}, '1199': {'items': 1}}, 'loop': false, 'autoHeight': false, 'margin': 0, 'dots': false, 'dotsVerticalOffset': '-235px', 'nav': true, 'navVerticalOffset': '70px', 'animateIn': 'fadeIn', 'animateOut': 'fadeOut', 'mouseDrag': false, 'touchDrag': false, 'pullDrag': false, 'autoplay': true, 'autoplayTimeout': 7000, 'autoplayHoverPause': true, 'rewind': true}">
+				<!-- Slide Carousel 1 -->
+
+				{% for slider in sliders %}
+				<div class="position-relative  overlay-show overlay-op-0 overflow-hidden pt-4" data-dynamic-height="['845px','845px','845px','750px','750px']" style="height: 845px;">
+					<div class="background-image-wrapper position-absolute top-0 left-0 right-0 bottom-0" data-appear-animation="kenBurnsToLeft" data-appear-animation-duration="30s" data-plugin-options="{'minWindowWidth': 0}" data-carousel-onchange-show style="background-image: url({{ slider.gambar.url }}); background-size: cover; background-position: center;"></div>
+					<div class="container position-relative z-index-3 pb-5 h-100">
+						<div class="row justify-content-center align-items-center pb-5 h-100">
+							<div class="col-lg-8 text-center pb-5 mb-5">
+								<h1 class="text-color-light font-weight-bold line-height-1 text-12 text-md-14 positive-ls-3 mb-3 appear-animation" data-appear-animation="blurIn" data-appear-animation-delay="1000" data-plugin-options="{'minWindowWidth': 0}">{{ slider.judul }}</h1>
 							</div>
 						</div>
-						<p class="position-absolute bottom-15 right-0 text-color-light font-weight-bold text-5-5 line-height-3 text-end pb-0 pb-lg-5 mb-0 d-none d-sm-block">
-							<span class="d-block line-height-1 position-relative z-index-1 pb-5 ps-lg-3 mb-5-5 appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="2200">Modern Building Design</span>
-							<span class="custom-svg-position-1">
-								<svg class="svg-fill-color-dark appear-animation" data-appear-animation="fadeInLeftShorter" data-appear-animation-delay="1600" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 859.45 88.44" xml:space="preserve" preserveAspectRatio="none">
-									<polyline points="7.27,84.78 855.17,84.78 855.17,4.79 84.74,4.79 "/>
-								</svg>
-							</span>
-						</p>
 					</div>
 				</div>
+				{% endfor %}
 			</div>
 		</div>
-		<div class="owl-nav mt-5">
-			<button type="button" role="presentation" class="owl-prev" aria-label="Previous"></button>
-			<button type="button" role="presentation" class="owl-next" aria-label="Next"></button>
-		</div>
-	</div>
+	</div>	
 	<div class="container py-5 my-3">
 		<div class="row justify-content-between align-items-center flex-lg-nowrap gy-3">
 			<div class="col-lg-4">
@@ -198,113 +171,34 @@
 				<div id="photographyLightbox" class="mfp-hide">
 					<div class="thumb-gallery">
 						<div class="owl-carousel owl-theme manual thumb-gallery-detail" id="thumbGalleryDetail">
+							{% for d_galeri in galeri	%}
 							<div>
 								<span class="img-thumbnail d-block">
-									<img alt="Project Image" src="{% static '/img/3.jpeg' %}" class="img-fluid">
+									<img alt="Project Image" src="{{d_galeri.gambar.url}}" class="img-fluid">
 								</span>
 							</div>
-							<div>
-								<span class="img-thumbnail d-block">
-									<img alt="Project Image" src="{% static '/img/2.jpeg' %}" class="img-fluid">
-								</span>
-							</div>
-							<div>
-								<span class="img-thumbnail d-block">
-									<img alt="Project Image" src="{% static '/img/3.jpeg' %}" class="img-fluid">
-								</span>
-							</div>
-							<div>
-								<span class="img-thumbnail d-block">
-									<img alt="Project Image" src="{% static 'img/4.jpeg' %}" class="img-fluid">
-								</span>
-							</div>
-							<div>
-								<span class="img-thumbnail d-block">
-									<img alt="Project Image" src="{% static 'img/foto.jpg' %}" class="img-fluid">
-								</span>
-							</div>
-							<div>
-								<span class="img-thumbnail d-block">
-									<img alt="Project Image" src="{% static 'img/2.jpeg' %}" class="img-fluid">
-								</span>
-							</div>
+							{% endfor %}
+							
 						</div>
 					</div>
 				</div>
 				<div id="horizontalScrollBox">
 					<div class="content">
+						{% for d_galeri in galeri	%}
 						<div class="horizontal-scroll-item-wrapper">
 							<div class="horizontal-scroll-item">
 								<a href="#photographyLightbox" class="text-decoration-none popup-with-move-anim">
 									<span class="thumb-info">
 										<span class="thumb-info-wrapper m-0">
-											<img src="{% static '/img/3.jpeg' %}" class="img-fluid" alt="" />
+											<img src="{{d_galeri.gambar.url}}" class="img-fluid" alt="" />
 											<span class="thumb-info-plus"></span>
 										</span>
 									</span>
 								</a>
 							</div>
 						</div>
-						<div class="horizontal-scroll-item-wrapper">
-							<div class="horizontal-scroll-item">
-								<a href="#photographyLightbox" class="text-decoration-none popup-with-move-anim">
-									<span class="thumb-info">
-										<span class="thumb-info-wrapper m-0">
-											<img src="{% static '/img/2.jpeg' %}" class="img-fluid" alt="" />
-											<span class="thumb-info-plus"></span>
-										</span>
-									</span>
-								</a>
-							</div>
-						</div>
-						<div class="horizontal-scroll-item-wrapper">
-							<div class="horizontal-scroll-item">
-								<a href="#photographyLightbox" class="text-decoration-none popup-with-move-anim">
-									<span class="thumb-info">
-										<span class="thumb-info-wrapper m-0">
-											<img src="{% static '/img/3.jpeg' %}" class="img-fluid" alt="" />
-											<span class="thumb-info-plus"></span>
-										</span>
-									</span>
-								</a>
-							</div>
-						</div>
-						<div class="horizontal-scroll-item-wrapper">
-							<div class="horizontal-scroll-item">
-								<a href="#photographyLightbox" class="text-decoration-none popup-with-move-anim">
-									<span class="thumb-info">
-										<span class="thumb-info-wrapper m-0">
-											<img src="{% static '/img/4.jpeg' %}" class="img-fluid" alt="" />
-											<span class="thumb-info-plus"></span>
-										</span>
-									</span>
-								</a>
-							</div>
-						</div>
-						<div class="horizontal-scroll-item-wrapper">
-							<div class="horizontal-scroll-item">
-								<a href="#photographyLightbox" class="text-decoration-none popup-with-move-anim">
-									<span class="thumb-info">
-										<span class="thumb-info-wrapper m-0">
-											<img src="{% static '/img/foto.jpg' %}" class="img-fluid" alt="" />
-											<span class="thumb-info-plus"></span>
-										</span>
-									</span>
-								</a>
-							</div>
-						</div>
-						<div class="horizontal-scroll-item-wrapper">
-							<div class="horizontal-scroll-item">
-								<a href="#photographyLightbox" class="text-decoration-none popup-with-move-anim">
-									<span class="thumb-info">
-										<span class="thumb-info-wrapper m-0">
-											<img src="{% static '/img/4.jpeg' %}" class="img-fluid" alt="" />
-											<span class="thumb-info-plus"></span>
-										</span>
-									</span>
-								</a>
-							</div>
-						</div>
+						{% endfor %}
+						
 					</div>
 				</div>
 			</div>

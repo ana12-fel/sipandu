@@ -269,12 +269,6 @@ Master Sekolah
                     console.log(response.data_wilayah[i]['wilayah_nama'])
                 }
                 elem.val('');
-
-                // var options = '<option value="">Pilih Wilayah</option>';
-                // for (var i = 0; i < response.length; i++) {
-                //     options += '<option value="' + response[i] + '">' + response[i] + '</option>';
-                // }
-                // $('#wilayah_nama').html(options);
             },
             error: function(xhr, status, error) {
                 console.error(error);

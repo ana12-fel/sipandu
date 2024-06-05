@@ -62,12 +62,14 @@ urlpatterns = [
     path('delete_konten/<str:id_data_konten>/delete', konten_views.DeleteKonten, name='delete_konten'),
     path('archive_konten/<str:id_data_konten>/', konten_views.archive_konten, name='archive_konten'),
     path('unarchive_konten/<str:id_data_konten>/', konten_views.unarchive_konten, name='unarchive_konten'),
+    path('get_sub_kategori/', konten_views.get_sub_kategori, name='get_sub_kategori'),
+    path('get_kategori_by_sekolah/', konten_views.get_kategori_by_sekolah, name='get_kategori_by_sekolah'),
+
     
     path('galeri/', galeri.Indexgaleri, name='index_galeri'),
     path('tambah_galeri/', galeri.Tambahgaleri, name='tambah_galeri'),
     path('edit_galeri/<str:id_data_galeri>/', galeri.Editgaleri, name='edit_galeri'),
     path('delete_galeri/<str:id_data_galeri>/delete', galeri.Deletegaleri, name='delete_galeri'),
-    
     
     path('kontak/', kontak_sekolah.Indexkontak, name='index_kontak'),
     path('tambah_kontak/', kontak_sekolah.TambahKontak, name='tambah_kontak'),

@@ -11,16 +11,17 @@
                 {% endfor %}
             </div>
 
-            <div class="col-lg-3 mb-5 mb-lg-0">
-                <h5 class="text-transform-none font-weight-bold text-color-light text-5-5 mb-4">UNIVERSITAS TERKAIT</h5>
-                <ul class="list list-unstyled text-3-5 mb-0">
-                    {% for data in data_link_footer %}
-                    <li class="mb-2"><a href="{{data.nama_link}}" target="_blank">{{data.judul_link}}</a></li>
-                    {% endfor %}
-                    
-                    <!-- <li class="mb-2"><a href="#">LTMPT</a></li>
-                    <li class="mb-2"><a href="#">SBMPTN</a></li>
-                    <li class="mb-2"><a href="{% static 'demo-law-firm-2-about.html' %}">SNMPTN</a></li> -->
+            <div class="col-lg-2">
+                <h4 class="font-weight-bold text-color-light">Navigasi</h4>
+                <ul class="list list-unstyled mb-0">
+                    <li class="mb-0"><a href="{% url 'sipandu:home' %}" class="text-decoration-none text-3-5">- Beranda</a></li>
+                    <li class="mb-0"><a href="{% url 'sipandu:home' %}" class="text-decoration-none text-3-5">- Profil</a></li>
+                    <li class="mb-0"><a href="{% url 'sipandu:home' %}" class="text-decoration-none text-3-5">- Jurusan</a></li>
+                    <li class="mb-0"><a href="{% url 'sipandu:ekstrakulikuler' %}" class="text-decoration-none text-3-5">- Program</a></li>
+                    <li class="mb-0"><a href="{% url 'sipandu:prestasi' %}" class="text-decoration-none text-3-5">- Prestasi</a></li>
+                    <li class="mb-0"><a href="{% url 'sipandu:berita' %}" class="text-decoration-none text-3-5">- Berita</a></li>
+                    <li class="mb-0"><a href="{% url 'sipandu:galeri' %}" class="text-decoration-none text-3-5">- Galeri</a></li>
+                    <li class="mb-0"><a href="{% url 'sipandu:kontak' %}" class="text-decoration-none text-3-5">- Kontak</a></li>
                 </ul>
             </div>
 
@@ -39,32 +40,15 @@
             </div>
 
             <div class="col-lg-3">
-                <h5 class="text-transform-none font-weight-bold text-color-light text-5-5 mb-4">Kontak</h5>
-                <ul class="list list-unstyled mb-4">
-                    {% for data in data_kontak_footer %}
-                    <li>
-                        <i class="icons icon-phone text-color-primary text-5-5 position-relative top-2 me-2"></i>
-                        <a href="tel:0123456789" class="text-color-light font-weight-bold text-decoration-none text-5"> {{data.no_hp}}</a>
-                    </li>
-                    <li class="mb-3">
-                        <i class="icons icon-envelope text-color-primary text-6 position-relative top-6 me-2"></i>
-                        <a href="mailto:porto@portotheme.com" class="text-color-light text-decoration-none text-4"> {{data.email}}</a>
-                    </li>
-                   
-                </ul>
-                
-                <ul class="custom-social-icons-style-1 social-icons social-icons-clean">
+                <h4 class="font-weight-bold text-color-light">Kontak</h4>
+                {% for data in data_kontak_footer %}
+                    <p class="text-3-5"><a href="#" target="_blank" class="text-decoration-none"><i class="fas fa-phone"></i> {{data.no_hp}}</a></p>
+                    <p class="text-3-5"><a href="mailto:email@example.com" target="_blank" class="text-decoration-none"><i class="fa fa-envelope"></i> {{data.email}}</a></p>
+                    <p class="text-3-5"><a href="#" target="_blank" class="text-decoration-none"><i class="fab fa-facebook-f text-4"></i> {{data.fb}}</a></p>
+                    <p class="text-3-5"><a href="#" target="_blank" class="text-decoration-none"><i class="fab fa-instagram text-4"></i> {{data.ig}}</a></p>
                     
-                    <li class="social-icons-instagram">
-                        <a href="http://www.instagram.com/" class="no-footer-css" target="_blank" title="Instagram"><i class="fab fa-instagram text-color-primary"></i> {{data.ig}}</a>
-                    </li>
-
-                    <li class="social-icons-facebook ">
-                        <a href="http://www.facebook.com/" class="no-footer-css" target="_blank" title="Facebook"><i class="fab fa-facebook-f text-color-primary"></i> {{data.fb}}</a>
-                    </li>
-                   
-                </ul>
                 {% endfor %}
+                </ul>
             </div>
         </div>
     </div>
