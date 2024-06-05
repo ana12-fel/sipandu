@@ -61,6 +61,16 @@ class Master_jenjang(models.Model):
         self.deleted_at = timezone.now()
         self.save()
 
+class get_sekolah(models.Manager):
+    def get_queryset(self)  -> models.QuerySet:
+        return super().get_queryset()
+
+    def by_hakakses(self, user):
+        if user.user_role == 'admin_sekolah':
+            return self.get_queryset().filter(sekolah_id = user.user_sekolah.sekolah_id)
+        else:
+            return self.get_queryset().filter()
+        
 class Master_sekolah(models.Model):
     sekolah_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     sekolah_jenjang = models.ForeignKey(Master_jenjang, on_delete=models.PROTECT,default=None, null=True)
@@ -84,6 +94,8 @@ class Master_sekolah(models.Model):
         self.archived = False
         self.deleted_at = None
         self.save()
+    
+    objects=get_sekolah()
 
 
     # sekolah_status_kepemilikan = models.TextField(choices=STATUS_KEPEMILIKAN_SEKOLAH, null=True, default=None)
@@ -264,7 +276,16 @@ def generate_image_filename(instance, filename):
     new_filename = f"{basefilename}_{timestamp}{file_extension}"
     return f"image_konten/{new_filename}"
 
+class get_data_konten(models.Manager):
+    def get_queryset(self) -> models.QuerySet:
+        return super().get_queryset()
 
+    def by_hakakses(self, user):
+        if user.user_role == 'admin_sekolah':
+            return self.get_queryset().filter(konten_sekolah = user.user_sekolah)
+        else:
+            return self.get_queryset().filter()
+    
 class Data_konten(models.Model):
     id_data_konten = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     konten_sekolah = models.ForeignKey(Master_sekolah,related_name='konten_kategori_related', on_delete=models.CASCADE,default=None, null=True)
@@ -290,6 +311,18 @@ class Data_konten(models.Model):
         self.deleted_at = None
         self.save()
 
+    objects=get_data_konten()
+
+class get_galeri(models.Manager):
+    def get_queryset(self)  -> models.QuerySet:
+        return super().get_queryset()
+
+    def by_hakakses(self, user):
+        if user.user_role == 'admin_sekolah':
+            return self.get_queryset().filter(galeri_sekolah = user.user_sekolah)
+        else:
+            return self.get_queryset().filter()
+    
 class Data_galeri(models.Model):
     id_data_galeri= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     galeri_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
@@ -298,8 +331,18 @@ class Data_galeri(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
+
+    objects=get_galeri() 
     
-    
+class get_data_kontak(models.Manager):
+    def get_queryset(self)  -> models.QuerySet:
+        return super().get_queryset()
+
+    def by_hakakses(self, user):
+        if user.user_role == 'admin_sekolah':
+            return self.get_queryset().filter(kontak_sekolah = user.user_sekolah)
+        else:
+            return self.get_queryset().filter()
 
 class Data_kontak(models.Model):
     id_data_kontak= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -319,6 +362,18 @@ class Data_kontak(models.Model):
     def archive(self):
         self.deleted_at = timezone.now()
         self.save()
+
+    objects=get_data_kontak()
+
+class get_data_link(models.Manager):
+    def get_queryset(self)  -> models.QuerySet:
+        return super().get_queryset()
+
+    def by_hakakses(self, user):
+        if user.user_role == 'admin_sekolah':
+            return self.get_queryset().filter(link_sekolah = user.user_sekolah)
+        else:
+            return self.get_queryset().filter()
 
 class Data_link(models.Model):
     id_link= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -340,6 +395,17 @@ class Data_link(models.Model):
         self.deleted_at = None
         self.save()
 
+    objects=get_data_link()
+
+class get_data_siswa(models.Manager):
+    def get_queryset(self)  -> models.QuerySet:
+        return super().get_queryset()
+
+    def by_hakakses(self, user):
+        if user.user_role == 'admin_sekolah':
+            return self.get_queryset().filter(siswa_sekolah = user.user_sekolah)
+        else:
+            return self.get_queryset().filter()
 
 class Data_siswa(models.Model):
     id_data_siswa = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -361,6 +427,17 @@ class Data_siswa(models.Model):
         self.deleted_at = None
         self.save()
 
+    objects=get_data_siswa()
+
+class get_data_guru(models.Manager):
+    def get_queryset(self)  -> models.QuerySet:
+        return super().get_queryset()
+
+    def by_hakakses(self, user):
+        if user.user_role == 'admin_sekolah':
+            return self.get_queryset().filter(guru_sekolah = user.user_sekolah)
+        else:
+            return self.get_queryset().filter()
 
 class Data_guru(models.Model):
     id_data_guru = models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -386,6 +463,18 @@ class Data_guru(models.Model):
         self.deleted_at = None
         self.save()
 
+    objects=get_data_siswa()
+
+class get_data_slider(models.Manager):
+    def get_queryset(self)  -> models.QuerySet:
+        return super().get_queryset()
+
+    def by_hakakses(self, user):
+        if user.user_role == 'admin_sekolah':
+            return self.get_queryset().filter(slider_sekolah = user.user_sekolah)
+        else:
+            return self.get_queryset().filter()
+
 class Data_slider(models.Model):
     id_data_slider= models.TextField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     slider_sekolah = models.ForeignKey(Master_sekolah, on_delete=models.PROTECT,default=None, null=True)
@@ -396,6 +485,7 @@ class Data_slider(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
 
+objects=get_data_slider()
 
 class Laporan(models.Model):
     judul = models.CharField(max_length=100)

@@ -16,7 +16,7 @@ def IndexLink(request):
 
         return redirect ('sipandu_admin:index_link')
     else:
-        data_sekolah = Master_sekolah.objects.all()
+        data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         data_link = Data_link.objects.filter(deleted_at=None)
         data_arsip_link = Data_link.objects.filter(deleted_at__isnull=False)
         return render(request, 'admin/data/link.html', {'data_sekolah' : data_sekolah, 'data_link' : data_link, 'data_arsip_link':data_arsip_link})

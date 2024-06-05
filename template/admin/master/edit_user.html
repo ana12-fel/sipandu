@@ -28,7 +28,7 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <!-- Tambahkan div untuk kabupaten -->
+                    <!-- Tambahkan div untuk kabupaten --
                     <div class="mb-3 d-none" id="div_kab_edit_{{dt_user.user_id}}">
                         <label for="kab_edit">Kabupaten</label>
                         <select name="kab_edit" id="kab_edit_{{dt_user.user_id}}" class="form-control" data-initiate_data="{% if dt_user.user_role == 'admin_kabupaten' %}{{dt_user.user_kabupaten.wilayah_id}}{% else %}{{ dt_user.user_sekolah.sekolah_kecamatan.wilayah_parent.wilayah_id }}{% endif %}" onchange="render_kab_edit(this)" data-role="kab_edit" >

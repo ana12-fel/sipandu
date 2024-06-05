@@ -44,6 +44,10 @@ def global_var(request):
         'galeri_footer':galeri_footer,
         'galeri_footer_first':galeri_footer_first,
         'data_guru':data_guru,
+        'akses_menu_master' : ["superadmin","admin"],
+        'akses_menu_transaksi_situs' : ["superadmin","admin","admin_kabupaten"],
+        'akses_menu_data' : ["superadmin","admin","admin_sekolah"],
+        'akses_menu_laporan' : ["superadmin","admin","admin_kabupaten"]
     }
     
     return data

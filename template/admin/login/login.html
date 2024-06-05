@@ -86,6 +86,14 @@
                                     </span>
                                 </div>
 
+                                {% if messages %}
+                                    <div class="text-danger mt-2">
+                                        {% for message in messages %}
+                                            <p>{{ message }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+
                                 <div class="container-login100-form-btn">
                                     <button class="login100-form-btn btn-primary">
                                         Login
