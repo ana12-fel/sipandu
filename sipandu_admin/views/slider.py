@@ -7,7 +7,8 @@ def Indexslider(request):
         slider_sekolah = request.POST.get('slider_sekolah')
         gambar = request.FILES.get('image_slider1')
         judul = request.POST.get('judul')
-        slider_status = request.POST.get('slider_status') == 'True'
+        slider_status = request.POST.get('status')
+        print(slider_status)
 
         dt_slider = Data_slider.objects.create(
             slider_sekolah_id=slider_sekolah,
@@ -28,7 +29,7 @@ def Tambahslider(request):
         slider_sekolah = request.POST.get('slider_sekolah')
         gambar = request.FILES.get('image_slider1')
         judul = request.POST.get('judul')
-        slider_status = request.POST.get('slider_status') == 'True'
+        slider_status = request.POST.get('status')
 
         dt_slider = Data_slider.objects.create(
             slider_sekolah_id=slider_sekolah,
@@ -48,7 +49,7 @@ def Editslider(request, id_data_slider):
         slider_sekolah = request.POST.get('slider_sekolah')
         gambar = request.FILES.get('image_slider1')
         judul = request.POST.get('judul')
-        slider_status = request.POST.get('slider_status') == 'True'
+        slider_status = request.POST.get('status') 
 
         dt_slider.slider_sekolah_id = slider_sekolah
         dt_slider.gambar = gambar
