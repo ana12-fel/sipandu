@@ -32,10 +32,9 @@
         <li class="slide">
             <a class="side-menu__item"  data-bs-toggle="slide" href="{% url 'sipandu_admin:index_transaksi' %}"></i><span class="side-menu__label">Transaksi Situs</span></a>
         </li>
-        <li class="slide">
-            <a class="side-menu__item"  data-bs-toggle="slide" href="{% url 'sipandu_admin:master_kategori' %}"></i><span class="side-menu__label">Master Kategori</span></a>
-        </li>
-        
+        {% endif %}
+
+        {% if request.user.user_role in akses_menu_data %}
         <li class="slide">
             <a class="side-menu__item" data-bs-toggle="slide" href="#"></i><span class="side-menu__label">Data</span><i class="angle fa fa-angle-right"></i></a>
             <ul class="slide-menu">
