@@ -39,14 +39,14 @@ Master User
     </div>
     <div class="mb-3">
         <label for="konten_kategori" class="form-label">Kategori</label>
-        <select class="form-select" id="konten_kategori" name="konten_kategori" onchange="render_tema()" required>
+        <select class="form-select" id="konten_kategori" name="konten_kategori" onchange="render_sub_kategori(this)" required>
             <option value="" selected disabled>Pilih Kategori</option>
             
         </select>
     </div>
     <div class="mb-3">
         <label for="sub_kategori_uraian" class="form-label">Sub Kategori</label>
-        <select class="form-select" id="sub_kategori_uraian" name="konten_sub_kategori" required>
+        <select class="form-select" id="konten_sub_kategori" name="konten_sub_kategori" required>
             <option value="" selected disabled>Pilih Sub Kategori</option>
             
         </select>
@@ -188,38 +188,32 @@ Master User
                 console.error('Error: ' + error + ', Status: ' + status);
             }
         });
+    }
 
-        // var selectedSekolahId = $('#konten_sekolah').val();
-        // var selectedKategoriId = $('#konten_kategori').val();
+    function render_sub_kategori(e) {
+        var kategori = $(e).val()
+        console.log(kategori)
 
-        // console.log('Sekolah ID: ' + selectedSekolahId + ', Kategori ID: ' + selectedKategoriId);
+        $.ajax({
+            url: "{% url 'sipandu_admin:get_sub_kategori' %}",
+            type: "GET",
+            data: {
+                'kategori_id': kategori,
+            },
+            success: function(response) {
+                var elem = $('#konten_sub_kategori');
+                elem.html('<option value="" selected disabled>Pilih Sub Kategori</option>');
 
-        // // Cek apakah kedua nilai sudah dipilih sebelum mengirim permintaan AJAX
-        // if (selectedSekolahId && selectedKategoriId) {
-        //     $.ajax({
-        //         url: "{% url 'sipandu_admin:get_sub_kategori' %}",
-        //         type: "GET",
-        //         data: {
-        //             'sekolah_id': selectedSekolahId,
-        //             'kategori_id': selectedKategoriId
-        //         },
-        //         success: function(response) {
-        //             var elem = $('#sub_kategori_uraian');
-        //             elem.html('<option value="" selected disabled>Pilih Sub Kategori</option>');
+                response.data_sub_kategori.forEach(function(sub_kategori) {
+                    elem.append('<option value="' + sub_kategori.sub_kategori_id + '">' + sub_kategori.sub_kategori_uraian.toUpperCase() + '</option>');
+                });
 
-        //             response.data_sub_kategori.forEach(function(sub_kategori) {
-        //                 elem.append('<option value="' + sub_kategori.sub_kategori_id + '">' + sub_kategori.sub_kategori_uraian.toUpperCase() + '</option>');
-        //             });
-
-        //             elem.val('');
-        //         },
-        //         error: function(xhr, status, error) {
-        //             console.error('Error: ' + error + ', Status: ' + status);
-        //         }
-        //     });
-        // } else {
-        //     console.warn('Sekolah ID atau Kategori ID tidak valid.');
-        // }
+                elem.val('');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error: ' + error + ', Status: ' + status);
+            }
+        });
     }
 
 </script>
