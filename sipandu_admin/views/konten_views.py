@@ -85,29 +85,19 @@ def get_kategori_by_sekolah(request):
 @require_GET
 @csrf_exempt
 def get_sub_kategori(request):
-    if request.is_ajax():
-        sekolah_id = request.GET.get('sekolah_id')
-        kategori_id = request.GET.get('kategori_id')
+    kategori_id = request.GET.get('kategori_id') 
+    
+    try:
+        sub_kategori_list = Sub_kategori.objects.filter(
+            kategori_id=kategori_id
+        ).values('sub_kategori_id', 'sub_kategori_uraian')
         
-        # Tambahkan debug log
-        print(f"sekolah_id: {sekolah_id}, kategori_id: {kategori_id}")
+        # Tambahkan debug log        
+        return JsonResponse({"data_sub_kategori": list(sub_kategori_list)})
+    except Exception as e:
+        print(f"Error: {e}")
+        return JsonResponse({'error': str(e)}, status=500)
         
-        if sekolah_id and kategori_id:
-            try:
-                sub_kategori_list = Sub_kategori.objects.filter(
-                    sekolah_id=sekolah_id, 
-                    kategori_id=kategori_id
-                ).values('sub_kategori_id', 'sub_kategori_uraian')
-                
-                # Tambahkan debug log
-                print(f"sub_kategori_list: {list(sub_kategori_list)}")
-                
-                return JsonResponse({"data_sub_kategori": list(sub_kategori_list)})
-            except Exception as e:
-                print(f"Error: {e}")
-                return JsonResponse({'error': str(e)}, status=500)
-        else:
-            return JsonResponse({'error': 'Missing parameters'}, status=400)
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
 def TambahKonten(request):
