@@ -38,21 +38,21 @@ def IndexWilayah(request):
     else:
         data_wilayah = Master_wilayah.objects.all()
         data_prov = Master_wilayah.objects.filter(wilayah_level='1')
+        data_kab = Master_wilayah.objects.filter(wilayah_level='2')
         return render(request, 'admin/master/index_master_wilayah.html', {'data_wilayah': data_wilayah, 'wilayah_level': LEVEL_WILAYAH,
-            "data_prov": data_prov})
+            "data_prov": data_prov, "kab" : data_kab})
 
 def get_wilayah_by_level(request):
     if request.method == 'GET':
         level = request.GET.get('level')
         wilayah_id = request.GET.get('wilayah_id')
+        print(level)
         
         wilayah_list = Master_wilayah.objects.filter(wilayah_parent=wilayah_id).values('wilayah_id', 'wilayah_nama')
         
         return JsonResponse({"data_wilayah": list(wilayah_list)})
     return JsonResponse({'error': 'Invalid request'})
 
-    
-from django.shortcuts import get_object_or_404
 
 def edit_wilayah(request, wilayah_id):
     # Mengambil objek wilayah yang akan diedit
@@ -62,7 +62,7 @@ def edit_wilayah(request, wilayah_id):
         wilayah_kode = request.POST.get('wilayah_kode_edit') 
         wilayah_nama = request.POST.get('wilayah_nama_edit')
         wilayah_level = request.POST.get('wilayah_level_edit')
-        wilayah_status = request.POST.get('wilayah_status_edit')
+        wilayah_status = request.POST.get('edit_wilayah_status')
         
         prov = request.POST.get('prov_edit')
         kab = request.POST.get('kab_edit')
@@ -82,7 +82,9 @@ def edit_wilayah(request, wilayah_id):
         dt_wilayah.wilayah_kode = wilayah_kode
         dt_wilayah.wilayah_nama = wilayah_nama
         dt_wilayah.wilayah_level = wilayah_level
+        dt_wilayah.wilayah_status = wilayah_status
         dt_wilayah.wilayah_parent = wilayah_parent
+        
 
         # Menyimpan perubahan
         dt_wilayah.save()
@@ -117,4 +119,12 @@ def delete_wilayah(request, wilayah_id):
             'message': 'Wilayah tidak ditemukan'
         }
         return JsonResponse(data, status=404)
+    
+
+def cek_kode_wilayah(request):
+    kode = request.GET.get('kode', None)
+    data = {
+        'is_unique': not Master_wilayah.objects.filter(wilayah_kode=kode).exists()
+    }
+    return JsonResponse(data)
 

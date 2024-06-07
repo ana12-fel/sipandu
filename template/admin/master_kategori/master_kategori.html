@@ -8,22 +8,23 @@ Master User
 <!--app-content open-->
 <div class="app-content">
     <div class="side-app">
+        
+        {% if messages %}
+            <ul class="messages error-duplicate ">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <div>
                 <h1 class="page-title">DATA KATEGORI</h1>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">kategori</li>
+                    <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Master Kategori</li>
                 </ol>
-            </div>
-            <div class="ms-auto pageheader-btn">
-                <a href="#" class="btn btn-success btn-icon text-white">
-                    <span>
-                        <i class="fe fe-log-in"></i>
-                    </span> Export
-                </a>
             </div>
         </div>
         <!-- PAGE-HEADER END -->
@@ -35,7 +36,7 @@ Master User
                         <select class="form-select" id="tema_id" name="tema_id" onchange="ubah_pilihan_tema(this)">
                             <option value="" disabled>Pilih Tema</option>
                             {% for tema in data_tema %}
-                            <option value="{{ tema.tema_id }}">{{ tema.tema_nama.upper }}</option>
+                            <option value="{{ tema.tema_id }}" {% if tema.tema_id == tema_id %} selected {% endif %}>{{ tema.tema_nama.upper }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -84,7 +85,7 @@ Master User
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary" >Submit</button>
                             </div>
                         </form>
                     </div>
@@ -114,14 +115,18 @@ Master User
                                     <!-- Isi tabel Kategori -->
                                     {% for dt_kategori in data_kategori %}
                                     <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>{{ dt_kategori.kategori_uraian }}</td>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_kategori.kategori_uraian }}</td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <!-- Tombol edit -->
-                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_kategori.kategori_id}}">Edit</a> &nbsp;
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_kategori.kategori_id}}">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a> &nbsp;
                                                 <!-- Tombol delete -->
-                                                <button onclick="deleteKategori('{{ dt_kategori.kategori_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                <button onclick="deleteKategori('{{ dt_kategori.kategori_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>
@@ -130,20 +135,6 @@ Master User
                                 </tbody>
                             </table>
                         </div>
-                        <!-- Paginasi untuk Kategori -->
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item" id="kategoriPrevBtn">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                                </li>
-                                {% for i in 1..kategoriNumPages %}
-                                <li class="page-item"><a class="page-link" href="#" onclick="showKategoriPage({{ i }})">{{ i }}</a></li>
-                                {% endfor %}
-                                <li class="page-item" id="kategoriNextBtn">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
             </div>
@@ -194,7 +185,7 @@ Master User
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -225,13 +216,17 @@ Master User
                                     <!-- Isi tabel Sub Kategori -->
                                     {% for dt_sub_kategori in data_sub_kategori %}
                                     <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>{{ dt_sub_kategori.kategori_id.kategori_uraian}}</td>
-                                        <td>{{ dt_sub_kategori.sub_kategori_uraian }}</td>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_sub_kategori.kategori_id.kategori_uraian}}</td>
+                                        <td class="text-center align-middle">{{ dt_sub_kategori.sub_kategori_uraian }}</td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
-                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_sub_kategori.sub_kategori_id}}">Edit</a> &nbsp;
-                                                <button onclick="deleteSubKategori('{{ dt_sub_kategori.sub_kategori_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_sub_kategori.sub_kategori_id}}">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a> &nbsp;
+                                                <button onclick="deleteSubKategori('{{ dt_sub_kategori.sub_kategori_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>
@@ -240,20 +235,6 @@ Master User
                                 </tbody>
                             </table>
                         </div>
-                        <!-- Paginasi untuk Sub Kategori -->
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item" id="subkategoriPrevBtn">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                                </li>
-                                {% for i in 1..subkategoriNumPages %}
-                                <li class="page-item"><a class="page-link" href="#" onclick="showSubKategoriPage({{ i }})">{{ i }}</a></li>
-                                {% endfor %}
-                                <li class="page-item" id="subkategoriNextBtn">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
             </div>
@@ -266,7 +247,59 @@ Master User
 
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script>
+
+document.addEventListener('DOMContentLoaded', function () {
+        var errorMessages = document.querySelectorAll('.error-duplicate');
+        if (errorMessages.length > 0) {
+            var messages = [];
+            errorMessages.forEach(function (element) {
+                messages.push(element.innerText);
+            });
+            swal("Error!", messages.join("\n"), "error");
+        }
+    });
+function submitForm() {
+    var kategoriUraian = document.getElementById("kategori_uraian").value;
+    var subkategoriUraian = document.getElementById("sub_kategori_uraian").value;
+    var form_sub_input = document.getElementById("form_tema_id").value;
+
+    // Mengirim data ke server menggunakan Ajax
+    $.ajax({
+        url: "{% url 'sipandu_admin:sub_kategori' %}",
+        type: "POST",
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            kategori_uraian: kategoriUraian,
+            sub_kategori_uraian: subkategoriUraian,
+            form_sub: form_sub_input,
+        },
+        success: function(response) {
+            console.log('sukses')
+            $('#addDataModal').modal('hide'); 
+            swal({
+                icon: 'success',
+                title: 'Berhasil...',
+                text: 'Data Berhasil Diinput.',
+            });
+            setTimeout(function() { 
+                window.location.reload();
+            }, 2000);
+        },
+        error: function(xhr, status, error) {
+            console.error("Terjadi kesalahan:", error);
+            swal({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Data Sudah Terinput Sebelumnya!....',
+            });
+        }
+    });
+}
+
+
+
     function ubah_pilihan_tema(e){
         var tema_id = e.value;
         var tema_nama = e.options[e.selectedIndex].text;
@@ -309,7 +342,7 @@ Master User
                                 window.location.reload(); 
                             },
                             error: function (xhr, status, error) {
-                                swal("Terjadi kesalahan saat menghapus data!", {
+                                swal("Data sedang digunakan!", {
                                     icon: "error",
                                 });
                             }
@@ -319,9 +352,7 @@ Master User
                     }
                 });
             }
-</script>
 
-<script>
     function deleteSubKategori(subkategori_) {
     var deleteUrl = "{% url 'sipandu_admin:delete_sub_kategori' 'sub_kategori_id' %}".replace("sub_kategori_id", subkategori_);  
     swal({
@@ -362,81 +393,26 @@ Master User
                     }
                 });
             }
+    
+    $(function(){
+        $('#kategoriResponsiveDatatable').DataTable({
+            scrollX: "100%",
+            language: {
+                searchPlaceholder: 'Search...',
+                sSearch: '',
+            }
+        });
+
+        $('#subkategoriResponsiveDatatable').DataTable({
+            scrollX: "100%",
+            language: {
+                searchPlaceholder: 'Search...',
+                sSearch: '',
+            }
+        });
+
+    })
+
 </script>
 
-<script>
-    $(document).ready(function() {
-        var rowsShown = 10;
-
-        // Kategori
-        var kategoriRows = $('#kategoriResponsiveDatatable tbody tr');
-        var kategoriRowsTotal = kategoriRows.length;
-        var kategoriNumPages = Math.ceil(kategoriRowsTotal / rowsShown);
-        var kategoriCurrentPage = 0;
-
-        // Sub Kategori
-        var subkategoriRows = $('#subkategoriResponsiveDatatable tbody tr');
-        var subkategoriRowsTotal = subkategoriRows.length;
-        var subkategoriNumPages = Math.ceil(subkategoriRowsTotal / rowsShown);
-        var subkategoriCurrentPage = 0;
-
-        showKategoriPage(1);
-        showSubKategoriPage(1);
-
-        function showKategoriPage(page) {
-            kategoriCurrentPage = page;
-            var start = (page - 1) * rowsShown;
-            var end = start + rowsShown;
-            kategoriRows.hide();
-            kategoriRows.slice(start, end).show();
-            // Mengatur status tombol Previous dan Next
-            $('#kategoriPrevBtn').prop('disabled', page === 1);
-            $('#kategoriNextBtn').prop('disabled', page === kategoriNumPages);
-        }
-
-        // Fungsi untuk menampilkan halaman untuk Sub Kategori
-        function showSubKategoriPage(page) {
-            subkategoriCurrentPage = page;
-            var start = (page - 1) * rowsShown;
-            var end = start + rowsShown;
-            subkategoriRows.hide();
-            subkategoriRows.slice(start, end).show();
-            // Mengatur status tombol Previous dan Next
-            $('#subkategoriPrevBtn').prop('disabled', page === 1);
-            $('#subkategoriNextBtn').prop('disabled', page === subkategoriNumPages);
-        }
-
-        // Event handler saat tombol "Previous" diklik untuk Kategori
-        $('#kategoriPrevBtn').on('click', function() {
-            if (kategoriCurrentPage > 1) {
-                showKategoriPage(kategoriCurrentPage - 1);
-            }
-        });
-
-        // Event handler saat tombol "Next" diklik untuk Kategori
-        $('#kategoriNextBtn').on('click', function() {
-            if (kategoriCurrentPage < kategoriNumPages) {
-                showKategoriPage(kategoriCurrentPage + 1);
-            }
-        });
-
-        // Event handler saat tombol "Previous" diklik untuk Sub Kategori
-        $('#subkategoriPrevBtn').on('click', function() {
-            if (subkategoriCurrentPage > 1) {
-                showSubKategoriPage(subkategoriCurrentPage - 1);
-            }
-        });
-
-        // Event handler saat tombol "Next" diklik untuk Sub Kategori
-        $('#subkategoriNextBtn').on('click', function() {
-            if (subkategoriCurrentPage < subkategoriNumPages) {
-                showSubKategoriPage(subkategoriCurrentPage + 1);
-            }
-        });
-
-        let searchParams = new URLSearchParams(window.location.search)
-        // console.log()
-        $('#tema_id').val(searchParams.get('tema_id'))
-    });
-</script>
 {% endblock %}

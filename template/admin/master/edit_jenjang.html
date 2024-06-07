@@ -18,20 +18,23 @@
                         <!-- Input jenjang_status secara default -->
                     </div>
                     <div class="mb-3">
-                        <label>Status:</label>
+                        <label for="jenjang_status">Status</label>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="jenjang_status" id="statusAktif" value="True" {% if dt_jenjang.jenjang_status == "True" %} checked {% endif %}>
+                            <input class="form-check-input" type="radio" name="jenjang_status" id="statusAktif" value="True" {% if dt_jenjang.jenjang_status %}checked{% endif %}>
                             <label class="form-check-label" for="statusAktif">Aktif</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="jenjang_status" id="statusTidakAktif" value="False" {% if dt_jenjang.jenjang_status == "False" %} checked {% endif %}>
+                            <input class="form-check-input" type="radio" name="jenjang_status" id="statusTidakAktif" value="False" {% if not dt_jenjang.jenjang_status %}checked{% endif %}>
                             <label class="form-check-label" for="statusTidakAktif">Tidak Aktif</label>
                         </div>
                     </div>
-                    </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit
+                        </button>
                     </div>
                 </form>
             

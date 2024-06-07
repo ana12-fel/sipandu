@@ -1,0 +1,148 @@
+{% extends 'admin/base/base_index.html' %}
+{% load static %}
+{% block title %}
+Master User
+{% endblock %}
+
+{% block content %}
+<!-- edit_konten.html -->
+<div class="app-content">
+    <div class="side-app">
+
+        <!-- PAGE-HEADER -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">EDIT DATA KONTAK</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="#">Data</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data Kontak</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Edit Kontak</h3>
+                    </div>
+                <div class="card-body">
+<form method="post" action="{% url 'sipandu_admin:edit_kontak' data_kontak.id_data_kontak %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="kontak_sekolah" class="form-label">Sekolah</label>
+        <select class="form-select" id="kontak_sekolah" name="kontak_sekolah">
+            <option value="test" selected disabled>Pilih Sekolah</option>
+            {% for sekolah in data_sekolah %}
+            <option value="{{ sekolah.sekolah_id }}" {% if data_kontak.kontak_sekolah_id == sekolah.sekolah_id %} selected {% endif %}>{{ sekolah.sekolah_nama.upper }}</option>
+            {% endfor %}
+        </select>
+    </div> 
+
+    <div class="mb-3">
+        <label for="Email" class="form-label">E-mail</label>
+        <input type="text" value="{{data_kontak.email}}" class="form-control" id="Email" name="email" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="no_hp" class="form-label">No Hp</label>
+        <input type="text" value="{{data_kontak.no_hp }}" class="form-control" id="no_hp" name="no_hp" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="alamat" class="form-label">alamat</label>
+        <input type="text" value="{{data_kontak.alamat }}" class="form-control" id="alamat" name="alamat" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="link_map" class="form-label">link Map </label>
+        <input type="text" value="{{data_kontak.link_map }}" class="form-control" id="link_map" name="link_map" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="fb"_ class="form-label">Facebook</label>
+        <input type="text" value="{{data_kontak.fb}}" class="form-control" id="fb" name="fb" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="tw" class="form-label">Twitter</label>
+        <input type="text" value="{{data_kontak.tw}}" class="form-control" id="tw" name="tw" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="ig" class="form-label">Instagram</label>
+        <input type="text" value="{{data_kontak.ig}}" class="form-control" id="ig" name="ig" required>
+    </div>
+
+    <td>
+        <label for="image" class="form-label">Foto</label>
+    </td>
+    <td>
+        {% if data_kontak.gambar %}
+            <input type="file" value="{{ data_kontak.gambar.url }}" class="form-control" id="gambar" name="image_galeri" accept="image/*" onchange="previewImage(event)">
+        {% else %}
+            <input type="file" class="form-control" id="gambar" name="image_galeri" accept="image/*" onchange="previewImage(event)">
+        {% endif %}
+    </td>
+    <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;">
+
+        {% if data_kontak.gambar %}
+        <img src="{{data_kontak.gambar.url}}" alt="">
+        {% endif %}
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Simpan</button>
+    </div>
+
+
+</form>
+</div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'admin/js/ckeditor.js'%}"></script>
+
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .then( editor => {
+                console.log( editor );
+        } )
+        .catch( error => {
+                console.error( error );
+        } );
+        
+    function previewImage(event) {
+        var input = event.target;
+        var preview = document.getElementById('image-preview');
+        
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                // Menghapus preview thumbnail sebelumnya jika ada
+                while (preview.firstChild) {
+                    preview.removeChild(preview.firstChild);
+                }
+
+                // Menambahkan elemen img untuk menampilkan preview thumbnail
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '300px';
+                img.alt = ' Preview';
+                preview.appendChild(img);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+</script>
+{% endblock %}
+
+

@@ -9,39 +9,40 @@
             </div>
             <div class="col-lg-3">
                 <h4 class="font-weight-bold text-color-light">Alamat</h4>
-                <p class="text-3-5">
-                    Jl. Sri Rahayu Jl. H. Abdul Kahar
-                     No.127, Sumodaran, Banyuraden,
-                     Kec. Gamping, Kabupaten Sleman, 
-                     Daerah Istimewa Yogyakarta 55293
-                </p>
+                {% for data in data_kontak_footer %}
+                    <p class="text-3-5"><a href="{{ data.link_map  }}" target="_blank" class="text-decoration-none">{{ data.alamat}}</a></p>
+                {% endfor %}
             </div>
+            
+            
             <div class="col-lg-2">
-                <h4 class="font-weight-bold text-color-light">Navigation</h4>
+                <h4 class="font-weight-bold text-color-light">Navigasi</h4>
                 <ul class="list list-unstyled mb-0">
-                    <li class="mb-0"><a href="index.html" class="text-decoration-none text-3-5">- Home</a></li>
-                    <li class="mb-0"><a href="about.html" class="text-decoration-none text-3-5">- About</a></li>
-                    <li class="mb-0"><a href="services.html" class="text-decoration-none text-3-5">- Services</a></li>
-                    <li class="mb-0"><a href="word.html" class="text-decoration-none text-3-5">- Work</a></li>
-                    <li class="mb-0"><a href="contact.html" class="text-decoration-none text-3-5">- Contact</a></li>
+                    <li class="mb-0"><a href="{% url 'sipandu:home' %}" class="text-decoration-none text-3-5">- Beranda</a></li>
+                    <li class="mb-0"><a href="{% url 'sipandu:home' %}" class="text-decoration-none text-3-5">- Profil</a></li>
+                    <li class="mb-0"><a href="{% url 'sipandu:berita' %}" class="text-decoration-none text-3-5">- Berita</a></li>
+                    <li class="mb-0"><a href="{% url 'sipandu:galeri' %}" class="text-decoration-none text-3-5">- Galeri</a></li>
+                    <li class="mb-0"><a href="{% url 'sipandu:kontak' %}" class="text-decoration-none text-3-5">- Kontak</a></li>
                 </ul>
             </div>
             <div class="col-lg-2">
-                <h4 class="font-weight-bold text-color-light">More</h4>
+                <h4 class="font-weight-bold text-color-light">LINK TERKAIT</h4>
                 <ul class="list list-unstyled mb-0">
-                    <li class="mb-0"><a href="#" class="text-decoration-none text-3-5">- Terms of Use</a></li>
-                    <li class="mb-0"><a href="#" class="text-decoration-none text-3-5">- Privacy Policy</a></li>
+                    {% for data in data_link_footer %}
+                    <li class="mb-0"><a href="{{data.nama_link}}" target="_blank" class="text-decoration-none text-3-5">{{data.judul_link}}</a></li>
+                    {% endfor %}
+                    <!-- <li class="mb-0"><a href="#" class="text-decoration-none text-3-5">- Privacy Policy</a></li> -->
                 </ul>
             </div>
             <div class="col-lg-3">
-                <h4 class="font-weight-bold text-color-light">Latest Post</h4>
-                <ul class="list-unstyled mb-0">
-                    <li class="mb-2 pb-1">
-                        <a href="#">
-                            <p class="text-3 mb-0">- <strong class="font-weight-regular">Lorem ipsum dolor sit amet.</strong></p>
-                            <p class="text-2 mb-0 opacity-8">12:55 AM Dec 19th</p>
-                        </a>
-                    </li>
+                <h4 class="font-weight-bold text-color-light">Kontak</h4>
+                {% for data in data_kontak_footer %}
+                    <p class="text-3-5"><a href="#" target="_blank" class="text-decoration-none"><i class="fas fa-phone"></i> {{data.no_hp}}</a></p>
+                    <p class="text-3-5"><a href="mailto:email@example.com" target="_blank" class="text-decoration-none"><i class="fa fa-envelope"></i> {{data.email}}</a></p>
+                    <p class="text-3-5"><a href="#" target="_blank" class="text-decoration-none"><i class="fab fa-facebook-f text-4"></i> {{data.fb}}</a></p>
+                    <p class="text-3-5"><a href="#" target="_blank" class="text-decoration-none"><i class="fab fa-instagram text-4"></i> {{data.ig}}</a></p>
+                    
+                {% endfor %}
                 </ul>
             </div>
         </div>
@@ -51,13 +52,6 @@
             <div class="row py-4">
                 <div class="col-md-4 d-flex align-items-center justify-content-center justify-content-md-start mb-2 mb-lg-0">
                     <p class="text-color-grey text-3-5">RST © 2024. All Rights Reserved.</p>
-                </div>
-                <div class="col-md-8 d-flex align-items-center justify-content-center justify-content-md-end mb-4 mb-lg-0">
-                    <ul class="footer-social-icons social-icons social-icons-clean social-icons-icon-light social-icons-big">
-                        <li class="social-icons-instagram"><a href="http://www.instagram.com/" target="_blank" title="Intagram"><i class="fab fa-instagram text-4"></i></a></li>
-                        <li class="social-icons-twitter"><a href="http://www.twitter.com/" target="_blank" title="Twitter"><i class="fab fa-twitter text-4"></i></a></li>
-                        <li class="social-icons-facebook"><a href="http://www.facebook.com/" target="_blank" title="Facebook"><i class="fab fa-facebook-f text-4"></i></a></li>
-                    </ul>
                 </div>
             </div>
         </div>

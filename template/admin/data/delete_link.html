@@ -1,0 +1,65 @@
+<div class="card">
+    <div class="card-header border-bottom-0 p-4">
+        <div class="page-options d-flex justify-content-end">
+        </div>
+    </div>
+    <div class="e-table px-5 pb-5">
+        <div class="table-responsive table-lg">
+            <form id="deleteForm" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id_link" id="id_link">
+            </form>
+            <table class="table border-top table-bordered mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-center border-bottom-0">NO</th>
+                        <th class="text-center border-bottom-0">TANGGAL</th>
+                        <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
+                        <th class="text-center border-bottom-0">JUDUL</th>
+                        <th class="text-center border-bottom-0">LINK</th>
+                        <th class="text-center border-bottom-0">AKSI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dt_link in data_link %}
+                    <tr>
+                        <td class="align-middle text-center">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" id="item-{{ dt_link.id_link }}" type="checkbox"> 
+                                <label class="custom-control-label" for="item-{{ dt_link.id_link }}"></label>
+                            </div>
+                        </td>
+                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                        <td class="text-center align-middle">{{ dt_link.created_at }}</td>
+                        <td class="text-center align-middle">{{ dt_link.link_sekolah.sekolah_nama }}</td>
+                        <td class="text-center align-middle">{{ dt_link.judul_link }}</td>
+                        <td class="text-center align-middle">{{ dt_link.nama_link }}</td>
+                        <td class="text-center align-middle">
+                            <div class="btn-group align-top">
+                                <button class="btn btn-sm btn-danger badge" onclick="prepareDelete('{{ dt_link.id_link}}')" type="button">Delete Link</button>
+                            </div>
+                        </td>
+                        <form id="deleteForm{{ dt_link.id_link }}" method="post" action="{% url 'delete_link' dt_link.id_link %}">
+                            {% csrf_token %}
+                        </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% block js %}
+<script>
+    function prepareDelete(id_link) {
+        var confirmation = confirm("Apakah Anda yakin ingin menghapus data ini?");
+        if (confirmation) {
+            document.getElementById("id_link").value = id_link;
+            document.getElementById("deleteForm" + id_link).submit();
+        } else {
+        }
+    }
+</script>
+{% endblock %}
+ 

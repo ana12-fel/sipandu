@@ -30,47 +30,34 @@
     </div>
 
 </section>
+<div class="container py-5 mb-5 pt-5">
+    <div class="lightbox pt-5" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+        <div class="row">
+            {% for gambar in galeri %}
+            <div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
+                <a class="img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{{ gambar.gambar.url }}">
+                    <img src="{{ gambar.gambar.url }}" class="img-fluid gambar-galeri rounded-0" alt="" />
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 
-	<div class="container py-5 mb-5 pt-5">
-		<div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
-			<div class="row">
-				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
-					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd1.jpg' %}">
-						<img src="{% static 'logo/sd1.jpg' %}" class="img-fluid rounded-0" alt="" />
-					</a>		
-				</div>
-				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">
-					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd2.jpg' %}">
-						<img src="{% static 'logo/sd2.jpg' %}" class="img-fluid rounded-0" alt="" />
-					</a>		
-				</div>
-				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">
-					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd3.jpg' %}">
-						<img src="{% static 'logo/sd1.jpg'%}" class="img-fluid rounded-0" alt="" />
-					</a>		
-				</div>
-			</div>
-		</div>
-		<div class="lightbox pt-5" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
-			<div class="row">
-				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
-					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd4.jpg' %}">
-						<img src="{% static 'logo/sd4.jpg' %}" class="img-fluid rounded-0" alt="" />
-					</a>		
-				</div>
-				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">
-					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd5.jpg' %}">
-						<img src="{% static 'logo/sd5.jpg' %}" class="img-fluid rounded-0" alt="" />
-					</a>		
-				</div>
-				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">
-					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{% static 'logo/sd6.jpg' %}">
-						<img src="{% static 'logo/sd6.jpg'%}" class="img-fluid rounded-0" alt="" />
-					</a>		
-				</div>
-			</div>
-		</div>
-	</div>
+
+
+<div class="container" style="padding-top: 50px;">
+    <div class="row">
+        {% for galeri in galeri %}
+        <div class="col-md-12">
+            <iframe width="100%" height="500" src="{{ galeri.video }}" 
+            title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+	
 
 
 

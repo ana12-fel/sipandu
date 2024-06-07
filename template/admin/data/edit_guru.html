@@ -1,0 +1,106 @@
+<!-- Modal Edit Data Tema -->
+<div class="modal fade" id="editdata_{{dt_guru.id_data_guru}}" tabindex="-1" aria-labelledby="editDataModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editDataModalLabel">Edit Data Tema</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form edit data di sini -->
+                <form method="post" enctype="multipart/form-data" action="{% url 'sipandu_admin:edit_guru' dt_guru.id_data_guru %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="guru_sekolah" class="form-label">Sekolah</label>
+                        <select class="form-select" id="guru_sekolah" name="guru_sekolah">
+                            <option value="test" selected disabled>Pilih Sekolah</option>
+                            {% for sekolah in data_sekolah %}
+                            <option value="{{ sekolah.sekolah_id }}" {% if dt_guru.guru_sekolah_id == sekolah.sekolah_id %} selected {% endif %}>{{ sekolah.sekolah_nama.upper }}</option>
+                            {% endfor %}
+                        </select>
+                    </div> 
+                    <div class="mb-3">
+                        <label for="nama" class="form-label">Nama Guru</label>
+                        <input type="text" value="{{dt_guru.nama_guru}}" class="form-control" id="nama" name="nama_guru" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nama" class="form-label">Nip</label>
+                        <input type="text" value="{{dt_guru.nip_guru}}" class="form-control" id="nama" name="nip_guru" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nama" class="form-label">Mata Pelajaran</label>
+                        <input type="text" value="{{dt_guru.mata_pelajaran}}" class="form-control" id="nama" name="mata_pelajaran" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nama" class="form-label">Pendidikan</label>
+                        <input type="text" value="{{dt_guru.pendidikan}}" class="form-control" id="nama" name="pendidikan" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="status_kepegawaian" class="form-label">Status Kepegawaian</label>
+                        <select class="form-select" id="edit_status_kepegawaian-{{dt_guru.id_data_guru}}" name="edit_status_kepegawaian-{{dt_guru.id_data_guru}}" onchange="edittoggleTahunForm()">
+                            <option value="" selected disabled>Pilih Status Kepegawaian</option>
+                            <option value="guru" {% if dt_guru.status_kepegawaian == 'guru' %} selected {% endif %}>Guru</option>
+                            <option value="kepala_sekolah" {% if dt_guru.status_kepegawaian == 'kepala_sekolah' %} selected {% endif %}>Kepala Sekolah</option>
+                        </select>
+                    </div>
+                    <div id="edit_tahun_guru-{{dt_guru.id_data_guru}}" style="display: none;">
+                        <div class="mb-3">
+                            <label for="tahun_guru" class="form-label">Tahun Jabatan Kepala Sekolah</label>
+                            <input type="text" class="form-control" id="edit_tahun_guru-{{dt_guru.id_data_guru}}" name="edit_tahun_guru-{{dt_guru.id_data_guru}}">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="thumbnail" class="form-label">Foto</label>
+                        <input type="file" class="form-control" id="guru_image" name="guru_image" accept="image/*" onchange="previewImage(event)">
+                    </div>
+                    <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;">
+                        {% if dt_guru.guru_image %}
+                            <img id="image-preview-img" src="{{ dt_guru.guru_image.url }}" alt="Gambar Konten" style="max-width: 100%;">
+                        {% else %}
+                            <img id="image-preview-img" src="#" alt="Pratinjau Gambar" style="display: none; max-width: 100%;">
+                        {% endif %}
+                    </div>
+                
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit
+                        </button>
+                    </div>     
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Edit Data Tema End -->
+<script>
+    function edittoggleTahunForm() {
+        var statusKepegawaian = document.getElementById("edit_status_kepegawaian-{{dt_guru.id_data_guru}}").value;
+        var tahun_guru = document.getElementById("edit_tahun_guru-{{dt_guru.id_data_guru}}");
+
+        if (statusKepegawaian === "kepala_sekolah") {
+            tahun_guru.style.display = "block";
+            console.log('berhasil')
+        } else {
+            tahun_guru.style.display = "none";
+            console.log('gagal')
+
+        }
+    }
+
+    function previewImage(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function(){
+            var dataURL = reader.result;
+            var previewImg = document.getElementById('image-preview-img');
+            previewImg.src = dataURL;
+            previewImg.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+
+</script>
+

@@ -10,10 +10,10 @@ Master Sekolah
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <div>
-                <h1 class="page-title">MASTER SEKOLAH</h1>
+                <h1 class="page-title">SEKOLAH</h1>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Master</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Master Sekolah</li>
+                    <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Master Data / Sekolah</li>
                 </ol>
             </div>
             <div class="ms-auto pageheader-btn">
@@ -22,16 +22,21 @@ Master Sekolah
                         <i class="fe fe-plus"></i>
                     </span> Tambahkan Data
                 </a>
+                <button class="btn btn-secondary btn-icon text-white" onclick="openArchiveModal()">
+                    <span>
+                        <i class="fas fa-archive"></i>
+                    </span> Arsip Data
+                </button>
             </div>
         </div>
         <!-- PAGE-HEADER END -->
 
-        <!-- Modal Form -->
+        <!-- Modal Tambah Data -->
         <div class="modal fade" id="addDataModal" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addDataModalLabel">Tambah Data Jenjang</h5>
+                        <h5 class="modal-title" id="addDataModalLabel">Tambah Data Sekolah</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -39,111 +44,149 @@ Master Sekolah
                         <!-- Form -->
                         <form id="addSekolahForm" method="post" action="{% url 'sipandu_admin:index_sekolah' %}">
                             {% csrf_token %}
-                            <div class="mb-3">
-<<<<<<< HEAD
-                                <label for="prov">Provinsi</label>
-                                <select name="prov" id="prov" class="form-control" onchange="getKabupaten(this)">
+                            <div class="mb-3" id="div_prov">
+                                <label for="role">Provinsi</label>
+                                <select name="sekolah_provinsi" id="prov" data-level="prov" class="form-control" onchange="render_kab(this)" required>
                                     <option value="">- Pilih Provinsi -</option>
                                     {% for provinsi in data_prov %}
-                                        <option value="{{ provinsi.wilayah_id }}">{{ provinsi.wilayah_nama }}</option>
-=======
-                                <label for="sekolah_jenjang" class="form-label">Provinsi</label>
-                                <select class="form-select" id="wilayah_id" name="wilayah_nama">
-                                    <option value="test" selected disabled>Pilih Wilayah</option>
-                                    {% for provinsi in data_wilayah %}
-                                    <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_provinsi.upper}}</option>
->>>>>>> 89731ad39b8e02172269befbef91737100dd82c7
+                                    <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_nama.upper}}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="mb-3">
-<<<<<<< HEAD
-                                <label for="kab">Kabupaten</label>
-                                <select name="kab" id="kab" class="form-control" onchange="getKecamatan(this)">
+                            <div class="mb-3" id="div_kab">
+                                <label for="role">Kabupaten</label>
+                                <select name="sekolah_kabupaten" id="kab" data-level="kab" class="form-control" onchange="render_kab(this)" required>
                                     <option value="">- Pilih Kabupaten -</option>
-                                    {% for kabupaten in data_wilayah  %}
-                                        <option value="{{ kabupaten.wilayah_id }}">{{ kabupaten.wilayah_nama }}</option>
-                                    {% endfor %}
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <label for="kec">Kecamatan</label>
-                                <select name="kec" id="kec" class="form-control">
+                            <div class="mb-3" id="div_kec">
+                                <label for="role">Kecamatan</label>
+                                <select name="sekolah_kecamatan" id="kec" data-level="kec" class="form-control" required>
                                     <option value="">- Pilih Kecamatan -</option>
-                                    {% for kecamatan in data_wilayah %}
-                                        <option value="{{ kecamatan.wilayah_id }}">{{ kecamatan.wilayah_nama }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-=======
-                                <label for="sekolah_jenjang" class="form-label">Kecamatan</label>
-                                <select class="form-select" id="wilayah_id" name="wilayah_nama">
-                                    <option value="test" selected disabled>Pilih Wilayah</option>
-                                    {% for provinsi in data_wilayah %}
-                                    <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_provinsi.upper}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div> 
-                            <div class="mb-3">
-                                <label for="sekolah_jenjang" class="form-label">Kabupaten</label>
-                                <select class="form-select" id="wilayah_id" name="wilayah">
-                                    <option value="test" selected disabled>Pilih Wilayah</option>
-                                    {% for provinsi in data_wilayah %}
-                                    <option value="{{provinsi.wilayah_id}}">{{provinsi.wilayah_provinsi.upper}}</option>
-                                    {% endfor %}
+                                    <option value="test" selected disabled>Pilih Kecamatan</option>
                                 </select>
                             </div>   
-                            
-                
->>>>>>> 89731ad39b8e02172269befbef91737100dd82c7
                             <div class="mb-3">
-                                <label for="sekolah_nama" class="form-label">Nama Sekolah</label>
-                                <input type="text" class="form-control" id="sekolah_nama" name="sekolah_nama" placeholder="Masukkan Nama Sekolah">
-                            </div>
-                            <div class="mb-3">
-                                <label for="sekolah_npsn" class="form-label">NPSN</label>
-                                <input type="text" class="form-control" id="sekolah_npsn" name="sekolah_npsn" placeholder="Nomor NPSN">
-                            </div>
+                                <label for="sekolah_jenjang" class="form-label">Jenjang</label>
+                                <select class="form-select" id="sekolah_jenjang" name="sekolah_jenjang" required>
+                                    <option value="" selected disabled>Pilih jenjang</option>
+                                    {% for jenjang in data_jenjang %}
+                                    <option value="{{jenjang.jenjang_id}}">{{jenjang.jenjang_nama.upper}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>  
                             <div class="mb-3">
                                 <label for="sekolah_jenis" class="form-label">Jenis</label>
-                                <select class="form-select" id="sekolah_jenis" name="sekolah_jenis">
+                                <select class="form-select" id="sekolah_jenis" name="sekolah_jenis" required>
                                     <option value="" selected disabled>Pilih Jenis Sekolah</option>
                                     <option value="negeri">Negeri</option>
                                     <option value="swasta">Swasta</option>
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="sekolah_jenjang" class="form-label">Jenjang</label>
-                                <select class="form-select" id="sekolah_jenjang" name="sekolah_jenjang">
-                                    <option value="" selected disabled>Pilih jenjang</option>
-                                    {% for jenjang in data_jenjang %}
-                                    <option value="{{jenjang.jenjang_id}}">{{jenjang.jenjang_nama.upper}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>                           
+                                <label for="sekolah_nama" class="form-label">Nama Sekolah</label>
+                                <input type="text" class="form-control" id="sekolah_nama" name="sekolah_nama" placeholder="Masukkan Nama Sekolah" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="sekolah_npsn" class="form-label">NPSN</label>
+                                <input type="text" class="form-control" id="sekolah_npsn" name="sekolah_npsn" placeholder="Nomor NPSN" required>
+                            </div>
+                                                
                             <!-- Tambahkan pilihan lainnya sesuai kebutuhan -->
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <i class="fas fa-times"></i> Close
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i> Submit
+                                </button>
                             </div>
                         </form>
-                        <!-- End Form -->
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Modal Tambah Data End -->
+
+        <!-- Modal Arsip Data Sekolah -->
+        <div class="modal fade" id="archiveSekolahModal" tabindex="-1" aria-labelledby="archiveSekolahModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="archiveSekolahModalLabel">Arsip Data Sekolah</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap border-bottom w-100">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center border-bottom-0">NO</th>
+                                        <th class="text-center border-bottom-0">PROVINSI</th>
+                                        <th class="text-center border-bottom-0">KABUPATEN</th>
+                                        <th class="text-center border-bottom-0">KECAMATAN</th>
+                                        <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
+                                        <th class="text-center border-bottom-0">JENJANG</th>
+                                        <th class="text-center border-bottom-0">NPSN</th>
+                                        <th class="text-center border-bottom-0">JENIS</th>
+                                        <th class="text-center border-bottom-0">STATUS</th>
+                                        <th class="text-center border-bottom-0">AKSI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for dt_arsip in data_arsip_sekolah %}
+                                    <tr>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.sekolah_provinsi.wilayah_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.sekolah_kabupaten.wilayah_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.sekolah_kecamatan.wilayah_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.sekolah_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.sekolah_jenjang.jenjang_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.sekolah_npsn }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.sekolah_jenis }}</td>
+                                        <td class="text-center align-middle">
+                                            <span class="badge {% if dt_sekolah.sekolah_status == 1 %} badge-success-light{% else %} badge-orange-light{% endif %}">
+                                                {% if dt_sekolah.sekolah_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}
+                                            </span>
+                                        </td>                                        
+                                        <td class="text-center align-middle">
+                                            <button type="button" class="btn btn-danger" onclick="deleteSekolah('{{ dt_arsip.sekolah_id }}')">
+                                                <i class="fas fa-trash-alt"></i> Delete
+                                            </button>
+                                            <button type="button" class="btn btn-success" onclick="unarchiveSekolah('{{ dt_arsip.sekolah_id }}')">
+                                                <i class="fas fa-sync-alt"></i> Restore
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Modal Arsip Data Sekolah End -->
+
+
         <!-- ROW-1 -->
         <div class="row row-sm">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Daftar Sekolah</h3>
+                        <h3 class="card-title">Data Sekolah</h3>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="sekolahResponsiveDatatable">
                                 <thead>
                                     <tr>
+                                        <th class="text-center border-bottom-0">NO</th>
                                         <th class="text-center border-bottom-0">PROVINSI</th>
                                         <th class="text-center border-bottom-0">KABUPATEN</th>
                                         <th class="text-center border-bottom-0">KECAMATAN</th>
@@ -158,22 +201,28 @@ Master Sekolah
                                 <tbody>
                                     {% for dt_sekolah in data_sekolah %}
                                         <tr>
-                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.wilayah_provinsi }}</td> 
-                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.wilayah_kabupaten }}</td> 
-                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_wilayah.wilayah_distrik }}</td> 
+                                            <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_provinsi.wilayah_nama}}</td> 
+                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_kabupaten.wilayah_nama }}</td> 
+                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_kecamatan.wilayah_nama}}</td> 
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_nama }}</td>
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_jenjang.jenjang_nama }}</td>
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_npsn }}</td>
                                             <td class="text-center align-middle">{{ dt_sekolah.sekolah_jenis }}</td>
-                                            <td class="text-center align-middle">{{ dt_sekolah.sekolah_status }}</td>
-                                            
+                                            <td class="text-center align-middle">
+                                                <span class="badge {% if dt_sekolah.sekolah_status == 1 %} badge-success-light{% else %} badge-orange-light{% endif %}">
+                                                    {% if dt_sekolah.sekolah_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}
+                                                </span>
+                                            </td>
                                             <td class="text-center align-middle">
                                                 <div class="btn-group align-top">
-                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_sekolah.sekolah_id}}">Edit</a> &nbsp;
-                                                    <button onclick="deleteSekolah('{{ dt_sekolah.sekolah_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
-
-
-                                                </div>
+                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{ dt_sekolah.sekolah_id }}">
+                                                        <i class="fas fa-edit"></i> Edit
+                                                    </a>&nbsp;
+                                                    <button onclick="archiveSekolah('{{ dt_sekolah.sekolah_id }}', '{{ dt_sekolah.sekolah_provinsi.wilayah_nama }}', '{{ dt_sekolah.sekolah_kabupaten.wilayah_nama  }}', '{{dt_sekolah.sekolah_kecamatan.wilayah_nama}}', '{{dt_sekolah.sekolah_nama}}', '{{dt_sekolah.sekolah_jenjang.jenjang_nama}}', '{{dt_sekolah.sekolah_npsn}}', '{{ dt_sekolah.sekolah_jenis }}', '{{ dt_sekolah.sekolah_status }}')" class="btn btn-sm btn-danger badge" value="Archive">
+                                                        <i class="fas fa-archive"></i> Arsip
+                                                    </button>                                                    
+                                                </div>                                            
                                             </td>
                                         </tr>
                                         {% include 'admin/master/edit_sekolah.html' %}
@@ -191,107 +240,195 @@ Master Sekolah
 {% endblock %}
 
 {% block js %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
-    function getKabupaten(e) {
-    var provinsi_id = $(e).val();
-    var kabupatenSelect = $('#kab');
+    function render_kab(e){
+        var level_wilayah = $(e).data('level');  //Mengambil data
 
-    $.ajax({
-        url: "{% url 'sipandu_admin:get_wilayah' %}",
-        type: "GET",
-        data: {
-            'level': 'kab',
-            'wilayah_id': provinsi_id
-        },
-        success: function(response) {
-            console.log(response);
-            kabupatenSelect.empty().append('<option value="">- Pilih Kabupaten -</option>');
-            response.data_wilayah.forEach(function(item) {
-                kabupatenSelect.append($('<option>', {
-                    value: item.wilayah_id,
-                    text: item.wilayah_nama
-                }));
-            });
-            kabupatenSelect.prop('disabled', false);
-            getKecamatan(kabupatenSelect); 
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
-        }
-    });
+      $.ajax({  //mengirim permintaan
+            url: "{% url 'sipandu_admin:get_wilayah_by_level' %}",
+            type: "GET",
+            data: {
+                'level': $('#wilayah_level').val(),
+                'wilayah_id': $(e).val()
+            },
+            success: function(response) {  //memproses response
+                console.log(response, level_wilayah)
+                if (level_wilayah == 'prov') {
+                    var elem = $('#kab')
+                }else if(level_wilayah == 'kab'){
+                    var elem = $('#kec')
+                }
+
+                elem.html('');  //menampilkan opsi baru
+                var opt_label = '<option value="">- Pilih Kabupaten -</option>'
+                for (var i = 0; i < response.data_wilayah.length; i++) {
+                    elem.append(`<option value="${response.data_wilayah[i]['wilayah_id']}">${response.data_wilayah[i]['wilayah_nama']}</option>`)
+                    console.log(response.data_wilayah[i]['wilayah_nama'])
+                }
+                elem.val('');
+
+                // var options = '<option value="">Pilih Wilayah</option>';
+                // for (var i = 0; i < response.length; i++) {
+                //     options += '<option value="' + response[i] + '">' + response[i] + '</option>';
+                // }
+                // $('#wilayah_nama').html(options);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });  
+    }
+
+    function openArchiveModal() {
+    $('#archiveSekolahModal').modal('show');
 }
 
-function getKecamatan(e) {
-    var kabupaten_id = $(e).val();
-    var kecamatanSelect = $('#kec');
+    function archiveSekolah(sekolahId) {
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "Anda ingin mengarsipkan data ini?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, arsipkan!",
+            cancelButtonText: "Batal",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var archiveUrl = "{% url 'sipandu_admin:archive_sekolah' 0 %}".replace('0', sekolahId);
 
-    $.ajax({
-        url: "{% url 'sipandu_admin:get_wilayah' %}",
-        type: "GET",
-        data: {
-            'level': 'kec',
-            'wilayah_id': kabupaten_id
-        },
-        success: function(response) {
-            console.log(response);
-            kecamatanSelect.empty().append('<option value="">- Pilih Kecamatan -</option>');
-            response.data_wilayah.forEach(function(item) {
-                kecamatanSelect.append($('<option>', {
-                    value: item.wilayah_id,
-                    text: item.wilayah_nama
-                }));
-            });
-            kecamatanSelect.prop('disabled', false);
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
-        }
-    });
-}
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: archiveUrl,
+                    type: "POST",
+                    success: function(response) {
+                        Swal.fire({
+                            title: "Data berhasil diarsipkan!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan saat mengarsipkan data!",
+                            icon: "error",
+                        });
+                    }
+                });
+            }
+        });
+    }
 
-function deleteSekolah(sekolah_) {
-    var deleteUrl = "{% url 'sipandu_admin:delete_sekolah' 'sekolah_id' %}".replace("sekolah_id", sekolah_);
+    function deleteSekolah(sekolah_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_sekolah' 'sekolah_id' %}".replace("sekolah_id", sekolah_);
 
-    swal({
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "DELETE",
+                    success: function(response) {
+                        console.log('berhasil');
+                        Swal.fire({
+                            title: "Data berhasil dihapus!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan karena data ini sedang digunakan!",
+                            icon: "error",
+                        });
+                    }
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Tindakan dibatalkan',
+                    '',
+                    'info'
+                );
+            }
+        });
+    }
+
+    function unarchiveSekolah(sekolahId) {
+    var unarchiveUrl = "{% url 'sipandu_admin:unarchive_sekolah' 0 %}".replace("0", sekolahId);
+
+    Swal.fire({
         title: "Apakah Anda yakin?",
-        text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-        type: "warning",
+        text: "ingin mengembalikan data yang diarsipkan!",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Ya, hapus!",
+        confirmButtonColor: "#28a745",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, lanjutkan",
         cancelButtonText: "Batal",
-        closeOnConfirm: false,
-        closeOnCancel: false
-    },
-    function (isConfirm) {
-        if (isConfirm) {
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
             $.ajax({
                 headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
-                url: deleteUrl,
-                type: "DELETE",
-                success: function (response) {
-                    console.log('berhasil');
-                    swal({
-                        title: "Data berhasil dihapus!",
+                url: unarchiveUrl,
+                type: "POST",
+                success: function(response) {
+                    Swal.fire({
+                        title: "Data berhasil dikembalikan!",
                         icon: "success",
-                        buttons: false, // Tidak menampilkan tombol OK
-                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.reload();
                     });
-                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
                 },
-                error: function (xhr, status, error) {
-                    // Terjadi kesalahan saat menghapus data
-                    swal("Terjadi kesalahan saat menghapus data!", {
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: "Terjadi kesalahan karena data ini sedang digunakan!",
                         icon: "error",
                     });
                 }
             });
-        } else {
-            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
-            swal("Tindakan dibatalkan", "", "info");
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire(
+                'Tindakan dibatalkan',
+                '',
+                'info'
+            );
         }
     });
 }
+
+
+    $(function(){
+        $('#sekolahResponsiveDatatable').DataTable({
+		scrollX: "100%",
+		language: {
+			searchPlaceholder: 'Search...',
+			sSearch: '',
+		}
+	});
+    })
+    
+
 
 </script>
 

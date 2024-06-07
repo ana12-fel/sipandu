@@ -10,24 +10,22 @@ Master User
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <div>
-                <h1 class="page-title">MASTER USER</h1>
+                <h1 class="page-title">USER</h1>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Master</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Master User</li>
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:admin_index'%}">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:index_user'%}">Master Data</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">User</li>
                 </ol>
             </div>
             <div class="ms-auto pageheader-btn">
                 <a href="#" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#addUserModal">
                     <span>
-                        <i class="fe fe-plus"></i>
+                        <i class="fe fe-user-plus"></i>
                     </span> Tambah User
                 </a>
-                <a href="#" class="btn btn-success btn-icon text-white">
-                    <span>
-                        <i class="fe fe-log-in"></i>
-                    </span> Export
-                </a>
+                
             </div>
+            
         </div>
         <!-- PAGE-HEADER END -->
 
@@ -44,55 +42,135 @@ Master User
                         <form id="addUserForm" method="post" action="{% url 'sipandu_admin:index_user' %}">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="first_name" class="form-label">Nama Depan</label>
-                                <input type="text" class="form-control" id="user_first_name" name="first_name">
-                            </div>
-                            <div class="mb-3">
-                                <label for="user_status" class="form-label">Nama Belakang</label>
-                                <input type="text" class="form-control" id="user_last_name" name="last_name">
-                            </div>
-                            <div class="mb-3">
-                                <label for="role">Role</label>
-                                <select name="role" id="role" class="form-control">
+                                <label for="role">Level</label>
+                                <select name="role" id="role" class="form-control" onchange="pilih_role(this)" required >
+                                    <option value="">- Pilih Role -</option>
                                     {% for role_key, role_display in role_choices %}
                                         <option value="{{ role_key }}">{{ role_display }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password">
-                            </div>
-                            <div class="mb-3">
-                                <label for="level">Level</label>
-                                <select name="level" id="level" class="form-control">
-                                    {% for dt_level in level %}
-                                    <option value="{{dt_level.0}}">{{dt_level.1}}</option>
+                            <div class="mb-3 d-none" id="div_prov">
+                                <label for="prov">Provinsi</label>
+                                <select name="prov" id="prov" class="form-control" onchange="render_kab(this)" data-level="prov" >
+                                    <option value="">- Pilih Provinsi -</option>
+                                    {% for provinsi in prov %}
+                                        <option value="{{ provinsi.wilayah_id }}">{{ provinsi.wilayah_nama }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
+                            <!-- Tambahkan div untuk kabupaten -->
+                            <div class="mb-3 d-none" id="div_kab">
+                                <label for="kab">Kabupaten</label>
+                                <select name="kab" id="kab" class="form-control" onchange="render_kab(this)" data-level="kab" >
+                                    <option value="">- Pilih Kabupaten -</option>
+                                    {% for level_key, level_display in wilayah_level %}
+                                        <option value="{{ level_key }}">{{ level_display }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <!-- Tambahkan div untuk kecamatan -->
+                            <div class="mb-3 d-none" id="div_kec">
+                                <label for="kec">Kecamatan</label>
+                                <select name="kec" id="kec" class="form-control" data-level="kecamatan" onchange="render_kab(this)" >
+                                    <option value="">- Pilih Kecamatan -</option>
+                                </select>
+                            </div>
+                            <!-- Tambahkan div untuk sekolah -->
+                            <div class="mb-3 d-none" id="div_sekolah">
+                                <label for="sekolah">Sekolah</label>
+                                <select name="user_sekolah" id="sekolah_id" class="form-control" data-level="sekolah" >
+                                    <option value="">- Pilih Sekolah-</option>
+                                    
+                                </select>
+                            </div>
                             <div class="mb-3">
-                        <label>Status:</label>
-                        <select class="form-select" name="user_status" aria-label="Default select example">
-                            <option selected>Pillih Status</option>
-                            <option {% if dt_user.user_status == 1 %} selected {% endif %} value="1">Aktif</option>
-                            <option {% if dt_user.user_status == 0 %} selected {% endif %} value="0">Tidak Aktif</option>
-                          </select>
-                    </div>
+                                <label for="first_name" class="form-label">Nama Depan</label>
+                                <input type="text" class="form-control" id="user_first_name" name="first_name" placeholder="Masukkan Nama Depan" required >
+                            </div>
+                            <div class="mb-3">
+                                <label for="last_name" class="form-label">Nama Belakang</label>
+                                <input type="text" class="form-control" id="user_last_name" name="last_name" placeholder="Masukkan Nama Belakang" required>
+                                <input type="hidden" name="user_status" value="True">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password" required >
+                            </div>
+                             <div class="mb-3">
+                                <input type="hidden" name="wilayah_status" value="True">
+                            </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="user_email" name="email">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email" required>
                             </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary"> <i class="fa fa-save"></i> Simpan  </button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                    </form>
                 </div>
             </div>
         </div>
         <!-- modal tambah data end -->
+
+        <!-- <div class="modal fade" id="archiveDataModal" tabindex="-1" aria-labelledby="archiveDataModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="archiveDataModalLabel">Arsip Data User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap border-bottom w-100">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center border-bottom-0">NO</th>
+                                        <th class="text-center border-bottom-0">USER</th>
+                                        <th class="text-center border-bottom-0">ROLE</th>
+                                        <th class="text-center border-bottom-0">LOGIN TERAKHIR</th>
+                                        <th class="text-center border-bottom-0">STATUS</th>
+                                        <th class="text-center border-bottom-0">EMAIL</th>
+                                        <th class="text-center border-bottom-0">AKSI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for dt_arsip in data_arsip %}
+                                    <tr>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.user_first_name }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.user_role }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.last_login }}</td>
+                                        <td class="text-center align-middle">
+                                            <span class="badge {% if dt_arsip.user_status == 1 %} badge-success-light{% else %} badge-danger-light {% endif %}">
+                                                {% if dt_arsip.user_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}
+                                            </span>
+                                        </td>
+                                        <td class="text-center align-middle">{{ dt_arsip.user_email }}</td>
+                                        <td class="text-center align-middle">
+                                        <button onclick="deleteUser('{{ dt_arsip.user_id }}')" class="btn btn-danger" value='Alert with title'>
+                                            <i class="fa fa-trash"></i> Hapus 
+                                        </button>                                   
+                                        <button type="button" class="btn btn-success" onclick="UnarchiveUser('{{ dt_arsip.user_id }}')">
+                                            <i class="fa fa-archive"></i> Unarchive
+                                        </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
 
 
         <!-- ROW-1 -->
@@ -104,9 +182,10 @@ Master User
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap border-bottom w-100" id="responsive-datatable">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="datakontenResponsiveDatatable">
                                 <thead>
                                     <tr>
+                                        <th class="text-center border-bottom-0">NO</th>
                                         <th class="text-center border-bottom-0">USER</th>
                                         <th class="text-center border-bottom-0">ROLE</th>
                                         <th class="text-center border-bottom-0">LOGIN TERAKHIR</th>
@@ -118,16 +197,27 @@ Master User
                                 <tbody>
                                     {% for dt_user in data_user %}
                                         <tr>
+                                            <td class="text-center align-middle">{{ forloop.counter }}</td>
                                             <td class="text-center align-middle">{{ dt_user.user_first_name }}</td>
                                             <td class="text-center align-middle">{{ dt_user.user_role }}</td>
-                                            <td class="text-center align-middle">{{ dt_user.user_last_login }}</td>
-                                            <td class="text-center align-middle"><span>{% if dt_user.user_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
+                                            <td class="text-center align-middle">{{ dt_user.last_login }}</td>
+                                            <td class="text-center align-middle">
+                                                <span class="badge {% if dt_user.user_status == 1 %} badge-success-light{% else %} badge-danger-light {% endif %}">
+                                                    {% if dt_user.user_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}
+                                                </span>
+                                            </td>
                                             <td class="text-center align-middle">{{ dt_user.user_email }}</td>
                                             <td class="text-center align-middle">
+
                                                 <div class="btn-group align-top">
-                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editUserModal_{{dt_user.user_id}}">Edit</a>&nbsp;
-                                                    <button onclick="deleteUser('{{ dt_user.user_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editUserModal_{{dt_user.user_id}}">
+                                                       <i class="fa fa-edit"> </i> Edit
+                                                    </a>&nbsp;
+                                                    <button onclick="deleteUser('{{ dt_user.user_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>
+                                                        <i class="fa fa-trash"></i> Hapus 
+                                                    </button> 
                                                 </div>
+                     
                                             </td>
                                         </tr>
 
@@ -158,50 +248,251 @@ Master User
 {% endblock %}
 
 {% block js %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-    function deleteUser(user_) {
-    var deleteUrl = "{% url 'sipandu_admin:delete_user' 'user_id' %}".replace("user_id", user_);
+
+// function openArchiveModal() {
+//     $('#archiveDataModal').modal('show');
+// }
+
+// function archiveUser(useriId, userFirstName, userRole, userLastLogin, userStatus, userEmail) {
+//     swal({
+//         title: "Apakah Anda yakin?",
+//         text: "Anda akan mengarsipkan data ini!",
+//         icon: "warning",
+//         buttons: true,
+//         dangerMode: true,
+//     }).then((willArchive) => {
+//         if (willArchive) {
+//             var archiveUrl = "{% url 'sipandu_admin:archive_user' 0 %}".replace('0', useriId);
+
+//             $.ajax({
+//                 headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+//                 url: archiveUrl,
+//                 type: "POST",
+//                 success: function(response) {
+//                     swal({
+//                         title: "Data berhasil diarsipkan!",
+//                         icon: "success",
+//                         buttons: false,
+//                         timer: 1500
+//                     }).then(() => {
+//                         window.location.reload();
+//                     });
+//                 },
+//                 error: function(xhr, status, error) {
+//                     swal("Terjadi kesalahan saat mengarsipkan data!", {
+//                         icon: "error",
+//                     });
+//                 }
+//             });
+//         }
+//     });
+// }
+
+
+$('#addUserForm').on('submit', function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var email = form.find('input[name="email"]').val();
+
+        $.ajax({
+            url: "{% url 'sipandu_admin:cek_user_email' %}",
+            type: "GET",
+            data: {
+                'email': email
+            },
+            success: function(response) {
+                if (response.is_unique) {
+                    form.off('submit').submit();  // Lanjutkan submit form jika kode unik
+                } else {
+                    swal({
+                        title: "Email sudah ada!",
+                        text: "Email yang Anda masukkan sudah digunakan.",
+                        icon: "warning",
+                        button: "OK",
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+
+    function deleteUser(userId) {
+    var deleteUrl = "{% url 'sipandu_admin:delete_user' 0 %}".replace('0', userId);
 
     swal({
         title: "Apakah Anda yakin?",
-        text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Ya, hapus!",
-        cancelButtonText: "Batal",
-        closeOnConfirm: false,
-        closeOnCancel: false
-    },
-    function (isConfirm) {
-        if (isConfirm) {
+        text: "Anda tidak akan dapat mengembalikan data ini!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
             $.ajax({
                 headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
                 url: deleteUrl,
                 type: "DELETE",
-                success: function (response) {
+                success: function(response) {
                     console.log('berhasil');
                     swal({
                         title: "Data berhasil dihapus!",
                         icon: "success",
-                        buttons: false, // Tidak menampilkan tombol OK
-                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                        buttons: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.reload();
                     });
-                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
                 },
-                error: function (xhr, status, error) {
-                    // Terjadi kesalahan saat menghapus data
+                error: function(xhr, status, error) {
                     swal("Terjadi kesalahan saat menghapus data!", {
                         icon: "error",
                     });
                 }
             });
         } else {
-            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
             swal("Tindakan dibatalkan", "", "info");
         }
     });
 }
+
+
+function pilih_role(e) {
+    var level = $(e).val();
+    var div_prov = $('#div_prov');
+    var div_kab = $('#div_kab');
+    var div_kec = $('#div_kec');
+    var div_sekolah = $('#div_sekolah');
+
+    if (level == 'superadmin' || level == 'admin') {
+        div_prov.addClass('d-none');
+        div_kab.addClass('d-none');
+        div_kec.addClass('d-none');
+        div_sekolah.addClass('d-none');
+    } else if (level == 'admin_kabupaten') {
+        div_prov.removeClass('d-none');
+        div_kab.removeClass('d-none');
+        div_kec.addClass('d-none');
+        div_sekolah.addClass('d-none');
+    } else if (level == 'admin_sekolah') {
+        div_prov.removeClass('d-none');
+        div_kab.removeClass('d-none');
+        div_kec.removeClass('d-none');
+        div_sekolah.removeClass('d-none');
+    } else {
+        div_prov.removeClass('d-none');
+        div_kab.removeClass('d-none');
+        div_kec.removeClass('d-none');
+        div_sekolah.removeClass('d-none');
+    }
+
+    $('#prov').trigger('change');
+    $('#kab').trigger('change');
+    $('#kec').trigger('change');
+    $('#sekolah').trigger('change');
+}
+
+
+    function render_kab(e) {
+        var level_wilayah = $(e).data('level');
+
+        $.ajax({
+            url: "{% url 'sipandu_admin:get_user_by_level' %}",
+            type: "GET",
+            data: {
+                'level': level_wilayah,
+                'wilayah_id': $(e).val()
+            },
+            success: function(response) {
+                var elem, opt_label;
+                console.log(response, level_wilayah)
+                if (level_wilayah == 'prov') {
+                    var elem = $('#kab')
+                    var opt_label = '<option value="">- Pilih Kabupaten -</option>';
+                } else if (level_wilayah == 'kab') {
+                    var elem = $('#kec')
+                    var opt_label = '<option value="">- Pilih Kecamatan -</option>';
+                }else if (level_wilayah == 'kecamatan') {
+                    var elem = $('#sekolah_id')
+                    var opt_label = '<option value="">- Pilih Sekolah -</option>';
+                }
+
+                elem.html(opt_label);
+                var opt_label = '<option value="">- Pilih Sekolah -</option>'
+                if(level_wilayah != 'kecamatan'){
+                    for (var i = 0; i < response.data_wilayah.length; i++) {
+                        elem.append(`<option value="${response.data_wilayah[i]['wilayah_id']}">${response.data_wilayah[i]['wilayah_nama']}</option>`)
+                    }
+                }else{
+                    for (var i = 0; i < response.data_wilayah.length; i++) {
+                        elem.append(`<option value="${response.data_wilayah[i]['sekolah_id']}">${response.data_wilayah[i]['sekolah_nama']}</option>`)
+                    }
+                }
+                elem.val('');
+
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+
+//     function UnarchiveUser(userId) {
+//     var unarchiveUrl = "{% url 'sipandu_admin:unarchive_user' 0 %}".replace('0', userId);
+
+//     swal({
+//         title: "Apakah Anda yakin?",
+//         text: "Anda akan mengembalikan data ini!",
+//         icon: "warning",
+//         buttons: true,
+//         dangerMode: true,
+//     }).then((willUnarchive) => {
+//         if (willUnarchive) {
+//             $.ajax({
+//                 headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+//                 url: unarchiveUrl,
+//                 type: "POST",
+//                 success: function(response) {
+//                     console.log('berhasil');
+//                     swal({
+//                         title: "Data berhasil dikembalikan!",
+//                         icon: "success",
+//                         buttons: false,
+//                         timer: 1500
+//                     }).then(() => {
+//                         window.location.reload();
+//                     });
+//                 },
+//                 error: function(xhr, status, error) {
+//                     swal("Terjadi kesalahan karena data ini sedang digunakan!", {
+//                         icon: "error",
+//                     });
+//                 }
+//             });
+//         } else {
+//             swal("Tindakan dibatalkan", "", "info");
+//         }
+//     });
+// }
+
+    $(function(){
+        $('#datakontenResponsiveDatatable').DataTable({
+		scrollX: "100%",
+		language: {
+			searchPlaceholder: 'Search...',
+			sSearch: '',
+		}
+	});
+    })
+
+    $( ".modal_edit" ).on('shown.bs.modal', function(){
+        generate_data(this)
+    });
 </script>
 
 {% endblock %}

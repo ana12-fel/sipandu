@@ -1,0 +1,107 @@
+
+ <!-- Modal Tambah Data -->
+ 
+ <div class="modal fade" id="editdata_{{dt_siswa.id_data_siswa}}" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addDataModalLabel">Edit Data Siswa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <!-- Form tambah data di sini -->
+                <form method="post" action="{% url 'sipandu_admin:edit_siswa' dt_siswa.id_data_siswa %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="siswa_sekolah" class="form-label">Sekolah</label>
+                        <select class="form-select" id="siswa_sekolah" name="siswa_sekolah">
+                            <option value="test" selected disabled>Pilih Sekolah</option>
+                            {% for sekolah in data_sekolah %}
+                            <option value="{{ sekolah.sekolah_id }}" {% if dt_siswa.siswa_sekolah_id == sekolah.sekolah_id %} selected {% endif %}>{{ sekolah.sekolah_nama.upper }}</option>
+                            {% endfor %}
+                        </select>
+                    </div> 
+                    <div class="mb-3">
+                        <label for="edit_total_siswa" class="form-label">Total Siswa</label>
+                        <input type="text" value="{{ dt_siswa.total_siswa }}" class="form-control" id="edit_total_siswa-{{ dt_siswa.id_data_siswa }}" name="edit_total_siswa" placeholder="Masukkan Total Siswa" required>
+                        <div id="error-message-edit-{{ dt_siswa.id_data_siswa }}" style="color: red; display: none;">Hanya angka yang diperbolehkan.</div>
+                    </div>                      
+                    <div class="mb-3">
+                        <label for="keterangan_siswa" class="form-label">Keterangan</label> 
+                        <select class="form-control keterangan_siswa_edit" id="keterangan_siswa_edit" name="keterangan_siswa" required onchange="changeIconEdit()">
+                            <option value="">Pilih Keterangan</option>
+                            <option value="siswa" {% if dt_siswa.keterangan_siswa == 'siswa' %} selected {% endif %}>Siswa</option>
+                            <option value="guru" {% if dt_siswa.keterangan_siswa == 'guru' %} selected {% endif %}>Guru</option>
+                            <option value="pegawai" {% if dt_siswa.keterangan_siswa == 'pegawai' %} selected {% endif %}>Pegawai</option>
+                            <option value="alumni" {% if dt_siswa.keterangan_siswa == 'alumni' %} selected {% endif %}>Alumni</option>
+                        </select>
+                    </div>
+                    <div class="mb-3" id="icon_div_edit">
+                        <label for="icon_siswa" class="form-label">Icon</label>
+                        <input type="text" value="{{ dt_siswa.icon_siswa }}" class="form-control" id="icon_siswa_edit" name="icon_siswa" readonly required>
+                    </div>        
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit
+                        </button>
+                    </div>     
+                </form>
+            
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Tambah Data End -->
+<script>
+    document.getElementById('edit_total_siswa-{{ dt_siswa.id_data_siswa }}').addEventListener('input', function (e) {
+        var errorMessage = document.getElementById('error-message-edit-{{ dt_siswa.id_data_siswa }}');
+        if (/\D/.test(this.value)) {
+            // Jika ada karakter non-angka
+            console.log('test11')
+            errorMessage.style.display = 'block';
+            this.value = this.value.replace(/\D/g, '');
+        } else {
+            // Jika hanya angka
+            console.log('test')
+            errorMessage.style.display = 'none';
+        }
+    });
+
+    
+
+    function changeIconEdit() {
+        var keterangan = document.getElementById("keterangan_siswa_edit").value;
+        var iconInput = document.getElementById("icon_siswa_edit");
+        console.log(keterangan)
+        var icon = "";
+        switch (keterangan) {
+            case "siswa":
+                icon = "fa fa-graduation-cap fa-3x";
+                break;
+            case "guru":
+                icon = "fa fa-users fa-3x";
+                break;
+            case "pegawai":
+                icon = "fa fa-user-plus fa-3x";
+                break;
+            case "alumni":
+                icon = "fa fa-id-card fa-3x";
+                break;
+            default:
+                icon = "";
+        }
+        iconInput.value = icon;
+    }
+</script>
+
+                            

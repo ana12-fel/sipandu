@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse, JsonResponse
+from django.db import IntegrityError
 from sipandu_app.models import Master_tema,Master_kategori,Sub_kategori 
 
 def MasterKategori(request):
@@ -26,7 +27,9 @@ def MasterKategori(request):
         else:
             data_kategori = Master_kategori.objects.all()
             data_sub_kategori = Sub_kategori.objects.all()
-        return render(request, 'admin/master_kategori/master_kategori.html', {'data_tema': data_tema, 'data_kategori' : data_kategori, 'data_sub_kategori' : data_sub_kategori, 'data_kat' : data_kat})
+        
+        
+        return render(request, 'admin/master_kategori/master_kategori.html', {'data_tema': data_tema, 'data_kategori' : data_kategori, 'data_sub_kategori' : data_sub_kategori, 'data_kat' : data_kat, 'tema_id':tema_id})
 
 def edit_kategori(request, kategori_id_):
 
@@ -72,19 +75,22 @@ def SubKategori(request):
         kategori_id_id = request.POST.get('kategori_uraian')
         Sub_kategori_uraian = request.POST.get ('sub_kategori_uraian')
         kategori_tema= request.POST.get ('form_sub')
+        data = {}
+        try:
+            dt_sub_kategori = Sub_kategori.objects.create(kategori_id_id=kategori_id_id,sub_kategori_uraian=Sub_kategori_uraian)
+            print('sukses')
+            data['status'] = True
+            return JsonResponse(data, status = 201)
+        except IntegrityError as e:
+            print('error insert sub kategori', e)
+            data['status'] = False
+            return JsonResponse(data, status = 400)
 
-        dt_sub_kategori = Sub_kategori.objects.create(kategori_id_id=kategori_id_id,sub_kategori_uraian=Sub_kategori_uraian)
-
-        print(kategori_id_id,Sub_kategori_uraian)
-
-        redirect_url = f'/admin/master-kategori?tema_id={kategori_tema}'
-        return redirect(redirect_url)
-    
      else:
         data_tema = Master_tema.objects.all()
         data_kategori = Master_kategori.objects.all()
         data_sub_kategori = Sub_kategori.objects.all()
-        return render(request, 'admin/sub_kategori/master_kategori.html', {'data_tema': data_tema, 'data_kategori' : data_kategori, 'data_sub_kategori' : data_sub_kategori})
+        return render(request, 'admin/master_kategori/master_kategori.html', {'data_tema': data_tema, 'data_kategori' : data_kategori, 'data_sub_kategori' : data_sub_kategori})
      
 def edit_sub_kategori(request, sub_kategori_id_):
     if request.method == 'POST':

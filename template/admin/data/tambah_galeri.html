@@ -12,54 +12,78 @@ Master User
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <div>
-                <h1 class="page-title">GALERI</h1>
+                <h1 class="page-title">DATA GALERI</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:admin_index' %}">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:index_galeri' %}">Data</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Galeri</li>
+                </ol>
             </div>
+
+            <div class="ms-auto pageheader-btn">
+                <a href="{% url 'sipandu_admin:index_galeri' %}" class="btn btn-primary btn-icon text-white me-2" >
+                    <span>
+                        <i class="fa fa-folder"></i>
+                    </span> Daftar Galeri
+                </a>
+            </div>
+
         </div>
 
+        
+
         <div class="col-lg-12 col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Tambah Konten</h3>
-                    </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Tambah Galeri</h3>
+                </div>
                 <div class="card-body">
-<form method="post" action="{% url 'sipandu_admin:tambah_galeri' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="mb-3">
-        <label for="konten_sekolah" class="form-label">Sekolah</label>
-        <select class="form-select" id="konten_sekolah" name="konten_sekolah">
-            <option value="test" selected disabled>Pilih Sekolah</option>
-            {% for sekolah in data_sekolah %}
-            <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
-            {% endfor %}
-        </select>
-    </div> 
-    <div class="mb-3">
-        <label for="judul" class="form-label">Judul</label>
-        <input type="text" class="form-control" id="judul" name="judul" required>
+                    <form method="post" action="{% url 'sipandu_admin:tambah_galeri' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <label for="galeri_sekolah" class="form-label">Sekolah</label>
+                                </td>
+                                <td>
+                                    <select class="form-select" id="galeri_sekolah" name="galeri_sekolah">
+                                        <option value="test" selected disabled>Pilih Sekolah</option>
+                                        {% for sekolah in data_sekolah %}
+                                        <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="video" class="form-label">Video</label>
+                                </td>
+                                <td>
+                                    <input type="url" class="form-control" id="video" name="video_galeri" placeholder="URL" required>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>
+                                    <label for="image" class="form-label">Image</label>
+                                </td>
+                                <td>
+                                    <input type="file" class="form-control" id="gambar" name="image_galeri" accept="image/*" onchange="previewImage(event)">
+                                </td>
+                            </tr>
+                        </table>
+                        <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-save"></i>  Simpan 
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="mb-3">
-        <label for="status" class="form-label">Status</label>
-        <select class="form-select" id="status" name="status" required>
-            <option value="1">Aktif</option>
-            <option value="0">Tidak Aktif</option>
-        </select>
-    </div> 
-    
-    <div class="mb-3">
-        <label for="konten_deskripsi" class="form-label">Deskripsi</label>
-        <input type="text" class="form-control" id="konten_deskripsi" name="konten_deskripsi" required>
-      
-    </div>
-    <div class="mb-3">
-        <label for="image" class="form-label">Image</label>
-        <input type="file" class="form-control" id="image" name="konten_image" accept="image/*" onchange="previewImage(event)">
-    </div>
-    <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> 
-    
-    <button type="submit" class="btn btn-primary">Simpan</button>
-</form>
-</div>
-</div>
 </div>
 
 {% endblock %}
@@ -69,22 +93,22 @@ Master User
 
 <script>
     ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .then( editor => {
-                console.log( editor );
-        } )
-        .catch( error => {
-                console.error( error );
-        } );
-        
+        .create(document.querySelector('#editor'))
+        .then(editor => {
+            console.log(editor);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
     function previewImage(event) {
         var input = event.target;
         var preview = document.getElementById('image-preview');
-        
+
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 // Menghapus preview thumbnail sebelumnya jika ada
                 while (preview.firstChild) {
                     preview.removeChild(preview.firstChild);

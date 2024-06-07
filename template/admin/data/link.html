@@ -1,0 +1,344 @@
+{% extends 'admin/base/base_index.html' %}
+{% load static %}
+
+{% block title %}
+Master User
+{% endblock %}
+
+{% block content %}
+<!-- app-content open -->
+<div class="app-content">
+    <div class="side-app">
+
+        <!-- PAGE-HEADER -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">DATA LINK</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data / data link</li>
+                </ol>
+            </div>
+            <div class="ms-auto pageheader-btn">
+                <button type="button" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#tambahModal">
+                    <span><i class="fe fe-plus"></i></span> Tambahkan Data
+                </button>
+                <button class="btn btn-secondary btn-icon text-white" onclick="openArchiveModal()">
+                    <span>
+                        <i class="fas fa-archive"></i>
+                    </span> Arsip Data
+                </button>
+            </div>
+        </div>
+        <!-- PAGE-HEADER END -->
+
+        <!-- Modal untuk tambah data -->
+        <div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{% url 'sipandu_admin:index_link' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="link_sekolah" class="form-label">Sekolah</label>
+                                <select class="form-select" id="link_sekolah" name="link_sekolah">
+                                    <option value="test" selected disabled>Pilih Sekolah</option>
+                                    {% for sekolah in data_sekolah %}
+                                    <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="judul_link" class="form-label">Judul</label>
+                                <input type="text" class="form-control" id="judul_link" name="judul_link" placeholder="Masukkan judul" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nama_link" class="form-label">Link</label>
+                                <input type="text" class="form-control" id="nama_link" name="nama_link" placeholder="Masukkan link" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="posisi_link" class="form-label">Posisi Link</label>
+                                <select class="form-control" id="posisi_link" name="posisi_link" required>
+                                    <option value="">Pilih Posisi Link</option>
+                                    <option value="kanan">kanan</option>
+                                    <option value="kiri">kiri</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i> Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal end -->
+
+        <!-- Modal Arsip Data -->
+        <div class="modal fade" id="archiveLinkDataModal" tabindex="-1" aria-labelledby="archiveDataModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header" >
+                        <h3 class="card-title" >Arsip Data Link</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap border-bottom w-100">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center border-bottom-0">NO</th>
+                                        <th class="text-center border-bottom-0">TANGGAL</th>
+                                        <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
+                                        <th class="text-center border-bottom-0">JUDUL</th>
+                                        <th class="text-center border-bottom-0">LINK</th>
+                                        <th class="text-center border-bottom-0">POSISI LINK</th>
+                                        <th class="text-center border-bottom-0">AKSI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for dt_arsip in data_arsip_link %}
+                                    <tr>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.created_at }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.link_sekolah.sekolah_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.judul_link }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.nama_link }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.posisi_link }}</td>
+                                        <td class="text-center align-middle">
+                                            <button type="button" class="btn btn-danger" onclick="deleteLink('{{ dt_arsip.id_link }}')">
+                                                <i class="fas fa-trash-alt"></i> Delete
+                                            </button>
+                                            <button type="button" class="btn btn-success" onclick="UnarchiveLink('{{ dt_arsip.id_link }}')">
+                                                <i class="fas fa-sync-alt"></i> Unarchive
+                                            </button>                                            
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Arsip Data End -->
+
+        <!-- ROW-1 OPEN -->
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Data Link</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="example">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="datakontenResponsiveDatatable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center border-bottom-0">NO</th>
+                                        <th class="text-center border-bottom-0">TANGGAL</th>
+                                        <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
+                                        <th class="text-center border-bottom-0">JUDUL</th>
+                                        <th class="text-center border-bottom-0">LINK</th>
+                                        <th class="text-center border-bottom-0">POSISI LINK</th>
+                                        <th class="text-center border-bottom-0">AKSI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for dt_link in data_link %}
+                                    <tr>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_link.created_at }}</td>
+                                        <td class="text-center align-middle">{{ dt_link.link_sekolah.sekolah_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_link.judul_link }}</td>
+                                        <td class="text-center align-middle">{{ dt_link.nama_link }}</td>
+                                        <td class="text-center align-middle">{{ dt_link.posisi_link }}</td>
+                                        <td class="text-center align-middle">
+                                            <div class="btn-group align-top">
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{ dt_jenjang.id_link }}">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a>&nbsp;
+                                                <button onclick="archiveLink('{{ dt_link.id_link }}', '{{ dt_link.created_at }}', '{{ dt_link.link_sekolah.sekolah_nama }}', '{{ dt_link.judul_link }}', '{{ dt_link.nama_link }}', '{{ dt_link.posisi_link }}')" class="btn btn-sm btn-danger badge">
+                                                    <i class="fas fa-archive"></i> Arsip
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% include 'admin/data/edit_link.html' %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<script>
+    function openArchiveModal() {
+    $('#archiveLinkDataModal').modal('show');
+}
+
+function archiveLink(idLink) {
+    Swal.fire({
+        title: "Apakah Anda yakin?",
+        text: "Anda ingin mengarsipkan data ini?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, arsipkan!",
+        cancelButtonText: "Batal",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var archiveUrl = "{% url 'sipandu_admin:archive_link' 0 %}".replace('0', idLink);
+
+            $.ajax({
+                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                url: archiveUrl,
+                type: "POST",
+                success: function(response) {
+                    Swal.fire({
+                        title: "Data berhasil diarsipkan!",
+                        icon: "success",
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: "Terjadi kesalahan saat mengarsipkan data!",
+                        icon: "error",
+                    });
+                }
+            });
+        }
+    });
+}
+    function UnarchiveLink(idLink) {
+        var unarchiveUrl = "{% url 'sipandu_admin:unarchive_link' 0 %}".replace("0", idLink);
+
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "ingin mengembalikan data yang diarsipkan!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#28a745", // Kode warna hijau yang sesuai dengan tombol Bootstrap
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, lanjutkan",
+            cancelButtonText: "Batal",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: unarchiveUrl,
+                    type: "POST",
+                    success: function(response) {
+                        console.log('berhasil');
+                        Swal.fire({
+                            title: "Data berhasil dikembalikan!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan karena data ini sedang digunakan!",
+                            icon: "error",
+                        });
+                    }
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Tindakan dibatalkan',
+                    '',
+                    'info'
+                );
+            }
+        });
+    }
+
+    function deleteLink(link_) {
+    var deleteUrl = "{% url 'sipandu_admin:delete_link' 'id_link' %}".replace("id_link", link_);
+
+    Swal.fire({
+        title: "Apakah Anda yakin?",
+        text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, hapus!",
+        cancelButtonText: "Batal",
+        reverseButtons: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                url: deleteUrl,
+                type: "DELETE",
+                success: function(response) {
+                    console.log('berhasil');
+                    Swal.fire({
+                        title: "Data berhasil dihapus!",
+                        icon: "success",
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: "Terjadi kesalahan karena data ini sedang digunakan!",
+                        icon: "error",
+                    });
+                }
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire(
+                'Tindakan dibatalkan',
+                '',
+                'info'
+            );
+        }
+    });
+}
+
+
+
+$(function() {
+    $('#datakontenResponsiveDatatable').DataTable({
+        scrollX: "100%",
+        language: {
+            searchPlaceholder: 'Search...',
+            sSearch: '',
+        }
+    });
+});
+
+</script>
+{% endblock %}

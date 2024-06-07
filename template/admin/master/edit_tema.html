@@ -29,15 +29,45 @@
                     </div>
                     <div class="mb-3">
                         <label for="tema_thumbnail" class="form-label">Thumbnail</label>
-                        <input type="file" class="form-control" name="tema_thumbnail" accept="image/*">
+                        <input type="file" class="form-control" name="tema_thumbnail" accept="image/*"  onchange="EditpreviewImage(event)">
                     </div>
+                    <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;">
+                        {% if dt_tema.tema_thumbnail %}
+                            <img id="edit-image-preview-img" src="{{ dt_tema.tema_thumbnail.url }}" alt="Tema Thumbnail" style="max-width: 100%;">
+                        {% else %}
+                            <img id="edit-image-preview-img" src="#" alt="Pratinjau Gambar" style="display: none; max-width: 100%;">
+                        {% endif %}
+                    </div>
+                
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit
+                        </button>
+                    </div>     
                 </form>
             </div>
         </div>
     </div>
 </div>
 <!-- Modal Edit Data Tema End -->
+<script>
+    function EditpreviewImage(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function(){
+            var dataURL = reader.result;
+            var previewImg = document.getElementById('edit-image-preview-img');
+            previewImg.src = dataURL;
+            previewImg.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+
+</script>
+
+
+
+

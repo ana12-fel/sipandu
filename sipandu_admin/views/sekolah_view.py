@@ -7,28 +7,34 @@ def IndexSekolah(request):
         sekolah_nama = request.POST.get('sekolah_nama') 
         sekolah_npsn = request.POST.get('sekolah_npsn')
         sekolah_jenis = request.POST.get('sekolah_jenis')
-        sekolah_wilayah = request.POST.get ('sekolah_wilayah')
         sekolah_jenjang = request.POST.get('sekolah_jenjang')
+        sekolah_provinsi = request.POST.get('sekolah_provinsi')
+        sekolah_kabupaten = request.POST.get('sekolah_kabupaten')
+        sekolah_kecamatan = request.POST.get('sekolah_kecamatan')
 
-        
-        print (sekolah_jenjang)
+        print (sekolah_jenjang, sekolah_provinsi, sekolah_kabupaten, sekolah_kecamatan)
         dt_sekolah = Master_sekolah.objects.create(
             sekolah_nama=sekolah_nama,
             sekolah_npsn=sekolah_npsn,
             sekolah_jenis=sekolah_jenis,
-            sekolah_wilayah=Master_wilayah.objects.get(wilayah_id = sekolah_wilayah),
-            sekolah_jenjang=Master_jenjang.objects.get(jenjang_id = sekolah_jenjang),
+            sekolah_provinsi=Master_wilayah.objects.get(wilayah_id = sekolah_provinsi),
+            sekolah_kabupaten=Master_wilayah.objects.get(wilayah_id = sekolah_kabupaten),
+            sekolah_kecamatan=Master_wilayah.objects.get(wilayah_id = sekolah_kecamatan),
+            sekolah_jenjang=Master_jenjang.objects.get(jenjang_id = sekolah_jenjang)
         )
 
-        print(sekolah_nama, sekolah_npsn, sekolah_jenis, sekolah_jenjang, sekolah_wilayah)
+        print(sekolah_nama, sekolah_npsn, sekolah_jenis, sekolah_jenjang, sekolah_provinsi,sekolah_kabupaten,sekolah_kecamatan)
         return redirect('sipandu_admin:index_sekolah')
     
     else:
         data_prov = Master_wilayah.objects.filter(wilayah_level='1')
         data_jenjang = Master_jenjang.objects.all()
-        data_sekolah = Master_sekolah.objects.all()
+        data_sekolah = Master_sekolah.objects.filter(deleted_at=None)
+        data_arsip_sekolah = Master_sekolah.objects.filter(deleted_at__isnull=False)
         data_wilayah = Master_wilayah.objects.all()
-        return render(request, 'admin/master/index_master_sekolah.html', {'data_sekolah': data_sekolah, 'data_wilayah': data_wilayah, "data_jenjang": data_jenjang, "data_prov" : data_prov})
+        data_kabupaten = Master_wilayah.objects.filter(wilayah_level = '2')
+        data_kecamatan = Master_wilayah.objects.filter(wilayah_level = '3')
+        return render(request, 'admin/master/index_master_sekolah.html', {'data_sekolah': data_sekolah, 'data_wilayah': data_wilayah, "data_jenjang": data_jenjang, "data_prov" : data_prov, 'data_kabupaten': data_kabupaten, 'data_kecamatan' : data_kecamatan, 'data_arsip_sekolah': data_arsip_sekolah})
     
 def get_wilayah(request):
     if request.method == 'GET' and request.is_ajax():
@@ -53,11 +59,18 @@ def edit_sekolah(request, sekolah_id):
     if request.method == 'POST':
         dt_sekolah = Master_sekolah.objects.get(sekolah_id=sekolah_id)
 
+        sekolah_provinsi = request.POST.get('sekolah_provinsi')
+        sekolah_kabupaten = request.POST.get('sekolah_kabupaten')
+        sekolah_kecamatan = request.POST.get('sekolah_kecamatan')
         sekolah_nama = request.POST.get('sekolah_nama')
         sekolah_npsn = request.POST.get('sekolah_npsn')
         sekolah_jenis = request.POST.get('sekolah_jenis')
         sekolah_jenjang = request.POST.get('sekolah_jenjang')
 
+
+        dt_sekolah.sekolah_provinsi=Master_wilayah.objects.get(wilayah_id = sekolah_provinsi)
+        dt_sekolah.sekolah_kabupaten=Master_wilayah.objects.get(wilayah_id = sekolah_kabupaten)
+        dt_sekolah.sekolah_kecamatan=Master_wilayah.objects.get(wilayah_id = sekolah_kecamatan)
         dt_sekolah.sekolah_nama=sekolah_nama
         dt_sekolah.sekolah_npsn=sekolah_npsn
         dt_sekolah.sekolah_jenis=sekolah_jenis
@@ -69,7 +82,9 @@ def edit_sekolah(request, sekolah_id):
     
     else:
         dt_sekolah = Master_sekolah.objects.get(sekolah_id=sekolah_id)
-        return render(request, 'admin/master/edit_sekolah.html', {"dt_sekolah": dt_sekolah, "id_sekolah": sekolah_id })
+        data_prov = Master_wilayah.objects.filter(wilayah_level='1')
+        data_wilayah = Master_wilayah.objects.all()
+        return render(request, 'admin/master/edit_sekolah.html', {"dt_sekolah": dt_sekolah, "id_sekolah": sekolah_id, "data_prov" : data_prov, "data_wilayah" : data_wilayah })
 
     
 def delete_sekolah(request, sekolah_id):
@@ -90,6 +105,30 @@ def delete_sekolah(request, sekolah_id):
                 'message': 'data sekolah gagal dihapus, data sekolah tidak ditemukan'
         }
         return JsonResponse(data, status=400)
+    
+def archive_sekolah(request, sekolah_id):
+    if request.method == "POST":
+        sekolah = get_object_or_404(Master_sekolah, pk=sekolah_id)
+        sekolah.sekolah_status = False
+        sekolah.archive()
+        return JsonResponse({"message": "Data berhasil diarsipkan."})
+    else:
+        return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
+
+    
+def unarchive_sekolah(request, sekolah_id):
+    if request.method == 'POST':
+        try:
+            sekolah = Master_sekolah.objects.get(sekolah_id=sekolah_id)
+            sekolah.sekolah_status=True
+            sekolah.deleted_at = None
+            sekolah.save()
+            return JsonResponse({'message': 'Data berhasil diunarsipkan'}, status=200)
+        except Master_sekolah.DoesNotExist:
+            return JsonResponse({'error': 'Data jenjang tidak ditemukan'}, status=404)
+    else:
+        return JsonResponse({'error': 'Metode request tidak diizinkan'}, status=405)
+
     
 
 

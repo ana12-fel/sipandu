@@ -1,0 +1,14 @@
+<!-- laporan_transaksi_belum.html -->
+{% extends 'base.html' %}
+
+{% block title %}
+Unduh Laporan Transaksi Belum
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Unduh Laporan Transaksi Belum</h1>
+<form action="{% url 'laporan_transaksi_belum' %}" method="post" class="text-center">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary"><i class="fa fa-download"></i> Unduh Laporan</button>
+</form>
+{% endblock %}

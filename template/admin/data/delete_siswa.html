@@ -1,0 +1,65 @@
+<div class="card">
+    <div class="card-header border-bottom-0 p-4">
+        <div class="page-options d-flex justify-content-end">
+        </div>
+    </div>
+    <div class="e-table px-5 pb-5">
+        <div class="table-responsive table-lg">
+            <form id="deleteForm" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id_data_siswa" id="id_data_siswa">
+            </form>
+            <table class="table border-top table-bordered mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-center border-bottom-0">NO</th>
+                        <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
+                        <th class="text-center border-bottom-0">TOTAL SISWA</th>
+                        <th class="text-center border-bottom-0">KETERANGAN</th>
+                        <th class="text-center border-bottom-0">ICON</th>
+                        <th class="text-center border-bottom-0">AKSI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dt_siswa in data_siswa %}
+                    <tr>
+                        <td class="align-middle text-center">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" id="item-{{ dt_siswa.id_data_siswa }}" type="checkbox"> 
+                                <label class="custom-control-label" for="item-{{ dt_siswa.id_data_siswa }}"></label>
+                            </div>
+                        </td>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ dt_siswa.siswa_sekolah.sekolah_nama }}</td>
+                        <td>{{ dt_siswa.total_siswa }}</td>
+                        <td>{{ dt_siswa.keterangan_siswa }}</td>
+                        <td class="text-center align-middle">
+                            <div class="btn-group align-top">
+                                <button class="btn btn-sm btn-danger badge" onclick="prepareDelete('{{ dt_edit.id_data_siswa }}')" type="button">Delete Siswa</button>
+                            </div>
+                        </td>
+                        <form id="deleteForm{{ dt_siswa.id_data_siswa}}" action="{% url 'delete_siswa' dt_siswa.id_data_siswa %}">
+                            {% csrf_token %}
+                        </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% block js %}
+<script>
+    function prepareDelete(id_data_konten) {
+        var confirmation = confirm("Apakah Anda yakin ingin menghapus data ini?");
+        if (confirmation) {
+            document.getElementById("id_data_siswa").value = id_data_siswa;
+            document.getElementById("deleteForm").submit();
+        } else {
+        }
+    }
+</script>
+
+{% endblock %}
+
+

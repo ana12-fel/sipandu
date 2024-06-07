@@ -12,7 +12,11 @@ Master User
         <!-- PAGE-HEADER -->
         <div class="page-header">
             <div>
-                <h1 class="page-title">Edit DATA KONTEN</h1>
+                <h1 class="page-title">EDIT KONTEN</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data / Edit Data Konten</li>
+                </ol>
             </div>
         </div>
 
@@ -56,21 +60,15 @@ Master User
         <input type="text" value="{{ dt_konten.judul }}" class="form-control" name="judul" required>
     </div>
     <div class="mb-3">
-        <label>Status</label>
+        <label for="status">Status</label>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="status" id="statusAktif" value="True" {% if dt_konten.konten_status == "True" %} checked {% endif %}>
-            <label class="form-check-label" for="statusAktif">Aktif</label>
+            <input class="form-check-input" type="radio" name="status" id="statusAktif" value="True" {% if dt_konten.status %}checked{% endif %}>
+            <label class="form-check-label" for="statusAktif">Publish</label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="status" id="statusTidakAktif" value="False" {% if dt_konten.konten_status == "False" %} checked {% endif %}>
-            <label class="form-check-label" for="statusTidakAktif">Tidak Aktif</label>
+            <input class="form-check-input" type="radio" name="status" id="statusTidakAktif" value="False" {% if not dt_konten.status %}checked{% endif %}>
+            <label class="form-check-label" for="statusTidakAktif">Unpublish</label>
         </div>
-    </div>
-    </div>
-    <div class="mb-3">
-        <label for="konten_deskripsi" class="form-label">Deskripsi</label>
-        <input type="text" value="{{ dt_konten.konten_deskripsi }}" class="form-control" name="konten_deskripsi" required>
-      
     </div>
 
     <div class="mb-3">
@@ -79,11 +77,16 @@ Master User
     </div>
 
     <div class="mb-3">
-        <label for="image" class="form-label">Image</label>
-        <input type="file" value="{{ dt_konten.konten_image }}" class="form-control" id="image" name="konten_image" accept="image/*" onchange="previewImage(event)">
+        <label for="konten_image" class="form-label">Image</label>
+        <input type="file" class="form-control" id="konten_image" name="konten_image" accept="image/*" onchange="EditpreviewImage(event)" style="display:none;">
+        <input type="text" id="edit-file-name-display" readonly class="form-control" onclick="document.getElementById('konten_image').click();" placeholder="Choose file">
     </div>
-    <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> 
-    
+    <div id="edit-image-preview" class="mb-3" style="border: 2px dotted; text-align: center;">
+        {% if dt_konten.konten_image %}
+            <img src="{{ dt_konten.konten_image.url }}" alt="Gambar Konten" style="max-width: 100%;">
+        {% endif %}
+    </div>
+
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -100,12 +103,11 @@ Master User
             </div>
         </div>
     </div>
-
-    
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-primary">Simpan</button>
-    </div>
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-paper-plane"></i> Submit
+        </button>
+    </div> 
 </form>
 </div>
 </div>
@@ -115,8 +117,65 @@ Master User
 
 {% block js %}
 <script src="{% static 'admin/js/ckeditor.js'%}"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script>
+    let modifiedFile;
+
+function EditpreviewImage(event) {
+    var input = event.target;
+    var preview = document.getElementById('edit-image-preview');
+    var fileNameDisplay = document.getElementById('edit-file-name-display');
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            // Menghapus preview thumbnail sebelumnya jika ada
+            while (preview.firstChild) {
+                preview.removeChild(preview.firstChild);
+            }
+
+            // Menambahkan elemen img untuk menampilkan preview thumbnail
+            var img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.maxWidth = '300px';
+            img.alt = 'Preview';
+            preview.appendChild(img);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+
+        // Mendapatkan informasi waktu upload
+        var currentTime = new Date();
+        var year = String(currentTime.getFullYear());
+        var month = String(currentTime.getMonth() + 1).padStart(2, '0'); // Bulan dimulai dari 0
+        var day = String(currentTime.getDate()).padStart(2, '0');
+        var hours = String(currentTime.getHours()).padStart(2, '0');
+        var minutes = String(currentTime.getMinutes()).padStart(2, '0');
+        var seconds = String(currentTime.getSeconds()).padStart(2, '0');
+        var formattedTime = `${year}-${month}-${day} at ${hours}.${minutes}.${seconds}`;
+        
+        // Mendapatkan nama file yang diunggah
+        var file = input.files[0];
+        var fileName = file.name;
+        
+        // Memisahkan ekstensi file
+        var fileExtension = fileName.split('.').pop();
+        
+        // Menggabungkan nama file, waktu upload, dan ekstensi file
+        var newFileName = `${fileName.split('.').slice(0, -1).join('.')}_${formattedTime}.${fileExtension}`;
+        
+        // Membuat file baru dengan nama yang telah diubah
+        modifiedFile = new File([file], newFileName, { type: file.type });
+
+        // Menampilkan nama file baru di elemen input teks
+        fileNameDisplay.value = newFileName;
+    }
+}
+
+
+
     ClassicEditor
         .create( document.querySelector( '#editor' ) )
         .then( editor => {
@@ -126,31 +185,7 @@ Master User
                 console.error( error );
         } );
         
-    function previewImage(event) {
-        var input = event.target;
-        var preview = document.getElementById('image-preview');
-        
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function(e) {
-                // Menghapus preview thumbnail sebelumnya jika ada
-                while (preview.firstChild) {
-                    preview.removeChild(preview.firstChild);
-                }
-
-                // Menambahkan elemen img untuk menampilkan preview thumbnail
-                var img = document.createElement('img');
-                img.src = e.target.result;
-                img.style.maxWidth = '300px';
-                img.alt = ' Preview';
-                preview.appendChild(img);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
+    
 </script>
 {% endblock %}
 

@@ -7,15 +7,15 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>Demo Law Firm 2 | Porto - Multipurpose Website Template</title>	
+		<title>{{data_sekolah_header.sekolah_id.sekolah_nama|title}}</title>	
 
 		<meta name="keywords" content="WebSite Template" />
 		<meta name="description" content="Porto - Multipurpose Website Template">
 		<meta name="author" content="okler.net">
 
 		<!-- Favicon -->
-		<link rel="shortcut icon" href="{% static 'img/favicon.icon' %}" type="image/x-icon" />
-		<link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
+		<link rel="shortcut icon" href="{% static 'logo/logo_sekolah.png' %}" type="image/x-icon" />
+		<link rel="apple-touch-icon" href="{% static 'logo/logo_sekolah.png' %}">
 
 		<!-- Mobile Metas -->
 		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
@@ -68,7 +68,7 @@
 										<a href="demo-construction.html">
 										</a>
 									</div>
-									<h1 class="" style="height: 5px;"> SMP NEGERI 1 LAMPUNG</h1>
+									<h1 class="" style="height: 5px;"> {{data_sekolah_header.sekolah_id.sekolah_nama|title}}</h1>
 								</div>
 							</div>
 							{% include 'layoutsmp/navsmp.html' %}

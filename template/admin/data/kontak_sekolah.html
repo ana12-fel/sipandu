@@ -1,0 +1,330 @@
+{% extends 'admin/base/base_index.html' %}
+{% load static %}
+{% block title %}
+Master User
+{% endblock %}
+
+{% block content %}
+<div class="app-content">
+    <div class="side-app">
+
+        <!-- PAGE-HEADER -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">DATA KONTAK</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'sipandu_admin:admin_index' %}">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="#">Data</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data Kontak</li>
+                </ol>
+            </div>
+            
+            <div class="ms-auto pageheader-btn">
+                <a href="{% url 'sipandu_admin:tambah_kontak'%}" class="btn btn-primary btn-icon text-white me-2" >
+                    <span>
+                        <i class="fe fe-plus"></i>
+                    </span> Tambahkan kontak
+                </a>
+                <button class="btn btn-secondary btn-icon text-white" onclick="openArchiveModal()">
+                    <span>
+                        <i class="fe fe-archive"></i>
+                    </span> Arsip Data
+                </button>
+            </div>
+        </div>
+
+        <div class="modal fade" id="archiveDataModal" tabindex="-1" aria-labelledby="archiveDataModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="archiveDataModalLabel">Arsip Data Kontak</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap border-bottom w-100">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center border-bottom-0">No</th>
+                                        <th class="text-center border-bottom-0">Tanggal</th>
+                                        <th class="text-center border-bottom-0">Nama Sekolah</th>
+                                        <th class="text-center border-bottom-0">No Hp</th>
+                                        <th class="text-center border-bottom-0">E-mail</th>
+                                        <th class="text-center border-bottom-0">Foto</th>
+                                        <th class="text-center border-bottom-0">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for dt_arsip in data_arsip %}
+                                    <tr>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.created_at }}</td>
+                                        <td class="text-center align-middle">{{ dt_arsip.kontak_sekolah.sekolah_nama }}</td>
+                                        <td class="text-center align-middle">{{dt_arsip.no_hp}}</td>
+                                        <td class="text-center align-middle">{{dt_arsip.email}}</td>
+                                        <td class="text-center align-middle"><img src="{% if dt_arsip.gambar %}{{ dt_arsip.gambar.url }}{% endif %}" alt="{{ dt_arsip.gambar }}" style="max-width: 100px;"></td>
+                                        <td class="text-center align-middle">
+                                            <td class="text-center align-middle">
+                                                <button type="button" class="btn btn-danger" onclick="deleteKontak('{{ dt_arsip.id_data_kontak }}')">
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </button>                                   
+                                                <button type="button" class="btn btn-success" onclick="UnarchiveKontak('{{ dt_arsip.id_data_kontak }}')">
+                                                    <i class="fas fa-archive"></i> Unarchive
+                                                </button>
+                                            </td>
+                                            
+                                        </td> 
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PAGE-HEADER END -->
+
+        <!-- ROW-1 OPEN -->
+        <div class="row row-cards">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header border-bottom-0 p-4">
+                        <h3 class="card-title">Data Kontak</h3>
+                    </div>
+                    <div class="e-table px-5 pb-5">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="datakontenResponsiveDatatable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center border-bottom-0">No</th>
+                                        <th class="text-center border-bottom-0">Tanggal</th>
+                                        <th class="text-center border-bottom-0">Nama Sekolah</th>
+                                        <th class="text-center border-bottom-0">No Hp</th>
+                                        <th class="text-center border-bottom-0">E-mail</th>
+                                        <th class="text-center border-bottom-0">Foto</th>
+                                        <th class="text-center border-bottom-0">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for dt_kontak in data_kontak %}
+                                    <tr>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_kontak.created_at }}</td>
+                                        <td class="text-center align-middle">{{ dt_kontak.kontak_sekolah.sekolah_nama }}</td>
+                                        <td class="text-center align-middle">{{dt_kontak.no_hp}}</td>
+                                        <td class="text-center align-middle">{{dt_kontak.email}}</td>
+                                        <td class="text-center align-middle"><img src="{% if dt_kontak.gambar %}{{ dt_kontak.gambar.url }}{% endif %}" alt="{{ dt_kontak.gambar }}" style="max-width: 100px;"></td>
+                                        <td class="text-center align-middle">
+                                            <div class="btn-group align-top">
+                                                <a href="{% url 'sipandu_admin:edit_kontak' dt_kontak.id_data_kontak %}" class="btn btn-sm btn-primary badge">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                                <span style="margin-left: 5px;"></span> <!-- Jarak -->
+                                                <!-- <button onclick="deleteKontak('{{ dt_kontak.id_data_kontak }}')" class="btn btn-sm btn-danger badge">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </button> -->
+                                                <span style="margin-left: 5px;"></span> <!-- Jarak -->
+                                                <button onclick="archivekontak('{{ dt_kontak.id_data_kontak }}','{{ dt_kontak.created_at }}', '{{ dt_kontak.kontak_sekolah.sekolah_nama }}', '{{ dt_kontak.ho_hp }}', '{{ dt_kontak.email }}', '{{ dt_kontak.alamat }}' )" class="btn btn-sm btn-warning badge">
+                                                    <i class="fas fa-archive"></i> Arsip
+                                                </button>
+                                            </div>
+
+                                            
+                                        </td> 
+                                    </tr>
+                                    
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    function openArchiveModal() {
+    $('#archiveDataModal').modal('show');
+}
+
+function archivekontak(kontakId, no_hp, email,  alamat, link_map, fb, tw, ig, gambar)  {
+      
+    swal({
+        title: "Apakah Anda yakin?",
+        text: "Anda akan mengarsipkan data ini!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willArchive) => {
+        if (willArchive) {
+            var archiveUrl = "{% url 'sipandu_admin:archive_kontak' 0 %}".replace('0', kontakId);
+
+            $.ajax({
+                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                url: archiveUrl,
+                type: "POST",
+                success: function(response) {
+                    swal({
+                        title: "Data berhasil diarsipkan!",
+                        icon: "success",
+                        buttons: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    swal("Terjadi kesalahan saat mengarsipkan data!", {
+                        icon: "error",
+                    });
+                }
+            });
+        }
+    });
+}
+function deleteKontak(kontakId) {
+    var deleteUrl = "{% url 'sipandu_admin:delete_kontak' 0 %}".replace('0', kontakId);
+
+    swal({
+        title: "Apakah Anda yakin?",
+        text: "Anda tidak akan dapat mengembalikan data ini!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                url: deleteUrl,
+                type: "DELETE",
+                success: function(response) {
+                    console.log('berhasil');
+                    swal({
+                        title: "Data berhasil dihapus!",
+                        icon: "success",
+                        buttons: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    swal("Terjadi kesalahan saat menghapus data!", {
+                        icon: "error",
+                    });
+                }
+            });
+        } else {
+            swal("Tindakan dibatalkan", "", "info");
+        }
+    });
+}
+
+function submitForm() {
+        // Mengambil nilai input dari formulir
+        var kontak = document.getElementById("kontak_sekolah").value.trim();
+        
+
+        // Periksa apakah input kosong
+        if (kontak === "") {
+            // Tampilkan pesan error jika input kosong
+            alert("kontak harus diisi!");
+            return false; // Menghentikan proses submit
+        }
+
+        // Mengirim data ke server menggunakan Ajax
+        $.ajax({
+            url: "{% url 'sipandu_admin:index_kontak' %}",
+            type: "POST",
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                kontak: Data_kontak,
+            
+            },
+            success: function(response) {
+                // Handle response dari server
+                // Misalnya, tampilkan notifikasi atau muat ulang halaman
+                console.log(response);
+                $('#addDataModal').modal('hide'); // Tutup modal setelah berhasil
+                setTimeout(function() {
+                // Redirect ke halaman yang sama setelah 2 detik
+                window.location.href = window.location.href;
+            }, 2000);
+            },
+            error: function(xhr, status, error) {
+                // Handle error jika terjadi kesalahan saat mengirimkan data
+                console.error("Terjadi kesalahan:", error);
+                swal({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Jenjang sudah terinput sebelumnya!',
+                });
+            }
+        });
+    }
+
+function UnarchiveKontak(kontakId) {
+    var unarchiveUrl = "{% url 'sipandu_admin:unarchive_kontak' 0 %}".replace('0', kontakId);
+
+    swal({
+        title: "Apakah Anda yakin?",
+        text: "Anda akan mengembalikan data ini!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willUnarchive) => {
+        if (willUnarchive) {
+            $.ajax({
+                headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                url: unarchiveUrl,
+                type: "POST",
+                success: function(response) {
+                    console.log('berhasil');
+                    swal({
+                        title: "Data berhasil dikembalikan!",
+                        icon: "success",
+                        buttons: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    swal("Terjadi kesalahan karena data ini sedang digunakan!", {
+                        icon: "error",
+                    });
+                }
+            });
+        } else {
+            swal("Tindakan dibatalkan", "", "info");
+        }
+    });
+}
+
+
+    $(function(){
+        $('#datakontenResponsiveDatatable').DataTable({
+		scrollX: "100%",
+		language: {
+			searchPlaceholder: 'Search...',
+			sSearch: '',
+		}
+	});
+    })
+
+</script>
+
+{% endblock %}

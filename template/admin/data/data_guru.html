@@ -1,0 +1,418 @@
+{% extends 'admin/base/base_index.html' %}
+{% load static %}
+{% block title %}
+Master User
+{% endblock %}
+
+{% block content %}
+<!--app-content open-->
+<div class="app-content">
+    <div class="side-app">
+        <!-- PAGE-HEADER -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">DATA GURU</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data/ Data Guru</li>
+                </ol>
+            </div>
+            <div class="ms-auto pageheader-btn">
+                <button type="button" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#tambahModal">
+                    <span><i class="fe fe-plus"></i></span> Tambahkan
+                </button>
+                <button class="btn btn-secondary btn-icon text-white" onclick="openArchiveModal()">
+                    <span>
+                        <i class="fas fa-archive"></i>
+                    </span> Arsip Data
+                </button>
+            </div>
+        </div>
+        <!-- PAGE-HEADER END -->
+
+        <!-- Modal untuk tambah data -->
+        <div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Data Guru</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form untuk tambah data -->
+                        <form method="POST" action="{% url 'sipandu_admin:index_guru' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="guru_sekolah" class="form-label">Sekolah</label>
+                                <select class="form-select" id="guru_sekolah" name="guru_sekolah" required>
+                                    <option value="" selected disabled>Pilih Sekolah</option>
+                                    {% for sekolah in data_sekolah %}
+                                    <option value="{{ sekolah.sekolah_id }}">{{ sekolah.sekolah_nama.upper }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama Guru</label>
+                                <input type="text" class="form-control" id="nama" name="nama_guru" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nip_guru" class="form-label">Nip</label>
+                                <input type="text" class="form-control" id="nip_guru" name="nip_guru" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Mata Pelajaran</label>
+                                <input type="text" class="form-control" id="nama" name="mata_pelajaran" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Pendidikan</label>
+                                <input type="text" class="form-control" id="nama" name="pendidikan" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="status_kepegawaian" class="form-label">Status Kepegawaian</label>
+                                <select class="form-select" id="status_kepegawaian" name="status_kepegawaian" onchange="toggleTahunForm()" required>
+                                    <option value="" selected disabled>Pilih Status Kepegawaian</option>
+                                    <option value="guru">Guru</option>
+                                    <option value="kepala_sekolah">Kepala Sekolah</option>
+                                </select>
+                            </div>
+                            <div id="tahun_guru_container">
+                                <div class="mb-3">
+                                    <label for="tahun_guru" class="form-label">Tahun Jabatan Kepala Sekolah</label>
+                                    <input type="text" class="form-control" id="tahun_guru" name="tahun_guru">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="thumbnail" class="form-label">Foto</label>
+                                <input type="file" class="form-control" id="guru_image" name="guru_image" accept="image/*" onchange="previewThumbnail(event)">
+                            </div>
+                            <div id="thumbnail-preview" class="mb-3" style="border: 2px dotted; text-align: center;"></div> 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <i class="fas fa-times"></i> Close
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i> Submit
+                                </button>
+                            </div>                             
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal end -->
+
+        <!-- Modal Arsip Data Guru -->
+<div class="modal fade" id="archiveGuruModal" tabindex="-1" aria-labelledby="archiveGuruModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="card-title" id="archiveGuruModalLabel">Arsip Data Guru</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap border-bottom w-100">
+                        <thead>
+                            <tr>
+                                <th class="text-center border-bottom-0">NO</th>
+                                <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
+                                <th class="text-center border-bottom-0">NAMA GURU</th>
+                                <th class="text-center border-bottom-0">NIP</th>
+                                <th class="text-center border-bottom-0">MATA PELAJARAN</th>
+                                <th class="text-center border-bottom-0">PENDIDIKAN</th>
+                                <th class="text-center border-bottom-0">STATUS </th>
+                                <th class="text-center border-bottom-0">TAHUN</th>
+                                <th class="text-center border-bottom-0">FOTO</th>
+                                <th class="text-center border-bottom-0">AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dt_arsip in data_arsip_guru %}
+                            <tr>
+                                <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.guru_sekolah.sekolah_nama }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.nama_guru }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.nip_guru }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.mata_pelajaran }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.pendidikan }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.status_kepegawaian }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.tahun_guru }}</td>
+                                <td class="text-center align-middle"><img src="{% if dt_arsip.guru_image %}{{ dt_arsip.guru_image.url }}{% endif %}" alt="{{ dt_arsip.nama_guru }}" style="max-width: 100px;"></td>
+                                <td class="text-center align-middle">
+                                    <button type="button" class="btn btn-danger" onclick="deleteGuru('{{ dt_arsip.id_data_guru }}')">
+                                        <i class="fas fa-trash-alt"></i> Delete
+                                    </button>                                   
+                                    <button type="button" class="btn btn-success" onclick="UnarchiveGuru('{{ dt_arsip.id_data_guru }}')">
+                                        <i class="fas fa-sync-alt"></i> Restore
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Arsip Data Guru End -->
+
+        <!-- ROW-1 OPEN -->
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">DATA GURU/KEPALA SEKOLAH</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="guruResponsiveDatatable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center border-bottom-0">NO</th>
+                                        <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
+                                        <th class="text-center border-bottom-0">NAMA GURU</th>
+                                        <th class="text-center border-bottom-0">NIP</th>
+                                        <th class="text-center border-bottom-0">MATA PELAJARAN</th>
+                                        <th class="text-center border-bottom-0">PENDIDIKAN</th>
+                                        <th class="text-center border-bottom-0">STATUS </th>
+                                        <th class="text-center border-bottom-0">TAHUN</th>
+                                        <th class="text-center border-bottom-0">FOTO</th>
+                                        <th class="text-center border-bottom-0">AKSI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for dt_guru in data_guru %}
+                                    
+                                    <tr>
+                                        <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                        <td class="text-center align-middle">{{ dt_guru.guru_sekolah.sekolah_nama }}</td>
+                                        <td class="text-center align-middle">{{ dt_guru.nama_guru }}</td>
+                                        <td class="text-center align-middle">{{ dt_guru.nip_guru }}</td>
+                                        <td class="text-center align-middle">{{ dt_guru.mata_pelajaran }}</td>
+                                        <td class="text-center align-middle">{{ dt_guru.pendidikan }}</td>
+                                        <td class="text-center align-middle">{{ dt_guru.status_kepegawaian }}</td>
+                                        <td class="text-center align-middle">{{ dt_guru.tahun_guru }}</td>
+                                        <td class="text-center align-middle"><img src="{% if dt_guru.guru_image %}{{ dt_guru.guru_image.url }}{% endif %}" alt="{{ dt_guru.nama_guru }}" style="max-width: 100px;"></td>
+                                        <td class="text-center align-middle">
+                                            <div class="btn-group align-top">
+                                                <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{ dt_guru.id_data_guru }}">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a>&nbsp;
+                                                <button onclick="archiveSiswa('{{ dt_guru.id_data_guru }}', '{{ dt_guru.guru_sekolah.sekolah_nama }}', '{{ dt_guru.nama_guru }}', '{{dt_guru.nip_guru}}', '{{dt_guru.mata_pelajaran}}', '{{dt_guru.pendidikan}}', '{{dt_guru.status_kepegawaian}}', '{{ dt_guru.guru_image }}', '{{ dt_guru.nama_guru }}')" class="btn btn-sm btn-danger badge" value="Archive">
+                                                    <i class="fas fa-archive"></i> Arsip
+                                                </button>                                                    
+                                            </div>
+                                            
+                                        </td> 
+                                    </tr>
+                                    {% include 'admin/data/edit_guru.html' %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ROW-1 END -->
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script>
+    function toggleTahunForm() {
+        var statusKepegawaian = document.getElementById("status_kepegawaian").value;
+        var tahun_guru = document.getElementById("tahun_guru");
+
+        if (statusKepegawaian === "kepala_sekolah") {
+            tahun_guru.style.display = "block";
+        } else {
+            tahun_guru.style.display = "none";
+        }
+    }
+    function previewThumbnail(event) {
+        var input = event.target;
+        var preview = document.getElementById('thumbnail-preview');
+        
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                // Menghapus preview thumbnail sebelumnya jika ada
+                while (preview.firstChild) {
+                    preview.removeChild(preview.firstChild);
+                }
+
+                // Menambahkan elemen img untuk menampilkan preview thumbnail
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '300px';
+                img.alt = 'Thumbnail Preview';
+                preview.appendChild(img);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function openArchiveModal() {
+    $('#archiveGuruModal').modal('show');
+}
+
+    function archiveSiswa(idDataGuru, guruSekolah, namaGuru, nipGuru, mataPelajaran, pendidikan, tahunGuru, statusKepegawaian, ) {
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "Anda ingin mengarsipkan data ini?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, arsipkan!",
+            cancelButtonText: "Batal",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var archiveUrl = "{% url 'sipandu_admin:archive_guru' 0 %}".replace('0', idDataGuru);
+
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: archiveUrl,
+                    type: "POST",
+                    success: function(response) {
+                        Swal.fire({
+                            title: "Data berhasil diarsipkan!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                            $('#archiveGuruModal').modal('show');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan saat mengarsipkan data!",
+                            icon: "error",
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    function deleteGuru(guru_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_guru' 'id_data_guru' %}".replace("id_data_guru", guru_);
+
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "DELETE",
+                    success: function(response) {
+                        console.log('berhasil');
+                        Swal.fire({
+                            title: "Data berhasil dihapus!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan karena data ini sedang digunakan!",
+                            icon: "error",
+                        });
+                    }
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Tindakan dibatalkan',
+                    '',
+                    'info'
+                );
+            }
+        });
+    }
+
+        function UnarchiveGuru(idDataGuru) {
+        var unarchiveUrl = "{% url 'sipandu_admin:unarchive_guru' 0 %}".replace("0", idDataGuru);
+
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "ingin mengembalikan data yang diarsipkan!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#28a745", // Kode warna hijau yang sesuai dengan tombol Bootstrap
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, lanjutkan",
+            cancelButtonText: "Batal",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: unarchiveUrl,
+                    type: "POST",
+                    success: function(response) {
+                        console.log('berhasil');
+                        Swal.fire({
+                            title: "Data berhasil dikembalikan!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan karena data ini sedang digunakan!",
+                            icon: "error",
+                        });
+                    }
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Tindakan dibatalkan',
+                    '',
+                    'info'
+                );
+            }
+        });
+    }
+
+    $(function(){
+        $('#guruResponsiveDatatable').DataTable({
+		scrollX: "100%",
+		language: {
+			searchPlaceholder: 'Search...',
+			sSearch: '',
+		}
+	});
+    })
+
+</script>
+
+{% endblock %}
+

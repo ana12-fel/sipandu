@@ -5,7 +5,6 @@ Master User
 {% endblock %}
 
 {% block content %}
-
 <div class="app-content">
     <div class="side-app">
         <!-- PAGE-HEADER -->
@@ -13,8 +12,8 @@ Master User
             <div>
                 <h1 class="page-title">JENJANG</h1>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Jenjang</li>
+                    <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Master Data/Jenjang</li>
                 </ol>
             </div>
             <div class="ms-auto pageheader-btn">
@@ -23,18 +22,17 @@ Master User
                         <i class="fe fe-plus"></i>
                     </span> Tambahkan Data
                 </a>
-                <a href="#" class="btn btn-success btn-icon text-white">
+                <button class="btn btn-secondary btn-icon text-white" onclick="openArchiveModal()">
                     <span>
-                        <i class="fe fe-log-in"></i>
-                    </span> Export
-                </a>
+                        <i class="fas fa-archive"></i>
+                    </span> Arsip Data
+                </button>
             </div>
         </div>
         <!-- PAGE-HEADER END -->
 
         <!-- Modal Tambah Data -->
- 
-         <div class="modal fade" id="addDataModal" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addDataModal" tabindex="-1" aria-labelledby="addDataModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -42,46 +40,95 @@ Master User
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <!-- Form tambah data di sini -->
                         <form method="post" action="{% url 'sipandu_admin:index_jenjang' %}">
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="jenjang" class="form-label">Jenjang</label>
-                                <input type="text" class="form-control" name="jenjang_nama" placeholder="Masukkan Status Jenjang">
-                                <!-- Input jenjang_status secara default -->
-                                <input type="hidden" name="jenjang_status" value="True">
+                                <input type="text" class="form-control" id="jenjang_nama" name="jenjang_nama" placeholder="Masukkan Nama Jenjang" required>
+                                <input type="hidden" name="jenjang_status" id="jenjang_status" value="1">
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <i class="fas fa-times"></i> Close
+                                </button>
+                                <button type="button" class="btn btn-primary" onclick="submitForm()">
+                                    <i class="fas fa-paper-plane"></i> Submit
+                                </button>
                             </div>
                         </form>
-                    
                     </div>
                 </div>
             </div>
         </div>
         <!-- Modal Tambah Data End -->
 
+<!-- Modal Arsip Data -->
+<div class="modal fade" id="archiveDataModal" tabindex="-1" aria-labelledby="archiveDataModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="archiveDataModalLabel">Arsip Data Jenjang</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap border-bottom w-100">
+                        <thead>
+                            <tr>
+                                <th class="text-center">NO</th>
+                                <th class="text-center">JENJANG PENDIDIKAN</th>
+                                <th class="text-center">STATUS</th>
+                                <th class="text-center">AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dt_arsip in data_arsip %}
+                            <tr>
+                                <td class="text-center align-middle">{{ forloop.counter }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.jenjang_nama }}</td>
+                                <td class="text-center align-middle">
+                                    <span class="badge {% if dt_arsip.jenjang_status == 1 %} badge-success-light {% else %} badge-orange-light{% endif %}">
+                                        {% if dt_arsip.jenjang_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}
+                                    </span>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <button type="button" class="btn btn-danger" onclick="deleteJenjang('{{ dt_arsip.jenjang_id }}')">
+                                        <i class="fas fa-trash-alt"></i> Delete
+                                    </button>                                   
+                                    <button type="button" class="btn btn-success" onclick="confirmUnarchive('{{ dt_arsip.jenjang_id }}')">
+                                        <i class="fas fa-sync-alt"></i> Restore
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Arsip Data End -->
+
+
         <!-- ROW OPEN -->
         <div class="row row-cards">
-            <div class="col-lg-12 col-xl-12">
-                <div class="input-group mb-5">
-                    <input type="text" class="form-control" placeholder="">
-                    <div class="input-group-text btn btn-primary">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                    </div>
-                </div>
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header border-bottom-0 p-4">
-                        <div class="page-options d-flex float-end">
-                        </div>
+                        <div class="page-options d-flex float-end"></div>
                     </div>
                     <div class="e-table px-5 pb-5">
-                        <div class="table-responsive table-lg">
-                            <table class="table border-top table-bordered mb-0">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap border-bottom w-100" id="jenjangResponsiveDatatable">
                                 <thead>
                                     <tr>
+                                        <th class="text-center">NO</th>
                                         <th class="text-center">JENJANG PENDIDIKAN</th>
                                         <th class="text-center">STATUS</th>
                                         <th class="text-center">AKSI</th>
@@ -89,40 +136,31 @@ Master User
                                 </thead>
                                 <tbody>
                                     {% for dt_jenjang in data_jenjang %}
-                                        <!-- Iterasi melalui setiap objek dt_jenjang -->
                                         <tr>
+                                            <td class="text-center align-middle">{{ forloop.counter }}</td>
                                             <td class="text-center align-middle">{{ dt_jenjang.jenjang_nama }}</td>
-                                            <td class="text-center align-middle"><span>{% if dt_jenjang.jenjang_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}</span></td>
+                                            <td class="text-center align-middle">
+                                                <span class="badge {% if dt_jenjang.jenjang_status == 1 %}badge-success-light{% else %}badge-orange-light{% endif %}">
+                                                    {% if dt_jenjang.jenjang_status == 1 %} Aktif {% else %} Tidak Aktif {% endif %}
+                                                </span>
+                                            </td>
                                             <td class="text-center align-middle">
                                                 <div class="btn-group align-top">
-                                                    <!-- Tombol edit -->
-                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_jenjang.jenjang_id}}">Edit</a> &nbsp;
-                                                    <!-- Tombol delete -->
-                                                    <button onclick="deleteJenjang('{{ dt_jenjang.jenjang_id }}')" class="btn btn-sm btn-danger badge" value='Alert with title'>Delete</button>
+                                                    <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{ dt_jenjang.jenjang_id }}">
+                                                        <i class="fas fa-edit"></i> Edit
+                                                    </a>&nbsp;
+                                                    <button onclick="archiveJenjang('{{ dt_jenjang.jenjang_id }}', '{{ dt_jenjang.jenjang_nama }}', '{{ dt_jenjang.jenjang_status }}')" class="btn btn-sm btn-danger badge" value="Archive">
+                                                        <i class="fas fa-archive"></i> Arsip
+                                                    </button>                                                    
                                                 </div>
                                             </td>
                                         </tr>
-                                        {% include 'admin/master/edit_jenjang.html'%}
+                                        {% include 'admin/master/edit_jenjang.html' %}
                                     {% endfor %}
-
-
-                            
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </div>
-                <div class="mb-5">
-                    <ul class="pagination float-end">
-                        <li class="page-item page-prev disabled">
-                            <a class="page-link" href="#" tabindex="-1">Prev</a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item page-next">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -132,51 +170,196 @@ Master User
 {% endblock %}
 
 {% block js %}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert@1"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script>
-    function deleteJenjang(jenjang_) {
-    var deleteUrl = "{% url 'sipandu_admin:delete_jenjang' 'jenjang_id' %}".replace("jenjang_id", jenjang_);
+    function openArchiveModal() {
+    $('#archiveDataModal').modal('show');
+}
 
-    swal({
+    function archiveJenjang(jenjangId, jenjangNama, jenjangStatus) {
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "Anda ingin mengarsipkan data ini?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, arsipkan!",
+            cancelButtonText: "Batal",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var archiveUrl = "{% url 'sipandu_admin:archive_jenjang' 0 %}".replace('0', jenjangId);
+
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: archiveUrl,
+                    type: "POST",
+                    success: function(response) {
+                        Swal.fire({
+                            title: "Data berhasil diarsipkan!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                            $('#archiveDataModal').modal('show');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan saat mengarsipkan data!",
+                            icon: "error",
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    function submitForm() {
+        // Mengambil nilai input dari formulir
+        var jenjangNama = document.getElementById("jenjang_nama").value.trim();
+        var jenjangStatus = document.getElementById("jenjang_status").value;
+
+        // Periksa apakah input kosong
+        if (jenjangNama === "") {
+            // Tampilkan pesan error jika input kosong
+            alert("Jenjang harus diisi!");
+            return false; // Menghentikan proses submit
+        }
+
+        // Mengirim data ke server menggunakan Ajax
+        $.ajax({
+            url: "{% url 'sipandu_admin:index_jenjang' %}",
+            type: "POST",
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                jenjang_nama: jenjangNama,
+                jenjang_status: jenjangStatus
+            },
+            success: function(response) {
+                // Handle response dari server
+                // Misalnya, tampilkan notifikasi atau muat ulang halaman
+                console.log(response);
+                $('#addDataModal').modal('hide'); // Tutup modal setelah berhasil
+                setTimeout(function() {
+                // Redirect ke halaman yang sama setelah 2 detik
+                window.location.href = window.location.href;
+            }, 2000);
+            },
+            error: function(xhr, status, error) {
+                // Handle error jika terjadi kesalahan saat mengirimkan data
+                console.error("Terjadi kesalahan:", error);
+                swal({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Jenjang sudah terinput sebelumnya!',
+                });
+            }
+        });
+    }
+
+    function deleteJenjang(jenjang_) {
+        var deleteUrl = "{% url 'sipandu_admin:delete_jenjang' 'jenjang_id' %}".replace("jenjang_id", jenjang_);
+
+        Swal.fire({
+            title: "Apakah Anda yakin?",
+            text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
+                    url: deleteUrl,
+                    type: "DELETE",
+                    success: function(response) {
+                        console.log('berhasil');
+                        Swal.fire({
+                            title: "Data berhasil dihapus!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: "Terjadi kesalahan karena data ini sedang digunakan!",
+                            icon: "error",
+                        });
+                    }
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Tindakan dibatalkan',
+                    '',
+                    'info'
+                );
+            }
+        });
+    }
+
+    function confirmUnarchive(jenjangId) {
+    var unarchiveUrl = "{% url 'sipandu_admin:unarchive_jenjang' 0 %}".replace("0", jenjangId);
+
+    Swal.fire({
         title: "Apakah Anda yakin?",
-        text: "Anda tidak akan dapat mengembalikan data yang dihapus!",
-        type: "warning",
+        text: "ingin mengembalikan data yang diarsipkan!",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Ya, hapus!",
+        confirmButtonColor: "#28a745", // Kode warna hijau yang sesuai dengan tombol Bootstrap
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, lanjutkan",
         cancelButtonText: "Batal",
-        closeOnConfirm: false,
-        closeOnCancel: false
-    },
-    function (isConfirm) {
-        if (isConfirm) {
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
             $.ajax({
                 headers: { "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val() },
-                url: deleteUrl,
-                type: "DELETE",
-                success: function (response) {
+                url: unarchiveUrl,
+                type: "POST",
+                success: function(response) {
                     console.log('berhasil');
-                    swal({
-                        title: "Data berhasil dihapus!",
+                    Swal.fire({
+                        title: "Data berhasil dikembalikan!",
                         icon: "success",
-                        buttons: false, // Tidak menampilkan tombol OK
-                        timer: 1500 // Waktu (dalam milidetik) sebelum swal tertutup
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.reload();
                     });
-                    window.location.reload(); // Me-refresh halaman setelah sweet alert muncul
                 },
-                error: function (xhr, status, error) {
-                    // Terjadi kesalahan saat menghapus data
-                    swal("Terjadi kesalahan saat menghapus data!", {
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: "Terjadi kesalahan karena data ini sedang digunakan!",
                         icon: "error",
                     });
                 }
             });
-        } else {
-            // Pengguna membatalkan tindakan, tidak perlu melakukan apa pun
-            swal("Tindakan dibatalkan", "", "info");
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire(
+                'Tindakan dibatalkan',
+                '',
+                'info'
+            );
         }
     });
 }
+    $(function() {
+        $('#jenjangResponsiveDatatable').DataTable({
+            scrollX: "100%",
+            language: {
+                searchPlaceholder: 'Search...',
+                sSearch: '',
+            }
+        });
+    });
 </script>
-
 {% endblock %}
