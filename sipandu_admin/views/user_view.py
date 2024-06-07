@@ -98,7 +98,7 @@ def edit_user(request, user_id):
         dt_user.password = user_password  # Sebaiknya hash password sebelum menyimpan
         dt_user.user_status = user_status
         
-        dt_user.user_kabupaten = user_kabupaten.first()
+        dt_user.user_kabupaten = user_kabupaten
         dt_user.user_sekolah = user_sekolah
 
         dt_user.set_password(user_password)

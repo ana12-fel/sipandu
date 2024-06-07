@@ -18,7 +18,7 @@ def Indexslider(request):
 
         return redirect('sipandu_admin:index_slider')
     else:
-        data_sekolah = Master_sekolah.objects.all()
+        data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         dt_slider = Data_slider.objects.all()
 
         return render(request, 'admin/data/slider.html', {"data_slider": dt_slider, "data_sekolah": data_sekolah})
@@ -39,7 +39,7 @@ def Tambahslider(request):
 
         return redirect('sipandu_admin:index_slider')
     else:
-        data_sekolah = Master_sekolah.objects.all()
+        data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         return render(request, 'admin/data/tambah_slider.html', {"data_sekolah": data_sekolah})
 
 def Editslider(request, id_data_slider):
@@ -59,7 +59,7 @@ def Editslider(request, id_data_slider):
 
         return redirect('sipandu_admin:index_slider')
     else:
-        data_sekolah = Master_sekolah.objects.all()
+        data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         return render(request, 'admin/data/edit_slider.html', {"dt_slider": dt_slider, "data_sekolah": data_sekolah})
 
 def Deleteslider(request, id_data_slider):

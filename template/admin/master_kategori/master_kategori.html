@@ -108,6 +108,7 @@ Master User
                                     <tr>
                                         <th class="text-center">Nomor Halaman</th>
                                         <th class="text-center">Nama Kategori</th>
+                                        <th class="text-center">Status</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
@@ -117,6 +118,11 @@ Master User
                                     <tr>
                                         <td class="text-center align-middle">{{ forloop.counter }}</td>
                                         <td class="text-center align-middle">{{ dt_kategori.kategori_uraian }}</td>
+                                        <td class="text-center align-middle">
+                                            <span class="badge {% if dt_kategori.kategori_status == 1 %}badge-success-light{% else %}badge-orange-light{% endif %}">
+                                                {% if dt_kategori.kategori_status == 1 %} Lock {% else %} Un-Lock {% endif %}
+                                            </span>
+                                        </td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <!-- Tombol edit -->
@@ -209,6 +215,7 @@ Master User
                                         <th class="text-center">Nomor Halaman</th>
                                         <th class="text-center">Nama Kategori</th>
                                         <th class="text-center">Sub Kategori</th>
+                                        <th class="text-center">Status</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
@@ -219,6 +226,11 @@ Master User
                                         <td class="text-center align-middle">{{ forloop.counter }}</td>
                                         <td class="text-center align-middle">{{ dt_sub_kategori.kategori_id.kategori_uraian}}</td>
                                         <td class="text-center align-middle">{{ dt_sub_kategori.sub_kategori_uraian }}</td>
+                                        <td class="text-center align-middle">
+                                            <span class="badge {% if dt_sub_kategori.sub_kategori_status == 1 %}badge-success-light{% else %}badge-orange-light{% endif %}">
+                                                {% if dt_sub_kategori.sub_kategori_status == 1 %} Lock {% else %} Un-Lock {% endif %}
+                                            </span>
+                                        </td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
                                                 <a href="#" class="btn btn-sm btn-primary badge" data-bs-toggle="modal" data-bs-target="#editdata_{{dt_sub_kategori.sub_kategori_id}}">

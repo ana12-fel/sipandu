@@ -22,7 +22,7 @@ def Indexgaleri(request):
     
     else:
         data_sekolah = Master_sekolah.objects.all()
-        data_galeri = Data_galeri.objects.all()
+        data_galeri = Data_galeri.objects.by_hakakses(request.user).all()
         
         return render(request, 'admin/data/galeri.html', {"data_galeri" : data_galeri, "data_sekolah" : data_sekolah})
 
@@ -45,7 +45,7 @@ def Tambahgaleri(request):
 
     else:
         dt_galeri = Data_galeri.objects.all()
-        data_sekolah = Master_sekolah.objects.all()
+        data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         return render(request, 'admin/data/tambah_galeri.html', {"data_galeri": dt_galeri, "data_sekolah" : data_sekolah})
 
 def Editgaleri(request, id_data_galeri):
@@ -66,7 +66,7 @@ def Editgaleri(request, id_data_galeri):
         return redirect('sipandu_admin:index_galeri')
 
     else:
-        data_sekolah = Master_sekolah.objects.all()
+        data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         return render(request, 'admin/data/edit_galeri.html', {"dt_galeri": dt_galeri, "data_sekolah" : data_sekolah})
 
 

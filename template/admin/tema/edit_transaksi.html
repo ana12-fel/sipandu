@@ -27,7 +27,7 @@
                         <select class="form-select" id="tema_id" name="tema_nama_edit">
                             <option value="test" selected disabled>Pilih Tema</option>
                             {% for tema in data_tema %}
-                            <option value="{{tema.tema_id}}"{% if tema.tema_id == tema.tema_id %} selected {% endif %}></option>>{{tema.tema_nama.upper}}</option>
+                            <option value="{{tema.tema_id}}"{% if tema.tema_id == tema.tema_id %} selected {% endif %}>{{tema.tema_nama.upper}}</option>
                             {% endfor %}
                         </select>
                     </div> 

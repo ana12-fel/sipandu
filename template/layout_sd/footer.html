@@ -4,12 +4,17 @@
         <div class="row gy-4">
             <div class="col-lg-2 align-self-center mb-4 mb-lg-0">
                 <a href="index.html" class="text-decoration-none">
+                    {% for data in data_kontak_footer %}
+                    
                     <img src="{% static 'logo/logo_sekolah.png' %}" width="125" height="35" class="img-fluid" alt="Footer Logo" />
+                   <h5> {{ data.kontak_sekolah.sekolah_nama }}</h5>
+                    {% endfor %}
                 </a>
             </div>
             <div class="col-lg-3">
                 <h4 class="font-weight-bold text-color-light">Alamat</h4>
                 {% for data in data_kontak_footer %}
+                    
                     <p class="text-3-5"><a href="{{ data.link_map  }}" target="_blank" class="text-decoration-none">{{ data.alamat}}</a></p>
                 {% endfor %}
             </div>

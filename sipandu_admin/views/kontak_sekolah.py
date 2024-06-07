@@ -76,7 +76,7 @@ def TambahKontak(request):
 
     else:
         dt_kontak = Data_kontak.objects.all()
-        data_sekolah = Master_sekolah.objects.all()
+        data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         return render(request, 'admin/data/tambah_kontak.html', {"data_kontak": dt_kontak, "data_sekolah": data_sekolah})
 
 def EditKontak(request, id_data_kontak):
@@ -109,7 +109,7 @@ def EditKontak(request, id_data_kontak):
         return redirect('sipandu_admin:index_kontak')
     else:
         dt_kontak = get_object_or_404(Data_kontak, id_data_kontak=id_data_kontak)
-        data_sekolah = Master_sekolah.objects.all()
+        data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         return render(request, 'admin/data/edit_kontak.html', {"data_kontak": dt_kontak, "data_sekolah": data_sekolah})
 
 def DeleteKontak(request, id_data_kontak):

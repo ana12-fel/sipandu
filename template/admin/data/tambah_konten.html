@@ -30,29 +30,25 @@ Master User
     {% csrf_token %}
     <div class="mb-3">
         <label for="konten_sekolah" class="form-label">Sekolah</label>
-        <select class="form-select" id="konten_sekolah" name="konten_sekolah" required>
+        <select class="form-select" id="konten_sekolah" name="konten_sekolah" onchange="render_kategori(this)" required>
             <option value="" selected disabled>Pilih Sekolah</option>
             {% for sekolah in data_sekolah %}
-            <option value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
-            {% endfor %}
-        </select>
-    </div> 
-    <div class="mb-3">
-        <label for="konten_kategori" class="form-label">Kategori</label>
-        <select class="form-select" id="konten_kategori" name="konten_kategori" required>
-            <option value="" selected disabled>Pilih Kategori</option>
-            {% for kategori in data_kategori %}
-                <option value="{{ kategori.kategori_id }}">{{ kategori.kategori_uraian.upper }}</option>
+                <option value="{{ sekolah.sekolah_id }}">{{ sekolah.sekolah_nama | upper }}</option>
             {% endfor %}
         </select>
     </div>
     <div class="mb-3">
+        <label for="konten_kategori" class="form-label">Kategori</label>
+        <select class="form-select" id="konten_kategori" name="konten_kategori" onchange="render_sub_kategori(this)" required>
+            <option value="" selected disabled>Pilih Kategori</option>
+            
+        </select>
+    </div>
+    <div class="mb-3">
         <label for="sub_kategori_uraian" class="form-label">Sub Kategori</label>
-        <select class="form-select" id="sub_kategori_uraian" name="konten_sub_kategori" required>
+        <select class="form-select" id="konten_sub_kategori" name="konten_sub_kategori" required>
             <option value="" selected disabled>Pilih Sub Kategori</option>
-            {% for sub_kategori in data_sub_kategori %}
-                <option value="{{ sub_kategori.sub_kategori_id }}">{{ sub_kategori.sub_kategori_uraian.upper }}</option>
-            {% endfor %}
+            
         </select>
     </div>
     <div class="mb-3">
@@ -90,7 +86,7 @@ Master User
                     </div>
                 </div>
                 <div class="card-body">
-                    <textarea id="editor" name="isi_konten"></textarea>
+                    <textarea name="isi_konten" id="editor1" rows="10" cols="80"></textarea>               
                 </div>
             </div>
         </div>
@@ -108,10 +104,12 @@ Master User
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'admin/js/ckeditor.js'%}"></script>
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script>
+    CKEDITOR.replace('editor1');
+
      let modifiedFile;
 
     function previewImage(event) {
@@ -166,14 +164,57 @@ Master User
         }
     }
     
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .then( editor => {
-                console.log( editor );
-        } )
-        .catch( error => {
-                console.error( error );
-        } );
-        
+    function render_kategori(e) {
+        var sekolah = $(e).val()
+        console.log(sekolah)
+
+        $.ajax({
+            url: "{% url 'sipandu_admin:get_kategori_by_sekolah' %}",
+            type: "GET",
+            data: {
+                'sekolah_id': sekolah,
+            },
+            success: function(response) {
+                var elem = $('#konten_kategori');
+                elem.html('<option value="" selected disabled>Pilih Kategori</option>');
+
+                response.data_kategori.forEach(function(kategori) {
+                    elem.append('<option value="' + kategori.kategori_id + '">' + kategori.kategori_uraian.toUpperCase() + '</option>');
+                });
+
+                elem.val('');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error: ' + error + ', Status: ' + status);
+            }
+        });
+    }
+
+    function render_sub_kategori(e) {
+        var kategori = $(e).val()
+        console.log(kategori)
+
+        $.ajax({
+            url: "{% url 'sipandu_admin:get_sub_kategori' %}",
+            type: "GET",
+            data: {
+                'kategori_id': kategori,
+            },
+            success: function(response) {
+                var elem = $('#konten_sub_kategori');
+                elem.html('<option value="" selected disabled>Pilih Sub Kategori</option>');
+
+                response.data_sub_kategori.forEach(function(sub_kategori) {
+                    elem.append('<option value="' + sub_kategori.sub_kategori_id + '">' + sub_kategori.sub_kategori_uraian.toUpperCase() + '</option>');
+                });
+
+                elem.val('');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error: ' + error + ', Status: ' + status);
+            }
+        });
+    }
+
 </script>
 {% endblock %}

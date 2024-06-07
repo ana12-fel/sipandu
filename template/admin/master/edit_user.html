@@ -28,14 +28,12 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <!-- Tambahkan div untuk kabupaten -->
                     <div class="mb-3 d-none" id="div_kab_edit_{{dt_user.user_id}}">
                         <label for="kab_edit">Kabupaten</label>
                         <select name="kab_edit" id="kab_edit_{{dt_user.user_id}}" class="form-control" data-initiate_data="{% if dt_user.user_role == 'admin_kabupaten' %}{{dt_user.user_kabupaten.wilayah_id}}{% else %}{{ dt_user.user_sekolah.sekolah_kecamatan.wilayah_parent.wilayah_id }}{% endif %}" onchange="render_kab_edit(this)" data-role="kab_edit" >
                             <option value="">- Pilih Kabupaten -</option>
                         </select>
                     </div>
-                    <!-- Tambahkan div untuk kecamatan -->
                     <div class="mb-3 d-none" id="div_kec_edit_{{dt_user.user_id}}">
                         <label for="kec_edit">Kecamatan</label>
                         <select name="kec_edit" id="kec_edit_{{dt_user.user_id}}" data-level="kecamatan" data-initiate_data="{{ dt_user.user_sekolah.sekolah_kecamatan.wilayah_id }}"  onchange="render_kab_edit(this)" class="form-control" data-role="kec_edit" >

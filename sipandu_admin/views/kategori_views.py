@@ -7,10 +7,13 @@ def MasterKategori(request):
     if request.method == 'POST':
         kategori_nama = request.POST.get ('kategori_nama')
         kategori_tema= request.POST.get ('form_tema_id')
+        default_status = 'True'
+        kategori_status = request.POST.get('kategori_status', default_status)
 
-        dt_kategori = Master_kategori.objects.create(kategori_uraian=kategori_nama, kategori_tema_id = kategori_tema )
 
-        print(kategori_tema,kategori_nama)
+        dt_kategori = Master_kategori.objects.create(kategori_uraian=kategori_nama, kategori_tema_id = kategori_tema, kategori_status = kategori_status )
+
+        print(kategori_tema,kategori_nama,kategori_status)
 
         redirect_url = f'/admin/master-kategori?tema_id={kategori_tema}'
         return redirect(redirect_url)
@@ -37,9 +40,12 @@ def edit_kategori(request, kategori_id_):
         dt_kategori = Master_kategori.objects.get(kategori_id=kategori_id_)
         kategori_uraian = request.POST.get('kategori_uraian')
         kategori_tema= request.POST.get ('form_sub')
+        is_active = request.POST.get('kategori_status')  
+
 
         
         dt_kategori.kategori_uraian=kategori_uraian
+        dt_kategori.kategori_status=is_active
         dt_kategori.save()
 
         redirect_url = f'/admin/master-kategori?tema_id={kategori_tema}'
@@ -48,7 +54,7 @@ def edit_kategori(request, kategori_id_):
     else:
         dt_kategori = Master_kategori.objects.get(kategori_id=kategori_id_)
 
-        return render(request, 'admin/master_kategori/edit_kategori.html', {"dt_kategori": dt_kategori,"id_kategori": kategori_id_})
+        return render(request, 'admin/master_kategori/edit_kategori.html', {"is_active": is_active,"dt_kategori": dt_kategori,"id_kategori": kategori_id_})
     
 def kategoriDelete(request, kategori_id):
     try:
@@ -71,26 +77,31 @@ def kategoriDelete(request, kategori_id):
         return JsonResponse(data, status=400)
     
 def SubKategori(request):
-     if request.method == 'POST':
+    if request.method == 'POST':
         kategori_id_id = request.POST.get('kategori_uraian')
-        Sub_kategori_uraian = request.POST.get ('sub_kategori_uraian')
-        kategori_tema= request.POST.get ('form_sub')
+        Sub_kategori_uraian = request.POST.get('sub_kategori_uraian')
+        kategori_tema = request.POST.get('form_sub')
+        
+        # Set default value for sub_kategori_status
+        default_status = True  # atau False, tergantung pada kebutuhan aplikasi Anda
+        sub_kategori_status = request.POST.get('sub_kategori_status', default_status)
+
         data = {}
         try:
-            dt_sub_kategori = Sub_kategori.objects.create(kategori_id_id=kategori_id_id,sub_kategori_uraian=Sub_kategori_uraian)
+            dt_sub_kategori = Sub_kategori.objects.create(kategori_id_id=kategori_id_id, sub_kategori_uraian=Sub_kategori_uraian, sub_kategori_status=sub_kategori_status)
             print('sukses')
             data['status'] = True
-            return JsonResponse(data, status = 201)
+            return JsonResponse(data, status=201)
         except IntegrityError as e:
             print('error insert sub kategori', e)
             data['status'] = False
-            return JsonResponse(data, status = 400)
+            return JsonResponse(data, status=400)
 
-     else:
+    else:
         data_tema = Master_tema.objects.all()
         data_kategori = Master_kategori.objects.all()
         data_sub_kategori = Sub_kategori.objects.all()
-        return render(request, 'admin/master_kategori/master_kategori.html', {'data_tema': data_tema, 'data_kategori' : data_kategori, 'data_sub_kategori' : data_sub_kategori})
+        return render(request, 'admin/master_kategori/master_kategori.html', {'data_tema': data_tema, 'data_kategori': data_kategori, 'data_sub_kategori': data_sub_kategori})
      
 def edit_sub_kategori(request, sub_kategori_id_):
     if request.method == 'POST':
@@ -98,9 +109,11 @@ def edit_sub_kategori(request, sub_kategori_id_):
 
         sub_kategori_uraian = request.POST.get('sub_kategori_uraian')
         kategori_tema= request.POST.get ('form_sub')
+        is_active = request.POST.get('sub_kategori_status')  
 
-        
         dt_sub_kategori.sub_kategori_uraian=sub_kategori_uraian
+        dt_sub_kategori.sub_kategori_status=is_active
+
         dt_sub_kategori.save()
         redirect_url = f'/admin/master-kategori?tema_id={kategori_tema}'
         return redirect(redirect_url)
@@ -108,7 +121,7 @@ def edit_sub_kategori(request, sub_kategori_id_):
     else:
         dt_sub_kategori = Sub_kategori.objects.get(sub_kategori_id=sub_kategori_id_)
 
-        return render(request, 'admin/master_kategori/edit_sub_kategori.html', {"dt_sub_kategori": dt_sub_kategori,"sub_kategori_id": sub_kategori_id_})
+        return render(request, 'admin/master_kategori/edit_sub_kategori.html', {"is_active": is_active, "dt_sub_kategori": dt_sub_kategori,"sub_kategori_id": sub_kategori_id_})
     
 def SubKategoriDelete(request, sub_kategori_id):
     try:

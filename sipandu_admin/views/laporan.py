@@ -2,8 +2,8 @@ from django.http import HttpResponse
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Spacer, Paragraph,Image
-from sipandu_app.models import  Master_sekolah,Transanksi_situs,Master_tema
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Spacer, Paragraph, Image, HRFlowable
+from sipandu_app.models import Master_sekolah, Transanksi_situs, Master_tema
 from django.db.models import Subquery, OuterRef
 from django.contrib.staticfiles import finders
 
@@ -16,7 +16,7 @@ def laporan_transaksi_belum(request):
     )
 
     # Nama file PDF
-    filename = "Laporan_Data_Sekolah.pdf"
+    filename = "Laporan_Sekolah_Yang_Belum_Transaksi.pdf"
 
     # Buat HttpResponse dengan tipe konten PDF
     response = HttpResponse(content_type='application/pdf')
@@ -31,29 +31,38 @@ def laporan_transaksi_belum(request):
 
     # Gaya untuk kop surat
     styles = getSampleStyleSheet()
+    times_new_roman = "Times-Roman"
     kop_surat_style = ParagraphStyle(
         name='KopSurat',
         parent=styles['Normal'],
+        fontName=times_new_roman,
         fontSize=14,
-        spaceAfter=14,
-        leading=21,  # Mengatur leading untuk jarak 1,5 per paragraf
+        spaceBefore=0,
+        spaceAfter=6,
+        leading=15,  # Mengatur leading untuk jarak 1,5 per paragraf
         alignment=1  # 1 untuk center alignment
     )
 
     title_style = ParagraphStyle(
         name='Title',
         parent=styles['Heading1'],
+        fontName=times_new_roman,
         alignment=1,  # 1 untuk center alignment
         fontSize=12  # Ukuran font lebih kecil dari kop surat
     )
 
     # Konten kop surat
-    kop_surat_text = "<h2>PEMERINTAH PROVINSI PAPUA TENGAH</h2><br/><h4>DINAS PENDIDIKAN DAN KEBUDAYAAN</h4><br/>Kontak Perusahaan"
+    kop_surat_text = """<para alignment="center">
+                            <font size=12><b>PEMERINTAH PROVINSI PAPUA TENGAH</b></font><br/>
+                            <font size=14><b>DINAS PENDIDIKAN DAN KEBUDAYAAN</b></font><br/>
+                            <font size=10><b><i>JL. Pepera No. 17 Kelurahan Karang Mulia Nabire-Papua Tengah</i></b></font><br/>
+                            <font size=9><b><i>email dibudpapuatengah@gmail.com</i></b></font>
+                        </para>"""
     kop_surat = Paragraph(kop_surat_text, kop_surat_style)
 
     # Tambahkan logo dan kop surat dalam tabel
     if logo_path:  # Periksa apakah logo ditemukan
-        logo = Image(logo_path, width=50, height=50)
+        logo = Image(logo_path, width=60, height=70)
         data_kop = [[logo, kop_surat, ""]]
         col_widths = [60, 400, 60]  # Tambahkan kolom kosong untuk menyeimbangkan
     else:
@@ -67,17 +76,22 @@ def laporan_transaksi_belum(request):
         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
         ('LEFTPADDING', (0, 0), (0, 0), 0),
         ('LEFTPADDING', (1, 0), (1, 0), 10),  # Menambahkan padding di sekitar teks
+        ('ALIGN', (0, 0), (0, 0), 'RIGHT'),
+         # Geser logo ke kanan
     ]))
+
     elements.append(kop_table)
+    elements.append(Spacer(1, 5))
+    elements.append(HRFlowable(width=700, thickness=1, color=colors.black, spaceBefore=2, spaceAfter=2))  # Adjust width to match the table
     elements.append(Spacer(1, 20))
 
     # Judul
-    title = Paragraph("Laporan", title_style)
+    title = Paragraph("<b>Laporan Sekolah yang Belum Melakukan Transaksi</b>", title_style)
     elements.append(title)
     elements.append(Spacer(1, 12))
 
     # Data sekolah dalam bentuk list
-    data = [["Provinsi","Kabupaten","Kecamatan","Nama Sekolah", "NPSN", "Jenjang", "Status"]]
+    data = [["Provinsi", "Kabupaten", "Kecamatan", "Nama Sekolah", "NPSN", "Jenjang", "Status"]]
 
     # Isi data sekolah
     for sekolah in data_sekolah:
@@ -101,7 +115,7 @@ def laporan_transaksi_belum(request):
         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
         ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white),
         ('GRID', (0, 0), (-1, -1), 1, colors.black)
     ])
 
@@ -112,27 +126,80 @@ def laporan_transaksi_belum(request):
     doc.build(elements)
 
     return response
+
 def laporan_transaksi_sudah(request):
     data_transaksi = Transanksi_situs.objects.all()
+    # Nama file PDF
+    filename = "Laporan_Sekolah_Yang_Sudah_Transaksi.pdf"
 
-    filename = "Laporan_Data_Transaksi_Sudah.pdf"
+    # Buat HttpResponse dengan tipe konten PDF
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="{filename}"'
 
+    # Buat file PDF menggunakan reportlab
     doc = SimpleDocTemplate(response, pagesize=letter)
     elements = []
-    
-     # Gaya untuk judul
+
+    # Path ke logo
+    logo_path = finders.find('admin/images/brand/logo-papua.png')
+
+    # Gaya untuk kop surat
     styles = getSampleStyleSheet()
-    title_style = ParagraphStyle(
-        name='Center',
-        parent=styles['Heading1'],
-        alignment=1,  # 1 for center alignment
-        fontSize=16
+    times_new_roman = "Times-Roman"
+    kop_surat_style = ParagraphStyle(
+        name='KopSurat',
+        parent=styles['Normal'],
+        fontName=times_new_roman,
+        fontSize=14,
+        spaceAfter=0,
+        leading=15,  # Mengatur leading untuk jarak 1,5 per paragraf
+        alignment=1  # 1 untuk center alignment
     )
 
+    title_style = ParagraphStyle(
+        name='Title',
+        parent=styles['Heading1'],
+        fontName=times_new_roman,
+        alignment=1,  # 1 untuk center alignment
+        fontSize=12  # Ukuran font lebih kecil dari kop surat
+    )
+
+    # Konten kop surat
+    kop_surat_text = """<para alignment="center">
+                            <font size=12><b>PEMERINTAH PROVINSI PAPUA TENGAH</b></font><br/>
+                            <font size=14><b>DINAS PENDIDIKAN DAN KEBUDAYAAN</b></font><br/>
+                            <font size=10><b><i>JL. Pepera No. 17 Kelurahan Karang Mulia Nabire-Papua Tengah</i></b></font><br/>
+                            <font size=9><b><i>email dibudpapuatengah@gmail.com</i></b></font>
+                        </para>"""
+    kop_surat = Paragraph(kop_surat_text, kop_surat_style)
+
+   # Tambahkan logo dan kop surat dalam tabel
+    if logo_path:  # Periksa apakah logo ditemukan
+        logo = Image(logo_path, width=60, height=70)
+        data_kop = [[logo, kop_surat, ""]]
+        col_widths = [60, 400, 60]  # Tambahkan kolom kosong untuk menyeimbangkan
+    else:
+        data_kop = [["", kop_surat, ""]]
+        col_widths = [60, 400, 60]
+
+    kop_table = Table(data_kop, colWidths=col_widths)  # Sesuaikan lebar kolom sesuai kebutuhan
+    kop_table.setStyle(TableStyle([
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('SPAN', (1, 0), (2, 0)),  # Menggabungkan kolom untuk teks kop surat
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('LEFTPADDING', (0, 0), (0, 0), 0),
+        ('LEFTPADDING', (1, 0), (1, 0), 10),  # Menambahkan padding di sekitar teks
+        ('ALIGN', (0, 0), (0, 0), 'RIGHT'),
+         # Geser logo ke kanan
+    ]))
+
+    elements.append(kop_table)
+    elements.append(Spacer(1, 5))
+    elements.append(HRFlowable(width=700, thickness=1, color=colors.black, spaceBefore=2, spaceAfter=2))  # Adjust width to match the table
+    elements.append(Spacer(1, 20))
+
     # Judul
-    title = Paragraph("LAPORAN DATA SITUS WEBSITE YANG TELAH TERBIT", title_style)
+    title = Paragraph("<b>Laporan Sekolah yang Sudah Melakukan Transaksi</b>", title_style)
     elements.append(title)
     elements.append(Spacer(1, 12))
 
@@ -152,11 +219,11 @@ def laporan_transaksi_sudah(request):
     table_sudah = Table(data_sudah_transaksi)
     style_sudah = TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), colors.gray),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
         ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white),
         ('GRID', (0, 0), (-1, -1), 1, colors.black)
     ])
     table_sudah.setStyle(style_sudah)

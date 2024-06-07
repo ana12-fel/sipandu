@@ -48,14 +48,25 @@
 
 <div class="container" style="padding-top: 50px;">
     <div class="row">
-        {% for galeri in galeri %}
+        {% for galeri_first in galeri_footer_first %}
         <div class="col-md-12">
-            <iframe width="100%" height="500" src="{{ galeri.video }}" 
+            <iframe width="100%" height="500" src="{{ galeri_first.video }}" 
             title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         {% endfor %}
     </div>
 </div>
+
+<div class="container" style="padding-top: 50px;">
+    <div class="row">
+        {% for galervideo in galeri %}
+        <div class="col-md-4">
+            <iframe width="100%" height="500" src="{{ galervideo.video }}" 
+            title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        {% endfor %}
+    </div>
+</div> 
 
 	
 
