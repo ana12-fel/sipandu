@@ -17,8 +17,9 @@ class MyModelMiddleware(object):
         domain_name = request.META['HTTP_HOST']
         domain_name = domain_name.split('.')[0]
         print(request.path.startswith('/admin'))
+        print('re path', request.path)
 
-        if not request.path.startswith('/admin') and not request.path.startswith('/assets') and not request.path.startswith('/media'):
+        if not request.path.startswith('/admin') and not request.path.startswith('/assets') and not request.path.startswith('/media') and not request.path.startswith('/favicon'):
             try:
                 data_app = Transanksi_situs.objects.get(domain = domain_name)
                 request.jenjang = data_app.sekolah_id.sekolah_jenjang.jenjang_nama

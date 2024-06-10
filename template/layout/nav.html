@@ -11,59 +11,109 @@
                         <li class="dropdown">									
                             <a href="{% url 'sipandu:home' %}" class="nav-link">PROFIL</a>
                             <ul class="dropdown-menu border-radius-0">
-                                {% for konten in data_konten_nav %}
-                                <li>
-                                    <a href="{% url 'sipandu:identitas'  %}" class="nav-link">{{ konten.judul|title }}</a>
-                                </li>
+                                {% for konten in nav_profil_sma %}
+                                    {% if konten.sub_kategori_uraian == 'Identitas Sekolah' %}
+                                    <li>
+                                        <a href="{% url 'sipandu:identitas'  %}" class="nav-link">Identitas Sekolah</a>
+                                    </li>
+                                    {% elif konten.sub_kategori_uraian == 'Visi dan Misi' %}
+                                    <li>
+                                        <a href="{% url 'sipandu:Visi'  %}" class="nav-link">Visi dan Misi</a>
+                                    </li>
+                                    {% elif konten.sub_kategori_uraian == 'Struktur Organisasi' %}
+                                    <li>
+                                        <a href="{% url 'sipandu:struktur'  %}" class="nav-link">Struktur Organisasi</a>
+                                    </li>
+                                    {% elif konten.sub_kategori_uraian == 'Fasilitas' %}
+                                    <li>
+                                        <a href="{% url 'sipandu:fasilitas'  %}" class="nav-link">Fasilitas</a>
+                                    </li>
+                                    {% elif konten.sub_kategori_uraian == 'Data GTK' %}
+                                    <li>
+                                        <a href="{% url 'sipandu:datagtk'  %}" class="nav-link">Data GTK</a>
+                                    </li>
+                                    {% else %}
+                                    <li>
+                                        <a href="{% url 'sipandu:identitas'  %}" class="nav-link">Tidak ada data</a>
+                                    </li>
+                                    
+                                    {% endif %}
                                 {% endfor %}
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="{% url 'sipandu:home' %}" class="dropdown-item dropdown-toggle">JURUSAN</a>
                             <ul class="dropdown-menu border-radius-0">
+                                {% for konten in nav_jurusan_sma %}
+                                    {% if konten.sub_kategori_uraian == 'IPS' %}
+                                    <li>
+                                        <a href="{% url 'sipandu:ips' %}" class="nav-link">IPS</a>
+                                    </li>
+                                    {% elif konten.sub_kategori_uraian == 'IPA' %}
+                                    <li>
+                                        <a href="{% url 'sipandu:ipa' %}" class="nav-link">IPA</a>
+                                    </li>
+                                    {% elif konten.sub_kategori_uraian == 'Bahasa' %}
+                                    <li>
+                                        <a href="{% url 'sipandu:bahasa' %}" class="nav-link">Bahasa</a>
+                                    </li> 
+                                    {% else %}
+                                    <li>
+                                        <a href="{% url 'sipandu:identitas'  %}" class="nav-link">Tidak ada data</a>
+                                    </li>
+                                    
+                                    {% endif %}
+                                {% endfor %}
+                                
+                                
+                            </ul>
                         
                         </li>
-                        <li>
-                            <a href="{% url 'sipandu:ipa' %}" class="nav-link">IPS</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'sipandu:ipa' %}" class="nav-link">IPA</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'sipandu:ipa' %}" class="nav-link">BAHASA</a>
-                        </li> 
-                            </ul>
-                        </li>
+                                
                         <li class="dropdown">
                             <a href="{% url 'sipandu:home' %}" class="dropdown-item dropdown-toggle">PROGRAM</a>
                             <ul class="dropdown-menu border-radius-0">
-                                <li>
-                                    <a href="{% url 'sipandu:ekstrakulikuler' %}" class="nav-link">EKSTRAKULIKULER</a>
-                                </li>
+                                {% for konten in nav_program_sma %}
+                                     {% if konten.sub_kategori_uraian == 'Ekstrakulikuler' %}
+                                    <li>
+                                        <a href="{% url 'sipandu:ekstrakulikuler' %}" class="nav-link">EKSTRAKULIKULER</a>
+                                    </li>
+                                 
+                                    {% endif %}
+                                {% endfor %}
                                 
                             </ul>
                         </li>
                             <li class="dropdown">
                                 <a href="{% url 'sipandu:prestasi' %}" class="dropdown-item dropdown-toggle">PRESTASI</a>
-                                </li>
+                            </li>
+
                             <li class="dropdown">
                                 <a href="{% url 'sipandu:home' %}" class="dropdown-item dropdown-toggle">BERITA</a>
                                 <ul class="dropdown-menu border-radius-0">
+                                {% for konten in nav_berita_sma %}
+                                    {% if konten.sub_kategori_uraian == 'Berita' %}
                                     <li>
                                         <a href="{% url 'sipandu:berita' %}" class="nav-link">Berita</a>
                                     </li>
+                                    {% elif konten.sub_kategori_uraian == 'PENGUMUMAN' %}
                                     <li>
                                         <a href="{% url 'sipandu:pengumuman' %}" class="nav-link">PENGUMUMAN</a>
                                     </li>
+                                    {% elif konten.sub_kategori_uraian == 'Beasiswa' %}
                                     <li>
-                                        <a href="{% static 'demo-law-firm-2-practice-areas-detail.html' %}" class="nav-link">BEASISWA</a>
+                                        <a href="{% url 'sipandu:beasiswa' %}" class="nav-link">Beasiswa</a>
                                     </li>
+                                    {% elif konten.sub_kategori_uraian == 'Bursa Kerja' %}
                                     <li>
-                                        <a href="{% url 'sipandu:bursa_kerja' %}" class="nav-link">BURSA KERJA</a>
+                                        <a href="{% url 'sipandu:bursa_kerja' %}" class="nav-link">Bursa Kerja</a>
                                     </li>
+                                    {% elif konten.sub_kategori_uraian == 'Kegiatan' %}
                                     <li>
-                                        <a href="{% url 'sipandu:kegiatan' %}" class="nav-link">KEGIATAN</a>
+                                        <a href="{% url 'sipandu:kegiatan' %}" class="nav-link">Kegiatan</a>
                                     </li>
+                                    {% endif %}
+                                {% endfor %}
                                     
                                 </ul>
                               </li>  

@@ -20,21 +20,15 @@
         <div class="row">
             <div class="col-md-6 mt-5">
                 <h2>
-                    Sejarah Singkat Sekolah
+                    {{ data_sejarah.judul }}
                 </h2>
                 
                 <p align="justify-content-start">
-                    Sekolah menengah pertama (disingkat SMP) adalah jenjang pendidikan dasar pada pendidikan formal di Indonesia yang ditempuh setelah lulus sekolah dasar (atau sederajat). Sekolah menengah pertama ditempuh dalam waktu 3 tahun, mulai dari kelas 7 sampai kelas 9. Pada tahun ajaran 1994/1995 hingga 2003/2004, sekolah ini pernah disebut Sekolah Lanjutan Tingkat Pertama (SLTP).
-                </p>
-                <p align="justify-content-start">
-                    Murid kelas 9 diwajibkan mengikuti Ujian Sekolah (dahulu diwajibkan mengikuti Ujian Nasional (dahulu bernama Ebtanas)) yang memengaruhi kelulusan siswa. Lulusan sekolah menengah pertama dapat melanjutkan pendidikan ke sekolah menengah atas atau sekolah menengah kejuruan (atau sederajat).
-                </p>
-                <p align="justify-content-start">
-                    Pelajar sekolah menengah pertama umumnya berusia 12–15 tahun. Di Indonesia, setiap warga negara berusia 7–15 tahun wajib mengikuti pendidikan dasar, yakni sekolah dasar (atau sederajat) 6 tahun dan sekolah menengah pertama (atau sederajat) 3 tahun.
+                    {{ data_sejarah.isi_konten|safe }}
                 </p>
             </div>
             <div class="col-md-3 d-flex align-items-center">
-                <img src="{% static 'img/iden.jpg' %}" alt="" style="border-radius: 2px;">
+                <img src="{{ data_sejarah.konten_image.url}}" alt="" style="border-radius: 2px;">
             </div>
         </div>
     </div>
@@ -113,11 +107,12 @@
 
                     <div class="custom-seemore-overlay mb-4" style="max-height: 400px;">
                         <div class="custom-accordion-style-1 accordion accordion-modern" id="FAQAccordion">
+                            
                             <div class="card">
                                 <div class="card">
                                     <h4 class="card-title m-0">
                                         <a class="text-color-dark">
-                                            NPSN : 0286473837638
+                                            NPSN : {{ identitas_sekolah.sekolah_npsn }}
                                         </a>
                                     </h4>
                                 </div>
@@ -126,7 +121,7 @@
                                 <div class="card">
                                     <h4 class="card-title m-0">
                                         <a class="text-color-dark">
-                                            Nama Sekolah : SMA NEGERI 1 ADILUWIH
+                                            Nama Sekolah : {{ identitas_sekolah.sekolah_nama }}
                                         </a>
                                     </h4>
                                 </div>
@@ -135,7 +130,7 @@
                                 <div class="card">
                                     <h4 class="card-title m-0">
                                         <a class="text-color-dark">
-                                            Jenis : Negeri
+                                            Jenis : {{ identitas_sekolah.sekolah_jenis.upper }}
                                         </a>
                                     </h4>
                                 </div>
@@ -144,7 +139,7 @@
                                 <div class="card">
                                     <h4 class="card-title m-0">
                                         <a class="text-color-dark">
-                                            Status : Akif
+                                            Status : {% if identitas_sekolah.sekolah_status %} Aktif {% else %} Tidak Aktif {% endif %}
                                         </a>
                                     </h4>
                                 </div>
@@ -153,7 +148,7 @@
                                 <div class="card">
                                     <h4 class="card-title m-0">
                                         <a class="text-color-dark">
-                                            Jenjang : SMA
+                                            Jenjang : {{ identitas_sekolah.sekolah_jenjang.jenjang_nama }}
                                         </a>
                                     </h4>
                                 </div>
@@ -162,7 +157,7 @@
                                 <div class="card">
                                     <h4 class="card-title m-0">
                                         <a class="text-color-dark">
-                                            Provinsi : Lampung
+                                            Provinsi : {{ identitas_sekolah.sekolah_provinsi.wilayah_nama }}
                                         </a>
                                     </h4>
                                 </div>
@@ -171,7 +166,7 @@
                                 <div class="card">
                                     <h4 class="card-title m-0">
                                         <a class="text-color-dark">
-                                            Kabupaten : Pringsewu 
+                                            Kabupaten : {{ identitas_sekolah.sekolah_kabupaten.wilayah_nama }} 
                                         </a>
                                     </h4>
                                 </div>
@@ -180,7 +175,7 @@
                                 <div class="card">
                                     <h4 class="card-title m-0">
                                         <a class="text-color-dark">
-                                            Kecamatan : Adiluwih 
+                                            Kecamatan : {{ identitas_sekolah.sekolah_kecamatan.wilayah_nama }} 
                                         </a>
                                     </h4>
                                 </div>
@@ -188,6 +183,16 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="position-relative">
+                <div data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
+                    <img src="{% static 'logo/FILLIANA.jpg' %}" class="img-fluid position-relative z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="border-radius: 5px;"/>
+                </div>
+                <h2 class="font-weight-bold text-color-dark text-center "> FILLYANA TRI PURWA HASTUTI</h2>
+                <h5 class="text-center">Masa Jabatan 2010 - Sekarang </h5>
             </div>
         </div>
     </div>

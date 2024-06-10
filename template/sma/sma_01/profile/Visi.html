@@ -23,7 +23,7 @@
                 <div class="overflow-hidden mb-3">
                     <h3 class="font-weight-bold text-transform-none text-9 line-height-2 mb-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="400">VISI</h3>
                 </div>
-                <p>Visi sendiri berfungsi sebagai suatu pandangan ke depan atau tujuan di masa depan yang ingin kamu capai. Sementara itu, misi adalah poin-poin penting tentang apa yang harus dilakukan untuk mencapai tujuan tersebut.</p>
+                <p>{{ data_visi.isi_konten|safe}}</p>
             </div>
         </div>
         <section class="section bg-color-light border-0 position-relative py-0 m-0">
@@ -34,33 +34,17 @@
                             <div class="overflow-hidden mb-3">
                                 <h3 class="font-weight-bold text-transform-none text-9 line-height-2 mb-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="400">MISI</h3>
                             </div>
+                            {% for dt_misi in data_misi %}
                             <div class="process-step col-lg-4 mb-5 mb-lg-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200">
                                 <div class="process-step-circle">
-                                    <strong class="process-step-circle-content">01</strong>
+                                    <strong class="process-step-circle-content">{{ forloop.counter }}</strong>
                                 </div>
                                 <div class="process-step-content">
-                                    <h4 class="mb-1 text-5 font-weight-bold">First Step</h4>
-                                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur rhoncus nulla dui, in dapibus magna aliquam et.</p>
+                                    
+                                    <p class="mb-0">{{ dt_misi.isi_konten|safe}}</p>
                                 </div>
                             </div>
-                            <div class="process-step col-lg-4 mb-5 mb-lg-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="400">
-                                <div class="process-step-circle">
-                                    <strong class="process-step-circle-content">02</strong>
-                                </div>
-                                <div class="process-step-content">
-                                    <h4 class="mb-1 text-5 font-weight-bold">Second Step</h4>
-                                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur rhoncus nulla dui, in dapibus magna aliquam et.</p>
-                                </div>
-                            </div>
-                            <div class="process-step col-lg-4 mb-5 mb-lg-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="600">
-                                <div class="process-step-circle">
-                                    <strong class="process-step-circle-content">03</strong>
-                                </div>
-                                <div class="process-step-content">
-                                    <h4 class="mb-1 text-5 font-weight-bold">Third Step</h4>
-                                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur rhoncus nulla dui, in dapibus magna aliquam et.</p>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
 
                     </div>

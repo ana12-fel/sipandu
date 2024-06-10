@@ -7,41 +7,60 @@
                     <ul class="nav nav-pills" id="mainNav">
                         <li>
                             <a class="nav-link active" href="{% url 'sipandu:home' %}">
-                                Home
+                                BERANDA
                             </a>
                         </li>
                         <li class="dropdown">									
                             <a href="{% url 'sipandu:home' %}" class="nav-link">PROFIL</a>
                             <ul class="dropdown-menu border-radius-0">
-                                <li>
-                                    <a href="{% url 'sipandu:identitas' %}" class="nav-link">IDENTITAS SEKOLAH</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'sipandu:Visi' %}" class="nav-link">VISI & MISI</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'sipandu:struktur' %}" class="nav-link">STRUKTUR ORGANISASI</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'sipandu:fasilitas' %}" class="nav-link">FASILITAS</a>
-                                </li>
-                                <li>
-                                    <a href="{% static 'demo-law-firm-2-practice-areas-detail.html' %}" class="nav-link">DATA GTK</a>
-                                </li>
+                                {% for konten in nav_profil_sd %}
+                                    {% if konten.sub_kategori_uraian == 'Identitas Sekolah' %}
+                                    <li>
+                                        <a href="{% url 'sipandu:identitas' %}" class="nav-link">Identitas Sekolah</a>
+                                    </li>
+                                    {% elif konten.sub_kategori_uraian == 'Visi dan Misi' %}
+                                    <li>
+                                        <a href="{% url 'sipandu:Visi' %}" class="nav-link">Visi dan Misi</a>
+                                    </li>
+                                    {% elif konten.sub_kategori_uraian == 'Struktur Organisasi' %}
+                                    <li>
+                                        <a href="{% url 'sipandu:struktur' %}" class="nav-link">Struktur Organisasi</a>
+                                    </li>
+                                    {% elif konten.sub_kategori_uraian == 'Fasilitas' %}
+                                    <li>
+                                        <a href="{% url 'sipandu:fasilitas' %}" class="nav-link">Fasilitas</a>
+                                    </li>
+                                    {% elif konten.sub_kategori_uraian == 'Data GTK' %}
+                                    <li>
+                                        <a href="{% static 'demo-law-firm-2-practice-areas-detail.html' %}" class="nav-link">Data GTK</a>
+                                    </li>
+                                    {% else %}
+                                    <li>
+                                        <a href="{% url 'sipandu:identitas'  %}" class="nav-link">Tidak ada data</a>
+                                    </li>
+                                    {% endif %}
+                                {% endfor %}
                             </ul>
                         </li>
+
                         <li class="dropdown">
                             <a href="{% url 'sipandu:home' %}" class="dropdown-item dropdown-toggle">BERITA</a>
                             <ul class="dropdown-menu border-radius-0">
-                                <li>
-                                    <a href="{% url 'sipandu:berita' %}" class="nav-link">Berita</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'sipandu:pengumuman' %}" class="nav-link">PENGUMUMAN</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'sipandu:kegiatan' %}" class="nav-link">KEGIATAN</a>
-                                </li>
+                                {% for konten in nav_berita_sd %}
+                                    {% if konten.sub_kategori_uraian == 'Berita' %}
+                                    <li>
+                                        <a href="{% url 'sipandu:berita' %}" class="nav-link">Berita</a>
+                                    </li>
+                                    {% elif konten.sub_kategori_uraian == 'Pengumuman' %}
+                                    <li>
+                                        <a href="{% url 'sipandu:pengumuman' %}" class="nav-link">Pengumuman</a>
+                                    </li>
+                                    {% elif konten.sub_kategori_uraian == 'Kegiatan' %}
+                                    <li>
+                                        <a href="{% url 'sipandu:kegiatan' %}" class="nav-link">Kegiatan</a>
+                                    </li>
+                                    {% endif %}
+                                {% endfor %}
                                 
                             </ul>
                           </li>  

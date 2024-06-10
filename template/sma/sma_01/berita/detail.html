@@ -3,14 +3,11 @@
 {% load static %}
 
 <div role="main" class="main">
-
-    <section class="page-header page-header-modern page-header-lg overlay overlay-show overlay-op-9 m-0" style="background-image: url(img/demos/law-firm-2/backgrounds/background-4.jpg); background-size: cover; background-position: center;">
-        <div class="container py-4">
-            <div class="row">
-                <div class="col text-center">
-                    <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2">
-                    </ul>
-                    <h1 class="text-color-light font-weight-bold text-10">DETAIL BERITA</h1>
+    <section class="page-header page-header-modern page-header-background page-header-background-sm" style="padding: 5rem 0; background-color: #0169fe;" >
+        <div class="container">
+            <div class="row py-3">
+                <div class="col-md-12 align-self-center p-static order-2 text-center">
+                    <h1 class="font-weight-normal text-12 m-0 pb-2">{{detail_berita.judul|title}}</h1>
                 </div>
             </div>
         </div>
@@ -19,182 +16,69 @@
     <div class="container pt-4 pb-5 my-5">
         <div class="row">
             <div class="col-lg-8 mb-5 mb-lg-0 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1600">
-
                 <article>
                     <div class="card border-0">
                         <div class="card-body z-index-1 p-0">
-                            <p class="text-uppercase text-1 mb-3 text-color-default"><time pubdate datetime="2023-01-10">10 Jan 2023</time> <span class="opacity-3 d-inline-block px-2">|</span> 3 Comments <span class="opacity-3 d-inline-block px-2">|</span> John Doe</p>
-
+                            <p class="text-uppercase text-1 mb-3 text-color-default"><time pubdate datetime="2023-01-10">{{detail_berita.created_at}}</time> <span class="opacity-3 d-inline-block px-2">|</span> Admin</p>
                             <div class="post-image pb-4">
-                                <img class="card-img-top custom-border-radius-1" src="{% static 'logo/pramuka.jpg' %}" alt="Card Image">
+                                <img class="card-img-top custom-border-radius-1" src="{{detail_berita.konten_image.url}}" alt="Card Image">
                             </div>
-
                             <div class="card-body p-0">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur lectus lacus, rutrum sit amet placerat et, bibendum nec mauris. Duis molestie, purus eget placerat viverra, nisi odio gravida sapien, congue tincidunt nisl ante nec tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, massa fringilla consequat blandit, mauris ligula porta nisi, non tristique enim sapien vel nisl. Suspendisse vestibulum lobortis dapibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent nec tempus nibh. Donec mollis commodo metus et fringilla. Etiam venenatis, diam id adipiscing convallis, nisi eros lobortis tellus, feugiat adipiscing ante ante sit amet dolor. Vestibulum vehicula scelerisque facilisis. Sed faucibus placerat bibendum. Maecenas sollicitudin commodo justo, quis hendrerit leo consequat ac. Proin sit amet risus sapien, eget interdum dui. Proin justo sapien, varius sit amet hendrerit id, egestas quis mauris.</p>
-                                <p>Ut ac elit non mi pharetra dictum nec quis nibh. Pellentesque ut fringilla elit. Aliquam non ipsum id leo eleifend sagittis id a lorem. Sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam massa mauris, viverra et rhoncus a, feugiat ut sem. Quisque ultricies diam tempus quam molestie vitae sodales dolor sagittis. Praesent commodo sodales purus. Maecenas scelerisque ligula vitae leo adipiscing a facilisis nisl ullamcorper. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</p>
-                                <p>Curabitur non erat quam, id volutpat leo. Nullam pretium gravida urna et interdum. Suspendisse in dui tellus. Cras luctus nisl vel risus adipiscing aliquet. Phasellus convallis lorem dui. Quisque hendrerit, lectus ut accumsan gravida, leo tellus porttitor mi, ac mattis eros nunc vel enim. Nulla facilisi. Nam non nulla sed nibh sodales auctor eget non augue. Pellentesque sollicitudin consectetur mauris, eu mattis mi dictum ac. Etiam et sapien eu nisl dapibus fermentum et nec tortor.</p>
-
+                                <p>{{detail_berita.isi_konten|safe}}</p>
                                 <!-- Go to www.addthis.com/dashboard to customize your tools -->
                                 <div class="addthis_inline_share_toolbox"></div>
                                 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-60ba220dbab331b0"></script>
-
                             </div>
                         </div>
                     </div>
                 </article>
-
             </div>
             <div class="blog-sidebar col-lg-4 pt-4 pt-lg-0 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1800">
-                <aside class="sidebar">  
-                    <div class="py-1 clearfix">
-                        <hr class="my-2">
-                    </div>
+                <aside class="sidebar">
                     <div class="px-3 mt-4">
-                        <h3 class="text-color-quaternary text-capitalize font-weight-bold text-5 m-0 mb-3">Recent Comments</h3>
-                        <div class="pb-2 mb-1">
-                            <a href="#" class="text-color-default text-2 mb-0 d-block text-decoration-none line-height-4">Admin on <strong class="text-color-dark text-hover-primary text-4">Vivamus sollicitudin</strong> <span class="text-uppercase text-1 d-block pt-1 pb-3">10 Jan 2023</span></a>
-                            <a href="#" class="text-color-default text-2 mb-0 d-block text-decoration-none line-height-4">John Doe on <strong class="text-color-dark text-hover-primary text-4">Lorem ipsum dolor</strong> <span class="text-uppercase text-1 d-block pt-1 pb-3">10 Jan 2023</span></a>
-                            <a href="#" class="text-color-default text-2 mb-0 d-block text-decoration-none line-height-4">Admin on <strong class="text-color-dark text-hover-primary text-4">Consectetur adipiscing</strong> <span class="text-uppercase text-1 d-block pt-1 pb-3">10 Jan 2023</span></a>
-                        </div>
-                    </div>
-                    <div class="py-1 clearfix">
-                        <hr class="my-2">
-                    </div>
-                    <div class="px-3 mt-4">
-                        <h3 class="text-color-quaternary text-capitalize font-weight-bold text-5 m-0">KATEGORI</h3>
+                        <h3 class="text-color-quaternary text-capitalize font-weight-bold text-5 m-0">Kategori Berita</h3>
                         <ul class="nav nav-list flex-column mt-2 mb-0 p-relative right-9">
-                            <li class="nav-item">
-                                <a class="nav-link bg-transparent border-0 active" href="{% url 'sipandu:pengumuman' %}">Pengumuman</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link bg-transparent border-0 active" href="{% url 'sipandu:kegiatan' %}">Kegiatan</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link bg-transparent border-0 active" href="{% url 'sipandu:bursa_kerja' %}">Bursa Kerja</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link bg-transparent border-0 active" href="#">Beasiswa</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link bg-transparent border-0 active" href="{% url 'sipandu:berita' %}" </a>
-                            </li>
-                            
+                            <li class="nav-item"><a class="nav-link bg-transparent border-0" href="#">Looping Kategori Disini</a></li>
                         </ul>
                     </div>
                 </aside>
             </div>
         </div>
     </div>
+    
 
     <section class="section section-height-3 bg-gradient border-0 m-0">
         <div class="container py-1">
             <div class="col">
-                <h2 class="text-color-light font-weight-bold text-9 mb-5-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">Our Amazing Work</h2>
+                <h2 class="text-color-light font-weight-bold text-9 mb-5-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">Berita Lainnya</h2>
                 <div class="custom-half-carousel-style-1 carousel-half-full-width-wrapper carousel-half-full-width-right">
                     <div class="owl-carousel owl-theme carousel-half-full-width-right dots-align-left dots-light custom-dots-style-1 mb-0" data-plugin-options="{'responsive': {'0': {'items': 1}, '768': {'items': 3}, '992': {'items': 3}, '1200': {'items': 3}}, 'loop': false, 'nav': false, 'dots': true, 'margin': 20}">
+                        <!-- start -->
+                         {% for dt_berita_latest in data_berita_latest %}
                         <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="400">
                             <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
                                 <div class="thumb-info-wrapper rounded-0">
-                                    <img src="{% static 'logo/foto-1.jpg' %}" class="img-fluid rounded-0" alt="" />
+                                    <img src="{{dt_berita_latest.konten_image.url}}" class="img-fluid rounded-0" alt="" />
                                     <div class="thumb-info-action">
-                                        <a href="{% url 'sipandu:detail' %}" aria-label="">
+                                        <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" aria-label="">
                                             <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
                                         </a>
                                     </div>
                                 </div>
                             </div>
-                            <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">WEBSITE CREATION - 2023</h2>
+                            <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">{{dt_berita_latest.created_at}}</h2>
                             <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
-                                <a href="#" class="text-decoration-none text-color-light opacity-hover-8">Porto Digital Agency</a>
+                                <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" class="text-decoration-none text-color-light opacity-hover-8">{{dt_berita_latest.judul|title}}</a>
                             </h3>
                         </div>
-                        <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="600">
-                            <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
-                                <div class="thumb-info-wrapper rounded-0">
-                                    <img src="{% static 'logo/foto-1.jpg' %}" class="img-fluid rounded-0" alt="" />
-                                    <div class="thumb-info-action">
-                                        <a href="{% url 'sipandu:detail' %}"  aria-label="">
-                                            <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">WEBSITE CREATION - 2023</h2>
-                            <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
-                                <a href="#" class="text-decoration-none text-color-light opacity-hover-8">Porto Digital Agency</a>
-                            </h3>
-                        </div>
-                        <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="800">
-                            <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
-                                <div class="thumb-info-wrapper rounded-0">
-                                    <img src="{% static 'logo/foto-1.jpg' %}" class="img-fluid rounded-0" alt="" />
-                                    <div class="thumb-info-action">
-                                        <a href="{% url 'sipandu:detail' %}"  aria-label="">
-                                            <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">WEBSITE CREATION - 2023</h2>
-                            <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
-                                <a href="#" class="text-decoration-none text-color-light opacity-hover-8">Porto Digital Agency</a>
-                            </h3>
-                        </div>
-                        <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="200">
-                            <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
-                                <div class="thumb-info-wrapper rounded-0">
-                                    <img src="{% static 'logo/foto-1.jpg' %}" class="img-fluid rounded-0" alt="" />
-                                    <div class="thumb-info-action">
-                                        <a href="{% url 'sipandu:detail' %}"  aria-label="">
-                                            <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">WEBSITE CREATION - 2023</h2>
-                            <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
-                                <a href="#" class="text-decoration-none text-color-light opacity-hover-8">Porto Digital Agency</a>
-                            </h3>
-                        </div>
-                        <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="200">
-                            <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
-                                <div class="thumb-info-wrapper rounded-0">
-                                    <img src="{% static 'logo/foto-1.jpg' %}" class="img-fluid rounded-0" alt="" />
-                                    <div class="thumb-info-action">
-                                        <a href="{% url 'sipandu:detail' %}"  aria-label="">
-                                            <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">WEBSITE CREATION - 2023</h2>
-                            <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
-                                <a href="#" class="text-decoration-none text-color-light opacity-hover-8">Porto Digital Agency</a>
-                            </h3>
-                        </div>
-                        <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="200">
-                            <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
-                                <div class="thumb-info-wrapper rounded-0">
-                                    <img src="{% static 'logo/foto-1.jpg' %}" class="img-fluid rounded-0" alt="" />
-                                    <div class="thumb-info-action">
-                                        <a href="{% url 'sipandu:detail' %}"  aria-label="">
-                                            <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">WEBSITE CREATION - 2023</h2>
-                            <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
-                                <a href="#" class="text-decoration-none text-color-light opacity-hover-8">Porto Digital Agency</a>
-                            </h3>
-                        </div>
+                        {% endfor %}
+                        <!-- end -->
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </div> 
-
 
 
 {% endblock main %}

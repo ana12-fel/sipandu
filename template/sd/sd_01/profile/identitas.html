@@ -20,10 +20,10 @@
         <div class="row h-100">
             <div class="col align-self-end">
                 <div class="d-block">
-                    <span class="d-block custom-stroke-text-effect-1 custom-big-text-2 font-weight-bold opacity-2">SEJARAH SINGKAT</span>
+                    <span class="d-block custom-stroke-text-effect-1 custom-big-text-2 font-weight-bold opacity-2">PROFIL SEKOLAH</span>
                 </div>
                 <div class="d-block">
-                    <h1 class="text-color-light font-weight-bold positive-ls-3 custom-big-text-1 line-height-1 mb-0">SEJARAH SINGKAT</h1>
+                    <h1 class="text-color-light font-weight-bold positive-ls-3 custom-big-text-1 line-height-1 mb-0">PROFIL SEKOLAH</h1>
                 </div>
             </div>
         </div>
@@ -39,16 +39,16 @@
                     <div class="row m-0">
                         <div class="col-half-section col-half-section-right ms-auto py-5">
                             <div class="px-3 py-5">
-                                <h2 class="font-weight-bold text-color-dark text-9 mb-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">SEJARAH SINGKAT </h2>
-                                <p class="text-4-5 line-height-7 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec imperdiet massa tellus, vitae lacinia. </p>
-                                <p class="text-3-5 line-height-9 mb-0 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec imperdiet massa tellus, vitae <span class="highlight highlight-primary highlight-bg-opacity highlight-animated px-0" data-appear-animation="highlight-animated-start" data-appear-animation-delay="800" data-plugin-options="{'flagClassOnly': true}">lacinia arcu mollis ac.</span> Nulla ex enim, pellente que vitae tristique vel, porttitor in quam. </p>
+                                <h2 class="font-weight-bold text-color-dark text-9 mb-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">{{ data_sejarah.judul }} </h2>
+                                <p class="text-4-5 line-height-7 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">{{ data_sejarah.isi_konten|safe }}</p>
+                               
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6 p-0">
-                <section class="parallax section section-parallax h-100 m-0" data-plugin-parallax data-plugin-options="{'speed': 1.5, 'parallaxHeight': '135%'}" data-image-src="{% static 'logo/tampilan.jpg' %}" style="min-height: 285px;">
+                <section class="parallax section section-parallax h-100 m-0" data-plugin-parallax data-plugin-options="{'speed': 1.5, 'parallaxHeight': '135%'}" data-image-src="{{data_sejarah.konten_image.url}}" style="min-height: 285px;">
                 </section>
             </div>
         </div>
@@ -64,80 +64,86 @@
 
                     <div class="custom-seemore-overlay mb-4" style="max-height: 400px;">
                         <div class="custom-accordion-style-1 accordion accordion-modern" id="FAQAccordion">
-                            <div class="card">
-                                <div class="card">
-                                    <h4 class="card-title m-0">
-                                        <a class="text-color-dark">
-                                            NPSN : 0286473837638
-                                        </a>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card">
-                                    <h4 class="card-title m-0">
-                                        <a class="text-color-dark">
-                                            Nama Sekolah : SD Negeri 103 OKU
-                                        </a>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card">
-                                    <h4 class="card-title m-0">
-                                        <a class="text-color-dark">
-                                            Jenis : Negeri
-                                        </a>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card">
-                                    <h4 class="card-title m-0">
-                                        <a class="text-color-dark">
-                                            Status : Akif
-                                        </a>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card">
-                                    <h4 class="card-title m-0">
-                                        <a class="text-color-dark">
-                                            Jenjang : SD
-                                        </a>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card">
-                                    <h4 class="card-title m-0">
-                                        <a class="text-color-dark">
-                                            Provinsi : Sumatra Selatan
-                                        </a>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card">
-                                    <h4 class="card-title m-0">
-                                        <a class="text-color-dark">
-                                            Kabupaten : Ogan Kemering Ulu 
-                                        </a>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card">
-                                    <h4 class="card-title m-0">
-                                        <a class="text-color-dark">
-                                            Kecamatan : Semidang Aji 
-                                        </a>
-                                    </h4>
-                                </div>
-                            </div>
+                            {% for data_sd in identitas_sekolah %}
+                                {% if data_sd == request.sekolah %}
+                                    <div class="card">
+                                        <div class="card">
+                                            <h4 class="card-title m-0">
+                                                <a class="text-color-dark">
+                                                    NPSN : {{ data_sd.sekolah_npsn }}
+                                                </a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card">
+                                            <h4 class="card-title m-0">
+                                                <a class="text-color-dark">
+                                                    Nama Sekolah : {{ data_sd.sekolah_nama }}
+                                                </a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card">
+                                            <h4 class="card-title m-0">
+                                                <a class="text-color-dark">
+                                                    Jenis : {{ data_sd.sekolah_jenis }}
+                                                </a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card">
+                                            <h4 class="card-title m-0">
+                                                <a class="text-color-dark">
+                                                    Status : {% if data_sd.sekolah_status %} Aktif {% else %} Tidak Aktif {% endif %}
+                                                </a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card">
+                                            <h4 class="card-title m-0">
+                                                <a class="text-color-dark">
+                                                    Jenjang :{{ data_sd.sekolah_jenjang.jenjang_nama }}
+                                                </a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card">
+                                            <h4 class="card-title m-0">
+                                                <a class="text-color-dark">
+                                                    Provinsi : {{ data_sd.sekolah_provinsi.wilayah_nama }}
+                                                </a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card">
+                                            <h4 class="card-title m-0">
+                                                <a class="text-color-dark">
+                                                    Kabupaten : {{ data_sd.sekolah_kabupaten.wilayah_nama }} 
+                                                </a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card">
+                                            <h4 class="card-title m-0">
+                                                <a class="text-color-dark">
+                                                    Kecamatan : {{ data_sd.sekolah_kecamatan.wilayah_nama }}
+                                                </a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
+                    
+                    
                 </div>
             </div>
         </div>
@@ -151,7 +157,6 @@
                 <h5 class="text-center">Masa Jabatan 2010 - Sekarang </h5>
             </div>
         </div>
-
     </div>
 </div>
 

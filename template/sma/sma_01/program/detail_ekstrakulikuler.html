@@ -1,0 +1,53 @@
+{% extends 'layout/base_layout.html' %}
+{% block main %}
+{% load static %}
+
+<div role="main" class="main">
+
+<section class="page-header page-header-modern page-header-lg overlay overlay-show overlay-op-9 m-0" style="background-image: url(img/demos/law-firm-2/backgrounds/background-4.jpg); background-size: cover; background-position: center;">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col text-center">
+                    <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2">
+                    </ul>
+                    <h1 class="text-color-light font-weight-bold text-10">{{data_detail_ekstrakulikuler.judul}}</h1>
+                </div>
+            </div>
+        </div> 
+</section>
+
+<div class="container pt-4 pb-5 my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 mb-5 mb-lg-0 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1600">
+    
+                <article>
+                    <div class="card border-0">
+                        <div class="card-body z-index-1 p-0">
+                            
+                
+                            <div class="post-image pb-4 "> <!-- Changed class to text-center -->
+                                <img class="card-img-top custom-border-radius-1" src="{{ data_detail_ekstrakulikuler.konten_image.url }}" alt="Card Image">
+                                <p class="text-uppercase text-1 mb-3 text-color-default"><time pubdate datetime="2023-01-10">{{data_detail_ekstrakulikuler.created_at}}</time> 
+                                
+                                </p>
+                            </div>
+                            <div class="card-body p-0" style="text-align: justify;">
+                                <p style="color: black;">{{data_detail_ekstrakulikuler.isi_konten|safe}}</p>
+                                <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                                <div class="addthis_inline_share_toolbox"></div>
+                                <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-60ba220dbab331b0"></script>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                </article>                
+            </div>
+        </div>
+</div>
+    
+
+
+
+
+{% endblock main %}
