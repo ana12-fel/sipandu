@@ -23,7 +23,7 @@ Master User
                 <h1 class="page-title">DATA KATEGORI</h1>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Beranda</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Master Kategori</li>
+                    <li class="breadcrumb-item active" aria-current="page">Master Data / Kategori</li>
                 </ol>
             </div>
         </div>
@@ -54,45 +54,46 @@ Master User
                 <button type="button" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#tambahModal">
                     <span>
                         <i class="fe fe-plus"></i>
-                    </span> Tambahkan
+                    </span> Tambahkan Data
                 </button>
             </div>
         </div>
 
         <!-- Modal Tambah Data -->
-        <div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addDataModalLabel">Tambah Data Kategori</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addDataModalLabel">Tambah Data Kategori</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form tambah data di sini -->
+                <form id="formKategori">
+                    {% csrf_token %}
+                    {% for dt_kat in data_kat %}
+                    <div class="mb-3">
+                        <label for="form_tema" class="form-label">Nama Tema</label>
+                        <input type="hidden" class="form-control" id="form_tema_id" value="{{ dt_kat.tema_id }}" name="form_tema_id">
+                        <input type="text" class="form-control" id="form_tema" name="form_tema" value="{{ dt_kat.tema_nama }}">
                     </div>
-                    <div class="modal-body">
-                        <!-- Form tambah data di sini -->
-                        <form method="post" action="{% url 'sipandu_admin:master_kategori' %}">
-                            {% csrf_token %}
-                            {% for dt_kat in data_kat %}
-                            <div class="mb-3">
-                                <label for="form_tema" class="form-label">Nama Tema</label>
-                                <input type="hidden" class="form-control" id="form_tema_id" value="{{ dt_kat.tema_id }}" name="form_tema_id">
-                                <input type="text" class="form-control" id="form_tema" name="form_tema" value="{{ dt_kat.tema_nama }}">
-                            </div>
-                            {% endfor %}
-                            
-                            <div class="mb-3">
-                                <label for="kategori_nama" class="form-label">Nama Kategori</label>
-                                <input type="text" class="form-control" id="kategori_nama" name="kategori_nama">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" >Submit</button>
-                            </div>
-                        </form>
+                    {% endfor %}
+                    
+                    <div class="mb-3">
+                        <label for="kategori_nama" class="form-label">Nama Kategori</label>
+                        <input type="text" class="form-control" id="kategori_nama" name="kategori_nama">
                     </div>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="submitFormKategori()">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
-        <!-- Modal Tambah Data End -->
+    </div>
+</div>
+<!-- Modal Tambah Data End -->
+
 
         <!-- ROW-1 -->
         <div class="row row-sm">
@@ -150,7 +151,11 @@ Master User
         <!-- SUB KATEGORI -->
         <div class="page-header">
             <div>
-                <h1 class="page-title">SUB KATEGORI</h1>
+                <h1 class="page-title">DATA SUB KATEGORI</h1>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Master Data / Sub Kategori</li>
+                </ol>
             </div>
             <div class="ms-auto pageheader-btn">
                 <button type="button" class="btn btn-primary btn-icon text-white me-2" data-bs-toggle="modal" data-bs-target="#tambahData">
@@ -310,6 +315,41 @@ function submitForm() {
     });
 }
 
+    function submitFormKategori() {
+        var kategoriNama = document.getElementById("kategori_nama").value;
+        var formTemaId = document.getElementById("form_tema_id").value;
+
+        // Mengirim data ke server menggunakan Ajax
+        $.ajax({
+            url: "{% url 'sipandu_admin:master_kategori' %}",
+            type: "POST",
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                kategori_nama: kategoriNama,
+                form_tema_id: formTemaId,
+            },
+            success: function(response) {
+                console.log('sukses');
+                $('#tambahModal').modal('hide'); 
+                swal({
+                    icon: 'success',
+                    title: 'Berhasil...',
+                    text: 'Data Berhasil Diinput.',
+                });
+                setTimeout(function() { 
+                    window.location.reload();
+                }, 2000);
+            },
+            error: function(xhr, status, error) {
+                console.error("Terjadi kesalahan:", error);
+                swal({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Data Sudah Terinput Sebelumnya!.....',
+                });
+            }
+        });
+    }
 
 
     function ubah_pilihan_tema(e){

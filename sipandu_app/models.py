@@ -97,7 +97,6 @@ class Master_sekolah(models.Model):
     
     objects=get_sekolah()
 
-
     # sekolah_status_kepemilikan = models.TextField(choices=STATUS_KEPEMILIKAN_SEKOLAH, null=True, default=None)
     # sekolah_no_sk_pendirian = models.TextField(null=True, default=None) 
     # sekolah_tgl_sk_pendirian = models.DateField(null=True, default=None)
@@ -235,6 +234,9 @@ class Master_kategori(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ('kategori_tema', 'kategori_uraian')
 
     def create_kategori():
     # Buat instance model Jenjang dengan memberikan nilai yang valid untuk jenjang_status
@@ -446,7 +448,7 @@ class Data_guru(models.Model):
     mata_pelajaran = models.TextField(max_length=200, null=True)
     pendidikan = models.TextField(max_length=200, null=True)
     guru_image = models.ImageField(upload_to='image_guru/')
-    tahun_guru = models.CharField(max_length=10, null=True)
+    tahun_guru = models.CharField(max_length=10, null=True, blank=True)
     status_kepegawaian = models.TextField(choices=STATUS_KEPEGAWAIAN)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
