@@ -1,9 +1,9 @@
 <!-- Modal Edit Data Tema -->
-<div class="modal fade" id="editdata_{{dt_guru.id_data_guru}}" tabindex="-1" aria-labelledby="editDataModalLabel" aria-hidden="true">
+<div class="modal fade modal_guru_edit" id="editdata_{{dt_guru.id_data_guru}}" tabindex="-1" aria-labelledby="editDataModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editDataModalLabel">Edit Data Tema</h5>
+                <h5 class="modal-title" id="editDataModalLabel">Edit Data Guru</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -28,26 +28,26 @@
                         <input type="text" value="{{dt_guru.nip_guru}}" class="form-control" id="nama" name="nip_guru" required>
                     </div>
                     <div class="mb-3">
-                        <label for="nama" class="form-label">Mata Pelajaran</label>
-                        <input type="text" value="{{dt_guru.mata_pelajaran}}" class="form-control" id="nama" name="mata_pelajaran" required>
-                    </div>
-                    <div class="mb-3">
                         <label for="nama" class="form-label">Pendidikan</label>
                         <input type="text" value="{{dt_guru.pendidikan}}" class="form-control" id="nama" name="pendidikan" required>
                     </div>
                     <div class="mb-3">
                         <label for="status_kepegawaian" class="form-label">Status Kepegawaian</label>
-                        <select class="form-select" id="edit_status_kepegawaian-{{dt_guru.id_data_guru}}" name="edit_status_kepegawaian-{{dt_guru.id_data_guru}}" onchange="edittoggleTahunForm()">
-                            <option value="" selected disabled>Pilih Status Kepegawaian</option>
+                        <select class="form-select select_kepegawaian" id="edit_status_kepegawaian-{{dt_guru.id_data_guru}}" data-id="{{dt_guru.id_data_guru}}" data-value="{{dt_guru.status_kepegawaian}}" name="edit_status_kepegawaian" onchange="EdittoggleFields(this)">
+                            <option value="" disabled>Pilih Status Kepegawaian </option>
                             <option value="guru" {% if dt_guru.status_kepegawaian == 'guru' %} selected {% endif %}>Guru</option>
                             <option value="kepala_sekolah" {% if dt_guru.status_kepegawaian == 'kepala_sekolah' %} selected {% endif %}>Kepala Sekolah</option>
                         </select>
                     </div>
-                    <div id="edit_tahun_guru-{{dt_guru.id_data_guru}}" style="display: none;">
+                    <div id="edit_tahun_guru-{{dt_guru.id_data_guru}}" style="">
                         <div class="mb-3">
                             <label for="tahun_guru" class="form-label">Tahun Jabatan Kepala Sekolah</label>
-                            <input type="text" class="form-control" id="edit_tahun_guru-{{dt_guru.id_data_guru}}" name="edit_tahun_guru-{{dt_guru.id_data_guru}}">
+                            <input type="text" value="{{dt_guru.tahun_guru}}" class="form-control" id="edit_tahun_guru_{{dt_guru.id_data_guru}}" name="edit_tahun_guru">
                         </div>
+                    </div>
+                    <div class="mb-3" id="mata_pelajaran-{{dt_guru.id_data_guru}}">
+                        <label for="mata_pelajaran" class="form-label">Mata Pelajaran</label>
+                        <input type="text" value="{{dt_guru.mata_pelajaran}}" class="form-control" id="mata_pelajaran_input" name="mata_pelajaran">
                     </div>
                     <div class="mb-3">
                         <label for="thumbnail" class="form-label">Foto</label>
@@ -76,17 +76,27 @@
 </div>
 <!-- Modal Edit Data Tema End -->
 <script>
-    function edittoggleTahunForm() {
-        var statusKepegawaian = document.getElementById("edit_status_kepegawaian-{{dt_guru.id_data_guru}}").value;
-        var tahun_guru = document.getElementById("edit_tahun_guru-{{dt_guru.id_data_guru}}");
 
+    function action_guru_edit(){
+        $('.select_kepegawaian').each(function(){
+            $(this).val($(this).data('value')).change()
+        })
+    }
+
+    function EdittoggleFields(e) {
+        var statusKepegawaian = document.getElementById("edit_status_kepegawaian-" + $(e).data('id')).value;
+        var tahunGuruDiv = document.getElementById("edit_tahun_guru-" + $(e).data('id'));
+        var mataPelajaranDiv = document.getElementById("mata_pelajaran");
+        console.log('status kepegawaian', statusKepegawaian)
         if (statusKepegawaian === "kepala_sekolah") {
-            tahun_guru.style.display = "block";
-            console.log('berhasil')
+            $(`#edit_tahun_guru-${$(e).data('id')}`).removeClass('d-none')
+            $(`#mata_pelajaran-${$(e).data('id')}`).addClass('d-none')
+        } else if (statusKepegawaian === "guru") {
+            $(`#edit_tahun_guru-${$(e).data('id')}`).addClass('d-none')
+            $(`#mata_pelajaran-${$(e).data('id')}`).removeClass('d-none')
         } else {
-            tahun_guru.style.display = "none";
-            console.log('gagal')
-
+            $(`#edit_tahun_guru-${$(e).data('id')}`).addClass('d-none')
+            $(`#mata_pelajaran-${$(e).data('id')}`).addClass('d-none')
         }
     }
 

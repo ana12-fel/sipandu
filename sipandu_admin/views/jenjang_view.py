@@ -13,11 +13,13 @@ def IndexJenjang(request):
         data = {}
         try:
             dt_jenjang = Master_jenjang.objects.create(jenjang_nama=jenjang_nama, jenjang_status=jenjang_status)
-            print(jenjang_nama, jenjang_status)
-            return JsonResponse(data, status = 201)
-        except IntegrityError:
-            print("Data dengan nama jenjang tersebut sudah ada")
-            return JsonResponse(data, status = 400)
+            print('sukses')
+            data['status'] = True
+            return JsonResponse(data, status=201)
+        except IntegrityError as e:
+            print('Data dengan nama jenjang tersebut sudah ada', e)
+            data['status'] = False
+            return JsonResponse(data, status=400)
 
     else:
         data_jenjang = Master_jenjang.objects.filter(deleted_at=None)

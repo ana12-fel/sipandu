@@ -168,7 +168,6 @@ Master User
 </div>
 
 {% endblock %}
-
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -218,47 +217,57 @@ Master User
     }
 
     function submitForm() {
-        // Mengambil nilai input dari formulir
-        var jenjangNama = document.getElementById("jenjang_nama").value.trim();
-        var jenjangStatus = document.getElementById("jenjang_status").value;
+    // Mengambil nilai input dari formulir
+    var jenjangNama = document.getElementById("jenjang_nama").value.trim();
+    var jenjangStatus = document.getElementById("jenjang_status").value;
 
-        // Periksa apakah input kosong
-        if (jenjangNama === "") {
-            // Tampilkan pesan error jika input kosong
-            alert("Jenjang harus diisi!");
-            return false; // Menghentikan proses submit
-        }
+    // Periksa apakah input kosong
+    if (jenjangNama === "") {
+        // Tampilkan pesan error jika input kosong
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Jenjang harus diisi!'
+        });
+        return false; // Menghentikan proses submit
+    }
 
-        // Mengirim data ke server menggunakan Ajax
-        $.ajax({
-            url: "{% url 'sipandu_admin:index_jenjang' %}",
-            type: "POST",
-            data: {
-                csrfmiddlewaretoken: '{{ csrf_token }}',
-                jenjang_nama: jenjangNama,
-                jenjang_status: jenjangStatus
-            },
-            success: function(response) {
-                // Handle response dari server
-                // Misalnya, tampilkan notifikasi atau muat ulang halaman
-                console.log(response);
-                $('#addDataModal').modal('hide'); // Tutup modal setelah berhasil
-                setTimeout(function() {
+    // Mengirim data ke server menggunakan Ajax
+    $.ajax({
+        url: "{% url 'sipandu_admin:index_jenjang' %}",
+        type: "POST",
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            jenjang_nama: jenjangNama,
+            jenjang_status: jenjangStatus
+        },
+        success: function(response) {
+            // Handle response dari server
+            // Misalnya, tampilkan notifikasi atau muat ulang halaman
+            console.log(response);
+            $('#addDataModal').modal('hide'); // Tutup modal setelah berhasil
+            Swal.fire({
+                icon: 'success',
+                title: 'Sukses!',
+                text: 'Data berhasil diinput.'
+            });
+            setTimeout(function() {
                 // Redirect ke halaman yang sama setelah 2 detik
                 window.location.href = window.location.href;
             }, 2000);
-            },
-            error: function(xhr, status, error) {
-                // Handle error jika terjadi kesalahan saat mengirimkan data
-                console.error("Terjadi kesalahan:", error);
-                swal({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Jenjang sudah terinput sebelumnya!',
-                });
-            }
-        });
-    }
+        },
+        error: function(xhr, status, error) {
+            // Handle error jika terjadi kesalahan saat mengirimkan data
+            console.error("Terjadi kesalahan:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Jenjang sudah terinput sebelumnya!'
+            });
+        }
+    });
+}
+
 
     function deleteJenjang(jenjang_) {
         var deleteUrl = "{% url 'sipandu_admin:delete_jenjang' 'jenjang_id' %}".replace("jenjang_id", jenjang_);
