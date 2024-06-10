@@ -293,7 +293,6 @@ class Data_konten(models.Model):
     konten_sekolah = models.ForeignKey(Master_sekolah,related_name='konten_kategori_related', on_delete=models.CASCADE,default=None, null=True)
     konten_kategori = models.ForeignKey(Master_kategori, related_name='konten_kategori_related', on_delete=models.CASCADE,default=None, null=True)
     konten_sub_kategori = models.ForeignKey(Sub_kategori, related_name='konten_kategori_related', on_delete=models.CASCADE,default=None, null=True)
-
     judul = models.CharField(max_length=200)
     isi_konten = models.TextField(default=None, null=True)
     status = models.BooleanField(default=True)   
@@ -354,7 +353,7 @@ class Data_kontak(models.Model):
     tw = models.CharField(max_length=100, blank=True, null=True, verbose_name="Twitter")
     ig = models.CharField(max_length=100, blank=True, null=True, verbose_name="Instagram")
     no_hp = models.CharField(max_length=15, blank=True, null=True, verbose_name="Nomor HP")
-    alamat = models.TextField(null=True, default=None)  # Field untuk alamat
+    alamat = models.TextField(null=True, default=None)  # Field untuck alamat
     link_map = models.TextField(null=True, default=None)  # Field untuk link peta
     gambar = models.ImageField(upload_to='galeri_thumbnail/', null=True)
     created_at = models.DateTimeField(auto_now_add=True)

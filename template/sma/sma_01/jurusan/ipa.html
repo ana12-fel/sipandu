@@ -2,12 +2,12 @@
 {% block main %}
 {% load static %}
 
-<section class="page-header page-header-modern page-header-lg " style="padding: 5rem 0; background-color: #0169fe;">
+<section class="page-header page-header-modern page-header-lg" style="padding: 5rem 0; background-color: #0169fe;">
     <div class="container py-4">
         <div class="row">
             <div class="col text-center">
                 <h1 class="text-color-light font-weight-bold text-10"> IPA </h1>
-                 <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2">
+                <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2">
                     <li class="text-color-light active"> >>Ilmu Pengetahuan Alam<< </li>
                 </ul>
             </div>
@@ -15,24 +15,23 @@
     </div>
 </section>
 
-
 <section class="section section-no-border section-angled bg-color-light-scale-1 m-0">
-    <div class="section-angled-layer-top section-angled-layer-increase-angle" style="padding: 5rem 0; "></div>
+    <div class="section-angled-layer-top section-angled-layer-increase-angle" style="padding: 5rem 0;"></div>
     <div class="container py-5 my-5">
-        <div class="row align-items-center text-center my-5">
-            <div class="col-md-6">
-                <h2 class="font-weight-bold text-9 mb-0 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200" data-appear-animation-duration="750">Ilmu Pengetahuan Alam (IPA)</h2>
-                <p class="pb-2 mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="800" data-appear-animation-duration="750"></p>
-                <p class="pb-2 mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="800" data-appear-animation-duration="750">Ilmu pengetahuan alam atau kerap diperpendek sebagai ilmu alam adalah istilah yang digunakan yang merujuk pada rumpun ilmu di mana objeknya adalah benda-benda alam dengan hukum-hukum yang pasti dan umum, berlaku kapan pun dan di mana pun. Orang yang menekuni bidang ilmu pengetahuan alam disebut sebagai Saintis. </p>
-            </div>
-            <div class="col-md-6 position-relative py-5">
-                <div class="appear-animation" data-appear-animation="fadeInLeftShorter" data-appear-animation-delay="0" data-appear-animation-duration="750">
-                    <div class="strong-shadow rounded strong-shadow-top-right">
-                        <img src="{% static 'logo/ipajpg' %}" data-src="{% static 'logo/ipa.jpg' %}" class="lazyload img-fluid border border-width-10 border-color-light rounded box-shadow-3" alt="Porto Admin" width="600" height="400" />
+        <div class="row align-items-center text-justify my-5">
+            {% for item in data_ipa %}
+                <div class="col-md-6 mb-5">
+                    <h2 class="font-weight-bold text-9 mb-0 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200" data-appear-animation-duration="750">{{ item.judul }}</h2>
+                    <p class="pb-2 mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="800" data-appear-animation-duration="750">{{ item.isi_konten|safe }}</p>
+                </div>
+                <div class="col-md-6 position-relative py-5 mb-5">
+                    <div class="appear-animation" data-appear-animation="fadeInLeftShorter" data-appear-animation-delay="0" data-appear-animation-duration="750">
+                        <div class="strong-shadow rounded strong-shadow-top-right">
+                            <img src="{{ item.konten_image.url }}" class="lazyload img-fluid border border-width-10 border-color-light rounded box-shadow-3" alt="{{ item.judul }}" width="600" height="400" />
+                        </div>
                     </div>
                 </div>
-            </div>
-            
+            {% endfor %}
         </div>
     </div>
 </section>
@@ -144,7 +143,6 @@
         </div>
     </div>
 </section>
-
 
 
 {% endblock main %}

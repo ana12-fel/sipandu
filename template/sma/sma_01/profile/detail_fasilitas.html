@@ -10,7 +10,7 @@
                 <div class="col text-center">
                     <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2">
                     </ul>
-                    <h1 class="text-color-light font-weight-bold text-10">Laboratorium IPA</h1>
+                    <h1 class="text-color-light font-weight-bold text-10">{{data_detail_fasilitas.judul}}</h1>
                 </div>
             </div>
         </div>
@@ -19,26 +19,17 @@
 <div class="container pt-4 pb-5 my-5">
         <div class="row justify-content-center">
             <div class="col-lg-8 mb-5 mb-lg-0 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1600">
-    
                 <article>
                     <div class="card border-0">
                         <div class="card-body z-index-1 p-0">
-                            <p class="text-uppercase text-1 mb-3 text-color-default"><time pubdate datetime="2023-01-10">10 Jan 2023</time> <span class="opacity-3 d-inline-block px-2">|</span> 3 Comments <span class="opacity-3 d-inline-block px-2">|</span> John Doe</p>
-                
-                            <div class="post-image pb-4 text-center"> <!-- Changed class to text-center -->
-                                <img class="card-img-top custom-border-radius-1" src="{% static 'logo/lab ipa.jpg' %}" alt="Card Image">
+                            <div class="post-image pb-4 "> <!-- Changed class to text-center -->
+                                <img class="card-img-top custom-border-radius-1" src="{{ data_detail_fasilitas.konten_image.url }}" alt="Card Image">
+                                <p class="text-uppercase text-1 mb-3 text-color-default"><time pubdate datetime="2023-01-10">{{data_detail_fasilitas.created_at}}</time> 
+                                
+                                </p>
                             </div>
-                            <div class="card-body p-0" style="text-align: justify;">
-                                <p style="color: black;">Laboratorium IPA atau yang biasa disingkat Lab IPA adalah tempat atau ruang dengan segala macam perangkat penunjang yang diperlukan untuk kegiatan Ilmiah. Di laboratorium, peserta didik dan guru melakukan penyelidikan atau percobaan dengan pengamatan objek-objek alam. Bentuk laboratorium bisa berupa ruangan tertutup maupun ruangan yang terbuka.</p>
-                                <p style="color: black;">Laboratorium yang standar paling tidak terdiri dari beberapa ruang kegiatan penting, meliputi:</p>
-                                <p style="color: black;">1. Ruang Praktik, dengan berbagai syarat-syarat umum (bentuk, ukuran, penerangan, ventilasi, keamanan, dll).</p>
-                                <p style="color: black;">2. Ruang Persiapan yaitu tempat preparasi alat dan bahan, persiapan kerja dan menyusun alat peraga</p>
-                                <p style="color: black;">3. Ruang penyimpanan yaitu gudang alat penunjang, bahan baku, tempat penyimpanan bahan-bahan kimia</p>
-                                <p style="color: black;">4. Ruang gelap, berguna untuk kegiatan yang tidak memerlukan cahaya</p> 
-                                <p style="color: black;">5. Ruang Timbang</p>
-                                <p style="color: black;">6. Ruang Specimen dan kultur</p>
-                                <p style="color: black;">7. Rumah kaca (Green House)</p>
-                            
+                            <div class="card-body p-0" style="text-align: justify;">     
+                                <p style="color: black;">{{data_detail_fasilitas.isi_konten|safe}}</p>
                                 <!-- Go to www.addthis.com/dashboard to customize your tools -->
                                 <div class="addthis_inline_share_toolbox"></div>
                                 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-60ba220dbab331b0"></script>
@@ -63,9 +54,10 @@
                         <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="400">
                             <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
                                 <div class="thumb-info-wrapper rounded-0">
-                                    <img src="{% static 'logo/lab ipa.jpg' %}" class="img-fluid rounded-0" alt="" />
+                                    
+                                    <img src="{{ data_detail_fasilitas.konten_image.url }}" class="img-fluid rounded-0" alt="" />
                                     <div class="thumb-info-action">
-                                        <a href="{% url 'sipandu:detail_fasilitas' %}" aria-label="">
+                                        <a href="" aria-label="">
                                             <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
                                         </a>
                                     </div>
@@ -80,7 +72,7 @@
                                 <div class="thumb-info-wrapper rounded-0">
                                     <img src="{% static 'logo/lab komputer.jpg' %}" class="img-fluid rounded-0" alt="" />
                                     <div class="thumb-info-action">
-                                        <a href="{% url 'sipandu:detail_fasilitas' %}" aria-label="">
+                                        <a href="" aria-label="">
                                             <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
                                         </a>
                                     </div>
@@ -95,7 +87,7 @@
                                 <div class="thumb-info-wrapper rounded-0">
                                     <img src="{% static 'logo/perpustakaan.jpg' %}" class="img-fluid rounded-0" alt="" />
                                     <div class="thumb-info-action">
-                                        <a href="{% url 'sipandu:detail_fasilitas' %}" aria-label="">
+                                        <a href="" aria-label="">
                                             <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
                                         </a>
                                     </div>
@@ -110,7 +102,7 @@
                                 <div class="thumb-info-wrapper rounded-0">
                                     <img src="{% static 'logo/aula.jpg' %}" class="img-fluid rounded-0" alt="" />
                                     <div class="thumb-info-action">
-                                        <a href="{% url 'sipandu:detail_fasilitas' %}" aria-label="">
+                                        <a href="" aria-label="">
                                             <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
                                         </a>
                                     </div>
@@ -125,7 +117,7 @@
                                 <div class="thumb-info-wrapper rounded-0">
                                     <img src="{% static 'logo/lapangan.jpg' %}" class="img-fluid rounded-0" alt="" />
                                     <div class="thumb-info-action">
-                                        <a href="{% url 'sipandu:detail_fasilitas' %}" aria-label="">
+                                        <a href="" aria-label="">
                                             <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
                                         </a>
                                     </div>
@@ -140,7 +132,7 @@
                                 <div class="thumb-info-wrapper rounded-0">
                                     <img src="{% static 'img/demos/digital-agency/projects/project-6.jpg' %}" class="img-fluid rounded-0" alt="" />
                                     <div class="thumb-info-action">
-                                        <a href="{% url 'sipandu:detail_fasilitas' %}" aria-label="">
+                                        <a href="" aria-label="">
                                             <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
                                         </a>
                                     </div>
@@ -156,6 +148,7 @@
             </div>
         </div>
 </section>
+
 </div> 
 
 

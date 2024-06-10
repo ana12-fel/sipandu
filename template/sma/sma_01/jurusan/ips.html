@@ -16,28 +16,26 @@
 </section>
 
 <section class="section section-no-border section-angled bg-color-light-scale-1 m-0">
-    <div class="section-angled-layer-top section-angled-layer-increase-angle" style="padding: 5rem 0; "></div>
+    <div class="section-angled-layer-top section-angled-layer-increase-angle" style="padding: 5rem 0;"></div>
     <div class="container py-5 my-5">
         <div class="row align-items-center text-center my-5">
-            <div class="col-md-6">
-                <h2 class="font-weight-bold text-9 mb-0 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200" data-appear-animation-duration="750">Ilmu Pengetahuan Sosial (IPS)</h2>
-                <p class="pb-2 mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="800" data-appear-animation-duration="750"></p>
-                <p class="pb-2 mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="800" data-appear-animation-duration="750">Jurusan IPS mempelajari tentang hubungan antar manusia dan hubungan manusia dengan lingkungannya, serta berbagai aspek sosial. Hal itu akan dikaji dalam mata pelajaran Sosiologi, Geografi, Ekonomi, dan Sejarah.
-                Dengan mengambil Jurusan IPS, kamu akan memiliki bekal untuk memecahkan masalah sosial yang ada di masyarakat. </p>
-            </div>
-            <div class="col-md-6 position-relative py-5">
-                <div class="appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="500">
-                    <img class="lazyload" src="{% static 'logo/ips.jpg' %}" data-src="{% static 'logo/ips.jpg' %}"  alt="" width="149" height="142" style="position: absolute; top: -60px; right: -8%;">
+            {% for item in data_ips %}
+                <div class="col-md-6 mb-5">
+                    <h2 class="font-weight-bold text-9 mb-0 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200" data-appear-animation-duration="750">{{ item.judul }}</h2>
+                    <p class="pb-2 mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="800" data-appear-animation-duration="750">{{ item.isi_konten|safe }}</p>
                 </div>
-                <div class="appear-animation" data-appear-animation="fadeInLeftShorter" data-appear-animation-delay="0" data-appear-animation-duration="750">
-                    <div class="strong-shadow rounded strong-shadow-top-right">
-                        <img src="{% static 'logo/4.jpg' %}" data-src="{% static 'logo/4.jpg' %}" class="lazyload img-fluid border border-width-10 border-color-light rounded box-shadow-3" alt="Porto Admin" />
+                <div class="col-md-6 position-relative py-5 mb-5">
+                    <div class="appear-animation" data-appear-animation="fadeInLeftShorter" data-appear-animation-delay="0" data-appear-animation-duration="750">
+                        <div class="strong-shadow rounded strong-shadow-top-right">
+                            <img src="{{ item.konten_image.url }}" class="lazyload img-fluid border border-width-10 border-color-light rounded box-shadow-3" alt="{{ item.judul }}" width="600" height="400" />
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
+
 <section class="section section-height-3 bg-gradient border-0 m-0">
     <div class="container py-1">
         <div class="col">

@@ -1,0 +1,114 @@
+{% extends 'layout/base_layout.html' %}
+{% block main %}
+{% load static %}
+
+<div role="main" class="main">
+    
+
+    <section class="page-header page-header-modern page-header-background page-header-background-sm" style="padding: 5rem 0; background-color: #0169fe;" >
+        <div class="container">
+            <div class="row py-3">
+                <div class="col-md-12 align-self-center p-static order-2 text-center">
+                    <h1 class="font-weight-normal text-12 m-0 pb-2">BEASISWA</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container pt-4 pb-5 my-5">
+        <div class="row">
+            <div class="col-lg-8 mb-5 mb-lg-0 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1600">
+                <article class="mb-5">
+                    {% if data_beasiswa %}
+                        {% for dt_beasiswa in data_beasiswa %}
+                            <div class="card border-0 border-radius-0 custom-box-shadow-1 mb-4">
+                                <div class="card-img-top">
+                                    <a href="{% url 'sipandu:detail_beasiswa' dt_beasiswa.id_data_konten %}">
+                                        <img class="card-img-top border-radius-0 hover-effect-2" src="{{ dt_beasiswa.konten_image.url }}" alt="Card Image">
+                                    </a>
+                                </div>
+                                <div class="card-body bg-light p-4 z-index-1">
+                                    <p class="text-uppercase text-color-default text-1 mb-1 pt-1">
+                                        <time pubdate datetime="{{ dt_beasiswa.created_at|date:'Y-m-d' }}">{{ dt_beasiswa.created_at|date:'d M Y' }}</time>
+                                        <span class="opacity-3 d-inline-block px-2">|</span>
+                                        Admin
+                                    </p>
+                                    <div class="card-body p-0">
+                                        <h4 class="card-title alternative-font-4 font-weight-semibold text-5 mb-3">
+                                            <a class="text-color-dark text-color-hover-primary text-decoration-none font-weight-bold text-3" href="{% url 'sipandu:detail_beasiswa' dt_beasiswa.id_data_konten %}">{{ dt_beasiswa.judul }}</a>
+                                        </h4>
+                                        <p class="card-text mb-2">{{ dt_beasiswa.isi_konten|truncatewords:30|safe}}</p>
+                                        <a href="{% url 'sipandu:detail_beasiswa' dt_beasiswa.id_data_konten %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-primary svg-stroke-color-primary ps-0">
+                                            Lihat Detail dt_beasiswa...
+                                            <svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                <polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No news available.</p>
+                    {% endif %}
+                </article>
+    
+                <ul class="custom-pagination-style-1 pagination pagination-rounded pagination-md justify-content-center">
+                    <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
+                </ul>
+            </div>
+    
+            <div class="blog-sidebar col-lg-4 pt-4 pt-lg-0 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1800">
+                <aside class="sidebar">
+                    <div class="px-3 mt-4">
+                        <h3 class="text-color-quaternary text-capitalize font-weight-bold text-5 m-0">Kategori dt_beasiswa</h3>
+                        <ul class="nav nav-list flex-column mt-2 mb-0 p-relative right-9">
+                            <li class="nav-item"><a class="nav-link bg-transparent border-0" href="#">Looping Kategori Disini</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+    
+    
+
+    <section class="section section-height-3 bg-gradient border-0 m-0">
+        <div class="container py-1">
+            <div class="col">
+                <h2 class="text-color-light font-weight-bold text-9 mb-5-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">dt_beasiswa Lainnya</h2>
+                <div class="custom-half-carousel-style-1 carousel-half-full-width-wrapper carousel-half-full-width-right">
+                    <div class="owl-carousel owl-theme carousel-half-full-width-right dots-align-left dots-light custom-dots-style-1 mb-0" data-plugin-options="{'responsive': {'0': {'items': 1}, '768': {'items': 3}, '992': {'items': 3}, '1200': {'items': 3}}, 'loop': false, 'nav': false, 'dots': true, 'margin': 20}">
+                        <!-- start -->
+                         {% for dt_dt_beasiswa_latest in data_dt_beasiswa_latest %}
+                        <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="400">
+                            <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
+                                <div class="thumb-info-wrapper rounded-0">
+                                    <img src="{{dt_dt_beasiswa_latest.konten_image.url}}" class="img-fluid rounded-0" alt="" />
+                                    <div class="thumb-info-action">
+                                        <a href="{% url 'sipandu:detail_beasiswa' dt_dt_beasiswa_latest.id_data_konten %}" aria-label="">
+                                            <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">{{dt_dt_beasiswa_latest.created_at}}</h2>
+                            <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
+                                <a href="{% url 'sipandu:detail_beasiswa' dt_dt_beasiswa_latest.id_data_konten %}" class="text-decoration-none text-color-light opacity-hover-8">{{dt_dt_beasiswa_latest.judul|title}}</a>
+                            </h3>
+                        </div>
+                        {% endfor %}
+                        <!-- end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div> 
+
+{% endblock main %}
