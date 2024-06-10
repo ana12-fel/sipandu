@@ -60,26 +60,24 @@ Master User
                                 <input type="text" class="form-control" id="nip_guru" name="nip_guru" required>
                             </div>
                             <div class="mb-3">
-                                <label for="nama" class="form-label">Mata Pelajaran</label>
-                                <input type="text" class="form-control" id="nama" name="mata_pelajaran" required>
-                            </div>
-                            <div class="mb-3">
                                 <label for="nama" class="form-label">Pendidikan</label>
                                 <input type="text" class="form-control" id="nama" name="pendidikan" required>
                             </div>
-                            <div class="mb-3">
+                             <div class="mb-3">
                                 <label for="status_kepegawaian" class="form-label">Status Kepegawaian</label>
-                                <select class="form-select" id="status_kepegawaian" name="status_kepegawaian" onchange="toggleTahunForm()" required>
+                                <select class="form-select" id="status_kepegawaian" name="status_kepegawaian" onchange="toggleFields()" required>
                                     <option value="" selected disabled>Pilih Status Kepegawaian</option>
                                     <option value="guru">Guru</option>
                                     <option value="kepala_sekolah">Kepala Sekolah</option>
                                 </select>
                             </div>
-                            <div id="tahun_guru_container">
-                                <div class="mb-3">
-                                    <label for="tahun_guru" class="form-label">Tahun Jabatan Kepala Sekolah</label>
-                                    <input type="text" class="form-control" id="tahun_guru" name="tahun_guru">
-                                </div>
+                            <div id="form_tahun_guru" class="mb-3" style="display: none;">
+                                <label for="tahun_guru" class="form-label">Tahun Jabatan Kepala Sekolah</label>
+                                <input type="text" class="form-control" id="tahun_guru" name="tahun_guru">
+                            </div>
+                            <div id="form_mata_pelajaran" class="mb-3" style="display: none;">
+                                <label for="mata_pelajaran" class="form-label">Mata Pelajaran</label>
+                                <input type="text" class="form-control" id="mata_pelajaran" name="mata_pelajaran">
                             </div>
                             <div class="mb-3">
                                 <label for="thumbnail" class="form-label">Foto</label>
@@ -118,10 +116,10 @@ Master User
                                 <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
                                 <th class="text-center border-bottom-0">NAMA GURU</th>
                                 <th class="text-center border-bottom-0">NIP</th>
-                                <th class="text-center border-bottom-0">MATA PELAJARAN</th>
                                 <th class="text-center border-bottom-0">PENDIDIKAN</th>
                                 <th class="text-center border-bottom-0">STATUS </th>
-                                <th class="text-center border-bottom-0">TAHUN</th>
+                                <th class="text-center border-bottom-0">TAHUN JABATAN</th>
+                                <th class="text-center border-bottom-0">MATA PELAJARAN</th>
                                 <th class="text-center border-bottom-0">FOTO</th>
                                 <th class="text-center border-bottom-0">AKSI</th>
                             </tr>
@@ -133,10 +131,10 @@ Master User
                                 <td class="text-center align-middle">{{ dt_arsip.guru_sekolah.sekolah_nama }}</td>
                                 <td class="text-center align-middle">{{ dt_arsip.nama_guru }}</td>
                                 <td class="text-center align-middle">{{ dt_arsip.nip_guru }}</td>
-                                <td class="text-center align-middle">{{ dt_arsip.mata_pelajaran }}</td>
                                 <td class="text-center align-middle">{{ dt_arsip.pendidikan }}</td>
                                 <td class="text-center align-middle">{{ dt_arsip.status_kepegawaian }}</td>
                                 <td class="text-center align-middle">{{ dt_arsip.tahun_guru }}</td>
+                                <td class="text-center align-middle">{{ dt_arsip.mata_pelajaran }}</td>
                                 <td class="text-center align-middle"><img src="{% if dt_arsip.guru_image %}{{ dt_arsip.guru_image.url }}{% endif %}" alt="{{ dt_arsip.nama_guru }}" style="max-width: 100px;"></td>
                                 <td class="text-center align-middle">
                                     <button type="button" class="btn btn-danger" onclick="deleteGuru('{{ dt_arsip.id_data_guru }}')">
@@ -178,10 +176,10 @@ Master User
                                         <th class="text-center border-bottom-0">NAMA SEKOLAH</th>
                                         <th class="text-center border-bottom-0">NAMA GURU</th>
                                         <th class="text-center border-bottom-0">NIP</th>
-                                        <th class="text-center border-bottom-0">MATA PELAJARAN</th>
                                         <th class="text-center border-bottom-0">PENDIDIKAN</th>
                                         <th class="text-center border-bottom-0">STATUS </th>
-                                        <th class="text-center border-bottom-0">TAHUN</th>
+                                        <th class="text-center border-bottom-0">TAHUN JABATAN</th>
+                                        <th class="text-center border-bottom-0">MATA PELAJARAN</th>
                                         <th class="text-center border-bottom-0">FOTO</th>
                                         <th class="text-center border-bottom-0">AKSI</th>
                                     </tr>
@@ -194,10 +192,10 @@ Master User
                                         <td class="text-center align-middle">{{ dt_guru.guru_sekolah.sekolah_nama }}</td>
                                         <td class="text-center align-middle">{{ dt_guru.nama_guru }}</td>
                                         <td class="text-center align-middle">{{ dt_guru.nip_guru }}</td>
-                                        <td class="text-center align-middle">{{ dt_guru.mata_pelajaran }}</td>
                                         <td class="text-center align-middle">{{ dt_guru.pendidikan }}</td>
                                         <td class="text-center align-middle">{{ dt_guru.status_kepegawaian }}</td>
-                                        <td class="text-center align-middle">{{ dt_guru.tahun_guru }}</td>
+                                        <td class="text-center align-middle">{% if dt_guru.tahun_guru %}{{ dt_guru.tahun_guru }}{% else %}-{% endif %}</td>
+                                        <td class="text-center align-middle">{% if dt_guru.mata_pelajaran %}{{ dt_guru.mata_pelajaran }}{% else %}-{% endif %}</td>
                                         <td class="text-center align-middle"><img src="{% if dt_guru.guru_image %}{{ dt_guru.guru_image.url }}{% endif %}" alt="{{ dt_guru.nama_guru }}" style="max-width: 100px;"></td>
                                         <td class="text-center align-middle">
                                             <div class="btn-group align-top">
@@ -230,16 +228,23 @@ Master User
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script>
-    function toggleTahunForm() {
+    function toggleFields() {
         var statusKepegawaian = document.getElementById("status_kepegawaian").value;
-        var tahun_guru = document.getElementById("tahun_guru");
+        var formTahunGuru = document.getElementById("form_tahun_guru");
+        var formMataPelajaran = document.getElementById("form_mata_pelajaran");
 
-        if (statusKepegawaian === "kepala_sekolah") {
-            tahun_guru.style.display = "block";
+        if (statusKepegawaian === "guru") {
+            formTahunGuru.style.display = "none";
+            formMataPelajaran.style.display = "block";
+        } else if (statusKepegawaian === "kepala_sekolah") {
+            formTahunGuru.style.display = "block";
+            formMataPelajaran.style.display = "none";
         } else {
-            tahun_guru.style.display = "none";
+            formTahunGuru.style.display = "none";
+            formMataPelajaran.style.display = "none";
         }
     }
+
     function previewThumbnail(event) {
         var input = event.target;
         var preview = document.getElementById('thumbnail-preview');
@@ -411,6 +416,10 @@ Master User
 		}
 	});
     })
+
+    $(".modal_guru_edit").on('shown.bs.modal', function(){
+        action_guru_edit();
+    });
 
 </script>
 
