@@ -106,7 +106,8 @@ def laporan_transaksi_belum(request):
         ])
 
     # Buat tabel dari data
-    table = Table(data)
+    col_widths_data = [60, 60, 60, 120, 60, 60, 60]  # Menentukan lebar kolom sesuai kebutuhan
+    table = Table(data, colWidths=col_widths_data)
 
     # Tambahkan style ke tabel
     style = TableStyle([
@@ -114,9 +115,12 @@ def laporan_transaksi_belum(request):
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('FONTSIZE', (0, 0), (-1, 0), 8),  # Ukuran font header
+        ('FONTSIZE', (0, 1), (-1, -1), 8),  # Ukuran font data
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 6),  # Mengurangi padding bawah
+        ('TOPPADDING', (0, 0), (-1, 0), 6),  # Menambahkan padding atas untuk keseragaman
         ('BACKGROUND', (0, 1), (-1, -1), colors.white),
-        ('GRID', (0, 0), (-1, -1), 1, colors.black)
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.black)  # Mengurangi ketebalan grid
     ])
 
     table.setStyle(style)
@@ -173,14 +177,14 @@ def laporan_transaksi_sudah(request):
                         </para>"""
     kop_surat = Paragraph(kop_surat_text, kop_surat_style)
 
-   # Tambahkan logo dan kop surat dalam tabel
+    # Tambahkan logo dan kop surat dalam tabel
     if logo_path:  # Periksa apakah logo ditemukan
         logo = Image(logo_path, width=60, height=70)
         data_kop = [[logo, kop_surat, ""]]
-        col_widths = [60, 400, 60]  # Tambahkan kolom kosong untuk menyeimbangkan
+        col_widths = [60, 350, 50]  # Tambahkan kolom kosong untuk menyeimbangkan
     else:
         data_kop = [["", kop_surat, ""]]
-        col_widths = [60, 400, 60]
+        col_widths = [60, 350, 50]
 
     kop_table = Table(data_kop, colWidths=col_widths)  # Sesuaikan lebar kolom sesuai kebutuhan
     kop_table.setStyle(TableStyle([
@@ -216,18 +220,24 @@ def laporan_transaksi_sudah(request):
             transaksi.domain,
         ])
 
-    table_sudah = Table(data_sudah_transaksi)
+    col_widths_data_sudah = [90, 90, 90, 90, 60, 60, 60]  # Menentukan lebar kolom sesuai kebutuhan
+    table_sudah = Table(data_sudah_transaksi, colWidths=col_widths_data_sudah)
     style_sudah = TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), colors.gray),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('FONTSIZE', (0, 0), (-1, 0), 8),  # Ukuran font header
+        ('FONTSIZE', (0, 1), (-1, -1), 8),  # Ukuran font data
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 6),  # Mengurangi padding bawah
+        ('TOPPADDING', (0, 0), (-1, 0), 6),  # Menambahkan padding atas untuk keseragaman
         ('BACKGROUND', (0, 1), (-1, -1), colors.white),
-        ('GRID', (0, 0), (-1, -1), 1, colors.black)
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.black)  # Mengurangi ketebalan grid
     ])
     table_sudah.setStyle(style_sudah)
     elements.append(table_sudah)
+
+    
 
     doc.build(elements)
     return response

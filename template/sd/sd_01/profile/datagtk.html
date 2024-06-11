@@ -1,0 +1,52 @@
+{% extends 'layout_sd/base_layout_sd.html' %}
+{% block main %}
+{% load static %}
+
+<section class="page-header page-header-modern page-header-lg" style="background-color:#0169fe;">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col text-center">
+                <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2">
+                    <h2 class="text-color-light">
+                        DATA GTK
+                    </h2>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div role="main" class="main">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col">
+                <div class="blog-posts">
+                    <div class="row">
+                        {% for guru in data_guru %}
+                        <div class="col-md-4">
+                            <article class="post post-medium border-0 mb-5">
+                                <div class="post-image">
+                                    <a href="blog-post.html">
+                                        <img src="{{ guru.guru_image.url }}" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="{{ guru.nama_guru }}" />
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-body text-center px-2 py-3">
+                                        <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1">{{ guru.nama_guru }}</h2>
+                                        <p class="text-color-grey positive-ls-3 mb-3">{{ guru.mata_pelajaran }}</p>
+                                        <div class="post-meta">
+                                            <span class="d-block mt-2"><a href="blog-post.html" class="btn btn-xs btn-light text-1 text-uppercase">Read More</a></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock main %}

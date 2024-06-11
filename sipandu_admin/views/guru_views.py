@@ -48,27 +48,32 @@ def EditGuru(request, id_data_guru):
         nip_guru = request.POST.get('nip_guru')
         mata_pelajaran = request.POST.get('mata_pelajaran')
         pendidikan = request.POST.get('pendidikan')
-        status_kepegawaian = request.POST.get('edit_status_kepegawaian-' + str(dt_guru.id_data_guru))
-        tahun_guru = request.POST.get('edit_tahun_guru-' + str(dt_guru.id_data_guru))
+        status_kepegawaian = request.POST.get('edit_status_kepegawaian')
+        tahun_guru = request.POST.get('edit_tahun_guru')
         guru_image = request.FILES.get('guru_image')
 
-        if guru_sekolah_id:
-            try:
-                guru_sekolah = Master_sekolah.objects.get(sekolah_id=guru_sekolah_id)
-                dt_guru.guru_sekolah = guru_sekolah
-            except Master_sekolah.DoesNotExist:
-                return render(request, 'admin/data/edit_guru.html', {
-                    'data_sekolah': Master_sekolah.objects.all(),
-                    'dt_guru': dt_guru,
-                    'error': 'Sekolah tidak ditemukan'
-                })
+        if status_kepegawaian == 'guru':
+            dt_guru.tahun_guru = None
+            dt_guru.mata_pelajaran = mata_pelajaran
+        else:
+            dt_guru.tahun_guru = tahun_guru
+            dt_guru.mata_pelajaran = None
+            # try:
+            #     guru_sekolah = Master_sekolah.objects.get(sekolah_id=guru_sekolah_id)
+            #     dt_guru.guru_sekolah = guru_sekolah
+            # except Master_sekolah.DoesNotExist:
+            #     return render(request, 'admin/data/edit_guru.html', {
+            #         'data_sekolah': Master_sekolah.objects.all(),
+            #         'dt_guru': dt_guru,
+            #         'error': 'Sekolah tidak ditemukan'
+            #     })
 
         dt_guru.nama_guru = nama_guru
         dt_guru.nip_guru = nip_guru
-        dt_guru.mata_pelajaran = mata_pelajaran
+        
         dt_guru.pendidikan = pendidikan
         dt_guru.status_kepegawaian = status_kepegawaian
-        dt_guru.tahun_guru = tahun_guru
+        
 
         if guru_image:
             dt_guru.guru_image = guru_image

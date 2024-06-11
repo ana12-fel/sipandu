@@ -25,96 +25,50 @@
                 <h2>{{ data_sejarah.judul }}</h2>
                
                 
-                <p>{{ data_sejarah.isi_konten|safe}}</p>
+                <p>{{ data_sejarah.isi_konten|safe }}</p>
                 
             </div>
             <div class="col-md-6 d-flex align-items-center">
-                <img src="{% static 'logo/RST.jpg' %}" alt="" style="border-radius: 5px;">
+                <img src="{{ data_sejarah.konten_image.url}}" alt="" style="border-radius: 5px;">
             </div>
         </div>
     </div>
 </section>
 
-<section class="section  overlay-show border-0 m-0 appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="300" style="background-size: cover; background-position: center;">
-    <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2">
-        <div class="col text-center">
-            <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2 mt-3">
-                <h2 class="card-title alternative-font-4 text-color-light font-weight-semibold line-height-1 text-5 mb-1" >Pergantian Kepala Sekolah</h2>
-            </ul>
-        </div>
-    </ul>
-    <div style="padding-top:50px;" class="pt-100 owl-carousel-wrapper position-relative z-index-3 pb-4 mb-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600" style="height: 373px; margin-top: -225px;">
-            <div class="owl-carousel owl-theme dots-horizontal-center custom-dots-style-1 dots-dark mb-0" data-plugin-options="{'responsive': {'576': {'items': 2}, '768': {'items': 2}, '992': {'items': 3}, '1200': {'items': 4}, '1440': {'items': 5}}, 'margin': 20, 'stagePadding': 20, 'loop': true, 'nav': false, 'dots': true, 'autoplay': true, 'autoplayTimeout': 7000}">
-                <div class="py-5">
-                    <a href="{% url 'sipandu:detail_guru' %}" class="text-decoration-none">
-                        <div class="card custom-card-style-1 border-0 border-radius-5 custom-box-shadow-1">
-                            <img src="{% static 'logo/foto-1.jpg' %}" class="card-img-top border-radius-5" alt="John Doe Image" />
-                            <div class="card-body text-center px-4 py-5">
-                                <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1"> Jamal </h2>
-                                <p class="text-color-grey positive-ls-3 mb-3"> 2003 - 2008</p>
-                              
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="py-5">
-                    <a href="{% url 'sipandu:detail_guru' %}" class="text-decoration-none">
-                        <div class="card custom-card-style-1 border-0 border-radius-5 custom-box-shadow-1">
-                            <img src="{% static 'logo/foto-2.jpg' %}" class="card-img-top border-radius-5" alt="John Doe Image" />
-                            <div class="card-body text-center px-4 py-5">
-                                <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1"> Dimas </h2>
-                                <p class="text-color-grey positive-ls-3 mb-3"> 2008 - 2013</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="py-5">
-                    <a href="{% url 'sipandu:detail_guru' %}" class="text-decoration-none">
-                        <div class="card custom-card-style-1 border-0 border-radius-5 custom-box-shadow-1">
-                            <img src="{% static 'logo/foto-3.jpg' %}" class="card-img-top border-radius-5" alt="John Doe Image" />
-                            <div class="card-body text-center px-4 py-5">
-                                <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1"> Eko </h2>
-                                <p class="text-color-grey positive-ls-3 mb-3"> 2013 - 2018</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="py-5">
-                    <a href="{% url 'sipandu:detail_guru' %}" class="text-decoration-none">
-                        <div class="card custom-card-style-1 border-0 border-radius-5 custom-box-shadow-1">
-                            <img src="{% static 'logo/foto-4.jpg' %}" class="card-img-top border-radius-5" alt="John Doe Image" />
-                            <div class="card-body text-center px-4 py-5">
-                                <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1"> Malik </h2>
-                                <p class="text-color-grey positive-ls-3 mb-3"> 2018 - 2023</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="py-5">
-                    <a href="{% url 'sipandu:detail_guru' %}" class="text-decoration-none">
-                        <div class="card custom-card-style-1 border-0 border-radius-5 custom-box-shadow-1">
-                            <img src="{% static 'logo/foto-5.jpg' %}" class="card-img-top border-radius-5" alt="John Doe Image" />
-                            <div class="card-body text-center px-4 py-5">
-                                <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1"> Damar </h2>
-                                <p class="text-color-grey positive-ls-3 mb-3"> 2028 - 2033</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="py-5">
-                    <a href="{% url 'sipandu:detail_guru' %}" class="text-decoration-none">
-                        <div class="card custom-card-style-1 border-0 border-radius-5 custom-box-shadow-1">
-                            <img src="{% static 'logo/foto-1.jpg' %}" class="card-img-top border-radius-5" alt="John Doe Image" />
-                            <div class="card-body text-center px-4 py-5">
-                                <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1"> Selamet </h2>
-                                <p class="text-color-grey positive-ls-3 mb-3">2023 - 2038 </p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
+<section class="section overlay-show border-0 m-0 appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="300" style="background-size: cover; background-position: center; background-color: blue;">
+    <div class="row mt-5 mb-5">
+        <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2 mt-3">
+            <h2 class="card-title alternative-font-4 text-color-light font-weight-semibold line-height-1 text-5 mb-1">Pergantian Kepala Sekolah</h2>
+        </ul>
     </div>
+    <div class="row mt-5 mb-5">
+        <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2 mt-3">
+            <h2 class="card-title alternative-font-4 text-color-light font-weight-semibold line-height-1 text-5 mb-1"></h2>
+        </ul>
+    </div>
+      
 </section>
+
+<div class="owl-carousel-wrapper position-relative z-index-3 pb-5 mb-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600" style="height: 373px; margin-top: -225px;">
+    <div class="owl-carousel owl-theme dots-horizontal-center custom-dots-style-1 dots-dark mb-0" data-plugin-options="{'responsive': {'576': {'items': 2}, '768': {'items': 2}, '992': {'items': 3}, '1200': {'items': 4}, '1440': {'items': 5}}, 'margin': 20, 'stagePadding': 20, 'loop': true, 'nav': false, 'dots': true, 'autoplay': true, 'autoplayTimeout': 7000}">
+        
+        <div class="py-5">
+            <a href="#"class="text-decoration-none">
+                <div class="card custom-card-style-1 border-0 border-radius-3 custom-box-shadow-1">
+                    <img src="#" class="card-img-top border-radius-5" width="291" height="178"/>
+                    <div class="card-body text-center px-4 py-4">
+                        <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1">#</h2>
+                        <p class="text-color-grey positive-ls-3 mb-3">#</p>
+                        <svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+    
+    </div>
+</div>
+
 
 <div class="container py-5 my-5">
     <div class="row align-items-center">
@@ -125,11 +79,12 @@
 
                     <div class="custom-seemore-overlay mb-4" style="max-height: 400px;">
                         <div class="custom-accordion-style-1 accordion accordion-modern" id="FAQAccordion">
+                           
                             <div class="card">
                                 <div class="card">
                                     <h4 class="card-title m-0">
                                         <a class="text-color-dark">
-                                            NPSN : 0286473837638
+                                            Npsn: {{ identitas_sekolah.sekolah_npsn }}
                                         </a>
                                     </h4>
                                 </div>
@@ -138,7 +93,7 @@
                                 <div class="card">
                                     <h4 class="card-title m-0">
                                         <a class="text-color-dark">
-                                            Nama Sekolah : SMA NEGERI 1 ADILUWIH
+                                            Nama: {{ identitas_sekolah.sekolah_nama }}
                                         </a>
                                     </h4>
                                 </div>
@@ -147,7 +102,7 @@
                                 <div class="card">
                                     <h4 class="card-title m-0">
                                         <a class="text-color-dark">
-                                            Jenis : Negeri
+                                            Jenis : {{ identitas_sekolah.sekolah_jenis }}
                                         </a>
                                     </h4>
                                 </div>
@@ -156,7 +111,7 @@
                                 <div class="card">
                                     <h4 class="card-title m-0">
                                         <a class="text-color-dark">
-                                            Status : Aktif
+                                        Status : {% if identitas_sekolah.sekolah_status %} Aktif {% else %} Tidak Aktif {% endif %}
                                         </a>
                                     </h4>
                                 </div>
@@ -165,7 +120,7 @@
                                 <div class="card">
                                     <h4 class="card-title m-0">
                                         <a class="text-color-dark">
-                                            Jenjang : SMA
+                                            Jenjang : {{ identitas_sekolah.sekolah_jenjang.jenjang_nama }}
                                         </a>
                                     </h4>
                                 </div>
@@ -174,7 +129,7 @@
                                 <div class="card">
                                     <h4 class="card-title m-0">
                                         <a class="text-color-dark">
-                                            Provinsi : Lampung
+                                            Provinsi : {{ identitas_sekolah.sekolah_provinsi.wilayah_nama }}
                                         </a>
                                     </h4>
                                 </div>
@@ -183,7 +138,7 @@
                                 <div class="card">
                                     <h4 class="card-title m-0">
                                         <a class="text-color-dark">
-                                            Kabupaten : Pringsewu 
+                                            Kabupaten : {{ identitas_sekolah.sekolah_kabupaten.wilayah_nama }}
                                         </a>
                                     </h4>
                                 </div>
@@ -192,11 +147,12 @@
                                 <div class="card">
                                     <h4 class="card-title m-0">
                                         <a class="text-color-dark">
-                                            Kecamatan : Adiluwih 
+                                            Kecamatan : {{ identitas_sekolah.sekolah_kecamatan.wilayah_nama }}
                                         </a>
                                     </h4>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
