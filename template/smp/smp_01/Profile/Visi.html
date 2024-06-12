@@ -1,14 +1,14 @@
-{% extends 'layoutsmp/base_layoutsmp.html' %}
+{% extends 'layout_smp/base_layout_smp.html' %}
 {% block main %}
 {% load static %}
 
-<section class="page-header page-header-modern page-header-lg overlay overlay-show overlay-op-9 m-0" style="background-image: url(img/demos/law-firm-2/backgrounds/background-4.jpg); height: 300px; background-size: cover;  background-position: center;">
-    <div class="container py-5">
+<section class="page-header page-header-modern page-header-lg" style="background-color:#0169fe;">
+    <div class="container py-4">
         <div class="row">
-            <div class="col text-align-center text-center">
-                <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium " style="margin-top: 80px;">
+            <div class="col text-center">
+                <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2">
                     <h2 class="text-color-light">
-                      Visi & Misi
+                        VISI & MISI
                     </h2>
                 </ul>
             </div>
@@ -16,30 +16,43 @@
     </div>
 </section>
 
-<div class="row mt-4 mb-4 pt-0 pb-0">
-    <div class="col-md-8">
-        <h2 class="font-weight-semibold mb-0">Visi</h2>
-        <p class="lead font-weight-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<section class="section bg-light border-0 z-index-2 pb-0 m-0">
+    <div class="container pt-3 mt-5">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-9 col-xl-8 text-center">
+                <div class="overflow-hidden mb-3">
+                    <h3 class="font-weight-bold text-transform-none text-9 line-height-2 mb-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="400">VISI</h3>
+                </div>
+                <p>{{ data_visi.isi_konten|safe}}</p>
+            </div>
+        </div>
+        <section class="section bg-color-light border-0 position-relative py-0 m-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col pt-5 pb-4">
+                        <div class="row process my-5">
+                            <div class="overflow-hidden mb-3">
+                                <h3 class="font-weight-bold text-transform-none text-9 line-height-2 mb-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="400">MISI</h3>
+                            </div>
+                            {% for dt_misi in data_misi %}
+                            <div class="process-step col-lg-4 mb-5 mb-lg-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200">
+                                <div class="process-step-circle">
+                                    <strong class="process-step-circle-content">{{ forloop.counter }}</strong>
+                                </div>
+                                <div class="process-step-content">
+                                    
+                                    <p class="mb-0">{{ dt_misi.isi_konten|safe}}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
 
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur hendrerit, leo vitae interdum pretium, tortor risus dapibus tortor, eu suscipit orci leo sed nisl. Integer et ipsum eu nulla auctor mattis sit amet in diam. Vestibulum non ornare arcu. Class aptent taciti sociosqu ad...</p>
-
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-    <div class="col-md-4">
-        <img src="{% static 'img/visi.jpg' %}" alt class="img-fluid box-shadow-custom" /> 
-    </div>
-</div>
-
-<div class="row mt-5 mb-5 pt-3 pb-3">
-    <div class="col-md-8">
-        <h2 class="font-weight-semibold mb-0">Misi</h2>
-        <p class="lead font-weight-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur hendrerit, leo vitae interdum pretium, tortor risus dapibus tortor, eu suscipit orci leo sed nisl. Integer et ipsum eu nulla auctor mattis sit amet in diam. Vestibulum non ornare arcu. Class aptent taciti sociosqu ad...</p>
-    </div>
-    <div class="col-md-4">
-        <img src="{% static 'img/misi.png' %}" alt class="img-fluid box-shadow-custom" /> 
-    </div>
-</div>
+</section>
 
 
 

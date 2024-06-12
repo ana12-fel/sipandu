@@ -18,7 +18,7 @@
                                     </li>
                                     {% elif konten.sub_kategori_uraian == 'Visi dan Misi' %}
                                     <li>
-                                        <a href="{% url 'sipandu:Visi'  %}" class="nav-link">Visi dan Misi</a>
+                                        <a href="{% url 'sipandu:visi'  %}" class="nav-link">Visi dan Misi</a>
                                     </li>
                                     {% elif konten.sub_kategori_uraian == 'Struktur Organisasi' %}
                                     <li>
@@ -96,9 +96,9 @@
                                     <li>
                                         <a href="{% url 'sipandu:berita' %}" class="nav-link">Berita</a>
                                     </li>
-                                    {% elif konten.sub_kategori_uraian == 'PENGUMUMAN' %}
+                                    {% elif konten.sub_kategori_uraian == 'Pengumuman' %}
                                     <li>
-                                        <a href="{% url 'sipandu:pengumuman' %}" class="nav-link">PENGUMUMAN</a>
+                                        <a href="{% url 'sipandu:pengumuman' %}" class="nav-link">Pengumuman</a>
                                     </li>
                                     {% elif konten.sub_kategori_uraian == 'Beasiswa' %}
                                     <li>

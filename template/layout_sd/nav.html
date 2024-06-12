@@ -20,7 +20,7 @@
                                     </li>
                                     {% elif konten.sub_kategori_uraian == 'Visi dan Misi' %}
                                     <li>
-                                        <a href="{% url 'sipandu:Visi' %}" class="nav-link">Visi dan Misi</a>
+                                        <a href="{% url 'sipandu:visi' %}" class="nav-link">Visi dan Misi</a>
                                     </li>
                                     {% elif konten.sub_kategori_uraian == 'Struktur Organisasi' %}
                                     <li>
@@ -32,7 +32,7 @@
                                     </li>
                                     {% elif konten.sub_kategori_uraian == 'Data GTK' %}
                                     <li>
-                                        <a href="{% static 'demo-law-firm-2-practice-areas-detail.html' %}" class="nav-link">Data GTK</a>
+                                        <a href="{% url 'sipandu:datagtk'  %}" class="nav-link">Data GTK</a>
                                     </li>
                                     {% else %}
                                     <li>

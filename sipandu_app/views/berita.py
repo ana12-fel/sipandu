@@ -96,16 +96,30 @@ def Detail_kegiatan(request, id_data_konten):
    }
    return render(request, f'{request.jenjang}/{request.template_name}/berita/detail_kegiatan.html', data )
 
-
-
-
-
-
-
-
-def beritasmp(request):
-   return render(request, f'{request.jenjang}/{request.template_name}/berita/berita.html', )
 def pengumuman(request):
-   return render(request, f'{request.jenjang}/{request.template_name}/berita/pengumuman.html', )
-def bursa(request):
-   return render(request, f'{request.jenjang}/{request.template_name}/berita/bursa_kerja.html', )
+   data_pengumuman = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Pengumuman')
+   
+   data_berita_latest = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:5]
+   data = {
+      'data_pengumuman' : data_pengumuman,
+      'data_berita_latest' : data_berita_latest,
+   }
+   return render(request, f'{request.jenjang}/{request.template_name}/berita/pengumuman.html', data )
+
+def Detail_pengumuman(request, id_data_konten):
+
+   data_detail_pengumuman = get_object_or_404(dt_konten, konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian__icontains='Pengumuman', id_data_konten=id_data_konten )
+   data_berita_latest = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:5]
+   
+   data = {
+      'data_detail_pengumuman' : data_detail_pengumuman,
+      'data_berita_latest' : data_berita_latest,
+      
+   }
+   return render(request, f'{request.jenjang}/{request.template_name}/berita/detail_pengumuman.html', data )
+
+
+# def bursa(request):
+#    return render(request, f'{request.jenjang}/{request.template_name}/berita/bursa_kerja.html', )
+# def beritasmp(request):
+#    return render(request, f'{request.jenjang}/{request.template_name}/berita/berita.html', )
