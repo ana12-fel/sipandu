@@ -69,8 +69,10 @@ def detail_fasilitas(request, id_data_konten):
 def datagtk(request):
     # Fetch data for GTK
     data_gtk = dt_guru.objects.filter(guru_sekolah=request.sekolah)
+    
     data = {
         'data_gtk': data_gtk,
+
     }
     return render(request, f'{request.jenjang}/{request.template_name}/profile/datagtk.html', data)
 

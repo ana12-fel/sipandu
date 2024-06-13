@@ -135,13 +135,18 @@
         </div>
 
         <div class="col-lg-6">
+           
             <div class="position-relative">
                 <div data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
-                    <img src="{{ data_guru.guru_image}}" class="img-fluid position-relative z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="border-radius: 5px;"/>
+                    <img src="{{ data_kepala_sekolah.guru_image.url }}" class="img-fluid 
+                    position-relative z-index-1 appear-animation" 
+                    data-appear-animation="fadeInUpShorterPlus" 
+                    data-appear-animation-delay="900" alt="" style="border-radius: 5px;"/>
                 </div>
-                <h2 class="font-weight-bold text-color-dark text-center "> FILLYANA TRI PURWA HASTUTI</h2>
-                <h5 class="text-center">Masa Jabatan 2010 - Sekarang </h5>
+                <h2 class="font-weight-bold text-color-dark text-center "> {{ data_kepala_sekolah.nama_guru }}</h2>
+                <h5 class="text-center">{{ data_kepala_sekolah.tahun_guru }} </h5>
             </div>
+          
         </div>
     </div>
 </div>

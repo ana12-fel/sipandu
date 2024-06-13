@@ -30,6 +30,11 @@ def global_var(request):
         data_sambutan = dt_konten.objects.get(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Sambutan Kepala Sekolah')
     except Exception as e:
         data_sambutan = None
+
+    try:
+        data_kepala_sekolah = dt_guru.objects.get(guru_sekolah=request.sekolah, status_kepegawaian='kepala_sekolah')
+    except Exception as e:
+        data_kepala_sekolah = None
         
     # identitas_sekolah = dt_situs.objects.filter(sekolah_id=request.sekolah)
     try:
@@ -75,8 +80,9 @@ def global_var(request):
         'sliders': sliders,  # Menggunakan nama variabel 'sliders' untuk membedakannya dari model 'Data_slider'
         'galeri_footer':galeri_footer,
         'galeri_footer_first':galeri_footer_first,
-        'data_guru':data_guru,
-        'identitas_sekolah':identitas_sekolah,
+        'data_guru': data_guru,
+        'data_kepala_sekolah' : data_kepala_sekolah,
+        'identitas_sekolah': identitas_sekolah,
         'akses_menu_master' : ["superadmin","admin"],
         'akses_menu_transaksi_situs' : ["superadmin","admin","admin_kabupaten"],
         'akses_menu_data' : ["superadmin","admin","admin_sekolah"],
