@@ -21,6 +21,21 @@ def global_var(request):
     nav_profil_sd = sub_kat.objects.filter(kategori_id__kategori_uraian__icontains='PROFILE', kategori_id__kategori_tema__tema_nama__icontains ='TEMA SD' )
     nav_berita_sd = sub_kat.objects.filter(kategori_id__kategori_uraian__icontains='berita', kategori_id__kategori_tema__tema_nama__icontains ='TEMA SD' )
     data_guru = dt_guru.objects.filter(guru_sekolah=request.sekolah)
+    data_kegiatan = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Kegiatan').order_by('-id_data_konten')[:3]
+    data_berita = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:2]
+    data_kerja = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Bursa Kerja').order_by('-id_data_konten')[:2]
+    
+
+    try:
+        data_sambutan = dt_konten.objects.get(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Sambutan Kepala Sekolah')
+    except Exception as e:
+        data_sambutan = None
+
+    try:
+        data_kepala_sekolah = dt_guru.objects.get(guru_sekolah=request.sekolah, status_kepegawaian='kepala_sekolah')
+    except Exception as e:
+        data_kepala_sekolah = None
+        
     # identitas_sekolah = dt_situs.objects.filter(sekolah_id=request.sekolah)
     try:
         identitas_sekolah = dt_sekolah.objects.get(sekolah_id=request.sekolah.sekolah_id)
@@ -65,12 +80,17 @@ def global_var(request):
         'sliders': sliders,  # Menggunakan nama variabel 'sliders' untuk membedakannya dari model 'Data_slider'
         'galeri_footer':galeri_footer,
         'galeri_footer_first':galeri_footer_first,
-        'data_guru':data_guru,
-        'identitas_sekolah':identitas_sekolah,
+        'data_guru': data_guru,
+        'data_kepala_sekolah' : data_kepala_sekolah,
+        'identitas_sekolah': identitas_sekolah,
         'akses_menu_master' : ["superadmin","admin"],
         'akses_menu_transaksi_situs' : ["superadmin","admin","admin_kabupaten"],
         'akses_menu_data' : ["superadmin","admin","admin_sekolah"],
-        'akses_menu_laporan' : ["superadmin","admin","admin_kabupaten"]
+        'akses_menu_laporan' : ["superadmin","admin","admin_kabupaten"],
+        'data_kegiatan' : data_kegiatan,
+        'data_berita' : data_berita,
+        'data_kerja' : data_kerja,
+        'data_sambutan' : data_sambutan,
     }
     
     return data

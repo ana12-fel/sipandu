@@ -1,0 +1,79 @@
+{% extends 'layout_smp/base_layout_smp.html' %}
+{% block main %}
+{% load static %}
+
+<div role="main" class="main">
+
+    <section class="page-header page-header-modern page-header-lg" style="background-color:#0169fe;">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col text-center">
+                    <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2">
+                        <h2 class="text-color-light">
+                            PENGUMUMAN
+                        </h2>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container py-5 my-4">
+        <div class="row row-gutter-sm py-2">
+        {% if data_pengumuman %}
+            {% for dt_pengumuman in data_pengumuman %}
+            <div class="col-md-6 col-lg-4 mb-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
+                <a href="{% url 'sipandu:detail_pengumuman' dt_pengumuman.id_data_konten %}" class="text-decoration-none">
+                    <div class="card custom-card-style-1 border-0 border-radius-0 custom-box-shadow-1">
+                        <img src="{{dt_pengumuman.konten_image.url}}" class="card-img-top border-radius-0" alt="John Doe Image" />
+                        <div class="card-body text-center px-4 py-5">
+                            <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1">{{dt_pengumuman.judul}}</h2>
+                            <p class="font-weight-light text-color-dark line-height-7 mb-2">{{dt_pengumuman.isi_konten|truncatewords:15|safe}} </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+            {% else %}
+                <p>No news available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <section class="section section-height-3 bg-gradient border-0 m-0">
+        <div class="container py-1">
+            <div class="col">
+                <h2 class="text-color-light font-weight-bold text-9 mb-5-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">Berita Lainnya</h2>
+                <div class="custom-half-carousel-style-1 carousel-half-full-width-wrapper carousel-half-full-width-right">
+                    <div class="owl-carousel owl-theme carousel-half-full-width-right dots-align-left dots-light custom-dots-style-1 mb-0" data-plugin-options="{'responsive': {'0': {'items': 1}, '768': {'items': 3}, '992': {'items': 3}, '1200': {'items': 3}}, 'loop': false, 'nav': false, 'dots': true, 'margin': 20}">
+                        <!-- start -->
+                         {% for dt_berita_latest in data_berita_latest %}
+                        <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="400">
+                            <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
+                                <div class="thumb-info-wrapper rounded-0">
+                                    <img src="{{dt_berita_latest.konten_image.url}}" class="img-fluid rounded-0" alt="" />
+                                    <div class="thumb-info-action">
+                                        <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" aria-label="">
+                                            <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">{{dt_berita_latest.created_at}}</h2>
+                            <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
+                                <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" class="text-decoration-none text-color-light opacity-hover-8">{{dt_berita_latest.judul|title}}</a>
+                            </h3>
+                        </div>
+                        {% endfor %}
+                        <!-- end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+
+</div> 
+
+{% endblock main %}

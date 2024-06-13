@@ -4,7 +4,6 @@
 
 
 <section class="page-header page-header-modern bg-primary custom-page-header">
-
     <div class="custom-svg-style-1 svg-fill-color-primary position-absolute top-0 left-50pct transform3dx-n50 h-100 z-index-0">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1920 400" xml:space="preserve" preserveAspectRatio="none" width="100%" height="100%" data-plugin-float-element-svg="true">
             <circle id="svg_2" r="7.5" cy="539.5" cx="209.5" fill="#FFF" opacity="0.2" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}"/>
@@ -15,20 +14,12 @@
             <circle stroke="#ffffff" opacity="0.2" id="svg_9" r="14.625" cy="689.625" cx="128.87476" fill="none" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.5, 'transition': true, 'transitionDuration': 2000, 'isInsideSVG': true}"/>
         </svg>								
     </div>
-
-    <div class="container position-relative z-index-1 mt-4 h-100">
-        <div class="row h-100">
-            <div class="col align-self-end">
-                <div class="d-block">
-                    <span class="d-block custom-stroke-text-effect-1 custom-big-text-2 font-weight-bold opacity-2">PROFIL SEKOLAH</span>
-                </div>
-                <div class="d-block">
-                    <h1 class="text-color-light font-weight-bold positive-ls-3 custom-big-text-1 line-height-1 mb-0">PROFIL SEKOLAH</h1>
-                </div>
-            </div>
+    <div class="container position-relative z-index-1 mt-4 h-100 d-flex flex-column align-items-center justify-content-center">
+       
+        <div class="text-center">
+            <h1 class="text-color-light font-weight-bold positive-ls-3 custom-big-text-1 line-height-1 mb-0" style="font-size: 20px;">IDENTITAS</h1>
         </div>
     </div>
-
 </section>
 
 <section class="section bg-color-grey-scale-1 border-0 position-relative py-0 m-0">
@@ -64,98 +55,98 @@
 
                     <div class="custom-seemore-overlay mb-4" style="max-height: 400px;">
                         <div class="custom-accordion-style-1 accordion accordion-modern" id="FAQAccordion">
-                            {% for data_sd in identitas_sekolah %}
-                                {% if data_sd == request.sekolah %}
-                                    <div class="card">
-                                        <div class="card">
-                                            <h4 class="card-title m-0">
-                                                <a class="text-color-dark">
-                                                    NPSN : {{ data_sd.sekolah_npsn }}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card">
-                                            <h4 class="card-title m-0">
-                                                <a class="text-color-dark">
-                                                    Nama Sekolah : {{ data_sd.sekolah_nama }}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card">
-                                            <h4 class="card-title m-0">
-                                                <a class="text-color-dark">
-                                                    Jenis : {{ data_sd.sekolah_jenis }}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card">
-                                            <h4 class="card-title m-0">
-                                                <a class="text-color-dark">
-                                                    Status : {% if data_sd.sekolah_status %} Aktif {% else %} Tidak Aktif {% endif %}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card">
-                                            <h4 class="card-title m-0">
-                                                <a class="text-color-dark">
-                                                    Jenjang :{{ data_sd.sekolah_jenjang.jenjang_nama }}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card">
-                                            <h4 class="card-title m-0">
-                                                <a class="text-color-dark">
-                                                    Provinsi : {{ data_sd.sekolah_provinsi.wilayah_nama }}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card">
-                                            <h4 class="card-title m-0">
-                                                <a class="text-color-dark">
-                                                    Kabupaten : {{ data_sd.sekolah_kabupaten.wilayah_nama }} 
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card">
-                                            <h4 class="card-title m-0">
-                                                <a class="text-color-dark">
-                                                    Kecamatan : {{ data_sd.sekolah_kecamatan.wilayah_nama }}
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
+                            
+                            <div class="card">
+                                <div class="card">
+                                    <h4 class="card-title m-0">
+                                        <a class="text-color-dark">
+                                            NPSN : {{ identitas_sekolah.sekolah_npsn }}
+                                        </a>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card">
+                                    <h4 class="card-title m-0">
+                                        <a class="text-color-dark">
+                                            Nama Sekolah : {{ identitas_sekolah.sekolah_nama }}
+                                        </a>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card">
+                                    <h4 class="card-title m-0">
+                                        <a class="text-color-dark">
+                                            Jenis : {{ identitas_sekolah.sekolah_jenis.upper }}
+                                        </a>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card">
+                                    <h4 class="card-title m-0">
+                                        <a class="text-color-dark">
+                                            Status : {% if identitas_sekolah.sekolah_status %} Aktif {% else %} Tidak Aktif {% endif %}
+                                        </a>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card">
+                                    <h4 class="card-title m-0">
+                                        <a class="text-color-dark">
+                                            Jenjang : {{ identitas_sekolah.sekolah_jenjang.jenjang_nama }}
+                                        </a>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card">
+                                    <h4 class="card-title m-0">
+                                        <a class="text-color-dark">
+                                            Provinsi : {{ identitas_sekolah.sekolah_provinsi.wilayah_nama }}
+                                        </a>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card">
+                                    <h4 class="card-title m-0">
+                                        <a class="text-color-dark">
+                                            Kabupaten : {{ identitas_sekolah.sekolah_kabupaten.wilayah_nama }} 
+                                        </a>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card">
+                                    <h4 class="card-title m-0">
+                                        <a class="text-color-dark">
+                                            Kecamatan : {{ identitas_sekolah.sekolah_kecamatan.wilayah_nama }} 
+                                        </a>
+                                    </h4>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    
-                    
                 </div>
             </div>
         </div>
 
         <div class="col-lg-6">
+           
             <div class="position-relative">
                 <div data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
-                    <img src="{% static 'logo/FILLIANA.jpg' %}" class="img-fluid position-relative z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="border-radius: 5px;"/>
+                    <img src="{{ data_kepala_sekolah.guru_image.url }}" class="img-fluid 
+                    position-relative z-index-1 appear-animation" 
+                    data-appear-animation="fadeInUpShorterPlus" 
+                    data-appear-animation-delay="900" alt="" style="border-radius: 5px;"/>
                 </div>
-                <h2 class="font-weight-bold text-color-dark text-center "> FILLYANA TRI PURWA HASTUTI</h2>
-                <h5 class="text-center">Masa Jabatan 2010 - Sekarang </h5>
+                <h2 class="font-weight-bold text-color-dark text-center "> {{ data_kepala_sekolah.nama_guru }}</h2>
+                <h5 class="text-center">{{ data_kepala_sekolah.tahun_guru }} </h5>
             </div>
+          
         </div>
     </div>
 </div>

@@ -15,16 +15,20 @@ def ekstrakulikuler(request):
    # data_fasilitas = get_object_or_404(dt_konten, konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian__icontains='Fasilitas' )
    # print(data_fasilitas)
    ekstrakulikuler_list = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Ekstrakulikuler')
+   data_berita_latest = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:5]
    data = {
       'ekstrakulikuler_list' : ekstrakulikuler_list,
+      'data_berita_latest' : data_berita_latest,
    }
    return render(request, f'{request.jenjang}/{request.template_name}/program/ekstrakulikuler.html', data )
 
 def detail_ekstrakulikuler(request, id_data_konten):
 
    data_detail_ekstrakulikuler = get_object_or_404(dt_konten, konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian__icontains='Ekstrakulikuler', id_data_konten=id_data_konten )
+   data_berita_latest = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:5]
    # print(data_detail_fasilitas)
    data = {
       'data_detail_ekstrakulikuler' : data_detail_ekstrakulikuler,
+      'data_berita_latest' :data_berita_latest,
    }
    return render(request, f'{request.jenjang}/{request.template_name}/program/detail_ekstrakulikuler.html', data)
