@@ -105,7 +105,9 @@ Transaksi Situs
                                 <td class="text-center align-middle">{{ forloop.counter }}</td>
                                 <td class="text-center align-middle">{{ dt_arsip.sekolah_id.sekolah_nama }}</td>
                                 <td class="text-center align-middle">{{ dt_arsip.tema_id.tema_nama }}</td>
-                                <td class="text-center align-middle">{{ dt_arsip.domain }}</td>
+                                <td class="text-center align-middle">
+                                    <a href="http://example.com/{{ dt_arsip.domain }}">{{ dt_arsip.domain }}</a>
+                                </td>
                                 <td class="text-center align-middle">
                                     <img src="{% if dt_arsip.tema_id.tema_thumbnail %}{{ dt_arsip.tema_id.tema_thumbnail.url }}{% endif %}" alt="{{ dt_arsip.tema_id.tema_nama }}" style="max-width: 100px;">
                                 </td>
@@ -160,7 +162,9 @@ Transaksi Situs
                                             <td class="text-center align-middle">{{ forloop.counter }}</td>
                                             <td class="text-center align-middle">{{ dt_transaksi.sekolah_id.sekolah_nama }}</td>
                                             <td class="text-center align-middle">{{ dt_transaksi.tema_id.tema_nama }}</td>
-                                            <td class="text-center align-middle">{{ dt_transaksi.domain }}</td>
+                                            <td class="text-center align-middle">{{ dt_transaksi.domain }}
+                                                <a href="http://{{ dt_transaksi.domain }}.disdikpapuatengah.id/"  class="btn btn-primar"><i class="fa fa-mail-reply"  >
+                                            </td>
                                             <td class="text-center align-middle">
                                                 <img src="{% if dt_transaksi.tema_id.tema_thumbnail %}{{ dt_transaksi.tema_id.tema_thumbnail.url }}{% endif %}" alt="{{ dt_transaksi.tema_id.tema_nama }}" style="max-width: 100px;">
                                             </td>
