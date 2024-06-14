@@ -37,19 +37,21 @@
 	</div>
 	<div class="container">
 		<div class="row py-5 my-3">
+			
 			<div class="col-sm-4">
-				<img src="{% static 'img/1.jpeg' %}" alt class="img-fluid" />
+				<img src="{{ data_pengumuman.konten_image.url }}" alt class="img-fluid" />
 			</div>
 			<div class="col-sm-8">
 				<h1>
-					{{data_pengumuman.judul}}
+					{{ data_pengumuman.judul }}
 				</h1>
 				<p>
-					{{data_pengumuman.isi_konten}}
+					{{ data_pengumuman.isi_konten|safe|truncatewords:15 }}
 				</p>
 				<a href="#" class="btn btn-primary btn-sm">
 					Baca Selengkapnya <span class="fa fa-arrow-right"></span></a>
 			</div>
+			
 		</div>
 	</div>
 	<div class="container-fluid">

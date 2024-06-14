@@ -24,13 +24,17 @@ def global_var(request):
     data_kegiatan = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Kegiatan').order_by('-id_data_konten')[:3]
     data_berita = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:3]
     data_kerja = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Bursa Kerja').order_by('-id_data_konten')[:3]
-    data_Pengumuman = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Pengumuman').order_by('-id_data_konten')[:3]
     
 
     try:
         data_sambutan = dt_konten.objects.get(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Sambutan Kepala Sekolah')
     except Exception as e:
         data_sambutan = None
+
+    try:
+        data_pengumuman = dt_konten.objects.get(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Pengumuman')
+    except Exception as e:
+        data_pengumuman = None
 
     try:
         data_kepala_sekolah = dt_guru.objects.get(guru_sekolah=request.sekolah, status_kepegawaian='kepala_sekolah')
@@ -92,7 +96,7 @@ def global_var(request):
         'data_berita' : data_berita,
         'data_kerja' : data_kerja,
         'data_sambutan' : data_sambutan,
-        'data_Pengumuman' : data_Pengumuman,
+        'data_pengumuman' : data_pengumuman,
     }
     
     return data
