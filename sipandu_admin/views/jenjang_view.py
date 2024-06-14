@@ -8,7 +8,7 @@ from django.views.decorators.http import require_POST
 
 def IndexJenjang(request):
     if request.method == 'POST':
-        jenjang_nama = request.POST.get('jenjang_nama')
+        jenjang_nama = request.POST.get('jenjang_nama').lower()
         jenjang_status = request.POST.get('jenjang_status')
         data = {}
         try:
@@ -31,7 +31,7 @@ def IndexJenjang(request):
 def edit_jenjang(request, jenjang_id):
     if request.method == 'POST':
         dt_jenjang = Master_jenjang.objects.get(jenjang_id=jenjang_id)
-        jenjang_nama = request.POST.get('jenjang_nama')
+        jenjang_nama = request.POST.get('jenjang_nama').lower()
         is_active = request.POST.get('jenjang_status')  
         
         dt_jenjang.jenjang_nama=jenjang_nama
