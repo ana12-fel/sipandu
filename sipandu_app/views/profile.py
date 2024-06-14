@@ -15,7 +15,6 @@ def identitas(request):
 
 def sambutan(request):
    
-   # tolong di admin ditamnbahkan kunci untuk menu sub kategori.
    data_sambutan = get_object_or_404(dt_konten, konten_sekolah = request.sekolah, judul__icontains = 'data_sambutan' )
    data = {
       'data_sambutan' : data_sambutan,
@@ -23,8 +22,7 @@ def sambutan(request):
    return render(request, f'{request.jenjang}/{request.template_name}/base/index.html', data)
 
 
-
-def Visi(request):
+def visi(request):
     # tolong di admin ditamnbahkan kunci untuk menu sub kategori.
    data_visi = get_object_or_404(dt_konten, konten_sekolah = request.sekolah, judul__icontains = 'Visi' )
    data_misi = dt_konten.objects.filter(konten_sekolah = request.sekolah, judul__icontains = 'Misi')
@@ -32,10 +30,13 @@ def Visi(request):
       'data_visi' : data_visi,
       'data_misi' : data_misi,
    }
-   return render(request, f'{request.jenjang}/{request.template_name}/profile/Visi.html', data )
+   return render(request, f'{request.jenjang}/{request.template_name}/profile/visi.html', data )
+
 
 def struktur(request):
+   print ('test')
    data_struktur = get_object_or_404(dt_konten, konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Struktur Organisasi' )
+
    data = {
       'data_struktur' : data_struktur,
    }
@@ -46,8 +47,10 @@ def fasilitas(request):
    # data_fasilitas = get_object_or_404(dt_konten, konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian__icontains='Fasilitas' )
    # print(data_fasilitas)
    data_fasilitas = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Fasilitas')
+   data_berita_latest = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:5]
    data = {
       'data_fasilitas' : data_fasilitas,
+      'data_berita_latest' : data_berita_latest
    }
    return render(request, f'{request.jenjang}/{request.template_name}/profile/fasilitas.html', data )
 
@@ -55,20 +58,21 @@ def fasilitas(request):
 def detail_fasilitas(request, id_data_konten):
 
    data_detail_fasilitas = get_object_or_404(dt_konten, konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian__icontains='Fasilitas', id_data_konten=id_data_konten )
+   data_berita_latest = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:5]
    # print(data_detail_fasilitas)
    data = {
       'data_detail_fasilitas' : data_detail_fasilitas,
+      'data_berita_latest' : data_berita_latest
    }
    return render(request, f'{request.jenjang}/{request.template_name}/profile/detail_fasilitas.html', data)
-
-def detail_fasilitas_smp(request):
-   return render(request, f'{request.jenjang}/{request.template_name}/profile/detail_fasilitas_smp.html', )
 
 def datagtk(request):
     # Fetch data for GTK
     data_gtk = dt_guru.objects.filter(guru_sekolah=request.sekolah)
+    
     data = {
         'data_gtk': data_gtk,
+
     }
     return render(request, f'{request.jenjang}/{request.template_name}/profile/datagtk.html', data)
 

@@ -2,9 +2,7 @@
 {% block main %}
 {% load static %}
 
-
 <section class="page-header page-header-modern bg-primary custom-page-header">
-
     <div class="custom-svg-style-1 svg-fill-color-primary position-absolute top-0 left-50pct transform3dx-n50 h-100 z-index-0">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1920 400" xml:space="preserve" preserveAspectRatio="none" width="100%" height="100%" data-plugin-float-element-svg="true">
             <circle id="svg_2" r="7.5" cy="539.5" cx="209.5" fill="#FFF" opacity="0.2" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}"/>
@@ -15,82 +13,40 @@
             <circle stroke="#ffffff" opacity="0.2" id="svg_9" r="14.625" cy="689.625" cx="128.87476" fill="none" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.5, 'transition': true, 'transitionDuration': 2000, 'isInsideSVG': true}"/>
         </svg>								
     </div>
-
-    <div class="container position-relative z-index-1 mt-4 h-100">
-        <div class="row h-100">
-            <div class="col align-self-end">
-                <div class="d-block">
-                    <span class="d-block custom-stroke-text-effect-1 custom-big-text-2 font-weight-bold opacity-2">Presiden Hadir Acara Pramuka</span>
-                </div>
-                <div class="d-block">
-                    <h1 class="text-color-light font-weight-bold positive-ls-3 custom-big-text-1 line-height-1 mb-0">Presiden Hadir Acara Pramuka</h1>
-                </div>
-            </div>
+    <div class="container position-relative z-index-1 mt-4 h-100 d-flex flex-column align-items-center justify-content-center">
+       
+        <div class="text-center">
+            <h1 class="text-color-light font-weight-bold positive-ls-3 custom-big-text-1 line-height-1 mb-0" style="font-size: 20px;">{{detail_berita.judul}}</h1>
         </div>
     </div>
-
 </section>
 
 <div class="container pt-4 pb-5 my-5">
     <div class="row">
         <div class="col-lg-8 mb-5 mb-lg-0 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1600">
-
             <article>
                 <div class="card border-0">
                     <div class="card-body z-index-1 p-0">
-                        <p class="text-uppercase text-1 mb-3 text-color-default"><time pubdate datetime="2023-01-10">10 Jan 2023</time> <span class="opacity-3 d-inline-block px-2">|</span> 3 Comments <span class="opacity-3 d-inline-block px-2">|</span> John Doe</p>
-
+                        <p class="text-uppercase text-1 mb-3 text-color-default"><time pubdate datetime="2023-01-10">{{detail_berita.created_at}}</time> <span class="opacity-3 d-inline-block px-2">|</span> Admin</p>
                         <div class="post-image pb-4">
-                            <img class="card-img-top custom-border-radius-1" src="{% static 'logo/pramuka.jpg' %}" alt="Card Image">
+                            <img class="card-img-top custom-border-radius-1" src="{{detail_berita.konten_image.url}}" alt="Card Image">
                         </div>
-
                         <div class="card-body p-0">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur lectus lacus, rutrum sit amet placerat et, bibendum nec mauris. Duis molestie, purus eget placerat viverra, nisi odio gravida sapien, congue tincidunt nisl ante nec tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sagittis, massa fringilla consequat blandit, mauris ligula porta nisi, non tristique enim sapien vel nisl. Suspendisse vestibulum lobortis dapibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent nec tempus nibh. Donec mollis commodo metus et fringilla. Etiam venenatis, diam id adipiscing convallis, nisi eros lobortis tellus, feugiat adipiscing ante ante sit amet dolor. Vestibulum vehicula scelerisque facilisis. Sed faucibus placerat bibendum. Maecenas sollicitudin commodo justo, quis hendrerit leo consequat ac. Proin sit amet risus sapien, eget interdum dui. Proin justo sapien, varius sit amet hendrerit id, egestas quis mauris.</p>
-                            <p>Ut ac elit non mi pharetra dictum nec quis nibh. Pellentesque ut fringilla elit. Aliquam non ipsum id leo eleifend sagittis id a lorem. Sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam massa mauris, viverra et rhoncus a, feugiat ut sem. Quisque ultricies diam tempus quam molestie vitae sodales dolor sagittis. Praesent commodo sodales purus. Maecenas scelerisque ligula vitae leo adipiscing a facilisis nisl ullamcorper. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</p>
-                            <p>Curabitur non erat quam, id volutpat leo. Nullam pretium gravida urna et interdum. Suspendisse in dui tellus. Cras luctus nisl vel risus adipiscing aliquet. Phasellus convallis lorem dui. Quisque hendrerit, lectus ut accumsan gravida, leo tellus porttitor mi, ac mattis eros nunc vel enim. Nulla facilisi. Nam non nulla sed nibh sodales auctor eget non augue. Pellentesque sollicitudin consectetur mauris, eu mattis mi dictum ac. Etiam et sapien eu nisl dapibus fermentum et nec tortor.</p>
-
+                            <p>{{detail_berita.isi_konten|safe}}</p>
                             <!-- Go to www.addthis.com/dashboard to customize your tools -->
                             <div class="addthis_inline_share_toolbox"></div>
                             <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-60ba220dbab331b0"></script>
-
                         </div>
                     </div>
                 </div>
             </article>
-
         </div>
         <div class="blog-sidebar col-lg-4 pt-4 pt-lg-0 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1800">
-            <aside class="sidebar">  
-                <div class="py-1 clearfix">
-                    <hr class="my-2">
-                </div>
+            <aside class="sidebar">
                 <div class="px-3 mt-4">
-                    <h3 class="text-color-quaternary text-capitalize font-weight-bold text-5 m-0 mb-3">Recent Comments</h3>
-                    <div class="pb-2 mb-1">
-                        <a href="#" class="text-color-default text-2 mb-0 d-block text-decoration-none line-height-4">Admin on <strong class="text-color-dark text-hover-primary text-4">Vivamus sollicitudin</strong> <span class="text-uppercase text-1 d-block pt-1 pb-3">10 Jan 2023</span></a>
-                        <a href="#" class="text-color-default text-2 mb-0 d-block text-decoration-none line-height-4">John Doe on <strong class="text-color-dark text-hover-primary text-4">Lorem ipsum dolor</strong> <span class="text-uppercase text-1 d-block pt-1 pb-3">10 Jan 2023</span></a>
-                        <a href="#" class="text-color-default text-2 mb-0 d-block text-decoration-none line-height-4">Admin on <strong class="text-color-dark text-hover-primary text-4">Consectetur adipiscing</strong> <span class="text-uppercase text-1 d-block pt-1 pb-3">10 Jan 2023</span></a>
-                    </div>
-                </div>
-                <div class="py-1 clearfix">
-                    <hr class="my-2">
-                </div>
-                <div class="px-3 mt-4">
-                    <h3 class="text-color-quaternary text-capitalize font-weight-bold text-5 m-0">Categories</h3>
+                    <h3 class="text-color-quaternary text-capitalize font-weight-bold text-5 m-0">Kategori Berita</h3>
                     <ul class="nav nav-list flex-column mt-2 mb-0 p-relative right-9">
-                        <li class="nav-item"><a class="nav-link bg-transparent border-0" href="#">Design (2)</a></li>
-                        <li class="nav-item">
-                            <a class="nav-link bg-transparent border-0 active" href="#">Photos (4)</a>
-                            <ul>
-                                <li class="nav-item"><a class="nav-link bg-transparent border-0" href="#">Animals</a></li>
-                                <li class="nav-item"><a class="nav-link bg-transparent border-0 active" href="#">Business</a></li>
-                                <li class="nav-item"><a class="nav-link bg-transparent border-0" href="#">Sports</a></li>
-                                <li class="nav-item"><a class="nav-link bg-transparent border-0" href="#">People</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"><a class="nav-link bg-transparent border-0" href="#">Videos (3)</a></li>
-                        <li class="nav-item"><a class="nav-link bg-transparent border-0" href="#">Lifestyle (2)</a></li>
-                        <li class="nav-item"><a class="nav-link bg-transparent border-0" href="#">Technology (1)</a></li>
+                        <li class="nav-item"><a class="nav-link bg-transparent border-0" href="#">Looping Kategori Disini</a></li>
                     </ul>
                 </div>
             </aside>
@@ -98,204 +54,37 @@
     </div>
 </div>
 
-<div class="container pt-5 pb-2">
-    <div class="overflow-hidden">
-        <h2 class="text-color-dark font-weight-normal text-6 mb-0 appear-animation" data-appear-animation="maskUp"><strong class="font-weight-extra-bold">BERITA</strong></h2>
-    </div>
-    <div class="overflow-hidden mb-3">
-        <p class="mb-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="200">Berita terbaru</p>
-    </div>
-    <div class="row">
+
+<section class="section section-height-3 bg-gradient border-0 m-0">
+    <div class="container py-1">
         <div class="col">
-            <div class="my-4 lightbox appear-animation" data-appear-animation="fadeInUpShorter" data-plugin-options="{'delegate': 'a.lightbox-portfolio', 'type': 'image', 'gallery': {'enabled': true}}">
-                <div class="owl-carousel owl-theme pb-3" data-plugin-options="{'items': 4, 'margin': 35, 'loop': false}">
-
-                    <div class="portfolio-item">
-                        <span class="thumb-info thumb-info-lighten thumb-info-no-borders thumb-info-bottom-info thumb-info-centered-icons border-radius-0">
-                            <span class="thumb-info-wrapper border-radius-0">
-                                <img src="{% static 'logo/lab komputer.jpg' %}" class="img-fluid border-radius-0" alt="">
-                                <span class="thumb-info-title">
-                                    <span class="thumb-info-inner line-height-1 font-weight-bold text-dark position-relative top-3">Lab Komputer Baru</span>
-                                    <span class="thumb-info-type">Siswa sudah mencoba lab komputer baru</span>
-                                </span>
-                                <span class="thumb-info-action">
-                                    <a href="{% url 'sipandu:detail' %}">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-primary"><i class="fas fa-link"></i></span>
+            <h2 class="text-color-light font-weight-bold text-9 mb-5-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">Berita Lainnya</h2>
+            <div class="custom-half-carousel-style-1 carousel-half-full-width-wrapper carousel-half-full-width-right">
+                <div class="owl-carousel owl-theme carousel-half-full-width-right dots-align-left dots-light custom-dots-style-1 mb-0" data-plugin-options="{'responsive': {'0': {'items': 1}, '768': {'items': 3}, '992': {'items': 3}, '1200': {'items': 3}}, 'loop': false, 'nav': false, 'dots': true, 'margin': 20}">
+                    <!-- start -->
+                     {% for dt_berita_latest in data_berita_latest %}
+                    <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="400">
+                        <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
+                            <div class="thumb-info-wrapper rounded-0">
+                                <img src="{{dt_berita_latest.konten_image.url}}" class="img-fluid rounded-0" alt="" />
+                                <div class="thumb-info-action">
+                                    <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" aria-label="">
+                                        <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
                                     </a>
-                                    <a href="{% static 'logo/lab komputer.jpg' %}" class="lightbox-portfolio">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-search text-dark"></i></span>
-                                    </a>
-                                </span>
-                            </span>
-                        </span>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">{{dt_berita_latest.created_at}}</h2>
+                        <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
+                            <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" class="text-decoration-none text-color-light opacity-hover-8">{{dt_berita_latest.judul|title}}</a>
+                        </h3>
                     </div>
-
-                    <div class="portfolio-item">
-                        <span class="thumb-info thumb-info-lighten thumb-info-no-borders thumb-info-bottom-info thumb-info-centered-icons border-radius-0">
-                            <span class="thumb-info-wrapper border-radius-0">
-                                <img src="{% static 'logo/tari.jpg' %}" class="img-fluid border-radius-0" alt="">
-                                <span class="thumb-info-title">
-                                    <span class="thumb-info-inner line-height-1 font-weight-bold text-dark position-relative top-3">Kegiatan tari</span>
-                                    <span class="thumb-info-type">Siswa tampil di aceh menampilkan tarian daerah</span>
-                                </span>
-                                <span class="thumb-info-action">
-                                    <a href="portfolio-single-wide-slider.html">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-primary"><i class="fas fa-link"></i></span>
-                                    </a>
-                                    <a href="{% static 'logo/tari.jpg' %}" class="lightbox-portfolio">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-search text-dark"></i></span>
-                                    </a>
-                                </span>
-                            </span>
-                        </span>
-                    </div>
-
-                    <div class="portfolio-item">
-                        <span class="thumb-info thumb-info-lighten thumb-info-no-borders thumb-info-bottom-info thumb-info-centered-icons border-radius-0">
-                            <span class="thumb-info-wrapper border-radius-0">
-                                <img src="{% static 'logo/pramuka.jpg' %}" class="img-fluid border-radius-0" alt="">
-                                <span class="thumb-info-title">
-                                    <span class="thumb-info-inner line-height-1 font-weight-bold text-dark position-relative top-3">Porto Screens</span>
-                                    <span class="thumb-info-type">Website</span>
-                                </span>
-                                <span class="thumb-info-action">
-                                    <a href="portfolio-single-wide-slider.html">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-primary"><i class="fas fa-link"></i></span>
-                                    </a>
-                                    <a href="{% static 'logo/pramuka.jpg' %}" class="lightbox-portfolio">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-search text-dark"></i></span>
-                                    </a>
-                                </span>
-                            </span>
-                        </span>
-                    </div>
-
-                    <div class="portfolio-item">
-                        <span class="thumb-info thumb-info-lighten thumb-info-no-borders thumb-info-bottom-info thumb-info-centered-icons border-radius-0">
-                            <span class="thumb-info-wrapper border-radius-0">
-                                <img src="{% static 'logo/lapangan.jpg' %}" class="img-fluid border-radius-0" alt="">
-                                <span class="thumb-info-title">
-                                    <span class="thumb-info-inner line-height-1 font-weight-bold text-dark position-relative top-3">Three Bottles</span>
-                                    <span class="thumb-info-type">Logo</span>
-                                </span>
-                                <span class="thumb-info-action">
-                                    <a href="portfolio-single-wide-slider.html">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-primary"><i class="fas fa-link"></i></span>
-                                    </a>
-                                    <a href="{% static 'logo/lapangan.jpg' %}" class="lightbox-portfolio">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-search text-dark"></i></span>
-                                    </a>
-                                </span>
-                            </span>
-                        </span>
-                    </div>
-
-                    <div class="portfolio-item">
-                        <span class="thumb-info thumb-info-lighten thumb-info-no-borders thumb-info-bottom-info thumb-info-centered-icons border-radius-0">
-                            <span class="thumb-info-wrapper border-radius-0">
-                                <img src="{% static 'logo/lab ipa.jpg' %}" class="img-fluid border-radius-0" alt="">
-                                <span class="thumb-info-title">
-                                    <span class="thumb-info-inner line-height-1 font-weight-bold text-dark position-relative top-3">Company T-Shirt</span>
-                                    <span class="thumb-info-type">Brand</span>
-                                </span>
-                                <span class="thumb-info-action">
-                                    <a href="portfolio-single-wide-slider.html">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-primary"><i class="fas fa-link"></i></span>
-                                    </a>
-                                    <a href="{% static 'logo/lab ipa.jpg' %}" class="lightbox-portfolio">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-search text-dark"></i></span>
-                                    </a>
-                                </span>
-                            </span>
-                        </span>
-                    </div>
-
-                    <div class="portfolio-item">
-                        <span class="thumb-info thumb-info-lighten thumb-info-no-borders thumb-info-bottom-info thumb-info-centered-icons border-radius-0">
-                            <span class="thumb-info-wrapper border-radius-0">
-                                <img src="{% static 'logo/silat.jpg' %}" class="img-fluid border-radius-0" alt="">
-                                <span class="thumb-info-title">
-                                    <span class="thumb-info-inner line-height-1 font-weight-bold text-dark position-relative top-3">Mobile Mockup</span>
-                                    <span class="thumb-info-type">Website</span>
-                                </span>
-                                <span class="thumb-info-action">
-                                    <a href="portfolio-single-wide-slider.html">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-primary"><i class="fas fa-link"></i></span>
-                                    </a>
-                                    <a href="{% static 'logo/silat.jpg' %}" class="lightbox-portfolio">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-search text-dark"></i></span>
-                                    </a>
-                                </span>
-                            </span>
-                        </span>
-                    </div>
-
-                    <div class="portfolio-item">
-                        <span class="thumb-info thumb-info-lighten thumb-info-no-borders thumb-info-bottom-info thumb-info-centered-icons border-radius-0">
-                            <span class="thumb-info-wrapper border-radius-0">
-                                <img src="{% static 'logo/aula.jpg' %}" class="img-fluid border-radius-0" alt="">
-                                <span class="thumb-info-title">
-                                    <span class="thumb-info-inner line-height-1 font-weight-bold text-dark position-relative top-3">Porto Label</span>
-                                    <span class="thumb-info-type">Media</span>
-                                </span>
-                                <span class="thumb-info-action">
-                                    <a href="portfolio-single-wide-slider.html">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-primary"><i class="fas fa-link"></i></span>
-                                    </a>
-                                    <a href="{% static 'logo/aula.jpg' %}" class="lightbox-portfolio">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-search text-dark"></i></span>
-                                    </a>
-                                </span>
-                            </span>
-                        </span>
-                    </div>
-
-                    <div class="portfolio-item">
-                        <span class="thumb-info thumb-info-lighten thumb-info-no-borders thumb-info-bottom-info thumb-info-centered-icons border-radius-0">
-                            <span class="thumb-info-wrapper border-radius-0">
-                                <img src="{% static 'logo/dramband.jpg' %}" class="img-fluid border-radius-0" alt="">
-                                <span class="thumb-info-title">
-                                    <span class="thumb-info-inner line-height-1 font-weight-bold text-dark position-relative top-3">Business Folders</span>
-                                    <span class="thumb-info-type">Logo</span>
-                                </span>
-                                <span class="thumb-info-action">
-                                    <a href="portfolio-single-wide-slider.html">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-primary"><i class="fas fa-link"></i></span>
-                                    </a>
-                                    <a href="{% static 'logo/dramband.jpg' %}" class="lightbox-portfolio">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-search text-dark"></i></span>
-                                    </a>
-                                </span>
-                            </span>
-                        </span>
-                    </div>
-
-                    <div class="portfolio-item">
-                        <span class="thumb-info thumb-info-lighten thumb-info-no-borders thumb-info-bottom-info thumb-info-centered-icons border-radius-0">
-                            <span class="thumb-info-wrapper border-radius-0">
-                                <img src="{%static 'logo/paduan_suara.jpg'%} " class="img-fluid border-radius-0" alt="">
-                                <span class="thumb-info-title">
-                                    <span class="thumb-info-inner line-height-1 font-weight-bold text-dark position-relative top-3">Tablet Screen</span>
-                                    <span class="thumb-info-type">Website</span>
-                                </span>
-                                <span class="thumb-info-action">
-                                    <a href="portfolio-single-wide-slider.html">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-primary"><i class="fas fa-link"></i></span>
-                                    </a>
-                                    <a href="{% static 'logo/paduan_suara.jpg' %}" class="lightbox-portfolio">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-search text-dark"></i></span>
-                                    </a>
-                                </span>
-                            </span>
-                        </span>
-                    </div>
-
-
+                    {% endfor %}
+                    <!-- end -->
                 </div>
             </div>
-
         </div>
     </div>
-</div>
+</section>
 
 {% endblock main %}

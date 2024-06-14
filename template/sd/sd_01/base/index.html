@@ -1,6 +1,7 @@
 {% extends 'layout_sd/base_layout_sd.html' %}
 {% block main %}
 {% load static %}
+
 <div role="main" class="main">
 	<div class="owl-carousel-wrapper" style="height: 845px;">
 		<div class="" style="height: 845px;">
@@ -25,18 +26,17 @@
 </div>
 
 <!-- SAMBUTAN KEPALA SEKOLAH -->
+
 <div class="container py-3 my-3">
 	<div class="row align-items-center justify-content-center">
+		
 		<div class="col-lg-6 mb-5 mb-lg-0">
-			<h2 class="text-color-dark font-weight-extra-bold text-10 mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200"><em> SAMBUTAN KEPALA SEKOLAH</em></h2>
-			<p class="font-weight-light text-color-dark mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="400">Assalamu’alaikum Warahmatullahi Wabarakaatuh. Salam sejahtera dan tetap semangat. Selamat datang di website SMA Negeri 1 Adiluwih Pringsewu. Sebagai media informasi dan komunikasi, web SMA Negeri 1 Adiluwih dibangun dan dikembangkan dalam rangka meningkatkan layanan sekolah kepada peserta didik, orang tua, masyarakat, dan stakeholder. Kualitas layanan menjadi salah satu misi sekolah dan kaitannya dengan transparansi dan akuntabilitas sekolah.</p>
-			<p class="positive-ls-3 text-color-grey mb-3 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="600">FELLYANA TRI PURWA HASTUTI</p>
-			<a href="{% url 'sipandu:identitas' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
-				Lihat Detail ...
-				<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-					<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
-				</svg>
-			</a>
+			<h2 class="text-color-dark font-weight-extra-bold text-10 mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200"><em>Sambuatan Kepala Sekolah</em></h2>
+			<p class="font-weight-light text-color-dark mb-4 appear-animation" data-appear-animation="fadeInUpShorter" 
+			data-appear-animation-delay="400">
+				{{data_sambutan.isi_konten|safe}}
+			</p>
+			<p class="positive-ls-3 text-color-grey mb-3 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="600">{{data_sambutan.judul}}</p>
 		</div>
 		<div class="col-md-9 col-lg-6 ps-lg-5">
 			<div class="position-relative">
@@ -45,12 +45,15 @@
 					</div>
 				</div>
 				<div data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
-					<img src="{% static 'logo/FILLIANA.jpg' %}" class="img-fluid position-relative z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="border-radius: 5px;"/>
+					<img src="{{data_sambutan.konten_image.url}}" class="img-fluid position-relative z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="border-radius: 5px;"/>
 				</div>
 			</div>
 		</div>
+		
+	
 	</div>
 </div>
+
 
 <!-- JUMLAH PEGAWAI -->
 <section class="section overlay overlay-show overlay-op-5 border-0 m-0" style="background-image: url({% static 'logo/sd01.jpg' %}); background-size: cover; background-position: center;">
@@ -87,14 +90,15 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-9 col-md-6 mb-5-5">
+					{% for dt_berita in data_berita %}
 					<div id="teamMember1" class="row align-items-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
 						<div class="col-lg-5 col-xl-6 pe-lg-0 mb-0">
-							<img src="{% static 'logo/pramuka.jpg' %}" class="img-fluid" alt="Image of the team member" />
+							<img src="{{ dt_berita.konten_image.url }}" class="img-fluid" alt="Image of the team member" />
 						</div>
 						<div class="col-lg-7 col-xl-6 ps-lg-4">
-							<h4 class="text-color-dark font-weight-bold line-height-1 mt-3 mb-1">DIADAKAN NYA PRAMUKA YANG DIHADIRI OLEH JOKOWI</h4>
-							<p class="text-3 mb-3-5">Presiden Republik Indonesia Menghadiri kehiatan premuka yang di adakan di alun alun kediri </p>
-							<a href="{% url 'sipandu:detail' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
+							<h4 class="text-color-dark font-weight-bold line-height-1 mt-3 mb-1">{{dt_berita.judul|truncatewords:10}}</h4>
+							<p class="text-3 mb-3-5">{{dt_berita.isi_konten|truncatewords:10|safe}}</p>
+							<a href="{% url 'sipandu:detail' dt_berita.id_data_konten %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
 								Lihat Detail ...
 								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
@@ -102,57 +106,7 @@
 							</a>
 						</div>
 					</div>
-				</div>
-				<div class="col-sm-9 col-md-6 mb-5-5">
-					<div id="teamMember2" class="row align-items-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">
-						<div class="col-lg-5 col-xl-6 pe-lg-0 mb-0">
-							<img src="{%static 'logo/paskibra.jpg' %}" class="img-fluid" alt="Image of the team member" />
-						</div>
-						<div class="col-lg-7 col-xl-6 ps-lg-4">
-							<h4 class="text-color-dark font-weight-bold line-height-1 mt-3 mb-1">POLINELA ADAKAN PENGIBRAN BENDERA MERAH PUTIH </h4>
-							<p class="text-3 mb-3-5">Memperingati hari kemerdekaan polinela adakan upacara pengibaran bendera di lapanagn GSG</p>
-							<a href="{% url 'sipandu:detail' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
-								Lihat Detail ...
-								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
-								</svg>
-							</a>	
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-9 col-md-6 mb-5-5">
-					<div id="teamMember3" class="row align-items-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">
-						<div class="col-lg-5 col-xl-6 pe-lg-0 mb-0">
-							<img src="{% static 'logo/pmr.jpg' %}" class="img-fluid" alt="Image of the team member" />
-						</div>
-						<div class="col-lg-7 col-xl-6 ps-lg-4">
-							<h4 class="text-color-dark font-weight-bold line-height-1 mt-3 mb-1">AKSI PMR MENYELAMATKAN KORBAN KECELAKAAN</h4>
-							<p class="text-3 mb-3-5">PMR adakan kegitan di SD N 103 untuk motivasi anak-anak untuk saling tolong menolong   </p>
-							<a href="{% url 'sipandu:detail' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
-								Lihat Detail ...
-								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
-								</svg>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-9 col-md-6 mb-5-5">
-					<div id="teamMember4" class="row align-items-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="800">
-						<div class="col-lg-5 col-xl-6 pe-lg-0 mb-0">
-							<img src="{% static 'logo/praktek.jpeg' %}" class="img-fluid" alt="Image of the team member" />
-						</div>
-						<div class="col-lg-7 col-xl-6 ps-lg-4">
-							<h4 class="text-color-dark font-weight-bold line-height-1 mt-3 mb-1">ANAK KELAS 06 SD SUDAH MELAUKAN PRAKTEK DI LAB BARU</h4>
-							<p class="text-3 mb-3-5">Praktik Ilmu Pengetahuan Sosial sudah di lakukan di Lab baru SD N 103 OKU</p>
-							<a href="{% url 'sipandu:detail' %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
-								Lihat Detail ...
-								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
-								</svg>
-							</a>
-						</div>
-					</div>
+					{% endfor %}
 				</div>
 			</div>
 		</div>
