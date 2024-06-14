@@ -3,7 +3,9 @@ from django.http import JsonResponse, HttpResponse
 from sipandu_app.models import Data_kontak,Master_sekolah
 from django.urls import reverse
 from django.db import IntegrityError
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def Indexkontak(request):
     if request.method == 'POST':
         kontak_sekolah = request.POST.get('kontak_sekolah')
@@ -37,6 +39,7 @@ def Indexkontak(request):
         print('tes ini kontak')
         return render(request, 'admin/data/kontak_sekolah.html', {"data_kontak": dt_kontak, "data_sekolah": data_sekolah, "data_arsip": data_arsip})
 
+@login_required
 def TambahKontak(request):
     if request.method == 'POST':
         kontak_sekolah = request.POST.get('kontak_sekolah')
@@ -79,6 +82,7 @@ def TambahKontak(request):
         data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         return render(request, 'admin/data/tambah_kontak.html', {"data_kontak": dt_kontak, "data_sekolah": data_sekolah})
 
+@login_required
 def EditKontak(request, id_data_kontak):
     if request.method == 'POST':
         kontak_sekolah = request.POST.get('kontak_sekolah')
@@ -112,6 +116,7 @@ def EditKontak(request, id_data_kontak):
         data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         return render(request, 'admin/data/edit_kontak.html', {"data_kontak": dt_kontak, "data_sekolah": data_sekolah})
 
+@login_required
 def DeleteKontak(request, id_data_kontak):
     try:
         dt_kontak = get_object_or_404(Data_kontak, id_data_kontak=id_data_kontak)
@@ -129,6 +134,7 @@ def DeleteKontak(request, id_data_kontak):
         }
         return JsonResponse(data, status=400)
     
+@login_required   
 def archive_kontak(request, id_data_kontak):
     if request.method == "POST":
         kontak = get_object_or_404(Data_kontak, pk=id_data_kontak)
@@ -136,7 +142,9 @@ def archive_kontak(request, id_data_kontak):
         return JsonResponse({"message": "Data berhasil diarsipkan."})
     else:
         return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
-    
+
+
+@login_required
 def unarchive_kontak(request, id_data_kontak):
     if request.method == 'POST':
         print('test')

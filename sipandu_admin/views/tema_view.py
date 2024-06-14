@@ -3,7 +3,9 @@ from django.http import JsonResponse, HttpResponse
 from sipandu_app.models import Master_tema, Master_jenjang
 from django.urls import reverse
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def IndexTema(request):
     if request.method == 'POST':
         tema_id = request.POST.get ('tema_id')
@@ -29,7 +31,8 @@ def IndexTema(request):
         data_arsip = Master_tema.objects.filter(deleted_at__isnull=False)
         
         return render(request, 'admin/master/index_master_tema.html', {"data_tema": data_tema, "data_arsip": data_arsip, "data_jenjang": data_jenjang})
-    
+
+@login_required   
 def edit_tema(request, tema_id):
     if request.method == 'POST':
         
@@ -56,7 +59,8 @@ def edit_tema(request, tema_id):
     else:
         dt_tema = Master_tema.objects.get(tema_id=tema_id)
         return render(request, 'admin/master/edit_tema.html', {"dt_tema": dt_tema, "id_tema": tema_id })
-    
+
+@login_required   
 def delete_tema(request, tema_id):
     try:
         dt_tema = get_object_or_404(Master_tema, tema_id=tema_id)
@@ -75,7 +79,8 @@ def delete_tema(request, tema_id):
                 'message': 'data tema gagal dihapus, data tema tidak ditemukan'
         }
         return JsonResponse(data, status=400)
-    
+
+@login_required   
 def archive_tema(request, tema_id):
     if request.method == "POST":
         tema = get_object_or_404(Master_tema, pk=tema_id)
@@ -83,7 +88,8 @@ def archive_tema(request, tema_id):
         return JsonResponse({"message": "Data berhasil diarsipkan."})
     else:
         return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
-    
+
+@login_required
 def unarchive_tema(request, tema_id):
     if request.method == 'POST':
         print('test')

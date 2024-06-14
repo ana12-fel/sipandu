@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 
 # @login_required(login_url='sipandu_admin:login_index')
+@login_required
 def IndexUser(request):
     if request.method == 'POST':
         user_first_name = request.POST.get('first_name')
@@ -62,7 +63,7 @@ def IndexUser(request):
         
 # @login_required(login_url='sipandu_admin:login_index')
 
-
+@login_required
 def edit_user(request, user_id):
     dt_user = get_object_or_404(Master_user, user_id=user_id)
 
@@ -119,11 +120,10 @@ def edit_user(request, user_id):
             'prov': data_prov,
             'kab': data_kab
         })
-
-
-        
+     
 
 # @login_required(login_url='sipandu_admin:login_index')
+@login_required
 def delete_user(request, user_id):
     try:
         dt_user = Master_user.objects.get(user_id=user_id)
@@ -144,7 +144,7 @@ def delete_user(request, user_id):
         }
         return JsonResponse(data, status=400)
     
-
+@login_required
 def get_user_by_level(request):
     if request.method == 'GET':
         level = request.GET.get('level')
@@ -161,6 +161,7 @@ def get_user_by_level(request):
         return JsonResponse({"data_wilayah": list(wilayah_list)})
     return JsonResponse({'error': 'Invalid request'})
 
+@login_required
 def cek_user_email(request):
     email = request.GET.get('email', None)
     data = {
@@ -168,6 +169,7 @@ def cek_user_email(request):
     }
     return JsonResponse(data)
 
+@login_required
 def archive_user(request, user_id):
     if request.method == "POST":
         try:
@@ -180,7 +182,7 @@ def archive_user(request, user_id):
     else:
         return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
 
-
+@login_required
 def unarchive_user(request, user_id):
     if request.method == 'POST':
         print('test')

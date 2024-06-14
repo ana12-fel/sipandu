@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from sipandu_app.models import Data_link, Master_sekolah
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def IndexLink(request):
     if request.method == 'POST':
         link_sekolah = request.POST.get('link_sekolah')
@@ -21,7 +23,7 @@ def IndexLink(request):
         data_arsip_link = Data_link.objects.filter(deleted_at__isnull=False)
         return render(request, 'admin/data/link.html', {'data_sekolah' : data_sekolah, 'data_link' : data_link, 'data_arsip_link':data_arsip_link})
         
-
+@login_required
 def EditLink(request, id_link):
     if request.method == 'POST':
         
@@ -47,7 +49,8 @@ def EditLink(request, id_link):
     else:
         dt_link = Data_link.objects.get(id_link=id_link)       
         return render(request, 'admin/data/edit_link.html', {"dt_link": dt_link, "id_link": id_link })
-    
+
+@login_required   
 def DeleteLink(request, id_link):
     try:
         dt_link = get_object_or_404(Data_link, id_link=id_link)
@@ -66,7 +69,8 @@ def DeleteLink(request, id_link):
                 'message': 'data link gagal dihapus, data link tidak ditemukan'
         }
         return JsonResponse(data, status=400)
-    
+
+@login_required   
 def archive_link(request, id_link):
     if request.method == "POST":
         link = get_object_or_404(Data_link, pk=id_link)
@@ -74,7 +78,8 @@ def archive_link(request, id_link):
         return JsonResponse({"message": "Data berhasil diarsipkan."})
     else:
         return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
-    
+
+@login_required
 def unarchive_link(request, id_link):
     if request.method == 'POST':
         print('test')

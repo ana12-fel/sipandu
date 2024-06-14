@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
+
 def login_index(request):
     if request.method == 'POST':
         user_email = request.POST.get('user_email')

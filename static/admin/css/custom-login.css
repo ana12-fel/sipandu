@@ -1,0 +1,103 @@
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: url('/static/admin/images/bg-login.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.login-img {
+    background: url('/static/admin/images/brand/logo-papua.png') no-repeat center center fixed;
+    background-size: cover;
+    position: relative; 
+    width: 100%; 
+    height: 100vh; 
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    max-width: 900px;
+    width: 100%;
+}
+
+.brand-section {
+    text-align: center;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.form-section {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.login100-form-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.wrap-input100 {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input100 {
+    width: 100%;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.input100:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.login100-form-btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.login100-form-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.symbol-input100 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10px;
+    font-size: 18px;
+    color: #999;
+}
+
+.header-brand-img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
