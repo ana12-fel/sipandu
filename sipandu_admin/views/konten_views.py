@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def upload_and_save_image(request):
     konten_image = request.FILES.get('konten_image')
     
@@ -29,7 +29,7 @@ def upload_and_save_image(request):
     else:
         return None  
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def IndexKonten(request):
     if request.method == 'POST':
         konten_sekolah = request.POST.get('konten_sekolah')
@@ -66,7 +66,7 @@ def IndexKonten(request):
         data_arsip_konten = Data_konten.objects.filter(deleted_at__isnull=False)        
         return render(request, 'admin/data/konten.html', {"data_sub_kategori": data_sub_kategori, "data_kategori": data_kategori, "data_konten": data_konten, "data_sekolah": data_sekolah, "data_arsip_konten": data_arsip_konten})
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 @require_GET
 @csrf_exempt
 def get_kategori_by_sekolah(request):
@@ -87,7 +87,7 @@ def get_kategori_by_sekolah(request):
         
     return JsonResponse({'error': 'Invalid request'}, status=400)
  
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 @require_GET
 @csrf_exempt
 def get_sub_kategori(request):
@@ -107,7 +107,7 @@ def get_sub_kategori(request):
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def TambahKonten(request):
     if request.method == 'POST':
         konten_sekolah = request.POST.get('konten_sekolah')
@@ -142,7 +142,8 @@ def TambahKonten(request):
         return render(request, 'admin/data/tambah_konten.html', {'data_kategori': data_kategori, 'data_sub_kategori': data_sub_kategori, 'data_konten': data_konten, 'data_sekolah' : data_sekolah})
 
 
-@login_required      
+@login_required(login_url='sipandu_admin:login_index')
+     
 def EditKonten(request, id_data_konten):
     dt_konten = get_object_or_404(Data_konten, id_data_konten=id_data_konten)
     
@@ -189,7 +190,7 @@ def EditKonten(request, id_data_konten):
         }
         return render(request, 'admin/data/edit_konten.html', context)
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def DeleteKonten(request, id_data_konten):
     try:
         dt_konten = get_object_or_404(Data_konten, id_data_konten=id_data_konten)
@@ -209,7 +210,7 @@ def DeleteKonten(request, id_data_konten):
         }
         return JsonResponse(data, status=400)
 
-@login_required   
+@login_required(login_url='sipandu_admin:login_index')
 def archive_konten(request, id_data_konten):
     if request.method == "POST":
         konten = get_object_or_404(Data_konten, pk=id_data_konten)
@@ -218,7 +219,7 @@ def archive_konten(request, id_data_konten):
     else:
         return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
 
-@login_required   
+@login_required(login_url='sipandu_admin:login_index')
 def unarchive_konten(request, id_data_konten):
     if request.method == 'POST':
         print('test')

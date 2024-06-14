@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from sipandu_app.models import Data_slider, Master_sekolah
 from django.contrib.auth.decorators import login_required
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def Indexslider(request):
     if request.method == 'POST':
         slider_sekolah = request.POST.get('slider_sekolah')
@@ -26,7 +26,7 @@ def Indexslider(request):
 
         return render(request, 'admin/data/slider.html', {"data_slider": dt_slider, "data_sekolah": data_sekolah})
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def Tambahslider(request):
     if request.method == 'POST':
         slider_sekolah = request.POST.get('slider_sekolah')
@@ -46,7 +46,7 @@ def Tambahslider(request):
         data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         return render(request, 'admin/data/tambah_slider.html', {"data_sekolah": data_sekolah})
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def Editslider(request, id_data_slider):
     dt_slider = get_object_or_404(Data_slider, id_data_slider=id_data_slider)
     if request.method == 'POST':
@@ -67,7 +67,7 @@ def Editslider(request, id_data_slider):
         data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         return render(request, 'admin/data/edit_slider.html', {"dt_slider": dt_slider, "data_sekolah": data_sekolah})
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def Deleteslider(request, id_data_slider):
     dt_slider = get_object_or_404(Data_slider, id_data_slider=id_data_slider)
     dt_slider.delete()

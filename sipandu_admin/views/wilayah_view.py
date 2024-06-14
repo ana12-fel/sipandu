@@ -4,7 +4,7 @@ from sipandu_app.models import Master_wilayah, LEVEL_WILAYAH
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def IndexWilayah(request):
     if request.method == 'POST':
         wilayah_id = request.POST.get('wilayah_id')
@@ -44,7 +44,7 @@ def IndexWilayah(request):
         return render(request, 'admin/master/index_master_wilayah.html', {'data_wilayah': data_wilayah, 'wilayah_level': LEVEL_WILAYAH,
             "data_prov": data_prov, "kab" : data_kab})
     
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def get_wilayah_by_level(request):
     if request.method == 'GET':
         level = request.GET.get('level')
@@ -56,7 +56,7 @@ def get_wilayah_by_level(request):
         return JsonResponse({"data_wilayah": list(wilayah_list)})
     return JsonResponse({'error': 'Invalid request'})
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def edit_wilayah(request, wilayah_id):
     # Mengambil objek wilayah yang akan diedit
     dt_wilayah = get_object_or_404(Master_wilayah, wilayah_id=wilayah_id)
@@ -99,7 +99,7 @@ def edit_wilayah(request, wilayah_id):
         data_prov = Master_wilayah.objects.filter(wilayah_level='1')
         return render(request, 'admin/master/edit_wilayah.html', {'dt_wilayah': dt_wilayah, 'data_wilayah': data_wilayah, 'wilayah_level': LEVEL_WILAYAH, "data_prov": data_prov})
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def delete_wilayah(request, wilayah_id):      
     try:
         # Mengambil objek wilayah berdasarkan wilayah_id
@@ -123,7 +123,7 @@ def delete_wilayah(request, wilayah_id):
         }
         return JsonResponse(data, status=404)
     
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def cek_kode_wilayah(request):
     kode = request.GET.get('kode', None)
     data = {

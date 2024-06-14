@@ -4,7 +4,8 @@ from sipandu_app.models import Data_galeri,Master_sekolah
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
+
 def Indexgaleri(request):
     if request.method == 'POST':
         galeri_sekolah = request.POST.get('galeri_sekolah')
@@ -28,7 +29,8 @@ def Indexgaleri(request):
         
         return render(request, 'admin/data/galeri.html', {"data_galeri" : data_galeri, "data_sekolah" : data_sekolah})
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
+
 def Tambahgaleri(request):
     if request.method == 'POST':
         galeri_sekolah = request.POST.get('galeri_sekolah')
@@ -52,7 +54,8 @@ def Tambahgaleri(request):
         return render(request, 'admin/data/tambah_galeri.html', {"data_galeri": dt_galeri, "data_sekolah" : data_sekolah})
 
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
+
 def Editgaleri(request, id_data_galeri):
     dt_galeri = get_object_or_404(Data_galeri, id_data_galeri=id_data_galeri)
     if request.method == 'POST':
@@ -75,7 +78,8 @@ def Editgaleri(request, id_data_galeri):
         return render(request, 'admin/data/edit_galeri.html', {"dt_galeri": dt_galeri, "data_sekolah" : data_sekolah})
 
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
+
 def Deletegaleri(request, id_data_galeri):
     try:
         dt_galeri = get_object_or_404(Data_galeri, id_data_galeri=id_data_galeri)
