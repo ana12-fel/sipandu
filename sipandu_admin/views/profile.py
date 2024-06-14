@@ -8,7 +8,7 @@ from django.http import JsonResponse
 
 
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def IndexProfile(request):
     user = request.user
 
@@ -44,7 +44,7 @@ def IndexProfile(request):
 
     return render(request, 'admin/profile/profile.html', context)
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def edit_profile(request):
     user = request.user
 
@@ -72,7 +72,7 @@ def edit_profile(request):
 
     return render(request, 'admin/profile/edit_profile.html', context)
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def change_password(request):
     user = request.user
 
