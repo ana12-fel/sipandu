@@ -64,10 +64,7 @@
                                     <li>
                                         <a href="{% url 'sipandu:pengumuman' %}" class="nav-link">Pengumuman</a>
                                     </li>
-                                    {% elif konten.sub_kategori_uraian == 'Beasiswa' %}
-                                    <li>
-                                        <a href="{% static 'sipandu:beasiswa' %}" class="nav-link">Beasiswa</a>
-                                    </li>
+
                                     {% elif konten.sub_kategori_uraian == 'Kegiatan' %}
                                     <li>
                                         <a href="{% url 'sipandu:kegiatan' %}" class="nav-link">Kegiatan</a>

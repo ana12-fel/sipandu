@@ -3,6 +3,8 @@
 {% load static %}
 
 <div role="main" class="main">
+
+	<!-- Slider -->
 	<div class="owl-carousel-wrapper" style="height: 845px;">
 		<div class="" style="height: 845px;">
 			<div class="owl-carousel dots-inside dots-horizontal-center show-dots-hover show-dots-xs show-dots-sm show-dots-md nav-style-1 nav-inside nav-inside-plus nav-light nav-lg nav-font-size-lg show-nav-hover mb-0" data-plugin-options="{'responsive': {'0': {'items': 1, 'dots': true, 'nav': false}, '479': {'items': 1, 'dots': true}, '768': {'items': 1, 'dots': true}, '979': {'items': 1}, '1199': {'items': 1}}, 'loop': false, 'autoHeight': false, 'margin': 0, 'dots': false, 'dotsVerticalOffset': '-235px', 'nav': true, 'navVerticalOffset': '70px', 'animateIn': 'fadeIn', 'animateOut': 'fadeOut', 'mouseDrag': false, 'touchDrag': false, 'pullDrag': false, 'autoplay': true, 'autoplayTimeout': 7000, 'autoplayHoverPause': true, 'rewind': true}">
@@ -23,50 +25,67 @@
 			</div>
 		</div>
 	</div>	
-	<div class="container py-5 my-3">
-		<div class="row justify-content-between align-items-center flex-lg-nowrap gy-3">
-			<div class="col-lg-4">
-				<h2 class="text-color-dark font-weight-bold text-7 line-height-1 mb-3-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="2000">Who We Are</h2>
-				<p class="text-4 font-weight-light mb-0 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="2200">Cras a elit sit amet leo accumsan volutsudisse hendrerit vehicula leo, vel efficitur felis ultrices non nteger. </p>
-			</div>
-			<div class="col-auto d-none d-lg-block">
-				<svg width="145" height="147" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 145.42 147.12" xml:space="preserve" stroke-miter-limit="10" stroke-dasharray="7" data-appear-animation-svg="true">
-					<line stroke="#a2a2a2" stroke-dasharray="8" x1="14.75" y1="132.9" x2="133.81" y2="12.05" class="appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="2400" data-appear-animation-duration="100ms" />
-					<line stroke="#FFF" stroke-dasharray="8" stroke-width="2" x1="14.75" y1="132.9" x2="133.81" y2="12.05" class="appear-animation" data-appear-animation="customLineDividerAnim" data-appear-animation-delay="2400" data-appear-animation-duration="2.2s" />
-				</svg>
-			</div>
-			<div class="col-lg-6">
-				<p class="font-weight-medium text-3-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="3200">Cras a elit sit amet leo accumsan volutpat. Suspendisse hendrerit vehicula leo, vel efficitur felis <span class="highlight highlight-primary highlight-bg-opacity highlight-animated" data-appear-animation="highlight-animated-start" data-appear-animation-delay="4000" data-plugin-options="{'flagClassOnly': true}">ultrices non hendrerit</span> vehicula leo, vel efficitur felis ultrices non.</p>
-				<a href="demo-construction-company.html" class="custom-view-more d-inline-flex font-weight-medium text-color-primary text-decoration-none appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="3400">
-					View More
-					<img width="27" height="27" src="{% static 'img/demos/construction/icons/arrow-right.svg' %}"
-					alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-primary ms-2'}" />
-				</a>
+
+
+	<!-- Pengumuman  -->
+	<div class="container py-3 my-3">
+		<div class="row mb-5">
+			<div class="col text-center">
+				<h2 class="text-transform-none text-color-dark font-weight-bold text-10 negative-ls-1 mb-2 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">PENGUMUMAN</h2>
 			</div>
 		</div>
 	</div>
-	<section class="section parallax border-0 pt-5 py-0 m-0" data-plugin-parallax data-plugin-options="{'spped': '1.5', 'parallaxHeight': '125%', 'fadeIn': true}" data-image-src="{% static 'img/jadi.jpeg' %}">
+	<div class="container">
+		<div class="row py-5 my-3">
+			<div class="col-sm-4">
+				<img src="{% static 'img/1.jpeg' %}" alt class="img-fluid" />
+			</div>
+			<div class="col-sm-8">
+				<h1>
+					{{data_pengumuman.judul}}
+				</h1>
+				<p>
+					{{data_pengumuman.isi_konten}}
+				</p>
+				<a href="#" class="btn btn-primary btn-sm">
+					Baca Selengkapnya <span class="fa fa-arrow-right"></span></a>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col px-0">
+				<hr class="my-0">
+			</div>
+		</div>
+	</div>
+
+	<!-- Sambutan Kepala Sekolah  -->
+	<section class="section parallax border-0 pt-5 py-0 m-0" data-plugin-parallax data-plugin-options="{'speed': '1.5', 'parallaxHeight': '125%', 'fadeIn': true}" data-image-src="{% static 'img/jadi.jpeg' %}">
 		<div class="container">
-			<div class="row gy-5">
+			<div class="row gy-5 align-items-center">
 				<div class="col-lg-6 text-center order-2 order-lg-1">
-					<img src="{% static 'img/kepalas.png' %}" class="img-fluid" alt="Woman testimonial from Porto Magazine company" />
+					<img src="{{data_sambutan.konten_image.url}}" class="img-fluid" alt="Woman testimonial from Porto Magazine company" />
 				</div>
 				<div class="col-lg-6 align-self-center pb-lg-5 order-1 order-lg-2 ps-5 ps-lg-0">
 					<div class="testimonial testimonial-style-2 testimonial-with-quotes testimonial-remove-right-quote testimonial-quotes-dark custom-testimonial-quote-position-1 mb-0">
 						<blockquote>
-							<p class="alternative-font-4 font-weight-medium text-start text-4 px-2 mb-0" data-plugin-animated-letters data-plugin-options="{'startDelay': 1000, 'minWindowWidth': 0, 'animationName': 'typeWriter', 'animationSpeed': 25}">Cras a elit sit amet leo accumsan volutpat. Suspendisse hendreriast ehicula leo, vel efficitur felis ultrices non cras a elit sit amet leo acun volutpat. Suspendisse hendrerit vehicula leo, vel efficitur fel.</p>
+							<h2 class="text-white text-start mb-0" style="color: #ffffff;">Sambutan Kepala sekolah</h2>
+							<p class="alternative-font-4 font-weight-medium text-start text-4 text-white px-2 mb-0" style="color: #ffffff;" data-plugin-animated-letters data-plugin-options="{'startDelay': 1000, 'minWindowWidth': 0, 'animationName': 'typeWriter', 'animationSpeed': 25}">{{data_sambutan.isi_konten|safe}}</p>
 						</blockquote>
 						<div class="testimonial-author text-start ps-3 ms-1">
-							<strong class="text-4-5 negative-ls-1">Emiya Sembiring</strong>
-							<p class="text-color-defaultwhite text-start mb-0">Kepala Sekolah</p>
+							<strong class="text-4-5 negative-ls-1 text-white" style="color: #ffffff;">{{data_sambutan.judul}}</strong>
+							<p class="text-white text-start mb-0" style="color: #ffffff;">Kepala Sekolah</p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-
 	
+	
+
+	<!-- Kegiatan Sekolah -->
 	<section class="section position-relative overflow-hidden border-0 m-0">
 		<div class="container py-3 my-3">
 			<div class="row mb-5">
@@ -165,31 +184,8 @@
 			</div>
 		</div>
 	</section>
-	<div class="container">
-		<div class="row py-5 my-3">
-			<div class="col-sm-4">
-				<img src="{% static 'img/1.jpeg' %}" alt class="img-fluid" />
-			</div>
-			<div class="col-sm-8">
-				<h1>
-					Juara 1 olimpiade matematika tingkat smp se-lampung
-				</h1>
-				<p>
-					Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veritatis sunt nam molestiae eaque cumque iste consectetur eum officiis eos iusto maiores explicabo quidem totam voluptatum neque exercitationem, similique aperiam. Dignissimos.
-				</p>
-				<a href="#" class="btn btn-primary btn-sm">
-					Baca Selengkapnya <span class="fa fa-arrow-right"></span></a>
-			</div>
-		</div>
-	</div>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col px-0">
-				<hr class="my-0">
-			</div>
-		</div>
-	</div>
-
+	
+	<!-- Berita -->
 	<div class="container mt-5 pt-4 mb-5 mb-lg-4 mb-xl-0 pb-3 pb-xl-0">
 		<div class="row">
 			<div class="col">
@@ -213,7 +209,7 @@
 						<div class="card-body py-4 px-0">
 							<span class="d-block text-color-grey font-weight-semibold positive-ls-2 text-2">ADMIN</span>
 							<h3 class="text-transform-none font-weight-bold text-5 text-color-hover-primary mb-2">{{ dt_berita.judul }}</h3>
-							<p class="mb-2">{{ dt_berita.isi_konten||safe}}</p>
+							<p class="mb-2">{{ dt_berita.isi_konten|safe}}</p>
 							<span class="custom-view-more d-inline-flex font-weight-medium text-color-primary">
 								View More
 								<img width="27" height="27" src="{% static 'img/demos/construction/icons/arrow-right.svg' %}" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-primary ms-2'}" style="width: 27px;" />
@@ -225,7 +221,7 @@
 			{% endfor %}
 		</div>
 	</div>
-
+	
 	<div class="position-relative pb-5 d-sm-none d-xl-block">
 		<div class="position-absolute transform3dy-n50 left-0">
 			<div class="appear-animation" data-appear-animation="fadeInRightShorterPlus" data-appear-animation-delay="1500" data-appear-animation-duration="1500ms">

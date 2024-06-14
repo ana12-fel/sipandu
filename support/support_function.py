@@ -22,8 +22,9 @@ def global_var(request):
     nav_berita_sd = sub_kat.objects.filter(kategori_id__kategori_uraian__icontains='berita', kategori_id__kategori_tema__tema_nama__icontains ='TEMA SD' )
     data_guru = dt_guru.objects.filter(guru_sekolah=request.sekolah)
     data_kegiatan = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Kegiatan').order_by('-id_data_konten')[:3]
-    data_berita = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:2]
-    data_kerja = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Bursa Kerja').order_by('-id_data_konten')[:2]
+    data_berita = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:3]
+    data_kerja = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Bursa Kerja').order_by('-id_data_konten')[:3]
+    data_Pengumuman = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Pengumuman').order_by('-id_data_konten')[:3]
     
 
     try:
@@ -91,6 +92,7 @@ def global_var(request):
         'data_berita' : data_berita,
         'data_kerja' : data_kerja,
         'data_sambutan' : data_sambutan,
+        'data_Pengumuman' : data_Pengumuman,
     }
     
     return data
