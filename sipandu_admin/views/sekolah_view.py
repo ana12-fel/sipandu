@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from sipandu_app.models import Master_sekolah, Master_wilayah, Master_jenjang, LEVEL_WILAYAH
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def IndexSekolah(request):
     if request.method == 'POST':
         sekolah_nama = request.POST.get('sekolah_nama') 
@@ -35,7 +37,8 @@ def IndexSekolah(request):
         data_kabupaten = Master_wilayah.objects.filter(wilayah_level = '2')
         data_kecamatan = Master_wilayah.objects.filter(wilayah_level = '3')
         return render(request, 'admin/master/index_master_sekolah.html', {'data_sekolah': data_sekolah, 'data_wilayah': data_wilayah, "data_jenjang": data_jenjang, "data_prov" : data_prov, 'data_kabupaten': data_kabupaten, 'data_kecamatan' : data_kecamatan, 'data_arsip_sekolah': data_arsip_sekolah})
-    
+
+@login_required   
 def get_wilayah(request):
     if request.method == 'GET' and request.is_ajax():
         level = request.GET.get('level')
@@ -54,7 +57,7 @@ def get_wilayah(request):
     
 from django.shortcuts import get_object_or_404
 
-    
+@login_required   
 def edit_sekolah(request, sekolah_id):
     if request.method == 'POST':
         dt_sekolah = Master_sekolah.objects.get(sekolah_id=sekolah_id)
@@ -86,7 +89,7 @@ def edit_sekolah(request, sekolah_id):
         data_wilayah = Master_wilayah.objects.all()
         return render(request, 'admin/master/edit_sekolah.html', {"dt_sekolah": dt_sekolah, "id_sekolah": sekolah_id, "data_prov" : data_prov, "data_wilayah" : data_wilayah })
 
-    
+@login_required    
 def delete_sekolah(request, sekolah_id):
     try:
         dt_sekolah = get_object_or_404(Master_sekolah, sekolah_id=sekolah_id)
@@ -105,7 +108,8 @@ def delete_sekolah(request, sekolah_id):
                 'message': 'data sekolah gagal dihapus, data sekolah tidak ditemukan'
         }
         return JsonResponse(data, status=400)
-    
+
+@login_required
 def archive_sekolah(request, sekolah_id):
     if request.method == "POST":
         sekolah = get_object_or_404(Master_sekolah, pk=sekolah_id)
@@ -115,7 +119,7 @@ def archive_sekolah(request, sekolah_id):
     else:
         return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
 
-    
+@login_required   
 def unarchive_sekolah(request, sekolah_id):
     if request.method == 'POST':
         try:
