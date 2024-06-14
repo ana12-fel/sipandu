@@ -8,7 +8,7 @@ from django.db.models import Subquery, OuterRef
 from django.contrib.staticfiles import finders
 from django.contrib.auth.decorators import login_required
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def laporan_transaksi_belum(request):
     # Ambil data sekolah yang belum memiliki transaksi situs
     data_sekolah = Master_sekolah.objects.exclude(
@@ -133,8 +133,7 @@ def laporan_transaksi_belum(request):
 
     return response
 
-
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def laporan_transaksi_sudah(request):
     data_transaksi = Transanksi_situs.objects.all()
     # Nama file PDF

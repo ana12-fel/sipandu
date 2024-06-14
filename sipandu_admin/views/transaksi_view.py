@@ -4,7 +4,7 @@ from sipandu_app.models import Master_tema, Master_sekolah, Transanksi_situs
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def IndexTransaksi(request):
     if request.method == 'POST':
         transanksi_id = request.POST.get('transanksi_id')
@@ -51,7 +51,7 @@ def IndexTransaksi(request):
             "data_arsip": data_arsip
         })
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def edit_transaksi(request, transanksi_id):
     dt_transaksi = get_object_or_404(Transanksi_situs, transanksi_id=transanksi_id)
 
@@ -90,7 +90,7 @@ def edit_transaksi(request, transanksi_id):
             "dt_transaksi": dt_transaksi
         })
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def delete_transaksi(request, transanksi_id):
     try:
         dt_transaksi = get_object_or_404(Transanksi_situs, transanksi_id=transanksi_id)
@@ -109,7 +109,7 @@ def delete_transaksi(request, transanksi_id):
         }
         return JsonResponse(data, status=400)
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def archive_transaksi(request, transanksi_id):
     if request.method == "POST":
         try:
@@ -123,7 +123,7 @@ def archive_transaksi(request, transanksi_id):
         return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
     
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def unarchive_transaksi(request, transanksi_id):
     if request.method == 'POST':
         print('test')

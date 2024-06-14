@@ -4,7 +4,7 @@ from sipandu_app.models import Data_guru,Master_sekolah
 from django.contrib.auth.decorators import login_required
 
 
-@login_required
+@login_required(login_url='sipandu_admin:login_index')
 def IndexGuru(request):
     if request.method == 'POST':
         guru_sekolah = request.POST.get('guru_sekolah')
@@ -41,7 +41,8 @@ def IndexGuru(request):
 
         return render(request, 'admin/data/data_guru.html', {'data_sekolah' : data_sekolah, 'data_guru' : data_guru, 'data_arsip_guru':data_arsip_guru})
 
-@login_required   
+@login_required(login_url='sipandu_admin:login_index')
+
 def EditGuru(request, id_data_guru):
     dt_guru = get_object_or_404(Data_guru, id_data_guru=id_data_guru)
 
@@ -91,7 +92,8 @@ def EditGuru(request, id_data_guru):
             'dt_guru': dt_guru
         })
 
-@login_required    
+@login_required(login_url='sipandu_admin:login_index')
+ 
 def DeleteGuru (request, id_data_guru):
     try:
         dt_guru = get_object_or_404(Data_guru, id_data_guru=id_data_guru)
@@ -111,7 +113,8 @@ def DeleteGuru (request, id_data_guru):
         }
         return JsonResponse(data, status=400)
     
-@login_required   
+@login_required(login_url='sipandu_admin:login_index')
+
 def archive_guru(request, id_data_guru):
     if request.method == "POST":
         guru = get_object_or_404(Data_guru, pk=id_data_guru)
@@ -121,7 +124,8 @@ def archive_guru(request, id_data_guru):
         return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
 
 
-@login_required   
+@login_required(login_url='sipandu_admin:login_index')
+
 def unarchive_guru(request, id_data_guru):
     if request.method == 'POST':
         try:
