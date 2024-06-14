@@ -2,7 +2,9 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.db import IntegrityError
 from sipandu_app.models import Master_tema,Master_kategori,Sub_kategori 
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='sipandu_admin:login_index')
 def MasterKategori(request):
     if request.method == 'POST':
         kategori_nama = request.POST.get ('kategori_nama')
@@ -40,7 +42,8 @@ def MasterKategori(request):
         
         return render(request, 'admin/master_kategori/master_kategori.html', {'data_tema': data_tema, 'data_kategori' : data_kategori, 'data_sub_kategori' : data_sub_kategori, 'data_kat' : data_kat, 'tema_id':tema_id})
 
-    
+
+@login_required(login_url='sipandu_admin:login_index')
 def SubKategori(request):
     if request.method == 'POST':
         kategori_id_id = request.POST.get('kategori_uraian')
@@ -66,7 +69,8 @@ def SubKategori(request):
         data_kategori = Master_kategori.objects.all()
         data_sub_kategori = Sub_kategori.objects.all()
         return render(request, 'admin/master_kategori/master_kategori.html', {'data_tema': data_tema, 'data_kategori': data_kategori, 'data_sub_kategori': data_sub_kategori})
-     
+
+@login_required(login_url='sipandu_admin:login_index')
 def edit_sub_kategori(request, sub_kategori_id_):
     if request.method == 'POST':
         dt_sub_kategori = Sub_kategori.objects.get(sub_kategori_id=sub_kategori_id_)
@@ -86,7 +90,8 @@ def edit_sub_kategori(request, sub_kategori_id_):
         dt_sub_kategori = Sub_kategori.objects.get(sub_kategori_id=sub_kategori_id_)
 
         return render(request, 'admin/master_kategori/edit_sub_kategori.html', {"is_active": is_active, "dt_sub_kategori": dt_sub_kategori,"sub_kategori_id": sub_kategori_id_})
-    
+
+@login_required(login_url='sipandu_admin:login_index')
 def SubKategoriDelete(request, sub_kategori_id):
     try:
        
@@ -106,7 +111,8 @@ def SubKategoriDelete(request, sub_kategori_id):
                 'message': 'data kategori gagal dihapus, data tidak ditemukan'
         }
         return JsonResponse(data, status=400)
-    
+
+@login_required(login_url='sipandu_admin:login_index')
 def edit_kategori(request, kategori_id_):
 
     if request.method == 'POST':
@@ -128,7 +134,8 @@ def edit_kategori(request, kategori_id_):
         dt_kategori = Master_kategori.objects.get(kategori_id=kategori_id_)
 
         return render(request, 'admin/master_kategori/edit_kategori.html', {"is_active": is_active,"dt_kategori": dt_kategori,"id_kategori": kategori_id_})
-    
+
+@login_required(login_url='sipandu_admin:login_index')
 def kategoriDelete(request, kategori_id):
     try:
        

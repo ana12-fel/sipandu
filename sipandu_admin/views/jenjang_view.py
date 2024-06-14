@@ -4,8 +4,10 @@ from django.db import IntegrityError
 from sipandu_app.models import Master_jenjang
 from django.urls import reverse
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='sipandu_admin:login_index')
 def IndexJenjang(request):
     if request.method == 'POST':
         jenjang_nama = request.POST.get('jenjang_nama').lower()
@@ -28,6 +30,7 @@ def IndexJenjang(request):
         return render(request, 'admin/master/index_master_jenjang.html', {"data_jenjang": data_jenjang, "data_arsip": data_arsip})
 
 
+@login_required(login_url='sipandu_admin:login_index')
 def edit_jenjang(request, jenjang_id):
     if request.method == 'POST':
         dt_jenjang = Master_jenjang.objects.get(jenjang_id=jenjang_id)
@@ -42,7 +45,8 @@ def edit_jenjang(request, jenjang_id):
     else:
         dt_jenjang = Master_jenjang.objects.get(jenjang_id=jenjang_id)
         return render(request, 'admin/master/edit_jenjang.html', {'is_active': is_active,"dt_jenjang": dt_jenjang,"id_jenjang": jenjang_id})
-    
+
+@login_required(login_url='sipandu_admin:login_index')
 def delete_jenjang(request, jenjang_id):
     try:
        
@@ -62,7 +66,9 @@ def delete_jenjang(request, jenjang_id):
                 'message': 'Jenjang gagal dihapus, jenjang tidak ditemukan'
         }
         return JsonResponse(data, status=400)
-    
+
+@login_required(login_url='sipandu_admin:login_index')
+
 def archive_jenjang(request, jenjang_id):
     if request.method == "POST":
         jenjang = get_object_or_404(Master_jenjang, pk=jenjang_id)
@@ -70,7 +76,9 @@ def archive_jenjang(request, jenjang_id):
         return JsonResponse({"message": "Data berhasil diarsipkan."})
     else:
         return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
-    
+
+@login_required(login_url='sipandu_admin:login_index')
+
 def unarchive_jenjang(request, jenjang_id):
     if request.method == 'POST':
         print('test')

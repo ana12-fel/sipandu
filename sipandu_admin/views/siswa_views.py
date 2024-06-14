@@ -4,7 +4,9 @@ from sipandu_app.models import Data_siswa,Master_sekolah
 from django.contrib import messages
 from django.urls import reverse
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='sipandu_admin:login_index')
 def IndexSiswa(request):
     if request.method == 'POST':
         siswa_sekolah = request.POST.get('siswa_sekolah')
@@ -34,6 +36,7 @@ def IndexSiswa(request):
 
         return render(request, 'admin/data/data_siswa.html', {'data_sekolah': data_sekolah, 'data_siswa': data_siswa, 'data_arsip':data_arsip})
 
+@login_required(login_url='sipandu_admin:login_index')
 def EditSiswa(request, id_data_siswa):
     dt_siswa = get_object_or_404(Data_siswa, id_data_siswa=id_data_siswa)
     if request.method == 'POST':
@@ -70,7 +73,8 @@ def EditSiswa(request, id_data_siswa):
             'dt_siswa': dt_siswa,
             'data_sekolah': data_sekolah
         })
-    
+
+@login_required(login_url='sipandu_admin:login_index')
 def DeleteSiswa (request, id_data_siswa):
     try:
         dt_siswa = get_object_or_404(Data_siswa, id_data_siswa=id_data_siswa)
@@ -89,7 +93,8 @@ def DeleteSiswa (request, id_data_siswa):
                 'message': 'data siswa gagal dihapus, data tidak ditemukan'
         }
         return JsonResponse(data, status=400)
-    
+
+@login_required(login_url='sipandu_admin:login_index')
 def archive_siswa(request, id_data_siswa):
     if request.method == "POST":
         siswa = get_object_or_404(Data_siswa, pk=id_data_siswa)
@@ -97,7 +102,8 @@ def archive_siswa(request, id_data_siswa):
         return JsonResponse({"message": "Data berhasil diarsipkan."})
     else:
         return JsonResponse({"error": "Metode HTTP tidak valid."}, status=405)
-    
+
+@login_required(login_url='sipandu_admin:login_index')
 def unarchive_siswa(request, id_data_siswa):
     if request.method == 'POST':
         print('test')
