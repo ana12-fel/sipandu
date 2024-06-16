@@ -34,7 +34,7 @@ def Indexkontak(request):
         return redirect('sipandu_admin:index_kontak')
     else:
         data_arsip = Data_kontak.objects.filter(deleted_at__isnull=False)
-        dt_kontak = Data_kontak.objects.filter(deleted_at=None)
+        dt_kontak = Data_kontak.objects.by_hakakses(request.user).filter(deleted_at=None)
         data_sekolah = Master_sekolah.objects.all()
         print('tes ini kontak')
         return render(request, 'admin/data/kontak_sekolah.html', {"data_kontak": dt_kontak, "data_sekolah": data_sekolah, "data_arsip": data_arsip})

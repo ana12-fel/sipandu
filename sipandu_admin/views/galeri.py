@@ -62,7 +62,7 @@ def Editgaleri(request, id_data_galeri):
         gambar = request.FILES.get('image_galeri')
         video = request.POST.get('video_galeri')
 
-        # Mengambil objek yang sudah ada dan mengubah nilainya
+        # Mengambil objek yang sudah ada dan mengubah nilainy
         dt_galeri.galeri_sekolah_id = galeri_sekolah
         dt_galeri.gambar = gambar
         dt_galeri.video = video

@@ -464,7 +464,7 @@ class Data_guru(models.Model):
         self.deleted_at = None
         self.save()
 
-    objects=get_data_siswa()
+    objects=get_data_guru()
 
 class get_data_slider(models.Manager):
     def get_queryset(self)  -> models.QuerySet:
@@ -486,7 +486,7 @@ class Data_slider(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
 
-objects=get_data_slider()
+    objects=get_data_slider()
 
 class Laporan(models.Model):
     judul = models.CharField(max_length=100)

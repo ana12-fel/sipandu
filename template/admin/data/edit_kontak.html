@@ -119,29 +119,15 @@ Master User
         
     function previewImage(event) {
         var input = event.target;
-        var preview = document.getElementById('image-preview');
-        
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function(e) {
-                // Menghapus preview thumbnail sebelumnya jika ada
-                while (preview.firstChild) {
-                    preview.removeChild(preview.firstChild);
-                }
-
-                // Menambahkan elemen img untuk menampilkan preview thumbnail
-                var img = document.createElement('img');
-                img.src = e.target.result;
-                img.style.maxWidth = '300px';
-                img.alt = ' Preview';
-                preview.appendChild(img);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
+        var reader = new FileReader();
+        reader.onload = function(){
+            var dataURL = reader.result;
+            var previewImg = document.getElementById('image-preview');
+            previewImg.src = dataURL;
+            previewImg.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
     }
-
 </script>
 {% endblock %}
 

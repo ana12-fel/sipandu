@@ -62,7 +62,7 @@ def IndexKonten(request):
         data_sekolah = Master_sekolah.objects.all()
         data_sub_kategori = Sub_kategori.objects.all()
         data_kategori = Master_kategori.objects.all()
-        data_konten = Data_konten.objects.filter(deleted_at=None)
+        data_konten = Data_konten.objects.by_hakakses(request.user).filter(deleted_at=None)
         data_arsip_konten = Data_konten.objects.filter(deleted_at__isnull=False)        
         return render(request, 'admin/data/konten.html', {"data_sub_kategori": data_sub_kategori, "data_kategori": data_kategori, "data_konten": data_konten, "data_sekolah": data_sekolah, "data_arsip_konten": data_arsip_konten})
 
