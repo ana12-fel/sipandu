@@ -15,25 +15,28 @@
         </div>
     </div>
 </section>
-<section class="section section-height-3 border-0 m-0">
-	<div class="container">
-		<div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
-			<div class="row">
-				{% for gambar in galeri %}
-				<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
-					<a class=" img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{{ gambar.gambar.url }}">
-						<img src="{{ gambar.gambar.url }}" class="img-fluid rounded-0" alt="" />
-					</a>		
-				</div>
-				{% endfor %}
-			
 
-			</div>
-		</div>
+<div class="container py-5 mb-5 pt-5">
+    <div class="lightbox pt-5" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+        <div class="row">
+            {% for gambar in galeri %}
+            <div class="col-lg-4 mb-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
+                <a class="img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{{ gambar.gambar.url }}">
+                    <img src="{{ gambar.gambar.url }}" class="img-fluid gambar-galeri rounded-0 fixed-size-image" alt="" />
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 
-	</div>
-    
-</section>
+<style>
+    .fixed-size-image {
+        width: 100%;
+        height: 250px; /* Menyesuaikan tinggi sesuai kebutuhan */
+        object-fit: cover; /* Memastikan gambar menyesuaikan dengan ukuran kontainer */
+    }
+</style>
 
 
 <div class="container" style="padding-top: 50px;">

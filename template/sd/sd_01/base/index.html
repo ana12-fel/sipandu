@@ -3,27 +3,48 @@
 {% load static %}
 
 <div role="main" class="main">
-	<div class="owl-carousel-wrapper" style="height: 845px;">
-		<div class="" style="height: 845px;">
-			<div class="owl-carousel dots-inside dots-horizontal-center show-dots-hover show-dots-xs show-dots-sm show-dots-md nav-style-1 nav-inside nav-inside-plus nav-light nav-lg nav-font-size-lg show-nav-hover mb-0" data-plugin-options="{'responsive': {'0': {'items': 1, 'dots': true, 'nav': false}, '479': {'items': 1, 'dots': true}, '768': {'items': 1, 'dots': true}, '979': {'items': 1}, '1199': {'items': 1}}, 'loop': false, 'autoHeight': false, 'margin': 0, 'dots': false, 'dotsVerticalOffset': '-235px', 'nav': true, 'navVerticalOffset': '70px', 'animateIn': 'fadeIn', 'animateOut': 'fadeOut', 'mouseDrag': false, 'touchDrag': false, 'pullDrag': false, 'autoplay': true, 'autoplayTimeout': 7000, 'autoplayHoverPause': true, 'rewind': true}">
-				<!-- Slide Carousel 1 -->
-
-				{% for slider in sliders %}
-				<div class="position-relative  overlay-show overlay-op-0 overflow-hidden pt-4" data-dynamic-height="['845px','845px','845px','750px','750px']" style="height: 845px;">
-					<div class="background-image-wrapper position-absolute top-0 left-0 right-0 bottom-0" data-appear-animation="kenBurnsToLeft" data-appear-animation-duration="30s" data-plugin-options="{'minWindowWidth': 0}" data-carousel-onchange-show style="background-image: url({{ slider.gambar.url }}); background-size: cover; background-position: center;"></div>
-					<div class="container position-relative z-index-3 pb-5 h-100">
-						<div class="row justify-content-center align-items-center pb-5 h-100">
-							<div class="col-lg-8 text-center pb-5 mb-5">
-								<h1 class="text-color-light font-weight-bold line-height-1 text-12 text-md-14 positive-ls-3 mb-3 appear-animation" data-appear-animation="blurIn" data-appear-animation-delay="1000" data-plugin-options="{'minWindowWidth': 0}">{{ slider.judul }}</h1>
-							</div>
-						</div>
-					</div>
-				</div>
-				{% endfor %}
-			</div>
-		</div>
-	</div>	
+    <div class="owl-carousel-wrapper" style="height: 845px;">
+        <div class="" style="height: 845px;">
+            <div class="owl-carousel dots-inside dots-horizontal-center show-dots-hover show-dots-xs show-dots-sm show-dots-md nav-style-1 nav-inside nav-inside-plus nav-light nav-lg nav-font-size-lg show-nav-hover mb-0" data-plugin-options="{'responsive': {'0': {'items': 1, 'dots': true, 'nav': false}, '479': {'items': 1, 'dots': true}, '768': {'items': 1, 'dots': true}, '979': {'items': 1}, '1199': {'items': 1}}, 'loop': false, 'autoHeight': false, 'margin': 0, 'dots': false, 'dotsVerticalOffset': '-235px', 'nav': true, 'navVerticalOffset': '70px', 'animateIn': 'fadeIn', 'animateOut': 'fadeOut', 'mouseDrag': false, 'touchDrag': false, 'pullDrag': false, 'autoplay': true, 'autoplayTimeout': 7000, 'autoplayHoverPause': true, 'rewind': true}">
+                <!-- Slide Carousel 1 -->
+                {% for slider in sliders %}
+                <div class="position-relative overlay-show overlay-op-0 overflow-hidden pt-4" data-dynamic-height="['845px','845px','845px','750px','750px']" style="height: 845px;">
+                    <div class="background-image-wrapper position-absolute top-0 left-0 right-0 bottom-0 slide-overlay" data-appear-animation="kenBurnsToLeft" data-appear-animation-duration="30s" data-plugin-options="{'minWindowWidth': 0}" data-carousel-onchange-show style="background-image: url({{ slider.gambar.url }}); background-size: cover; background-position: center;"></div>
+                    <div class="container position-relative z-index-3 pb-5 h-100">
+                        <div class="row justify-content-center align-items-center pb-5 h-100">
+                            <div class="col-lg-8 text-center pb-5 mb-5">
+                                <h1 class="text-color-light font-weight-bold line-height-1 text-12 text-md-14 positive-ls-3 mb-3 appear-animation" data-appear-animation="blurIn" data-appear-animation-delay="1000" data-plugin-options="{'minWindowWidth': 0}">{{ slider.judul }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>    
 </div>
+
+<style>
+    .slide-overlay::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5); /* Ubah warna dan tingkat transparansi sesuai kebutuhan */
+        z-index: 1;
+    }
+    .background-image-wrapper {
+        position: relative;
+        z-index: 0;
+    }
+    .container {
+        position: relative;
+        z-index: 2;
+    }
+</style>
+
 
 <!-- SAMBUTAN KEPALA SEKOLAH -->
 
@@ -49,8 +70,6 @@
 				</div>
 			</div>
 		</div>
-		
-	
 	</div>
 </div>
 
@@ -126,18 +145,25 @@
 		<div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
 			<div class="row">
 				{% for gambar in galeri %}
-            <div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
-                <a class="img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{{ gambar.gambar.url }}">
-                    <img src="{{ gambar.gambar.url }}" class="img-fluid gambar-galeri rounded-0" alt="" />
-                </a>
-            </div>
-            {% endfor %}
-				
+				<div class="col-lg-4 appear-animation mb-4" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
+					<a class="img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{{ gambar.gambar.url }}">
+						<img src="{{ gambar.gambar.url }}" class="img-fluid gambar-galeri rounded-0 fixed-size-image" alt="" />
+					</a>
+				</div>
+				{% endfor %}
 			</div>
 		</div>
-		
 	</div>
 </section>
+
+<style>
+    .fixed-size-image {
+        width: 100%;
+        height: 300px; /* Anda dapat menyesuaikan tinggi sesuai kebutuhan */
+        object-fit: cover; /* Memastikan gambar menyesuaikan dengan ukuran kontainer */
+    }
+</style>
+
 
 </div>
 {% endblock main %}

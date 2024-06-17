@@ -15,25 +15,27 @@
 </section>
 
 <section>
-    <div class="container">  
+    <div class="container">
         <div class="row portfolio-list sort-destination sort-destination-margin sort-destination-items-hardware-acc overflow-visible mt-4" data-sort-id="portfolio">
             {% for ekstrakulikuler in ekstrakulikuler_list %}
-            <div class="col-sm-6 col-md-4 col-lg-3 isotope-item classic" data-sort-search="classic">
-                <div class="card border-0 border-radius-5 custom-box-shadow-1">
-                    <div class="card-img-top">
-                        <a href="{% url 'sipandu:detail_ekstrakulikuler' ekstrakulikuler.id_data_konten %}">
-                            <img class="card-img-top border-radius-5 hover-effect-2" src="{{ ekstrakulikuler.konten_image.url }}" alt="Card Image">
-                        </a> 
-                    </div>
-                    <div class="card-body bg-light p-4 z-index-1">
-                        <div class="card-body p-0 text-center">
+                <div class="col-sm-6 col-md-4 col-lg-3 isotope-item classic mb-4" data-sort-search="classic">
+                    <div class="card border-0 border-radius-5 custom-box-shadow-1 h-100">
+                        <div class="card-img-top position-relative overflow-hidden" style="border-radius: 10px;">
+                            <a href="{% url 'sipandu:detail_ekstrakulikuler' ekstrakulikuler.id_data_konten %}">
+                                {% if ekstrakulikuler.konten_image %}
+                                    <img src="{{ ekstrakulikuler.konten_image.url }}" class="img-fluid w-100" alt="Card Image" style="height: 200px; object-fit: cover;">
+                                {% else %}
+                                    <img src="{% static 'path/to/default/image.jpg' %}" class="img-fluid w-100" alt="Default Image" style="height: 200px; object-fit: cover;">
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="card-body bg-light p-4 z-index-1 text-center">
                             <h4 class="card-title alternative-font-4 font-weight-semibold text-5 mb-3">
                                 <a class="text-color-dark text-color-hover-primary text-decoration-none font-weight-bold text-3" href="{% url 'sipandu:detail_ekstrakulikuler' ekstrakulikuler.id_data_konten %}">{{ ekstrakulikuler.judul }}</a>
                             </h4>
                         </div>
                     </div>
                 </div>
-            </div>
             {% endfor %}
         </div>
     </div>
@@ -44,27 +46,29 @@
         <div class="col">
             <h2 class="text-color-light font-weight-bold text-9 mb-5-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">Berita Lainnya</h2>
             <div class="custom-half-carousel-style-1 carousel-half-full-width-wrapper carousel-half-full-width-right">
-                <div class="owl-carousel owl-theme carousel-half-full-width-right dots-align-left dots-light custom-dots-style-1 mb-0" data-plugin-options="{'responsive': {'0': {'items': 1}, '768': {'items': 3}, '992': {'items': 3}, '1200': {'items': 3}}, 'loop': false, 'nav': false, 'dots': true, 'margin': 20}">
-                    <!-- start -->
-                     {% for dt_berita_latest in data_berita_latest %}
-                    <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="400">
-                        <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
-                            <div class="thumb-info-wrapper rounded-0">
-                                <img src="{{dt_berita_latest.konten_image.url}}" class="img-fluid rounded-0" alt="" />
-                                <div class="thumb-info-action">
-                                    <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" aria-label="">
-                                        <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
-                                    </a>
+                <div class="owl-carousel owl-theme carousel-half-full-width-right dots-align-left dots-light custom-dots-style-1 mb-0" data-plugin-options="{'responsive': {'0': {'items': 1}, '768': {'items': 2}, '992': {'items': 3}, '1200': {'items': 3}}, 'loop': false, 'nav': false, 'dots': true, 'margin': 20}">
+                    {% for dt_berita_latest in data_berita_latest %}
+                        <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="400">
+                            <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
+                                <div class="thumb-info-wrapper rounded-0 position-relative overflow-hidden" style="height: 200px;">
+                                    {% if dt_berita_latest.konten_image %}
+                                        <img src="{{ dt_berita_latest.konten_image.url }}" class="img-fluid w-100" alt="" style="height: 200px; object-fit: cover;">
+                                    {% else %}
+                                        <img src="{% static 'path/to/default/image.jpg' %}" class="img-fluid w-100" alt="Default Image" style="height: 200px; object-fit: cover;">
+                                    {% endif %}
+                                    <div class="thumb-info-action">
+                                        <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" aria-label="" class="position-absolute top-50 start-50 translate-middle">
+                                            <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
+                            <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">{{ dt_berita_latest.created_at }}</h2>
+                            <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
+                                <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" class="text-decoration-none text-color-light opacity-hover-8">{{ dt_berita_latest.judul|title }}</a>
+                            </h3>
                         </div>
-                        <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">{{dt_berita_latest.created_at}}</h2>
-                        <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
-                            <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" class="text-decoration-none text-color-light opacity-hover-8">{{dt_berita_latest.judul|title}}</a>
-                        </h3>
-                    </div>
                     {% endfor %}
-                    <!-- end -->
                 </div>
             </div>
         </div>

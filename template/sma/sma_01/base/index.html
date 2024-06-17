@@ -235,12 +235,12 @@
 	</section>
 
 	<!-- GALERI -->
-<section class="section section-height-3 border-0 m-0">
-	<div class="container">
-		<div class="col text-center">
-			<h2 class="alternat
-			<h3 class="text-transform-none text-color-light font-weight-bold text-10 negative-ls-1 pb-3 mb-5">GALERI</h3>
-		</div>
+	<section class="section section-height-3 border-0 m-0">
+		<div class="container">
+			<div class="col text-center">
+				<h2 class="alternat
+				<h3 class="text-transform-none text-color-light font-weight-bold text-10 negative-ls-1 pb-3 mb-5">GALERI</h3>
+			</div>
 			<div class="container py-5 mb-5 pt-5">
 				<div class="row">
 					<div class="col-md-12">
@@ -252,20 +252,18 @@
 				<div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
 					<div class="row">
 						{% for gambar in galeri %}
-					<div class="col-lg-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
-						<a class="img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{{ gambar.gambar.url }}">
-							<img src="{{ gambar.gambar.url }}" class="img-fluid gambar-galeri rounded-0" alt="" />
-						</a>
-					</div>
-					{% endfor %}
-						
+						<div class="col-lg-4 mb-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
+							<a class="img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0 d-block position-relative overflow-hidden" href="{{ gambar.gambar.url }}">
+								<img src="{{ gambar.gambar.url }}" class="img-fluid gambar-galeri rounded-0 w-100" alt="" style="height: 100%;" />
+							</a>
+						</div>
+						{% endfor %}
 					</div>
 				</div>
 			</div>
+		</div>
+	</section>
 	
-		
-	</div>
-</section>
 
 <!-- BERITA -->
 	

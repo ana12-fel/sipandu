@@ -27,37 +27,38 @@
                 <!-- Daftar Fasilitas -->
                 <div class="row portfolio-list sort-destination" data-sort-id="portfolio">
                     {% for dtd_fasilitas in data_fasilitas %}
-                        <div class="col-sm-6 col-lg-6 isotope-item websites">
-                            <div class="portfolio-item">
-                                <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-5 mb-3">
-                                    <div class="thumb-info-wrapper rounded-5">
-                                        <!-- Gambar Konten -->
-                                        {% if dtd_fasilitas.konten_image %}
-                                            <img src="{{ dtd_fasilitas.konten_image.url }}" class="img-fluid rounded-5" alt="{{ dtd_fasilitas.judul }}" />
-                                        {% else %}
-                                            <img src="{% static 'path/to/default/image.jpg' %}" class="img-fluid rounded-5" alt="Default Image" />
-                                        {% endif %}
-                                        <!-- Tombol Aksi -->
-                                        <div class="thumb-info-action">
-                                            <a href="{% url 'sipandu:detail_fasilitas'  dtd_fasilitas.id_data_konten %}" aria-label="{{ dtd_fasilitas.judul }}">
-                                                <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
-                                            </a>
-                                        </div>
+                        <div class="col-sm-6 col-lg-4 isotope-item websites mb-4">
+                            <div class="card h-100">
+                                <div class="position-relative overflow-hidden rounded-3">
+                                    <!-- Gambar Konten -->
+                                    {% if dtd_fasilitas.konten_image %}
+                                        <img src="{{ dtd_fasilitas.konten_image.url }}" class="img-fluid w-100" alt="{{ dtd_fasilitas.judul }}" style="height: 250px; object-fit: cover; border-radius: 15px;">
+                                    {% else %}
+                                        <img src="{% static 'path/to/default/image.jpg' %}" class="img-fluid w-100" alt="Default Image" style="height: 250px; object-fit: cover; border-radius: 15px;">
+                                    {% endif %}
+                                    <!-- Tombol Aksi -->
+                                    <div class="thumb-info-action">
+                                        <a href="{% url 'sipandu:detail_fasilitas' dtd_fasilitas.id_data_konten %}" aria-label="{{ dtd_fasilitas.judul }}" class="position-absolute top-50 start-50 translate-middle">
+                                            <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+                                        </a>
                                     </div>
                                 </div>
                                 <!-- Judul Konten -->
-                                <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
-                                    <a href="" class="text-decoration-none text-color-dark opacity-hover-8">{{ dtd_fasilitas.judul }}</a>
-                                </h3>
+                                <div class="card-body text-center">
+                                    <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
+                                        <a href="{% url 'sipandu:detail_fasilitas' dtd_fasilitas.id_data_konten %}" class="text-decoration-none text-color-dark opacity-hover-8">{{ dtd_fasilitas.judul }}</a>
+                                    </h3>
+                                </div>
                             </div>
                         </div>
-                        {% endfor %}
-                    
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <section class="section section-height-3 bg-gradient border-0 m-0">
     <div class="container py-1">

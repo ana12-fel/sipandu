@@ -20,20 +20,22 @@
 
 <section>
     <div class="container">
-        <div class="row">
-            <div class="col-md-6 mt-5">
+        <div class="row align-items-center mt-5">
+            <!-- Text Section -->
+            <div class="col-md-6">
                 <h2>{{ data_sejarah.judul }}</h2>
-               
-                
                 <p>{{ data_sejarah.isi_konten|safe }}</p>
-                
             </div>
-            <div class="col-md-6 d-flex align-items-center">
-                <img src="{{ data_sejarah.konten_image.url}}" alt="" style="border-radius: 5px;">
+            <!-- Image Section -->
+            <div class="col-md-6 text-center">
+                <img src="{{ data_sejarah.konten_image.url }}" alt="{{ data_sejarah.judul }}" class="img-fluid rounded" style="max-height: 350px; width: auto; max-width: 100%; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
             </div>
         </div>
     </div>
 </section>
+
+
+
 
 <section class="section overlay-show border-0 m-0 appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="300" style="background-size: cover; background-position: center; background-color: blue;">
     <div class="row mt-5 mb-5">
