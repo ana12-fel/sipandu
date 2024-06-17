@@ -9,10 +9,11 @@
 		<div class="" style="height: 845px;">
 			<div class="owl-carousel dots-inside dots-horizontal-center show-dots-hover show-dots-xs show-dots-sm show-dots-md nav-style-1 nav-inside nav-inside-plus nav-light nav-lg nav-font-size-lg show-nav-hover mb-0" data-plugin-options="{'responsive': {'0': {'items': 1, 'dots': true, 'nav': false}, '479': {'items': 1, 'dots': true}, '768': {'items': 1, 'dots': true}, '979': {'items': 1}, '1199': {'items': 1}}, 'loop': false, 'autoHeight': false, 'margin': 0, 'dots': false, 'dotsVerticalOffset': '-235px', 'nav': true, 'navVerticalOffset': '70px', 'animateIn': 'fadeIn', 'animateOut': 'fadeOut', 'mouseDrag': false, 'touchDrag': false, 'pullDrag': false, 'autoplay': true, 'autoplayTimeout': 7000, 'autoplayHoverPause': true, 'rewind': true}">
 				<!-- Slide Carousel 1 -->
-
 				{% for slider in sliders %}
-				<div class="position-relative  overlay-show overlay-op-0 overflow-hidden pt-4" data-dynamic-height="['845px','845px','845px','750px','750px']" style="height: 845px;">
-					<div class="background-image-wrapper position-absolute top-0 left-0 right-0 bottom-0" data-appear-animation="kenBurnsToLeft" data-appear-animation-duration="30s" data-plugin-options="{'minWindowWidth': 0}" data-carousel-onchange-show style="background-image: url({{ slider.gambar.url }}); background-size: cover; background-position: center;"></div>
+				<div class="position-relative overlay-show overlay-op-0 overflow-hidden pt-4" data-dynamic-height="['845px','845px','845px','750px','750px']" style="height: 845px;">
+					<div class="background-image-wrapper position-absolute top-0 left-0 right-0 bottom-0 slide-overlay" data-appear-animation="kenBurnsToLeft" data-appear-animation-duration="30s" data-plugin-options="{'minWindowWidth': 0}" data-carousel-onchange-show style="background-image: url({{ slider.gambar.url }}); background-size: cover; background-position: center;">
+						<div class="overlay"></div> <!-- Overlay menggunakan pseudo-element ::before -->
+					</div>
 					<div class="container position-relative z-index-3 pb-5 h-100">
 						<div class="row justify-content-center align-items-center pb-5 h-100">
 							<div class="col-lg-8 text-center pb-5 mb-5">
@@ -24,66 +25,92 @@
 				{% endfor %}
 			</div>
 		</div>
-	</div>	
+	</div>
+	
+	<style>
+		.background-image-wrapper {
+			position: relative;
+			z-index: 0;
+		}
+		.background-image-wrapper .overlay {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: rgba(0, 0, 0, 0.3); /* Warna overlay dan tingkat transparansi (0.3 = 30%) */
+			z-index: 1;
+		}
+		.container {
+			position: relative;
+			z-index: 2;
+		}
+	</style>
+	
 
 
 	<!-- Pengumuman  -->
-	<div class="container py-3 my-3">
-		<div class="row mb-5">
-			<div class="col text-center">
-				<h2 class="text-transform-none text-color-dark font-weight-bold text-10 negative-ls-1 mb-2 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">PENGUMUMAN</h2>
-			</div>
-		</div>
-	</div>
-	<div class="container">
-		<div class="row py-5 my-3">
-			
-			<div class="col-sm-4">
-				<img src="{{ data_pengumuman.konten_image.url }}" alt class="img-fluid" />
-			</div>
-			<div class="col-sm-8">
-				<h1>
-					{{ data_pengumuman.judul }}
-				</h1>
-				<p>
-					{{ data_pengumuman.isi_konten|safe|truncatewords:15 }}
-				</p>
-				<a href="#" class="btn btn-primary btn-sm">
-					Baca Selengkapnya <span class="fa fa-arrow-right"></span></a>
-			</div>
-			
-		</div>
-	</div>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col px-0">
-				<hr class="my-0">
-			</div>
-		</div>
-	</div>
+<div class="container py-3 my-3">
+    <div class="row mb-5">
+        <div class="col text-center">
+            <h2 class="text-transform-none text-color-dark font-weight-bold text-10 negative-ls-1 mb-2 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">PENGUMUMAN</h2>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row py-5 my-3">
+        <div class="col-sm-4">
+            <img src="{{ data_pengumuman.konten_image.url }}" alt class="img-fluid" />
+        </div>
+        <div class="col-sm-8">
+            <h1>
+                {{ data_pengumuman.judul }}
+            </h1>
+            <p>
+                {{ data_pengumuman.isi_konten|safe|truncatewords:15 }}
+            </p>
+            <a href="{% url 'sipandu:pengumuman' %}" class="btn btn-primary btn-sm">
+                Baca Selengkapnya <span class="fa fa-arrow-right"></span></a>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col px-0">
+            <hr class="my-0">
+        </div>
+    </div>
+</div>
+<div class="row mb-5">
+    <div class="col text-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="800" data-plugin-options="{'accY': -250}">
+        <a href="{% url 'sipandu:pengumuman' %}" class="btn btn-info font-weight-bold px-5 btn-py-3"><span class="fa fa-eye"></span> Lihat Pengumuman Lainnya</a>
+    </div>
+</div>
 
-	<!-- Sambutan Kepala Sekolah  -->
-	<section class="section parallax border-0 pt-5 py-0 m-0" data-plugin-parallax data-plugin-options="{'speed': '1.5', 'parallaxHeight': '125%', 'fadeIn': true}" data-image-src="{% static 'img/jadi.jpeg' %}">
-		<div class="container">
-			<div class="row gy-5 align-items-center">
-				<div class="col-lg-6 text-center order-2 order-lg-1">
-					<img src="{{data_sambutan.konten_image.url}}" class="img-fluid" alt="Woman testimonial from Porto Magazine company" />
-				</div>
-				<div class="col-lg-6 align-self-center pb-lg-5 order-1 order-lg-2 ps-5 ps-lg-0">
-					<div class="testimonial testimonial-style-2 testimonial-with-quotes testimonial-remove-right-quote testimonial-quotes-dark custom-testimonial-quote-position-1 mb-0">
-						<blockquote>
-							<h2 class="text-white text-start mb-0" style="color: #ffffff;">Sambutan Kepala sekolah</h2>
-							<p class="alternative-font-4 font-weight-medium text-start text-4 text-white px-2 mb-0" style="color: #ffffff;" data-plugin-animated-letters data-plugin-options="{'startDelay': 1000, 'minWindowWidth': 0, 'animationName': 'typeWriter', 'animationSpeed': 25}">{{data_sambutan.isi_konten|safe}}</p>
-						</blockquote>
-						<div class="testimonial-author text-start ps-3 ms-1">
-							<strong class="text-4-5 negative-ls-1 text-white" style="color: #ffffff;">{{data_sambutan.judul}}</strong>
-							<p class="text-white text-start mb-0" style="color: #ffffff;">Kepala Sekolah</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+<!-- Sambutan Kepala Sekolah  -->
+<section class="section parallax border-0 pt-5 py-0 m-0 mb-5" data-plugin-parallax data-plugin-options="{'speed': '1.5', 'parallaxHeight': '125%', 'fadeIn': true}" data-image-src="{% static 'img/jadi.jpeg' %}">
+    <div class="container">
+        <div class="row gy-5 align-items-center">
+            <div class="col-lg-6 text-center order-2 order-lg-1">
+                <img src="{{data_sambutan.konten_image.url}}" class="img-fluid" alt="Woman testimonial from Porto Magazine company" />
+            </div>
+            <div class="col-lg-6 align-self-center pb-lg-5 order-1 order-lg-2 ps-5 ps-lg-0">
+                <div class="testimonial testimonial-style-2 testimonial-with-quotes testimonial-remove-right-quote testimonial-quotes-dark custom-testimonial-quote-position-1 mb-0">
+                    <blockquote>
+                        <h2 class="text-white text-start mb-0" style="color: #ffffff;">Sambutan Kepala sekolah</h2>
+                        <p class="alternative-font-4 font-weight-medium text-start text-4 text-white px-2 mb-0" style="color: #ffffff;" data-plugin-animated-letters data-plugin-options="{'startDelay': 1000, 'minWindowWidth': 0, 'animationName': 'typeWriter', 'animationSpeed': 25}">{{data_sambutan.isi_konten|safe}}</p>
+                    </blockquote>
+                    <div class="testimonial-author text-start ps-3 ms-1">
+                        <strong class="text-4-5 negative-ls-1 text-white" style="color: #ffffff;">{{data_sambutan.judul}}</strong>
+                        <p class="text-white text-start mb-0" style="color: #ffffff;">Kepala Sekolah</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 	
 	
 
@@ -125,9 +152,10 @@
 				</div>
 				{% endfor %}
 			</div>
+	
 			<div class="row">
 				<div class="col text-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="800" data-plugin-options="{'accY': -250}">
-					<a href="{% static 'demo-law-firm-2-blog.html' %}" class="btn btn-info font-weight-bold px-5 btn-py-3"><span class="fa fa-eye"></span> Lihat Kegiatan Lainnya</a>
+					<a href="{% url 'sipandu:kegiatan' %}" class="btn btn-info font-weight-bold px-5 btn-py-3"><span class="fa fa-eye"></span> Lihat Kegiatan Lainnya</a>
 				</div>
 			</div>
 		</div>
@@ -198,7 +226,7 @@
 		<div class="row row-gutter-sm justify-content-center mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="600">
 			{% for dt_berita in data_berita %}
 			<div class="col-sm-9 col-md-6 col-lg-4 mb-4 mb-lg-0">
-				<a href="demo-construction-blog-post.html" class="text-decoration-none" data-cursor-effect-hover="plus">
+				<a href="{% url 'sipandu:detail' dt_berita.id_data_konten %}" class="text-decoration-none" data-cursor-effect-hover="plus">
 					<div class="card border-0">
 						<div class="card-img-top position-relative overlay">
 							<div class="position-absolute bottom-10 right-0 d-flex justify-content-end w-100 py-3 px-4 z-index-3">
@@ -213,7 +241,7 @@
 							<h3 class="text-transform-none font-weight-bold text-5 text-color-hover-primary mb-2">{{ dt_berita.judul }}</h3>
 							<p class="mb-2">{{ dt_berita.isi_konten|safe}}</p>
 							<span class="custom-view-more d-inline-flex font-weight-medium text-color-primary">
-								View More
+								Lihat Detail
 								<img width="27" height="27" src="{% static 'img/demos/construction/icons/arrow-right.svg' %}" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-primary ms-2'}" style="width: 27px;" />
 							</span>
 						</div>
@@ -221,6 +249,11 @@
 				</a>
 			</div>
 			{% endfor %}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col text-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="800" data-plugin-options="{'accY': -250}">
+			<a href="{% url 'sipandu:berita' %}" class="btn btn-info font-weight-bold px-5 btn-py-3"><span class="fa fa-eye"></span> Lihat Berita Lainnya</a>
 		</div>
 	</div>
 	

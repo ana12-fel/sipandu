@@ -8,13 +8,15 @@
             <div class="col text-center">
                 <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2">
                     <h2 class="text-color-light">
-                        VISI & MISI
+                        IDENTITAS SEKOLAH
                     </h2>
                 </ul>
             </div>
         </div>
     </div>
 </section>
+
+ <!-- SEJARAH SINGKAT -->
 <section>
     <div class="container">
         <div class="row">
@@ -33,82 +35,17 @@
         </div>
     </div>
 </section>
-<section class="section custom-bg-color-grey-1 border-0 m-0" id="courses">
-        <div class="row mb-4">
-            <div class="col text-center">
-                <div class="overflow-hidden">
-                    <h2 class="text-color-secondary font-weight-semi-bold text-6 line-height-1 mb-3-5 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="300">Pergantian Kepala Sekolah</h2>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="500">
-                <div class="owl-carousel owl-theme nav-style-1 nav-outside nav-font-size-lg custom-nav-secondary mb-0" data-plugin-options="{'responsive': {'576': {'items': 1}, '768': {'items': 2}, '992': {'items': 2}, '1200': {'items': 3}}, 'loop': true, 'nav': true, 'dots': false, 'margin': 20}">
-                    <div>
-                        <div class="card custom-card-courses border-radius-0">
-                            <div class="p-relative">
-                                <a href="demo-education-courses-details.html" class="text-color-secondary" title="">
-                                    <img class="card-img-top border-radius-0" src="{% static 'img/home1.jpg' %}" alt="" />
-                                </a>
-                            </div>
-                            
-                            <div class="card-body">
-                                <div class="card-body text-center px-2 py-3">
-                                    <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1"> Jamal </h2>
-                                    <p class="text-color-grey positive-ls-3 mb-3"> 2003 - 2008</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="card custom-card-courses border-radius-0">
-                            <div class="p-relative">
-                                <a href="demo-education-courses-details.html" class="text-color-secondary" title="">
-                                    <img class="card-img-top border-radius-0" src="{% static 'img/home1.jpg' %}" alt="" />
-                                </a>
-                            </div>
-                            <div class="card-body">
-                                <div class="card-body text-center px-2 py-3">
-                                    <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1"> Emiya </h2>
-                                    <p class="text-color-grey positive-ls-3 mb-3"> 2009 - 2014</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="card custom-card-courses border-radius-0">
-                            <div class="p-relative">
-                                <a href="demo-education-courses-details.html" class="text-color-secondary" title="">
-                                    <img class="card-img-top border-radius-0" src="{% static 'img/home1.jpg' %}" alt="" />
-                                </a>
-                            </div>
-                            <div class="card-body">
-                            <div class="card-body text-center px-2 py-3">
-                                <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1"> Ivana </h2>
-                                <p class="text-color-grey positive-ls-3 mb-3"> 2014 - 2019<p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row pt-2">
-            <div class="col text-center">
-            </div>
-        </div>
-    </div>
-</section>
 
+<!-- PERGANTIAN KEPALA SEKOLAH -->
 <div class="container py-5 my-5">
     <div class="row align-items-center">
+        <!-- IDENTITAS SEKOLAH -->
         <div class="col-lg-6 mb-5 mb-lg-0">
             <div class="card bg-primary border-0 border-radius-0">
                 <div class="card-body p-5">
                     <h2 class="text-color-light font-weight-bold text-9 pb-2 mb-4">Identitas Sekolah</h2>
-
                     <div class="custom-seemore-overlay mb-4" style="max-height: 400px;">
                         <div class="custom-accordion-style-1 accordion accordion-modern" id="FAQAccordion">
-                            
                             <div class="card">
                                 <div class="card">
                                     <h4 class="card-title m-0">
@@ -186,14 +123,14 @@
                 </div>
             </div>
         </div>
-
+        <!-- FOTO KEPALA SEKOLAH -->
         <div class="col-lg-6">
-            <div class="position-relative">
+            <div class="d-flex flex-column align-items-center">
                 <div data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
-                    <img src="{% static 'logo/FILLIANA.jpg' %}" class="img-fluid position-relative z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="border-radius: 5px;"/>
+                    <img src="{{ data_kepala_sekolah.guru_image.url }}" class="img-fluid z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="border-radius: 5px;"/>
                 </div>
-                <h2 class="font-weight-bold text-color-dark text-center "> FILLYANA TRI PURWA HASTUTI</h2>
-                <h5 class="text-center">Masa Jabatan 2010 - Sekarang </h5>
+                <h2 class="font-weight-bold text-color-dark text-center mt-3">{{ data_kepala_sekolah.nama_guru }}</h2>
+                <h5 class="text-center">{{ data_kepala_sekolah.tahun_guru }}</h5>
             </div>
         </div>
     </div>
