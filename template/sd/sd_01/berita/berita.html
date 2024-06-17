@@ -28,8 +28,8 @@
     <div class="row">
         <div class="col-lg-8 mb-5 mb-lg-0 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1600">
             <article class="mb-5">
-                {% if data_berita %}
-                    {% for berita in data_berita %}
+                {% if page_obj %}
+                    {% for berita in page_obj %}
                         <div class="card border-0 border-radius-0 custom-box-shadow-1 mb-4">
                             <div class="card-img-top">
                                 <a href="{% url 'sipandu:detail' berita.id_data_konten %}">
@@ -46,7 +46,7 @@
                                     <h4 class="card-title alternative-font-4 font-weight-semibold text-5 mb-3">
                                         <a class="text-color-dark text-color-hover-primary text-decoration-none font-weight-bold text-3" href="{% url 'sipandu:detail' berita.id_data_konten %}">{{ berita.judul }}</a>
                                     </h4>
-                                    <p class="card-text mb-2">{{ berita.isi_konten|truncatewords:30|safe}}</p>
+                                    <p class="card-text mb-2">{{ berita.isi_konten|truncatewords:30|safe }}</p>
                                     <a href="{% url 'sipandu:detail' berita.id_data_konten %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-primary svg-stroke-color-primary ps-0">
                                         Lihat Detail Berita...
                                         <svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -63,11 +63,23 @@
             </article>
 
             <ul class="custom-pagination-style-1 pagination pagination-rounded pagination-md justify-content-center">
-                <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-angle-left"></i></a>
+                </li>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="fas fa-angle-right"></i></a>
+                </li>
+                {% endif %}
             </ul>
         </div>
 
@@ -86,6 +98,8 @@
 
 
 
+
+
 <section class="section section-height-3 bg-gradient border-0 m-0">
     <div class="container py-1">
         <div class="col">
@@ -93,11 +107,11 @@
             <div class="custom-half-carousel-style-1 carousel-half-full-width-wrapper carousel-half-full-width-right">
                 <div class="owl-carousel owl-theme carousel-half-full-width-right dots-align-left dots-light custom-dots-style-1 mb-0" data-plugin-options="{'responsive': {'0': {'items': 1}, '768': {'items': 3}, '992': {'items': 3}, '1200': {'items': 3}}, 'loop': false, 'nav': false, 'dots': true, 'margin': 20}">
                     <!-- start -->
-                     {% for dt_berita_latest in data_berita_latest %}
+                    {% for dt_berita_latest in data_berita_latest %}
                     <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="400">
-                        <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
-                            <div class="thumb-info-wrapper rounded-0">
-                                <img src="{{dt_berita_latest.konten_image.url}}" class="img-fluid rounded-0" alt="" />
+                        <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3 berita-item">
+                            <div class="thumb-info-wrapper rounded-0 image-container">
+                                <img src="{{ dt_berita_latest.konten_image.url }}" class="img-fluid rounded-0 news-image" alt="Image of the news" />
                                 <div class="thumb-info-action">
                                     <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" aria-label="">
                                         <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
@@ -105,9 +119,9 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">{{dt_berita_latest.created_at}}</h2>
+                        <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">{{ dt_berita_latest.created_at }}</h2>
                         <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
-                            <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" class="text-decoration-none text-color-light opacity-hover-8">{{dt_berita_latest.judul|title}}</a>
+                            <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" class="text-decoration-none text-color-light opacity-hover-8">{{ dt_berita_latest.judul|title }}</a>
                         </h3>
                     </div>
                     {% endfor %}
@@ -117,6 +131,24 @@
         </div>
     </div>
 </section>
+
+<style>
+.berita-item {
+    width: 100%;
+    height: 100%; /* Adjust as needed */
+}
+.image-container {
+    width: 100%;
+    height: 200px; /* Set a fixed height for the images */
+    overflow: hidden;
+}
+.news-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the entire container without distortion */
+}
+</style>
+
 
 
 

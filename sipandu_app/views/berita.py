@@ -3,20 +3,44 @@ from django.shortcuts import render,redirect
 from django.shortcuts import render,redirect, get_object_or_404
 from sipandu_app.models import Data_konten as dt_konten, Transanksi_situs as dt_situs
 # from support.support_function import JENJANG, TEMPLATE_NAME
+from django.core.paginator import Paginator
 
 
 def index_berita(request):
-   
-   # data_fasilitas = get_object_or_404(dt_konten, konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian__icontains='Fasilitas' )
-   # print(data_fasilitas)
-   data_berita = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita')
-   data_berita_latest = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:5]
-   
-   data = {
-      'data_berita' : data_berita,
-      'data_berita_latest' : data_berita_latest,
-   }
-   return render(request, f'{request.jenjang}/{request.template_name}/berita/berita.html', data )
+    # Ambil data berita dari database
+    data_berita = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita')
+    data_berita_latest = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:5]
+    
+    # Set up pagination, 3 berita per halaman
+    paginator = Paginator(data_berita, 3)  # 3 berita per halaman
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    # Siapkan data untuk template
+    data = {
+        'page_obj': page_obj,
+        'data_berita_latest': data_berita_latest,
+    }
+    return render(request, f'{request.jenjang}/{request.template_name}/berita/berita.html', data)
+
+
+def index_berita(request):
+    # Ambil data berita dari database
+    data_berita = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita')
+    data_berita_latest = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:5]
+    
+    # Set up pagination, 3 berita per halaman
+    paginator = Paginator(data_berita, 3)  # 3 berita per halaman
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    # Siapkan data untuk template
+    data = {
+        'page_obj': page_obj,
+        'data_berita_latest': data_berita_latest,
+    }
+    return render(request, f'{request.jenjang}/{request.template_name}/berita/berita.html', data)
+
 
 def detail(request, id_data_konten):
 
@@ -77,8 +101,13 @@ def kegiatan(request):
    data_kegiatan = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Kegiatan')
    
    data_berita_latest = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:5]
+
+   paginator = Paginator(data_kegiatan, 3)  # 3 berita per halaman
+   page_number = request.GET.get('page')
+   page_obj = paginator.get_page(page_number)
+
    data = {
-      'data_kegiatan' : data_kegiatan,
+      'page_obj': page_obj,
       'data_berita_latest' : data_berita_latest,
    }
 
@@ -98,10 +127,14 @@ def Detail_kegiatan(request, id_data_konten):
 
 def pengumuman(request):
    data_pengumuman = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Pengumuman')
-   
    data_berita_latest = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:5]
+
+   paginator = Paginator(data_pengumuman, 3)  # 3 berita per halaman
+   page_number = request.GET.get('page')
+   page_obj = paginator.get_page(page_number)
+
    data = {
-      'data_pengumuman' : data_pengumuman,
+      'page_obj': page_obj,
       'data_berita_latest' : data_berita_latest,
    }
    return render(request, f'{request.jenjang}/{request.template_name}/berita/pengumuman.html', data )
