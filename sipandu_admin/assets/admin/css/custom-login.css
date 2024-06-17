@@ -6,12 +6,14 @@ body {
 }
 
 .login-img {
-   
     background-size: cover;
-    position: relative; 
-    width: 100%; 
-    height: 100vh; 
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #007bff; 
+
 }
+
 .login-img-img {
     background-color: #007bff;
     background-size: cover;
@@ -45,7 +47,7 @@ body {
 .login100-form-title {
     font-size: 24px;
     font-weight: 700;
-    color: #09f;
+    color: rgb(0, 0, 0);
     margin-bottom: 20px;
 }
 
@@ -103,8 +105,8 @@ body {
 }
 
 .header-brand-img {
-    width: 200px;
-    height: 100px;
+    width: 150px;
+    height:150px;
     margin-bottom: 100px;
 }
 
