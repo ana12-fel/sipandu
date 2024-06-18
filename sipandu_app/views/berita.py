@@ -56,8 +56,14 @@ def detail(request, id_data_konten):
 def BursaKerja(request):
    bursa_kerja = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Bursa Kerja')
    data_berita_latest = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:5]
+
+    # Set up pagination, 3 berita per halaman
+   paginator = Paginator(bursa_kerja, 3)  # 3 berita per halaman
+   page_number = request.GET.get('page')
+   page_obj = paginator.get_page(page_number)
+
    data = {
-      'bursa_kerja' : bursa_kerja,
+      'page_obj' : page_obj,
       'data_berita_latest' : data_berita_latest,
    }
 
@@ -76,10 +82,14 @@ def detail_kerja(request, id_data_konten):
 
 def Beasiswa(request):
    data_beasiswa = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Beasiswa')
-   print(data_beasiswa)
    data_berita_latest = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:5]
+
+   paginator = Paginator(data_beasiswa, 3)  # 3 berita per halaman
+   page_number = request.GET.get('page')
+   page_obj = paginator.get_page(page_number)   
+
    data = {
-      'data_beasiswa' : data_beasiswa,
+      'page_obj' : page_obj,
       'data_berita_latest' : data_berita_latest,
    }
 
