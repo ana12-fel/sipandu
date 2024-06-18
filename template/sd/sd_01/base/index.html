@@ -102,35 +102,68 @@
 
 <!-- BERITA -->
 <div class="container pb-5 mb-4 pt-5">
-	<div class="row">
-		<div class="col">
-			<div class="col text-center">
-				<h2 class="text-transform-none text-color-dark font-weight-bold text-10 negative-ls-1 mb-2 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">BERITA</h2>
-			</div>
+    <div class="row">
+        <div class="col text-center">
+            <h2 class="text-transform-none text-color-dark font-weight-bold text-10 negative-ls-1 mb-2 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">BERITA</h2>
+        </div>
+        <div class="col-12">
+            <div class="d-flex flex-nowrap justify-content-center">
+                {% for dt_berita in data_berita %}
+                <div id="teamMember{{ forloop.counter }}" class="d-flex flex-column align-items-center appear-animation mx-2 mb-4 berita-item" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
+                    <div class="image-container mb-2">
+                        <img src="{{ dt_berita.konten_image.url }}" class="img-fluid news-image" alt="Image of the team member" />
+                    </div>
+                    <div class="content-container text-center">
+                        <h4 class="text-color-dark font-weight-bold line-height-1 mt-3 mb-1">{{ dt_berita.judul|truncatewords:10 }}</h4>
+                        <p class="text-3 mb-3-5">{{ dt_berita.isi_konten|truncatewords:10|safe }}</p>
+                        <a href="{% url 'sipandu:detail' dt_berita.id_data_konten %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
+                            Lihat Detail ...
+                            <svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
 			<div class="row">
-				<div class="col-sm-9 col-md-6 mb-5-5">
-					{% for dt_berita in data_berita %}
-					<div id="teamMember1" class="row align-items-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
-						<div class="col-lg-5 col-xl-6 pe-lg-0 mb-0">
-							<img src="{{ dt_berita.konten_image.url }}" class="img-fluid" alt="Image of the team member" />
-						</div>
-						<div class="col-lg-7 col-xl-6 ps-lg-4">
-							<h4 class="text-color-dark font-weight-bold line-height-1 mt-3 mb-1">{{dt_berita.judul|truncatewords:10}}</h4>
-							<p class="text-3 mb-3-5">{{dt_berita.isi_konten|truncatewords:10|safe}}</p>
-							<a href="{% url 'sipandu:detail' dt_berita.id_data_konten %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
-								Lihat Detail ...
-								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
-								</svg>
-							</a>
-						</div>
-					</div>
-					{% endfor %}
+				<div class="col text-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="800" data-plugin-options="{'accY': -250}">
+					<a href="{% url 'sipandu:berita' %}" class="btn btn-info font-weight-bold px-5 btn-py-3"><span class="fa fa-eye"></span> Lihat Berita Lainnya</a>
 				</div>
 			</div>
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
+
+
+<style>
+.berita-item {
+    width: 300px; /* Atur lebar sesuai kebutuhan */
+    height: 450px; /* Atur tinggi sesuai kebutuhan */
+    border: 1px solid #ddd; /* Opsional: Untuk visualisasi batas */
+    padding: 15px; /* Opsional: Untuk memberikan ruang dalam */
+    box-sizing: border-box; /* Memastikan padding tidak menambah ukuran total */
+}
+.image-container {
+    width: 100%;
+    height: 200px; /* Atur tinggi gambar */
+    overflow: hidden;
+}
+.news-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Memastikan gambar memenuhi kontainer */
+}
+.content-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+</style>
+
+
+
 
 <!-- GALERI -->
 <section class="section overlay overlay-show overlay-op-5 border-0 m-0" style="background-image: url({% static 'logo/sd01.jpg' %}); background-size: cover; background-position: center;">
