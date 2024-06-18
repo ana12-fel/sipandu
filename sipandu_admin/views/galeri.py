@@ -49,7 +49,7 @@ def Tambahgaleri(request):
 
     else:
         dt_galeri = Data_galeri.objects.all()
-        data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
+        data_sekolah = Master_sekolah.objects.all()
         return render(request, 'admin/data/tambah_galeri.html', {"data_galeri": dt_galeri, "data_sekolah" : data_sekolah})
 
 

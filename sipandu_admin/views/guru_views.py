@@ -35,7 +35,7 @@ def IndexGuru(request):
         return redirect('sipandu_admin:index_guru')
     
     else:
-        data_sekolah = Master_sekolah.objects.all()
+        data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         data_guru = Data_guru.objects.by_hakakses(request.user).filter(deleted_at=None)
         data_arsip_guru = Data_guru.objects.filter(deleted_at__isnull=False)
 
