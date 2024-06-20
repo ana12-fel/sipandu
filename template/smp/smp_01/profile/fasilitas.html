@@ -1,0 +1,100 @@
+{% extends 'layout_smp/base_layout_smp.html' %}
+{% block main %}
+{% load static %}
+
+<section class="page-header page-header-modern page-header-lg" style="background-color:#0169fe;">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col text-center">
+                <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2">
+                    <h2 class="text-color-light">
+                        FASILITAS
+                    </h2>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="container pt-4 pb-5 my-5">
+    <div class="row justify-content-center">
+        <div class="col">
+            <!-- Navigasi Pill -->
+            <ul class="nav nav-pills sort-source sort-source-style-3 custom-sort-source mt-4" data-sort-id="portfolio" data-option-key="filter" data-plugin-options="{'layoutMode': 'packery', 'filter': '*'}"></ul>
+            <!-- Loader -->
+            <div class="sort-destination-loader sort-destination-loader-showing mt-4 pt-2">
+                <!-- Daftar Fasilitas -->
+                <div class="row portfolio-list sort-destination" data-sort-id="portfolio">
+                    {% for dtd_fasilitas in data_fasilitas %}
+                        <div class="col-sm-6 col-lg-6 isotope-item websites">
+                            <div class="portfolio-item">
+                                <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-5 mb-3">
+                                    <div class="thumb-info-wrapper rounded-5">
+                                        <!-- Gambar Konten -->
+                                        {% if dtd_fasilitas.konten_image %}
+                                            <img src="{{ dtd_fasilitas.konten_image.url }}" class="img-fluid rounded-5" alt="{{ dtd_fasilitas.judul }}" />
+                                        {% else %}
+                                            <img src="{% static 'path/to/default/image.jpg' %}" class="img-fluid rounded-5" alt="Default Image" />
+                                        {% endif %}
+                                        <!-- Tombol Aksi -->
+                                        <div class="thumb-info-action">
+                                            <a href="{% url 'sipandu:detail_fasilitas'  dtd_fasilitas.id_data_konten %}" aria-label="{{ dtd_fasilitas.judul }}">
+                                                <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Judul Konten -->
+                                <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
+                                    <a href="" class="text-decoration-none text-color-dark opacity-hover-8">{{ dtd_fasilitas.judul }}</a>
+                                </h3>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="section section-height-3 bg-gradient border-0 m-0">
+    <div class="container py-1">
+        <div class="col">
+            <h2 class="text-color-light font-weight-bold text-9 mb-5-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">Berita Lainnya</h2>
+            <div class="custom-half-carousel-style-1 carousel-half-full-width-wrapper carousel-half-full-width-right">
+                <div class="owl-carousel owl-theme carousel-half-full-width-right dots-align-left dots-light custom-dots-style-1 mb-0" data-plugin-options="{'responsive': {'0': {'items': 1}, '768': {'items': 3}, '992': {'items': 3}, '1200': {'items': 3}}, 'loop': false, 'nav': false, 'dots': true, 'margin': 20}">
+                    <!-- start -->
+                     {% for dt_berita_latest in data_berita_latest %}
+                    <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="400">
+                        <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3">
+                            <div class="thumb-info-wrapper rounded-0">
+                                <img src="{{dt_berita_latest.konten_image.url}}" class="img-fluid rounded-0" alt="" />
+                                <div class="thumb-info-action">
+                                    <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" aria-label="">
+                                        <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">{{dt_berita_latest.created_at}}</h2>
+                        <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
+                            <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" class="text-decoration-none text-color-light opacity-hover-8">{{dt_berita_latest.judul|title}}</a>
+                        </h3>
+                    </div>
+                    {% endfor %}
+                    <!-- end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+{% endblock main %}
