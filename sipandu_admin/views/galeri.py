@@ -59,13 +59,13 @@ def Editgaleri(request, id_data_galeri):
     dt_galeri = get_object_or_404(Data_galeri, id_data_galeri=id_data_galeri)
     if request.method == 'POST':
         galeri_sekolah = request.POST.get('galeri_sekolah')
-        gambar = request.FILES.get('image_galeri')
         video = request.POST.get('video_galeri')
+        gambar = request.FILES.get('image_galeri', dt_galeri.gambar)  # Default to current image if no new image is uploaded
 
-        # Mengambil objek yang sudah ada dan mengubah nilainy
+        # Mengambil objek yang sudah ada dan mengubah nilainya
         dt_galeri.galeri_sekolah_id = galeri_sekolah
-        dt_galeri.gambar = gambar
         dt_galeri.video = video
+        dt_galeri.gambar = gambar
 
         # Menyimpan perubahan pada objek yang sudah ada
         dt_galeri.save()
@@ -74,7 +74,7 @@ def Editgaleri(request, id_data_galeri):
 
     else:
         data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
-        return render(request, 'admin/data/edit_galeri.html', {"dt_galeri": dt_galeri, "data_sekolah" : data_sekolah})
+        return render(request, 'admin/data/edit_galeri.html', {"dt_galeri": dt_galeri, "data_sekolah": data_sekolah})
 
 
 @login_required(login_url='sipandu_admin:login_index')
