@@ -79,11 +79,11 @@
                     <div class="px-3 mt-4">
                         <h3 class="text-color-quaternary text-capitalize font-weight-bold text-5 m-0">Kategori</h3>
                         <ul class="nav nav-list flex-column mt-2 mb-0 p-relative right-9">
-                            <li class="nav-item"><a class="nav-link bg-transparent border-0" href="{% url 'sipandu:berita' %}">Berita <span id="#" class="badge badge-primary">0</span></a></li>
-                            <li class="nav-item"><a class="nav-link bg-transparent border-0" href="{% url 'sipandu:pengumuman' %}">Pengumuman <span id="#" class="badge badge-primary">0</span></a></li>
-                            <li class="nav-item"><a class="nav-link bg-transparent border-0" href="{% url 'sipandu:kegiatan' %}">Kegiatan <span id="#" class="badge badge-primary">0</span></a></li>
-                            <li class="nav-item"><a class="nav-link bg-transparent border-0" href="{% url 'sipandu:bursa_kerja' %}">Bursa Kerja <span id="#" class="badge badge-primary">0</span></a></li>
-                            <li class="nav-item"><a class="nav-link bg-transparent border-0" href="{% url 'sipandu:beasiswa' %}">Beasiswa <span id="data_kegiatan" class="badge badge-primary">0</span></a></li>
+                            <li class="nav-item"><a class="nav-link bg-transparent border-0" href="{% url 'sipandu:berita' %}">Berita <span id="berita.id_data_konten" class="badge badge-primary">{{jumlah_berita}}</span></a></li>
+                            <li class="nav-item"><a class="nav-link bg-transparent border-0" href="{% url 'sipandu:pengumuman' %}">Pengumuman <span id="data_pengumuman" class="badge badge-primary">{{jumlah_pengumuman}}</span></a></li>
+                            <li class="nav-item"><a class="nav-link bg-transparent border-0" href="{% url 'sipandu:kegiatan' %}">Kegiatan <span id="data_kegiatan" class="badge badge-primary">{{jumlah_kegiatan}}</span></a></li>
+                            <li class="nav-item"><a class="nav-link bg-transparent border-0" href="{% url 'sipandu:bursa_kerja' %}">Bursa Kerja <span id="#" class="badge badge-primary">{{jumlah_kerja}}</span></a></li>
+                            <li class="nav-item"><a class="nav-link bg-transparent border-0" href="{% url 'sipandu:beasiswa' %}">Beasiswa <span id="data_kegiatan" class="badge badge-primary">{{jumlah_beasiswa}}</span></a></li>
                             <!-- Tambahkan kategori lain sesuai kebutuhan -->
                         </ul>
                     </div>
@@ -91,6 +91,7 @@
             </div>
         </div>
     </div>
+   
     
     <style>
     .fixed-size-image {

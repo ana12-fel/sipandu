@@ -136,9 +136,12 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, f'sipandu_admin/assets'),
 ]
 
+
 for x in list_dir1:
     for xx in os.listdir(os.path.join(BASE_DIR, f'sipandu_app/static/{x}')):
         STATICFILES_DIRS.append(os.path.join(BASE_DIR, f'sipandu_app/static/{x}/{xx}'))
+
+
 
 
 
