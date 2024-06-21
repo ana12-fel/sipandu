@@ -8,14 +8,15 @@
             <div class="col text-center">
                 <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2">
                     <h2 class="text-color-light">
-                        VISI & MISI
+                        IDENTITAS SEKOLAH
                     </h2>
                 </ul>
             </div>
         </div>
     </div>
 </section>
-<section>
+
+<section class="mt-5">
     <div class="container">
         <div class="row">
             <div class="col-md-6 mt-5">
@@ -28,76 +29,54 @@
                 </p>
             </div>
             <div class="col-md-3 d-flex align-items-center">
-                <img src="{{ data_sejarah.konten_image.url}}" alt="" style="border-radius: 2px;">
+                <img src="{{ data_sejarah.konten_image.url }}" alt="" style="border-radius: 2px;">
             </div>
         </div>
     </div>
 </section>
-<section class="section custom-bg-color-grey-1 border-0 m-0" id="courses">
-        <div class="row mb-4">
-            <div class="col text-center">
-                <div class="overflow-hidden">
-                    <h2 class="text-color-secondary font-weight-semi-bold text-6 line-height-1 mb-3-5 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="300">Pergantian Kepala Sekolah</h2>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="500">
-                <div class="owl-carousel owl-theme nav-style-1 nav-outside nav-font-size-lg custom-nav-secondary mb-0" data-plugin-options="{'responsive': {'576': {'items': 1}, '768': {'items': 2}, '992': {'items': 2}, '1200': {'items': 3}}, 'loop': true, 'nav': true, 'dots': false, 'margin': 20}">
-                    <div>
-                        <div class="card custom-card-courses border-radius-0">
-                            <div class="p-relative">
-                                <a href="demo-education-courses-details.html" class="text-color-secondary" title="">
-                                    <img class="card-img-top border-radius-0" src="{% static 'img/home1.jpg' %}" alt="" />
-                                </a>
-                            </div>
-                            
-                            <div class="card-body">
-                                <div class="card-body text-center px-2 py-3">
-                                    <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1"> Jamal </h2>
-                                    <p class="text-color-grey positive-ls-3 mb-3"> 2003 - 2008</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="card custom-card-courses border-radius-0">
-                            <div class="p-relative">
-                                <a href="demo-education-courses-details.html" class="text-color-secondary" title="">
-                                    <img class="card-img-top border-radius-0" src="{% static 'img/home1.jpg' %}" alt="" />
-                                </a>
-                            </div>
-                            <div class="card-body">
-                                <div class="card-body text-center px-2 py-3">
-                                    <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1"> Emiya </h2>
-                                    <p class="text-color-grey positive-ls-3 mb-3"> 2009 - 2014</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="card custom-card-courses border-radius-0">
-                            <div class="p-relative">
-                                <a href="demo-education-courses-details.html" class="text-color-secondary" title="">
-                                    <img class="card-img-top border-radius-0" src="{% static 'img/home1.jpg' %}" alt="" />
-                                </a>
-                            </div>
-                            <div class="card-body">
-                            <div class="card-body text-center px-2 py-3">
-                                <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1"> Ivana </h2>
-                                <p class="text-color-grey positive-ls-3 mb-3"> 2014 - 2019<p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row pt-2">
-            <div class="col text-center">
-            </div>
-        </div>
+
+<section class="section overlay-show border-0 m-0 appear-animation mt-5" data-appear-animation="fadeIn" data-appear-animation-delay="300" style="background-size: cover; background-position: center; background-color: rgb(101, 1, 1);">
+    <div class="row mt-5 mb-5">
+        <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2 mt-3">
+            <h2 class="card-title alternative-font-4 text-color-light font-weight-semibold line-height-1 text-5 mb-1">Pergantian Kepala Sekolah</h2>
+        </ul>
     </div>
+    <div class="row mt-5 mb-5">
+        <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2 mt-3">
+            <h2 class="card-title alternative-font-4 text-color-light font-weight-semibold line-height-1 text-5 mb-1"></h2>
+        </ul>
+    </div>
+      
 </section>
+
+<div class="owl-carousel-wrapper position-relative z-index-3 pb-5 mb-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600" style="height: 373px; margin-top: -225px;">
+    <div class="owl-carousel owl-theme dots-horizontal-center custom-dots-style-1 dots-dark mb-0" data-plugin-options="{'responsive': {'576': {'items': 2}, '768': {'items': 2}, '992': {'items': 3}, '1200': {'items': 4}, '1440': {'items': 5}}, 'margin': 20, 'stagePadding': 20, 'loop': true, 'nav': false, 'dots': true, 'autoplay': true, 'autoplayTimeout': 7000}">
+        
+        {% if data_kepala_sekolah %}
+            {% for kepala_sekolah in data_kepala_sekolah %}
+                <div class="py-5">
+                    <a href="{% url 'sipandu:detail_guru' kepala_sekolah.id_data_guru %}" class="text-decoration-none">
+                        <div class="card custom-card-style-1 border-0 border-radius-3 custom-box-shadow-1">
+                            <img src="{{ kepala_sekolah.guru_image.url }}" class="card-img-top border-radius-5" width="291" height="178" alt="{{ kepala_sekolah.nama_guru }}"/>
+                            <div class="card-body text-center px-4 py-4">
+                                <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1">{{ kepala_sekolah.nama_guru }}</h2>
+                                <p class="text-color-grey positive-ls-3 mb-3">{{ kepala_sekolah.tahun_guru }}</p>
+                                <svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Data kepala sekolah tidak tersedia.</p>
+        {% endif %}
+        
+    </div>
+</div>
+
+
 
 <div class="container py-5 my-5">
     <div class="row align-items-center">
@@ -186,16 +165,71 @@
                 </div>
             </div>
         </div>
-
         <div class="col-lg-6">
-            <div class="position-relative">
-                <div data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
-                    <img src="{% static 'logo/FILLIANA.jpg' %}" class="img-fluid position-relative z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="border-radius: 5px;"/>
+            <div class="position-relative">  
+                <div class="d-flex flex-column align-items-center position-relative">
+                    {% if data_kepala %}
+                        <div data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
+                            <img src="{{data_kepala.guru_image.url}}" class="img-fluid z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="width: 300px; height: 300px; object-fit: cover; border-radius: 5px;"/>
+                        </div>
+                        <h2 class="font-weight-bold text-color-dark text-center mt-3">{{ data_kepala.nama_guru }}</h2>
+                        <h5 class="text-center">{{ data_kepala.tahun_guru }}</h5>
+                    {% else %}
+                        <p class="text-center">Data kepala sekolah tidak tersedia.</p>
+                    {% endif %}
                 </div>
-                <h2 class="font-weight-bold text-color-dark text-center "> FILLYANA TRI PURWA HASTUTI</h2>
-                <h5 class="text-center">Masa Jabatan 2010 - Sekarang </h5>
+            </div>
+        </div> 
+    </div>
+</div>
+
+<section class="section section-height-3 bg-gradient border-0 m-0">
+    <div class="container py-1">
+        <div class="col">
+            <h2 class="text-color-light font-weight-bold text-9 mb-5-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">Berita Lainnya</h2>
+            <div class="custom-half-carousel-style-1 carousel-half-full-width-wrapper carousel-half-full-width-right">
+                <div class="owl-carousel owl-theme carousel-half-full-width-right dots-align-left dots-light custom-dots-style-1 mb-0" data-plugin-options="{'responsive': {'0': {'items': 1}, '768': {'items': 3}, '992': {'items': 3}, '1200': {'items': 3}}, 'loop': false, 'nav': false, 'dots': true, 'margin': 20}">
+                    <!-- start -->
+                    {% for dt_berita_latest in data_berita_latest %}
+                    <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="400">
+                        <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3 berita-item">
+                            <div class="thumb-info-wrapper rounded-0 image-container">
+                                <img src="{{ dt_berita_latest.konten_image.url }}" class="img-fluid rounded-0 news-image" alt="Image of the news" />
+                                <div class="thumb-info-action">
+                                    <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" aria-label="">
+                                        <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">{{ dt_berita_latest.created_at }}</h2>
+                        <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
+                            <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" class="text-decoration-none text-color-light opacity-hover-8">{{ dt_berita_latest.judul|title }}</a>
+                        </h3>
+                    </div>
+                    {% endfor %}
+                    <!-- end -->
+                </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+
+<style>
+.berita-item {
+    width: 100%;
+    height: 100%; /* Adjust as needed */
+}
+.image-container {
+    width: 100%;
+    height: 200px; /* Set a fixed height for the images */
+    overflow: hidden;
+}
+.news-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the entire container without distortion */
+}
+</style>
+
 {% endblock main %}

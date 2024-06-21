@@ -5,14 +5,44 @@ from sipandu_app.models import Data_konten as dt_konten, Transanksi_situs as dt_
 # from support.support_function import JENJANG, TEMPLATE_NAME
 from django.core.paginator import Paginator
 
+
 def identitas(request):
-   
-   # tolong di admin ditamnbahkan kunci untuk menu sub kategori.
-   data_sejarah = get_object_or_404(dt_konten, konten_sekolah = request.sekolah, judul__icontains = 'Sejarah singkat' )
-   data = {
-      'data_sejarah' : data_sejarah,
-   }
-   return render(request, f'{request.jenjang}/{request.template_name}/profile/identitas.html', data)
+    # Fetch data_sejarah
+    data_sejarah = get_object_or_404(dt_konten, konten_sekolah=request.sekolah, judul__icontains='Sejarah singkat')
+
+    # Fetch the latest news
+    data_berita_latest = dt_konten.objects.filter(
+        konten_sekolah=request.sekolah, 
+        konten_sub_kategori__sub_kategori_uraian='Berita'
+    ).order_by('-id_data_konten')[:5]
+
+    # Fetch kepala sekolah data
+    try:
+        data_kepala_sekolah = dt_guru.objects.filter(
+            guru_sekolah=request.sekolah, 
+            status_kepegawaian='kepala_sekolah'
+        ).order_by('tahun_guru')
+    except dt_guru.DoesNotExist:
+        data_kepala_sekolah = None
+
+    try:
+        data_kepala = dt_guru.objects.filter(
+            guru_sekolah=request.sekolah, 
+            status_kepegawaian='kepala_sekolah'
+        ).first()
+    except dt_guru.DoesNotExist:
+        data_kepala = None
+
+    # Prepare context data
+    data = {
+        'data_sejarah': data_sejarah,
+        'data_berita_latest': data_berita_latest,
+        'data_kepala_sekolah': data_kepala_sekolah,
+        'data_kepala' : data_kepala,
+    }
+
+    return render(request, f'{request.jenjang}/{request.template_name}/profile/identitas.html', data)
+
 
 def sambutan(request):
    
@@ -81,6 +111,7 @@ def detail_fasilitas(request, id_data_konten):
 def datagtk(request):
     # Fetch data for GTK
     data_gtk = dt_guru.objects.filter(guru_sekolah=request.sekolah)
+   
     data_berita_latest = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:5]
    
     

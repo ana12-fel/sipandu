@@ -5,38 +5,36 @@
             <div class="header-nav-main header-nav-main-square header-nav-main-text-capitalize header-nav-main-effect-1 header-nav-main-sub-effect-1">
                 <nav class="collapse px-3-5">
                     <ul class="nav nav-pills" id="mainNav">
-                        <li>
-                            <a class="nav-link active" href="{% url 'sipandu:home' %}">
-                                BERANDA
-                            </a>
+                        <li class="dropdown">
+                            <a href="{% url 'sipandu:home' %}" class="nav-link" style="text-transform: uppercase;"> BERANDA </a>
                         </li>
                         <li class="dropdown">									
-                            <a href="{% url 'sipandu:home' %}" class="nav-link">PROFIL</a>
+                            <a href="{% url 'sipandu:home' %}" class="nav-link" style="text-transform: uppercase;">PROFIL</a>
                             <ul class="dropdown-menu border-radius-0">
                                 {% for konten in nav_profil_smp %}
                                     {% if konten.sub_kategori_uraian == 'Identitas Sekolah' %}
                                     <li>
-                                        <a href="{% url 'sipandu:identitas'  %}" class="nav-link">Identitas Sekolah</a>
+                                        <a href="{% url 'sipandu:identitas'  %}" class="nav-link" style="text-transform: uppercase;">Identitas Sekolah</a>
                                     </li>
                                     {% elif konten.sub_kategori_uraian == 'Visi dan Misi' %}
                                     <li>
-                                        <a href="{% url 'sipandu:visi'  %}" class="nav-link">Visi dan Misi</a>
+                                        <a href="{% url 'sipandu:visi'  %}" class="nav-link" style="text-transform: uppercase;">Visi dan Misi</a>
                                     </li>
                                     {% elif konten.sub_kategori_uraian == 'Struktur Organisasi' %}
                                     <li>
-                                        <a href="{% url 'sipandu:struktur'  %}" class="nav-link">Struktur Organisasi</a>
+                                        <a href="{% url 'sipandu:struktur'  %}" class="nav-link" style="text-transform: uppercase;">Struktur Organisasi</a>
                                     </li>
                                     {% elif konten.sub_kategori_uraian == 'Fasilitas' %}
                                     <li>
-                                        <a href="{% url 'sipandu:fasilitas'  %}" class="nav-link">Fasilitas</a>
+                                        <a href="{% url 'sipandu:fasilitas'  %}" class="nav-link" style="text-transform: uppercase;">Fasilitas</a>
                                     </li>
                                     {% elif konten.sub_kategori_uraian == 'Data GTK' %}
                                     <li>
-                                        <a href="{% url 'sipandu:datagtk'  %}" class="nav-link">Data GTK</a>
+                                        <a href="{% url 'sipandu:datagtk'  %}" class="nav-link" style="text-transform: uppercase;">Data GTK</a>
                                     </li>
                                     {% else %}
                                     <li>
-                                        <a href="{% url 'sipandu:identitas'  %}" class="nav-link">Tidak ada data</a>
+                                        <a href="{% url 'sipandu:identitas'  %}" class="nav-link" style="text-transform: uppercase;">Tidak ada data</a>
                                     </li>
                                     
                                     {% endif %}
@@ -44,30 +42,35 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a class="nav-link dropdown-toggle" href="{% url 'sipandu:ekstrakulikuler' %}">Program</a>
+                            <a class="nav-link dropdown-toggle" href="{% url 'sipandu:ekstrakulikuler' %}" style="text-transform: uppercase;">Program</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{% url 'sipandu:ekstrakulikuler' %}">Extrakulikuler</a></li>
+                                <li><a class="dropdown-item" href="{% url 'sipandu:ekstrakulikuler' %}" style="text-transform: uppercase;">Extrakulikuler</a></li>
                             </ul>
                             <li>
-                                <a class="nav-link" href="{% url 'sipandu:prestasi' %}">Prestasi</a>
+                                <a class="nav-link" href="{% url 'sipandu:prestasi' %}" style="text-transform: uppercase;">Prestasi</a>
                             </li>
 
                             <li class="dropdown">
-                                <a href="{% url 'sipandu:home' %}" class="dropdown-item dropdown-toggle">BERITA</a>
+                                <a href="{% url 'sipandu:home' %}" class="dropdown-item dropdown-toggle" style="text-transform: uppercase;">BERITA</a>
                                 <ul class="dropdown-menu border-radius-0">
                                 {% for konten in nav_berita_smp %}
                                     {% if konten.sub_kategori_uraian == 'Berita' %}
                                     <li>
-                                        <a href="{% url 'sipandu:berita' %}" class="nav-link">Berita</a>
+                                        <a href="{% url 'sipandu:berita' %}" class="nav-link" style="text-transform: uppercase;">Berita</a>
                                     </li>
                                     {% elif konten.sub_kategori_uraian == 'Pengumuman' %}
                                     <li>
-                                        <a href="{% url 'sipandu:pengumuman' %}" class="nav-link">Pengumuman</a>
+                                        <a href="{% url 'sipandu:pengumuman' %}" class="nav-link" style="text-transform: uppercase;">Pengumuman</a>
                                     </li>
 
                                     {% elif konten.sub_kategori_uraian == 'Kegiatan' %}
                                     <li>
-                                        <a href="{% url 'sipandu:kegiatan' %}" class="nav-link">Kegiatan</a>
+                                        <a href="{% url 'sipandu:kegiatan' %}" class="nav-link" style="text-transform: uppercase;">Kegiatan</a>
+                                    </li>
+                                    
+                                    {% elif konten.sub_kategori_uraian == 'Beasiswa' %}
+                                    <li>
+                                        <a href="{% url 'sipandu:beasiswa' %}" class="nav-link" style="text-transform: uppercase;">Beasiswa</a>
                                     </li>
                                     {% endif %}
                                 {% endfor %}
@@ -75,20 +78,17 @@
                                 </ul>
                               </li>
                         <li>
-                            <a class="nav-link" href="{% url 'sipandu:galeri' %}">Galeri</a>
+                            <a class="nav-link" href="{% url 'sipandu:galeri' %}" style="text-transform: uppercase;">Galeri</a>
                         </li>
                         <li>
-                            <a class="nav-link" href="{% url 'sipandu:kontak' %}">Kontak</a>
+                            <a class="nav-link" href="{% url 'sipandu:kontak' %}" style="text-transform: uppercase;">Kontak</a>
                         </li>
                     </ul>
                 </nav>
             </div>
             <button class="btn header-btn-collapse-nav" data-bs-toggle="collapse" data-bs-target=".header-nav-main nav">
                 <i class="fas fa-bars"></i>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            </button>
         </div>
     </div>
 </div>

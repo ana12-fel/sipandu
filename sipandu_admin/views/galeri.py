@@ -29,28 +29,27 @@ def Indexgaleri(request):
         return render(request, 'admin/data/galeri.html', {"data_galeri" : data_galeri, "data_sekolah" : data_sekolah})
 
 @login_required(login_url='sipandu_admin:login_index')
-
 def Tambahgaleri(request):
     if request.method == 'POST':
         galeri_sekolah = request.POST.get('galeri_sekolah')
-        gambar = request.FILES.get('image_galeri')
         video = request.POST.get('video_galeri')
-        print(request.POST,request.FILES)
+        gambar = request.FILES.get('image_galeri')  # Menggunakan request.FILES untuk mengambil file gambar
 
-        print(galeri_sekolah)
-        dt_galeri = Data_galeri.objects.create( 
-                                                galeri_sekolah_id=galeri_sekolah, 
-                                                gambar=gambar, 
-                                                video=video)
-                                            
-        dt_galeri.save()
-
-        return redirect('sipandu_admin:index_galeri')
+        # Buat objek Data_galeri baru dan simpan ke database
+        dt_galeri = Data_galeri.objects.create(
+            galeri_sekolah_id=galeri_sekolah,
+            video=video,
+            gambar=gambar  # Simpan file gambar ke dalam model jika ada
+        )
+        
+        return redirect('sipandu_admin:index_galeri')  # Redirect ke halaman sukses atau index galeri setelah berhasil disimpan
 
     else:
+        # Jika method adalah GET, tampilkan formulir kosong
         dt_galeri = Data_galeri.objects.all()
-        data_sekolah = Master_sekolah.objects.all()
-        return render(request, 'admin/data/tambah_galeri.html', {"data_galeri": dt_galeri, "data_sekolah" : data_sekolah})
+        data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
+        return render(request, 'admin/data/tambah_galeri.html', {"data_galeri": dt_galeri, "data_sekolah": data_sekolah})
+
 
 
 @login_required(login_url='sipandu_admin:login_index')

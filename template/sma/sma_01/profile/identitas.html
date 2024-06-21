@@ -54,22 +54,32 @@
 <div class="owl-carousel-wrapper position-relative z-index-3 pb-5 mb-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600" style="height: 373px; margin-top: -225px;">
     <div class="owl-carousel owl-theme dots-horizontal-center custom-dots-style-1 dots-dark mb-0" data-plugin-options="{'responsive': {'576': {'items': 2}, '768': {'items': 2}, '992': {'items': 3}, '1200': {'items': 4}, '1440': {'items': 5}}, 'margin': 20, 'stagePadding': 20, 'loop': true, 'nav': false, 'dots': true, 'autoplay': true, 'autoplayTimeout': 7000}">
         
-        <div class="py-5">
-            <a href="#"class="text-decoration-none">
-                <div class="card custom-card-style-1 border-0 border-radius-3 custom-box-shadow-1">
-                    <img src="#" class="card-img-top border-radius-5" width="291" height="178"/>
-                    <div class="card-body text-center px-4 py-4">
-                        <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1">#</h2>
-                        <p class="text-color-grey positive-ls-3 mb-3">#</p>
-                        <svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
-                        </svg>
-                    </div>
+        {% if data_kepala_sekolah %}
+            {% for kepala_sekolah in data_kepala_sekolah %}
+                <div class="py-5">
+                    <a href="{% url 'sipandu:detail_guru' kepala_sekolah.id_data_guru %}" class="text-decoration-none">
+                        <div class="card custom-card-style-1 border-0 border-radius-3 custom-box-shadow-1">
+                            <img src="{{ kepala_sekolah.guru_image.url }}" class="card-img-top border-radius-5" width="291" height="178" alt="{{ kepala_sekolah.nama_guru }}"/>
+                            <div class="card-body text-center px-4 py-4">
+                                <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1">{{ kepala_sekolah.nama_guru }}</h2>
+                                <p class="text-color-grey positive-ls-3 mb-3">{{ kepala_sekolah.tahun_guru }}</p>
+                                <svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </a>
-    
+            {% endfor %}
+        {% else %}
+            <p>Data kepala sekolah tidak tersedia.</p>
+        {% endif %}
+        
     </div>
 </div>
+
+
+
 
 
 <div class="container py-5 my-5">
@@ -162,18 +172,23 @@
         </div>
 
         <div class="col-lg-6">
-            <div class="position-relative">
+            <div class="position-relative">  
                 <div class="d-flex flex-column align-items-center position-relative">
-                    <div data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
-                        <img src="{{ data_kepala_sekolah.guru_image.url }}" class="img-fluid z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="border-radius: 5px;"/>
-                    </div>
-                    <h2 class="font-weight-bold text-color-dark text-center mt-3">{{ data_kepala_sekolah.nama_guru }}</h2>
-                    <h5 class="text-center">{{ data_kepala_sekolah.tahun_guru }}</h5>
+                    {% if data_kepala %}
+                        <div data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
+                            <img src="{{data_kepala.guru_image.url}}" class="img-fluid z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="width: 300px; height: 300px; object-fit: cover; border-radius: 5px;"/>
+                        </div>
+                        <h2 class="font-weight-bold text-color-dark text-center mt-3">{{ data_kepala.nama_guru }}</h2>
+                        <h5 class="text-center">{{ data_kepala.tahun_guru }}</h5>
+                    {% else %}
+                        <p class="text-center">Data kepala sekolah tidak tersedia.</p>
+                    {% endif %}
                 </div>
             </div>
-        </div>
+        </div> 
     </div>
 </div>
+
 <section class="section section-height-3 bg-gradient border-0 m-0">
     <div class="container py-1">
         <div class="col">
