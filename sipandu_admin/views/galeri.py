@@ -51,7 +51,6 @@ def Tambahgaleri(request):
         return render(request, 'admin/data/tambah_galeri.html', {"data_galeri": dt_galeri, "data_sekolah": data_sekolah})
 
 
-
 @login_required(login_url='sipandu_admin:login_index')
 
 def Editgaleri(request, id_data_galeri):
