@@ -28,41 +28,53 @@
 	
 
 <!-- Nama Nama Jurusan -->
-	<div class="owl-carousel-wrapper position-relative z-index-3 pb-4 mb-4 pt-5 ppear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600" style="height: 373px; margin-top: -225px;">
-		<div class="owl-carousel owl-theme dots-horizontal-center custom-dots-style-1 dots-dark mb-0" data-plugin-options="{'responsive': {'576': {'items': 2}, '768': {'items': 2}, '992': {'items': 3}, '1200': {'items': 4}, '1440': {'items': 5}}, 'margin': 20, 'stagePadding': 20, 'loop': true, 'nav': false, 'dots': true, 'autoplay': true, 'autoplayTimeout': 7000}">
-			{% for jurusan in data_ipa %}
-			
-			<div class="py-5">
-				<a href="{% url 'sipandu:jurusan' jurusan.konten_sub_kategori.sub_kategori_uraian %}" class="text-decoration-none">
-					<div class="card custom-card-style-1 custom-box-shadow-1">
-						
-						<img src="{{jurusan.konten_image.url}}" class="card-img-top" style="border-radius: 5px;" />
-						
-						<div class="card-body text-center px-4 py-4">
-							<h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1">{{jurusan.judul}}</h2>
-								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
-								</svg>
-							</span>
-						</div>
-					</div>
-					
-				</a>	
-			</div>
-			
-			{% endfor %}
-		</div>
-	</div>
+<div class="owl-carousel-wrapper position-relative z-index-3 pb-4 mb-4 pt-5 appear-animation"
+     data-appear-animation="fadeInUpShorterPlus"
+     data-appear-animation-delay="600"
+     style="height: 373px; margin-top: -225px;">
+
+    <div class="owl-carousel owl-theme dots-horizontal-center custom-dots-style-1 dots-dark mb-0"
+         data-plugin-options='{"responsive": {"576": {"items": 2}, "768": {"items": 2}, "992": {"items": 3}, "1200": {"items": 4}, "1440": {"items": 5}}, "margin": 20, "stagePadding": 20, "loop": true, "nav": false, "dots": true, "autoplay": true, "autoplayTimeout": 7000}'>
+
+        {% for jurusan in data_ipa %}
+        <div class="py-5">
+            <a href="{% url 'sipandu:jurusan' jurusan.konten_sub_kategori.sub_kategori_uraian %}" class="text-decoration-none">
+                <div class="card custom-card-style-1 custom-box-shadow-1" style="height: 100%;">
+
+                    <div class="card-img-container" style="overflow: hidden; border-radius: 5px; height: 200px;">
+                        <img src="{{jurusan.konten_image.url}}"
+                             class="card-img-top img-fluid"
+                             style="object-fit: cover; width: 100%; height: 100%;" alt="{{ jurusan.judul }}">
+                    </div>
+
+                    <div class="card-body text-center px-4 py-4">
+                        <h2 class="card-title alternative-font-4 text-color-dark font-weight-semibold line-height-1 text-5 mb-1">{{jurusan.judul}}</h2>
+                        <svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 " />
+                        </svg>
+                    </div>
+
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
 	
 <!-- Sambutan Kepala Sekolah -->
 <div class="container py-3 my-3">
 	<div class="row align-items-center justify-content-center">
 		<div class="col-lg-6 mb-5 mb-lg-0">
 			<h2 class="text-color-dark font-weight-extra-bold text-10 mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200"><em>Sambutan Kepala Sekolah</em></h2>
-			<p class="font-weight-light text-color-dark mb-4 appear-animation" data-appear-animation="fadeInUpShorter" 
-			data-appear-animation-delay="400">
-				{{data_sambutan.isi_konten|safe}}
+			<p class="font-weight-light text-color-dark mb-4 appear-animation custom-text-style" data-appear-animation="fadeInUpShorter" 
+   				data-appear-animation-delay="400">
+    			{{data_sambutan.isi_konten|safe}}
 			</p>
+
 			<p class="positive-ls-3 text-color-grey mb-3 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="600">{{data_sambutan.judul}}</p>
 		</div>
 		<div class="col-md-9 col-lg-6 ps-lg-5">
@@ -78,6 +90,8 @@
 		</div>
 	</div>
 </div>
+
+
 
 <section class="section overlay overlay-show overlay-op-9 border-0 m-0" style="background-image: url({% static 'logo/sekolah.jpg' %}); background-size: cover; background-position: center;">
 	<div class="container py-5 mb-5">

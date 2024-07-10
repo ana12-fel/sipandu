@@ -9,10 +9,10 @@ from sipandu_app.models import Data_konten as dt_konten, Sub_kategori as sub_kat
 def index(request):
    # data_ipa = dt_konten.objects.filter(konten_sekolah=request.sekolah,konten_sub_kategori__sub_kategori_uraian='IPA')
    data_ipa = dt_konten.objects.filter(konten_sekolah=request.sekolah,konten_kategori_id__kategori_uraian__icontains='Jurusan', status=True)
-   # data_ipa = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Jurusan')
-   print(data_ipa.__dict__)
+   
    data ={
       'data_ipa' : data_ipa,
+     
 
    }
 

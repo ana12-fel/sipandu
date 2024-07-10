@@ -20,15 +20,13 @@
     <div class="lightbox pt-5" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
         <div class="row">
             {% for gambar in galeri %}
-                {% if gambar.gambar %}
-                    <div class="col-lg-4 mb-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
-                        <a class="img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{{ gambar.gambar.url }}">
-                            <img src="{{ gambar.gambar.url }}" class="img-fluid gambar-galeri rounded-0 fixed-size-image" alt="" />
-                        </a>
-                    </div>
-                {% endif %}
+            <div class="col-lg-4 mb-4 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
+                <a class="img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon rounded-0" href="{{ gambar.gambar.url }}">
+                    <img src="{{ gambar.gambar.url }}" class="img-fluid gambar-galeri rounded-0 fixed-size-image" alt="" />
+                </a>
+            </div>
             {% endfor %}
-</div>
+        </div>
     </div>
 </div>
 
