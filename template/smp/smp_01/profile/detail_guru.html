@@ -15,41 +15,41 @@
 </section>
 
 <div class="container py-3 my-3">
-    <div class="row align-items-center justify-content-center">
-        <div class="col-lg-6 mb-5 mb-lg-0">
-            <h2 class="text-color-dark font-weight-extra-bold text-10 mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200"><em>BIODATA</em></h2>
-            <table>
-                <tr>
-                    <td class="label text-color-dark">NAMA</td>
-                    <td class="label text-color-dark">: {{ data_detail_guru.nama_guru }}</td>
-                </tr>
-                <tr>
-                    <td class="label text-color-dark">NIP</td>
-                    <td class="label text-color-dark">: {{ data_detail_guru.nip_guru }}</td>
-                </tr>
-                <tr>
-                    <td class="label text-color-dark">Mata Pelajaran</td>
-                    <td class="label text-color-dark">: {{ data_detail_guru.mata_pelajaran }}</td>
-                </tr>
-                <tr>
-                    <td class="label text-color-dark">Pendidikan</td>
-                    <td class="label text-color-dark">: {{ data_detail_guru.pendidikan }}</td>
-                </tr>
+    <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <!-- Tabel BIODATA -->
+            <h2 class="text-color-dark font-weight-extra-bold text-5 mb-3 mb-md-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200"><em>BIODATA</em></h2>
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <tr>
+                        <td class="label text-color-dark">NAMA</td>
+                        <td class="label text-color-dark">: {{ data_detail_guru.nama_guru }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label text-color-dark">NIP</td>
+                        <td class="label text-color-dark">: {{ data_detail_guru.nip_guru }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label text-color-dark">Mata Pelajaran</td>
+                        <td class="label text-color-dark">: {{ data_detail_guru.mata_pelajaran }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label text-color-dark">Pendidikan</td>
+                        <td class="label text-color-dark">: {{ data_detail_guru.pendidikan }}</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
         <div class="col-md-9 col-lg-6 ps-lg-5">
-            <div class="position-relative">
-                <div class="custom-shape-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="1100">
-                    <div class="position-absolute top-0 left-0 right-0 bottom-0 bg-primary" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.1, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}" style="border-radius: 5px;"></div>
-                </div>
+            <!-- Gambar -->
+            <div >
                 <div data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
-                    <img src="{{ data_detail_guru.guru_image.url }}" class="img-fluid position-relative z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="border-radius: 5px;"/>
+                    <img src="{{ data_detail_guru.guru_image.url }}" class="img-fluid position-relative z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="position: absolute; top: 100; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <section class="section section-height-3 bg-gradient border-0 m-0">
     <div class="container py-1">
@@ -99,4 +99,7 @@
     object-fit: cover; /* Ensures the image covers the entire container without distortion */
 }
 </style>
+
+
+
 {% endblock main %}
