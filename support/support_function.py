@@ -30,6 +30,7 @@ def global_var(request):
     jumlah_kerja = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Bursa Kerja').count()
     jumlah_beasiswa = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Beasiswa').count()
 
+    
 
     try:
         data_sambutan = dt_konten.objects.get(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Sambutan Kepala Sekolah')
@@ -44,7 +45,7 @@ def global_var(request):
         print('test')
 
     try:
-        data_kepala_sekolah = dt_guru.objects.get(guru_sekolah=request.sekolah, status_kepegawaian='kepala_sekolah')
+        data_kepala_sekolah = dt_guru.objects.filter(guru_sekolah=request.sekolah, status_kepegawaian='kepala_sekolah')
     except Exception as e:
         data_kepala_sekolah = None
         

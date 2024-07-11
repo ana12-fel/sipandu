@@ -227,7 +227,7 @@ def unarchive_konten(request, id_data_konten):
             konten = Data_konten.objects.get(id_data_konten=id_data_konten)
             konten.status = True  # Ubah status menjadi aktif
 
-            print(konten)
+            # print(konten)
             konten.deleted_at = None
             konten.save()
             return JsonResponse({'message': 'Data berhasil diunarsipkan'}, status=200)

@@ -2,60 +2,41 @@
 {% block main %}
 {% load static %}
 
-<section class="page-header page-header-modern page-header-lg" style="background-color:#0169fe;">
+<section class="page-header page-header-modern page-header-lg" style="padding: 5rem 0; background-color: #0169fe;">
     <div class="container py-4">
         <div class="row">
             <div class="col text-center">
-                <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2">
-                    <h2 class="text-color-light">
-                       BIODATA GURU
-                    </h2>
-                </ul>
+                <h1 class="text-color-light font-weight-bold text-10">{{nm_jurusan}}</h1>
+                <!-- <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2">
+                    <li class="text-color-light active"> >>Ilmu Pengetahuan Alam<< </li>
+                </ul> -->
             </div>
         </div>
     </div>
 </section>
 
-
-
-<div class="container py-3 my-3">
-    <div class="row align-items-center">
-        <div class="col-lg-6 mb-4 mb-lg-0">
-            <!-- Tabel BIODATA -->
-            <h2 class="text-color-dark font-weight-extra-bold text-5 mb-3 mb-md-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200"><em>BIODATA</em></h2>
-            <table class="table table-bordered table-striped">
-                <tbody>
-                    <tr>
-                        <td class="label text-color-dark">NAMA</td>
-                        <td class="label text-color-dark">: {{ data_detail_guru.nama_guru }}</td>
-                    </tr>
-                    <tr>
-                        <td class="label text-color-dark">NIP</td>
-                        <td class="label text-color-dark">: {{ data_detail_guru.nip_guru }}</td>
-                    </tr>
-                    <tr>
-                        <td class="label text-color-dark">Mata Pelajaran</td>
-                        <td class="label text-color-dark">: {{ data_detail_guru.mata_pelajaran }}</td>
-                    </tr>
-                    <tr>
-                        <td class="label text-color-dark">Pendidikan</td>
-                        <td class="label text-color-dark">: {{ data_detail_guru.pendidikan }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-9 col-lg-6 ps-lg-5">
-            <!-- Gambar -->
-            <div >
-                <div data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
-                    <img src="{{ data_detail_guru.guru_image.url }}" class="img-fluid position-relative z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="position: absolute; top: 100; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
+<section class="section section-no-border section-angled bg-color-light-scale-1 m-0">
+    <div class="section-angled-layer-top section-angled-layer-increase-angle" style="padding: 5rem 0;"></div>
+    <div class="container py-5 my-5">
+        <div class="row align-items-center text-justify my-5">
+            {% for item in data_ipa %}
+                <div class="col-md-6 mb-5">
+                    <h2 class="font-weight-bold text-9 mb-0 appear-animation" 
+                        data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200" data-appear-animation-duration="750">{{ item.judul }}</h2>
+                    <p class="pb-2 mb-4 appear-animation" data-appear-animation="fadeInUpShorter" 
+                        data-appear-animation-delay="800" data-appear-animation-duration="750">{{ item.isi_konten|safe }}</p>
                 </div>
-            </div>
+                <div class="col-md-6 position-relative py-5 mb-5">
+                    <div class="appear-animation" data-appear-animation="fadeInLeftShorter" data-appear-animation-delay="0" data-appear-animation-duration="750">
+                        <div class="strong-shadow rounded strong-shadow-top-right">
+                            <img src="{{ item.konten_image.url }}" class="lazyload img-fluid border border-width-10 border-color-light rounded box-shadow-3" alt="{{ item.judul }}" width="600" height="400" />
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
-</div>
-
-
+</section>
 
 
 <section class="section section-height-3 bg-gradient border-0 m-0">
@@ -106,5 +87,6 @@
     object-fit: cover; /* Ensures the image covers the entire container without distortion */
 }
 </style>
+
 
 {% endblock main %}

@@ -47,7 +47,7 @@ def EditLink(request, id_link):
         return redirect('sipandu_admin:index_link')
     
     else:
-        dt_link = Data_link.objects.get(id_link=id_link)       
+        dt_link = Data_link.objects.by_hakakses(request.user).get(id_link=id_link)       
         return render(request, 'admin/data/edit_link.html', {"dt_link": dt_link, "id_link": id_link })
 
 @login_required(login_url='sipandu_admin:login_index')

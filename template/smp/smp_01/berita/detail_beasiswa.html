@@ -1,4 +1,4 @@
-{% extends 'layout/base_layout.html' %}
+{% extends 'layout_smp/base_layout_smp.html' %}
 {% block main %}
 {% load static %}
 
@@ -7,7 +7,7 @@
         <div class="container">
             <div class="row py-3">
                 <div class="col-md-12 align-self-center p-static order-2 text-center">
-                    <h1 class="font-weight-normal text-12 m-0 pb-2">{{detail_berita.judul|title}}</h1>
+                    <h1 class="font-weight-normal text-12 m-0 pb-2">{{data_detail_beasiswa.judul|title}}</h1>
                 </div>
             </div>
         </div>
@@ -19,12 +19,12 @@
                 <article>
                     <div class="card border-0">
                         <div class="card-body z-index-1 p-0">
-                            <p class="text-uppercase text-1 mb-3 text-color-default"><time pubdate datetime="2023-01-10">{{detail_berita.created_at}}</time> <span class="opacity-3 d-inline-block px-2">|</span> Admin</p>
+                            <p class="text-uppercase text-1 mb-3 text-color-default"><time pubdate datetime="2023-01-10">{{data_detail_beasiswa.created_at}}</time> <span class="opacity-3 d-inline-block px-2">|</span> Admin</p>
                             <div class="post-image pb-4">
-                                <img class="card-img-top custom-border-radius-1" src="{{detail_berita.konten_image.url}}" alt="Card Image">
+                                <img class="card-img-top custom-border-radius-1" src="{{data_detail_beasiswa.konten_image.url}}" alt="Card Image">
                             </div>
                             <div class="card-body p-0">
-                                <p>{{detail_berita.isi_konten|safe}}</p>
+                                <p>{{data_detail_beasiswa.isi_konten|safe}}</p>
                                 <!-- Go to www.addthis.com/dashboard to customize your tools -->
                                 <div class="addthis_inline_share_toolbox"></div>
                                 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-60ba220dbab331b0"></script>
@@ -49,6 +49,7 @@
                 </aside>
             </div>
         </div>
+        
     </div>
     
 
