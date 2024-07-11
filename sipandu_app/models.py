@@ -88,6 +88,7 @@ class Master_sekolah(models.Model):
     def archive(self):
         self.archived = True
         self.deleted_at = timezone.now()
+        
         self.save()
 
     def unarchive(self):
