@@ -18,7 +18,7 @@ def IndexLink(request):
 
         return redirect ('sipandu_admin:index_link')
     else:
-        data_sekolah = Master_sekolah.objects.all()
+        data_sekolah = Master_sekolah.objects.by_hakakses(request.user).all()
         data_link = Data_link.objects.by_hakakses(request.user).filter(deleted_at=None)
         data_arsip_link = Data_link.objects.filter(deleted_at__isnull=False)
         return render(request, 'admin/data/link.html', {'data_sekolah' : data_sekolah, 'data_link' : data_link, 'data_arsip_link':data_arsip_link})
@@ -47,7 +47,7 @@ def EditLink(request, id_link):
         return redirect('sipandu_admin:index_link')
     
     else:
-        dt_link = Data_link.objects.get(id_link=id_link)       
+        dt_link = Data_link.objects.by_hakakses(request.user).get(id_link=id_link)       
         return render(request, 'admin/data/edit_link.html', {"dt_link": dt_link, "id_link": id_link })
 
 @login_required(login_url='sipandu_admin:login_index')

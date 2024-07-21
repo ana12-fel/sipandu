@@ -1,0 +1,59 @@
+{% extends 'layout_smp/base_layout_smp.html' %}
+{% block main %}
+{% load static %}
+
+<section class="page-header page-header-modern page-header-lg" style="background-color:#0169fe;">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col text-center">
+                <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2">
+                    <h2 class="text-color-light">
+                        VISI & MISI
+                    </h2>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section bg-light border-0 z-index-2 pb-0 m-0">
+    <div class="container pt-3 mt-5">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-9 col-xl-8 text-center">
+                <div class="overflow-hidden mb-3">
+                    <h3 class="font-weight-bold text-transform-none text-9 line-height-2 mb-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="400">VISI</h3>
+                </div>
+                <p>{{ data_visi.isi_konten|safe}}</p>
+            </div>
+        </div>
+        <section class="section bg-color-light border-0 position-relative py-0 m-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col pt-5 pb-4">
+                        <div class="row process my-5">
+                            <div class="overflow-hidden mb-3">
+                                <h3 class="font-weight-bold text-transform-none text-9 line-height-2 mb-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="400">MISI</h3>
+                            </div>
+                            {% for dt_misi in data_misi %}
+                            <div class="process-step col-lg-4 mb-5 mb-lg-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200">
+                                <div class="process-step-circle">
+                                    <strong class="process-step-circle-content">{{ forloop.counter }}</strong>
+                                </div>
+                                <div class="process-step-content">
+                                    
+                                    <p class="mb-0">{{ dt_misi.isi_konten|safe}}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+
+
+{% endblock main %}

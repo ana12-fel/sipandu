@@ -8,8 +8,6 @@ Master User
 
 <div class="app-content">
     <div class="side-app">
-      
-        
         <!-- ROW-1 OPEN -->
         <div class="page-header">
             <div>
@@ -21,7 +19,7 @@ Master User
                 </ol>
             </div>
             <div class="ms-auto pageheader-btn">
-                <a href="{% url 'sipandu_admin:index_galeri' %}" class="btn btn-primary btn-icon text-white me-2" >
+                <a href="{% url 'sipandu_admin:index_galeri' %}" class="btn btn-primary btn-icon text-white me-2">
                     <span>
                         <i class="fa fa-folder"></i>
                     </span> Daftar Galeri
@@ -34,54 +32,48 @@ Master User
                     <h3 class="card-title">Edit Galeri</h3>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{% url 'sipandu_admin:tambah_galeri' %}" enctype="multipart/form-data">
+                    <form method="post" action="{% url 'sipandu_admin:edit_galeri' dt_galeri.id_data_galeri %}" enctype="multipart/form-data">
                         {% csrf_token %}
-                            <table class="table">
-                                <tr>
-                                    <td>
-                                        <label for="galeri_sekolah" class="form-label">Sekolah</label>
-                                    </td>
-                                    <td>
-                                        <select class="form-select" id="galeri_sekolah" name="galeri_sekolah">
-                                            <option value="test" selected disabled>Pilih Sekolah</option>
-                                            {% for sekolah in data_sekolah %}
-                                            <option {% if sekolah.sekolah_id == dt_galeri.galeri_sekolah.sekolah_id %} selected {% endif %} value="{{sekolah.sekolah_id}}">{{sekolah.sekolah_nama.upper}}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label for="video" class="form-label">Video</label>
-                                    </td>
-                                    <td>
-                                        <input type="text" value="{{dt_galeri.video}}" class="form-control" id="video" name="video_galeri" required>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label for="image" class="form-label">Image</label>
-                                    </td>
-                                    <td>
-                                        {% if dt_galeri.gambar %}
-                                            <input type="file" value="{{ dt_galeri.gambar.url }}" class="form-control" id="gambar" name="image_galeri" accept="image/*" onchange="previewImage(event)">
-                                        {% else %}
-                                            <input type="file" class="form-control" id="gambar" name="image_galeri" accept="image/*" onchange="previewImage(event)">
-                                        {% endif %}
-
-                                    </td>
-                                </tr>
-                            </table>
-                            <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;">
-                               {% if dt_galeri.gambar %}
-                               <img src="{{dt_galeri.gambar.url}}" alt="">
-                               {% endif %}
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
-                            </div>
-                        </form>
-                    </div>
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <label for="galeri_sekolah" class="form-label">Sekolah</label>
+                                </td>
+                                <td>
+                                    <select class="form-select" id="galeri_sekolah" name="galeri_sekolah">
+                                        <option value="test" selected disabled>Pilih Sekolah</option>
+                                        {% for sekolah in data_sekolah %}
+                                            <option {% if sekolah.sekolah_id == dt_galeri.galeri_sekolah.sekolah_id %} selected {% endif %} value="{{ sekolah.sekolah_id }}">{{ sekolah.sekolah_nama.upper }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="video" class="form-label">Video</label>
+                                </td>
+                                <td>
+                                    <input type="text" value="{{ dt_galeri.video }}" class="form-control" id="video" name="video_galeri">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="image" class="form-label">Image</label>
+                                </td>
+                                <td>
+                                    <input type="file" class="form-control" id="gambar" name="image_galeri" accept="image/*" onchange="previewImage(event)">
+                                </td>
+                            </tr>
+                        </table>
+                        <div id="image-preview" class="mb-3" style="border: 2px dotted; text-align: center;">
+                            {% if dt_galeri.gambar %}
+                                <img src="{{ dt_galeri.gambar.url }}" alt="Preview" style="max-width: 300px;">
+                            {% endif %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -89,25 +81,21 @@ Master User
     </div>
 </div>
 
-
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'admin/js/ckeditor.js'%}"></script>
+<script src="{% static 'admin/js/ckeditor.js' %}"></script>
 
 <script>
     ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .then( editor => {
-                console.log( editor );
-        } )
-        .catch( error => {
-                console.error( error );
-        } );
+        .create(document.querySelector('#editor'))
+        .then(editor => {
+            console.log(editor);
+        })
+        .catch(error => {
+            console.error(error);
+        });
 
-
-
-        
     function previewImage(event) {
         var input = event.target;
         var preview = document.getElementById('image-preview');
@@ -119,19 +107,18 @@ Master User
                 // Menghapus preview thumbnail sebelumnya jika ada
                 while (preview.firstChild) {
                     preview.removeChild(preview.firstChild);
-                } 
+                }
 
                 // Menambahkan elemen img untuk menampilkan preview thumbnail
                 var img = document.createElement('img');
                 img.src = e.target.result;
                 img.style.maxWidth = '300px';
-                img.alt = ' Preview';
+                img.alt = 'Preview';
                 preview.appendChild(img);
             }
 
             reader.readAsDataURL(input.files[0]);
         }
     }
-
 </script>
 {% endblock %}

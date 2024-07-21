@@ -135,19 +135,71 @@
         </div>
 
         <div class="col-lg-6">
-           
-            <div class="position-relative">
+            <div class="position-relative">  
                 <div class="d-flex flex-column align-items-center position-relative">
-                    <div data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
-                        <img src="{{ data_kepala_sekolah.guru_image.url }}" class="img-fluid z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="border-radius: 5px;"/>
-                    </div>
-                    <h2 class="font-weight-bold text-color-dark text-center mt-3">{{ data_kepala_sekolah.nama_guru }}</h2>
-                    <h5 class="text-center">{{ data_kepala_sekolah.tahun_guru }}</h5>
+                    {% if data_kepala_sekolah %}
+                        <div data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
+                            <img src="{{data_kepala_sekolah.guru_image.url}}" class="img-fluid z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="width: 300px; height: 300px; object-fit: cover; border-radius: 5px;"/>
+                        </div>
+                        <h2 class="font-weight-bold text-color-dark text-center mt-3">{{ data_kepala_sekolah.nama_guru }}</h2>
+                        <h5 class="text-center">{{ data_kepala_sekolah.tahun_guru }}</h5>
+                    {% else %}
+                        <p class="text-center">Data kepala sekolah tidak tersedia.</p>
+                    {% endif %}
                 </div>
             </div>
-            
-        </div>
+        </div> 
     </div>
 </div>
+
+<section class="section section-height-3 bg-gradient border-0 m-0">
+    <div class="container py-1">
+        <div class="col">
+            <h2 class="text-color-light font-weight-bold text-9 mb-5-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">Berita Lainnya</h2>
+            <div class="custom-half-carousel-style-1 carousel-half-full-width-wrapper carousel-half-full-width-right">
+                <div class="owl-carousel owl-theme carousel-half-full-width-right dots-align-left dots-light custom-dots-style-1 mb-0" data-plugin-options="{'responsive': {'0': {'items': 1}, '768': {'items': 3}, '992': {'items': 3}, '1200': {'items': 3}}, 'loop': false, 'nav': false, 'dots': true, 'margin': 20}">
+                    <!-- start -->
+                    {% for dt_berita_latest in data_berita_latest %}
+                    <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="400">
+                        <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3 berita-item">
+                            <div class="thumb-info-wrapper rounded-0 image-container">
+                                <img src="{{ dt_berita_latest.konten_image.url }}" class="img-fluid rounded-0 news-image" alt="Image of the news" />
+                                <div class="thumb-info-action">
+                                    <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" aria-label="">
+                                        <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">{{ dt_berita_latest.created_at }}</h2>
+                        <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
+                            <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" class="text-decoration-none text-color-light opacity-hover-8">{{ dt_berita_latest.judul|title }}</a>
+                        </h3>
+                    </div>
+                    {% endfor %}
+                    <!-- end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.berita-item {
+    width: 100%;
+    height: 100%; /* Adjust as needed */
+}
+.image-container {
+    width: 100%;
+    height: 200px; /* Set a fixed height for the images */
+    overflow: hidden;
+}
+.news-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the entire container without distortion */
+}
+</style>
+
 
 {% endblock main %}

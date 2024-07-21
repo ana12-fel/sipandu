@@ -45,24 +45,11 @@
                             <a href="{% url 'sipandu:home' %}" class="dropdown-item dropdown-toggle">JURUSAN</a>
                             <ul class="dropdown-menu border-radius-0">
                                 {% for konten in nav_jurusan_sma %}
-                                    {% if konten.sub_kategori_uraian == 'IPS' %}
                                     <li>
-                                        <a href="{% url 'sipandu:ips' %}" class="nav-link">IPS</a>
-                                    </li>
-                                    {% elif konten.sub_kategori_uraian == 'IPA' %}
-                                    <li>
-                                        <a href="{% url 'sipandu:ipa' %}" class="nav-link">IPA</a>
-                                    </li>
-                                    {% elif konten.sub_kategori_uraian == 'Bahasa' %}
-                                    <li>
-                                        <a href="{% url 'sipandu:bahasa' %}" class="nav-link">Bahasa</a>
-                                    </li> 
-                                    {% else %}
-                                    <li>
-                                        <a href="{% url 'sipandu:identitas'  %}" class="nav-link">Tidak ada data</a>
+                                        <a href="{% url 'sipandu:jurusan' konten.sub_kategori_uraian|lower %}" 
+                                            class="nav-link">{{konten.sub_kategori_uraian}}</a>
                                     </li>
                                     
-                                    {% endif %}
                                 {% endfor %}
                                 
                                 

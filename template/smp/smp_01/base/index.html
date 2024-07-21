@@ -96,10 +96,10 @@
                 <img src="{{data_sambutan.konten_image.url}}" class="img-fluid" alt="Woman testimonial from Porto Magazine company" />
             </div>
             <div class="col-lg-6 align-self-center pb-lg-5 order-1 order-lg-2 ps-5 ps-lg-0">
-                <div class="testimonial testimonial-style-2 testimonial-with-quotes testimonial-remove-right-quote testimonial-quotes-dark custom-testimonial-quote-position-1 mb-0">
+                <div class="testimonial testimonial-style-2 testimonial-with-quotes testimonial-remove-right-quote testimonial-quotes-light custom-testimonial-quote-position-1 mb-0" style="color: #ffffff !important;">
                     <blockquote>
                         <h2 class="text-white text-start mb-0" style="color: #ffffff;">Sambutan Kepala sekolah</h2>
-                        <p class="alternative-font-4 font-weight-medium text-start text-4 text-white px-2 mb-0" style="color: #ffffff;" data-plugin-animated-letters data-plugin-options="{'startDelay': 1000, 'minWindowWidth': 0, 'animationName': 'typeWriter', 'animationSpeed': 25}">{{data_sambutan.isi_konten|safe}}</p>
+                        <p class="alternative-font-4 font-weight-medium text-start text-4 text-white px-2 mb-0" style="color: #ffffff !important;" data-plugin-animated-letters data-plugin-options="{'startDelay': 1000, 'minWindowWidth': 0, 'animationName': 'typeWriter', 'animationSpeed': 25}">{{data_sambutan.isi_konten|safe}}</p>
                     </blockquote>
                     <div class="testimonial-author text-start ps-3 ms-1">
                         <strong class="text-4-5 negative-ls-1 text-white" style="color: #ffffff;">{{data_sambutan.judul}}</strong>
@@ -122,9 +122,17 @@
 					<h2 class="text-transform-none text-color-dark font-weight-bold text-10 negative-ls-1 mb-2 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">KEGIATAN SEKOLAH</h2>
 				</div>
 			</div>
-			<div class="row row-gutter-sm pb-2 mb-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">
+			<style>
+				.card-img-top img {
+					width: 100%; /* Gambar akan memiliki lebar 100% dari parent element (card-img-top) */
+					height: auto; /* Mengatur tinggi gambar agar sesuai proporsi */
+					border-radius: 0; /* Menghapus border-radius yang mungkin ada untuk memastikan gambar seragam */
+				}
+			</style>
+			
+			<div class="row row-cols-1 row-cols-md-3 pb-2 mb-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="600">
 				{% for dt_kegiatan in data_kegiatan %}
-				<div class="col-lg-4 mb-4 mb-lg-0">
+				<div class="col mb-4">
 					<article>
 						<div class="card border-0 border-radius-0 custom-box-shadow-1">
 							<div class="card-img-top">
@@ -137,12 +145,14 @@
 									<time pubdate datetime="2023-01-10">{{ dt_kegiatan.created_at }}</time> 
 								</p>
 								<div class="card-body p-0">
-									<h4 class="card-title alternative-font-4 font-weight-semibold text-5 mb-3"><a class="text-color-dark text-color-hover-primary text-decoration-none font-weight-bold text-3" href="demo-law-firm-2-blog-post.html">{{ dt_kegiatan.judul }}</a></h4>
-									<p class="card-text mb-2">{{ dt_kegiatan.isi_konten|safe }}</p>
+									<h4 class="card-title alternative-font-4 font-weight-semibold text-5 mb-3">
+										<a class="text-color-dark text-color-hover-primary text-decoration-none font-weight-bold text-3" href="demo-law-firm-2-blog-post.html">{{ dt_kegiatan.judul }}</a>
+									</h4>
+									<p class="card-text mb-2">{{ dt_kegiatan.isi_konten|truncatewords:5|safe }}</p>
 									<a href="{% url 'sipandu:detail_kegiatan' dt_kegiatan.id_data_konten %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-primary svg-stroke-color-primary ps-0">
 										READ MORE
 										<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-											<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+											<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353"/>
 										</svg>
 									</a>
 								</div>
@@ -159,38 +169,39 @@
 				</div>
 			</div>
 		</div>
-		<div class="container py-2 my-2-2">
+	
+		<div class="container py-2 my-2">
 			<div class="row">
 				<div class="col">
 					<h2 class="text-color-dark font-weight-bold text-7 line-height-1 mb-3-5">Gallery</h2>
-					<p class="text-4 font-weight-light">Dokumentasi dari sekolah kami </p>
+					<p class="text-4 font-weight-light">Dokumentasi dari sekolah kami</p>
 				</div>
 			</div>
+	
 			<div role="main" class="main" id="main">
-
 				<div id="photographyLightbox" class="mfp-hide">
 					<div class="thumb-gallery">
 						<div class="owl-carousel owl-theme manual thumb-gallery-detail" id="thumbGalleryDetail">
-							{% for d_galeri in galeri	%}
+							{% for d_galeri in galeri %}
 							<div>
 								<span class="img-thumbnail d-block">
 									<img alt="Project Image" src="{{d_galeri.gambar.url}}" class="img-fluid">
 								</span>
 							</div>
 							{% endfor %}
-							
 						</div>
 					</div>
 				</div>
+	
 				<div id="horizontalScrollBox">
 					<div class="content">
-						{% for d_galeri in galeri	%}
+						{% for d_galeri in galeri %}
 						<div class="horizontal-scroll-item-wrapper">
 							<div class="horizontal-scroll-item">
 								<a href="#photographyLightbox" class="text-decoration-none popup-with-move-anim">
 									<span class="thumb-info">
 										<span class="thumb-info-wrapper m-0">
-											<img src="{{d_galeri.gambar.url}}" class="img-fluid" alt="" />
+											<img src="{{d_galeri.gambar.url}}" class="img-fluid" alt="">
 											<span class="thumb-info-plus"></span>
 										</span>
 									</span>
@@ -198,16 +209,17 @@
 							</div>
 						</div>
 						{% endfor %}
-						
 					</div>
 				</div>
 			</div>
 		</div>
+	
 		<div class="position-absolute transform3dy-n50 right-0 pe-5 me-4">
 			<div class="appear-animation" data-appear-animation="fadeInRightShorterPlus" data-appear-animation-delay="1700" data-appear-animation-duration="750ms">
 				<div class="custom-square-1 bg-primary mb-5"></div>
 			</div>
 		</div>
+	
 		<div class="position-absolute transform3dy-n50 right-15 pe-5 me-5">
 			<div class="appear-animation" data-appear-animation="fadeInRightShorterPlus" data-appear-animation-delay="1500" data-appear-animation-duration="750ms">
 				<div class="custom-square-1 bg-dark pe-5 me-5 mt-4 mb-5"></div>
@@ -215,55 +227,66 @@
 		</div>
 	</section>
 	
+	
 	<!-- Berita -->
-	<div class="container mt-5 pt-4 mb-5 mb-lg-4 mb-xl-0 pb-3 pb-xl-0">
+	<div class="container pb-5 mb-4 pt-5">
 		<div class="row">
-			<div class="col">
-				<h2 class="text-color-dark font-weight-bold text-7 line-height-1 mb-3-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">Berita</h2>
-				<p class="text-4 font-weight-light mb-5-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">Cras a elit sit amet leo accumsan volutsudisse. </p>
+			<div class="col text-center">
+				<h2 class="text-transform-none text-color-dark font-weight-bold text-10 negative-ls-1 mb-2 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="400">BERITA</h2>
 			</div>
-		</div>
-		<div class="row row-gutter-sm justify-content-center mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="600">
-			{% for dt_berita in data_berita %}
-			<div class="col-sm-9 col-md-6 col-lg-4 mb-4 mb-lg-0">
-				<a href="{% url 'sipandu:detail' dt_berita.id_data_konten %}" class="text-decoration-none" data-cursor-effect-hover="plus">
-					<div class="card border-0">
-						<div class="card-img-top position-relative overlay">
-							<div class="position-absolute bottom-10 right-0 d-flex justify-content-end w-100 py-3 px-4 z-index-3">
-								<span class="text-center bg-primary text-color-light font-weight-semibold text-5-5 line-height-2 px-3 py-2">
-									<span class="position-relative z-index-2">{{ dt_berita.created_at }}</span>
-								</span>
-							</div>
-							<img src="{{ dt_berita.konten_image.url }}"class="img-fluid" alt="Lorem Ipsum Dolor" />
+			<div class="col-12">
+				<div class="d-flex flex-nowrap justify-content-center">
+					{% for dt_berita in data_berita %}
+					<div id="teamMember{{ forloop.counter }}" class="d-flex flex-column align-items-center appear-animation mx-2 mb-4 berita-item" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">
+						<div class="image-container mb-2">
+							<img src="{{ dt_berita.konten_image.url }}" class="img-fluid news-image" alt="Image of the team member" />
 						</div>
-						<div class="card-body py-4 px-0">
-							<span class="d-block text-color-grey font-weight-semibold positive-ls-2 text-2">ADMIN</span>
-							<h3 class="text-transform-none font-weight-bold text-5 text-color-hover-primary mb-2">{{ dt_berita.judul }}</h3>
-							<p class="mb-2">{{ dt_berita.isi_konten|safe}}</p>
-							<span class="custom-view-more d-inline-flex font-weight-medium text-color-primary">
-								Lihat Detail
-								<img width="27" height="27" src="{% static 'img/demos/construction/icons/arrow-right.svg' %}" alt="" data-icon data-plugin-options="{'onlySVG': true, 'extraClass': 'svg-fill-color-primary ms-2'}" style="width: 27px;" />
-							</span>
+						<div class="content-container text-center">
+							<h4 class="text-color-dark font-weight-bold line-height-1 mt-3 mb-1">{{ dt_berita.judul|truncatewords:10 }}</h4>
+							<p class="text-3 mb-3-5">{{ dt_berita.isi_konten|truncatewords:10|safe }}</p>
+							<a href="{% url 'sipandu:detail' dt_berita.id_data_konten %}" class="custom-read-more-link d-inline-flex align-items-center font-weight-semibold text-3 text-decoration-none svg-fill-color-dark svg-stroke-color-primary ps-0">
+								Lihat Detail ...
+								<svg class="ms-2" version="1.1" viewBox="0 0 15.698 8.706" width="17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+									<polygon stroke="#777" stroke-width="0.1" fill="#777" points="11.354,0 10.646,0.706 13.786,3.853 0,3.853 0,4.853 13.786,4.853 10.646,8 11.354,8.706 15.698,4.353 "/>
+								</svg>
+							</a>
 						</div>
 					</div>
-				</a>
+					{% endfor %}
+				</div>
+				<div class="row">
+					<div class="col text-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="800" data-plugin-options="{'accY': -250}">
+						<a href="{% url 'sipandu:berita' %}" class="btn btn-info font-weight-bold px-5 btn-py-3"><span class="fa fa-eye"></span> Lihat Berita Lainnya</a>
+					</div>
+				</div>
 			</div>
-			{% endfor %}
-		</div>
-	</div>
-	<div class="row">
-		<div class="col text-center appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="800" data-plugin-options="{'accY': -250}">
-			<a href="{% url 'sipandu:berita' %}" class="btn btn-info font-weight-bold px-5 btn-py-3"><span class="fa fa-eye"></span> Lihat Berita Lainnya</a>
 		</div>
 	</div>
 	
-	<div class="position-relative pb-5 d-sm-none d-xl-block">
-		<div class="position-absolute transform3dy-n50 left-0">
-			<div class="appear-animation" data-appear-animation="fadeInRightShorterPlus" data-appear-animation-delay="1500" data-appear-animation-duration="1500ms">
-				<div class="custom-square-1 bg-primary mt-0 mb-5"></div>
-			</div>
-		</div>
-	</div>
-
-</div>
+	
+	<style>
+	.berita-item {
+		width: 300px; /* Atur lebar sesuai kebutuhan */
+		height: 450px; /* Atur tinggi sesuai kebutuhan */
+		border: 1px solid #ddd; /* Opsional: Untuk visualisasi batas */
+		padding: 15px; /* Opsional: Untuk memberikan ruang dalam */
+		box-sizing: border-box; /* Memastikan padding tidak menambah ukuran total */
+	}
+	.image-container {
+		width: 100%;
+		height: 200px; /* Atur tinggi gambar */
+		overflow: hidden;
+	}
+	.news-image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover; /* Memastikan gambar memenuhi kontainer */
+	}
+	.content-container {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+	</style>
 {% endblock main %}

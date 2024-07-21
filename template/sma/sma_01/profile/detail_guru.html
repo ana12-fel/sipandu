@@ -2,52 +2,109 @@
 {% block main %}
 {% load static %}
 
-<section class="page-header page-header-modern page-header-lg overlay overlay-show overlay-op-9 m-0" style="background-image: url(img/demos/law-firm-2/backgrounds/background-4.jpg); background-size: cover; background-position: center;">
+<section class="page-header page-header-modern page-header-lg" style="background-color:#0169fe;">
     <div class="container py-4">
         <div class="row">
             <div class="col text-center">
                 <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium mb-2">
+                    <h2 class="text-color-light">
+                       BIODATA GURU
+                    </h2>
                 </ul>
-                <h1 class="text-color-light font-weight-bold text-10">BIODATA GURU</h1>
             </div>
         </div>
     </div>
 </section>
 
+
+
 <div class="container py-3 my-3">
-    <div class="row align-items-center justify-content-center">
-        <div class="col-lg-6 mb-5 mb-lg-0">
-            <h2 class="text-color-dark font-weight-extra-bold text-10 mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200"><em>BIODATA</em></h2>
-            <table>
-                <tr>
-                    <td class="label text-color-dark">NAMA</td>
-                    <td class="label text-color-dark">: {{ data_detail_guru.nama_guru }}</td>
-                </tr>
-                <tr>
-                    <td class="label text-color-dark">NIP</td>
-                    <td class="label text-color-dark">: {{ data_detail_guru.nip_guru }}</td>
-                </tr>
-                <tr>
-                    <td class="label text-color-dark">Mata Pelajaran</td>
-                    <td class="label text-color-dark">: {{ data_detail_guru.mata_pelajaran }}</td>
-                </tr>
-                <tr>
-                    <td class="label text-color-dark">Pendidikan</td>
-                    <td class="label text-color-dark">: {{ data_detail_guru.pendidikan }}</td>
-                </tr>
+    <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <!-- Tabel BIODATA -->
+            <h2 class="text-color-dark font-weight-extra-bold text-5 mb-3 mb-md-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200"><em>BIODATA</em></h2>
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <tr>
+                        <td class="label text-color-dark">NAMA</td>
+                        <td class="label text-color-dark">: {{ data_detail_guru.nama_guru }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label text-color-dark">NIP</td>
+                        <td class="label text-color-dark">: {{ data_detail_guru.nip_guru }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label text-color-dark">Mata Pelajaran</td>
+                        <td class="label text-color-dark">: {{ data_detail_guru.mata_pelajaran }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label text-color-dark">Pendidikan</td>
+                        <td class="label text-color-dark">: {{ data_detail_guru.pendidikan }}</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
         <div class="col-md-9 col-lg-6 ps-lg-5">
-            <div class="position-relative">
-                <div class="custom-shape-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="1100">
-                    <div class="position-absolute top-0 left-0 right-0 bottom-0 bg-primary" data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.1, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}" style="border-radius: 5px;"></div>
-                </div>
+            <!-- Gambar -->
+            <div >
                 <div data-plugin-float-element data-plugin-options="{'startPos': 'top', 'speed': 0.3, 'transition': true, 'transitionDuration': 1000, 'isInsideSVG': true}">
-                    <img src="{{ data_detail_guru.guru_image.url }}" class="img-fluid position-relative z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="border-radius: 5px;"/>
+                    <img src="{{ data_detail_guru.guru_image.url }}" class="img-fluid position-relative z-index-1 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="900" alt="" style="position: absolute; top: 100; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+<section class="section section-height-3 bg-gradient border-0 m-0">
+    <div class="container py-1">
+        <div class="col">
+            <h2 class="text-color-light font-weight-bold text-9 mb-5-5 appear-animation" data-appear-animation="fadeInUpShorterPlus" data-appear-animation-delay="200">Berita Lainnya</h2>
+            <div class="custom-half-carousel-style-1 carousel-half-full-width-wrapper carousel-half-full-width-right">
+                <div class="owl-carousel owl-theme carousel-half-full-width-right dots-align-left dots-light custom-dots-style-1 mb-0" data-plugin-options="{'responsive': {'0': {'items': 1}, '768': {'items': 3}, '992': {'items': 3}, '1200': {'items': 3}}, 'loop': false, 'nav': false, 'dots': true, 'margin': 20}">
+                    <!-- start -->
+                    {% for dt_berita_latest in data_berita_latest %}
+                    <div class="appear-animation" data-appear-animation="fadeInLeftShorterPlus" data-appear-animation-delay="400">
+                        <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3 berita-item">
+                            <div class="thumb-info-wrapper rounded-0 image-container">
+                                <img src="{{ dt_berita_latest.konten_image.url }}" class="img-fluid rounded-0 news-image" alt="Image of the news" />
+                                <div class="thumb-info-action">
+                                    <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" aria-label="">
+                                        <span class="thumb-info-action-icon thumb-info-action-icon-light"><i class="fas fa-plus text-dark"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="text-color-light font-weight-semibold text-3 opacity-7 line-height-1 mb-1">{{ dt_berita_latest.created_at }}</h2>
+                        <h3 class="text-transform-none font-weight-bold text-5-5 mb-0 pb-2">
+                            <a href="{% url 'sipandu:detail' dt_berita_latest.id_data_konten %}" class="text-decoration-none text-color-light opacity-hover-8">{{ dt_berita_latest.judul|title }}</a>
+                        </h3>
+                    </div>
+                    {% endfor %}
+                    <!-- end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.berita-item {
+    width: 100%;
+    height: 100%; /* Adjust as needed */
+}
+.image-container {
+    width: 100%;
+    height: 200px; /* Set a fixed height for the images */
+    overflow: hidden;
+}
+.news-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the entire container without distortion */
+}
+</style>
 
 {% endblock main %}

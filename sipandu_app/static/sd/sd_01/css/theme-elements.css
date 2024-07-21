@@ -12395,7 +12395,11 @@ Credits: Codyhouse (https://codyhouse.co/gem/360-degrees-product-viewer)
 }
 
 .particle.particle-repeating-lines.bg-dark {
-	background: repeating-linear-gradient(-55deg, rgba(255, 255, 255, 0) 0.8px, #212529 1.6px, #212529 3px, rgba(255, 255, 255, 0) 3.8px, rgba(255, 255, 255, 0) 10px) !important;
+	background: repeating-linear-gradient(-55deg, rgba(255, 255, 255, 0) 0.8px, #ff1493 1.6px, #ff1493 3px, rgba(255, 255, 255, 0) 3.8px, rgba(255, 255, 255, 0) 10px) !important;
+}
+
+.particle.particle-repeating-lines.bg-pink {
+	background: repeating-linear-gradient(-55deg, rgba(255, 255, 255, 0) 0.8px, #ff1493 1.6px, #ff1493 3px, rgba(255, 255, 255, 0) 3.8px, rgba(255, 255, 255, 0) 10px) !important;
 }
 
 .patterns svg {
@@ -16040,7 +16044,8 @@ html.gecko .sort-destination.sort-destination-margin > [class*="col-"] {
 }
 
 .testimonial.testimonial-style-2 blockquote p {
-	color: #777;
+	/* CSS SD */
+	color: #fff;
 }
 
 .testimonial.testimonial-style-2 .testimonial-arrow-down {

@@ -16032,6 +16032,7 @@ html.gecko .sort-destination.sort-destination-margin > [class*="col-"] {
 }
 
 .testimonial.testimonial-style-2 blockquote p {
+	/* CSS SMP */
 	color: #ffffff;
 }
 

@@ -306,10 +306,12 @@ class Data_konten(models.Model):
     def archive(self):
         self.archived = True
         self.deleted_at = timezone.now()
+        self.status = False
         self.save()
 
     def unarchive(self):
         self.archived = False
+        self.status = True
         self.deleted_at = None
         self.save()
 

@@ -14,10 +14,12 @@ urlpatterns = [
     path('fasilitas/', profile.fasilitas, name='fasilitas'),
      path('detail_fasilitas/<str:id_data_konten>/', profile.detail_fasilitas, name='detail_fasilitas'),
 
-    path('ipa/', jurusan.ipa, name='ipa'),
-    path('ips/', jurusan.ips, name='ips'),
-    path('bahasa/', jurusan.bahasa, name='bahasa'),
+    # path('ipa/', jurusan.ipa, name='ipa'),
+    # path('ips/', jurusan.ips, name='ips'),
+    # path('bahasa/', jurusan.bahasa, name='bahasa'),
     
+    path('jurusan/<str:nama_jurusan>/', jurusan.index_jurusan, name='jurusan'),
+
     path('kontak/', kontak.index_kontak, name='kontak'),
 
     path('prestasi/', prestasi.index_prestasi, name='prestasi'),

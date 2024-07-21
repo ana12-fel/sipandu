@@ -1,0 +1,55 @@
+{% extends 'layout_smp/base_layout_smp.html' %}
+{% block main %}
+{% load static %}
+
+<section class="page-header page-header-modern page-header-lg overlay overlay-show overlay-op-9 m-0" style="background-image: url(img/demos/law-firm-2/backgrounds/background-4.jpg); height: 300px; background-size: cover;  background-position: center;">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col text-align-center text-center">
+                <ul class="breadcrumb d-flex justify-content-center text-4-5 font-weight-medium " style="margin-top: 80px;">
+                    <h2 class="text-color-light">
+                      STRUKTUR ORGANISASI
+                    </h2>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-1">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>{{ data_struktur.judul }}</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-centered-icons rounded-0 mb-3 mt-4">
+                <div class="thumb-info-wrapper rounded-0">
+                    <!-- Menampilkan judul -->
+                    
+                    <!-- Mengecek apakah data_struktur memiliki konten_image -->
+                    {% if data_struktur.konten_image %}
+                    <div>
+                        <img src="{{ data_struktur.konten_image.url }}" class="img-fluid rounded-0" alt="" style="border-radius: 5px;"/>
+                    </div>
+                        <!-- Menampilkan deskripsi di bawah gambar -->
+                        
+                    {% else %}
+                        <!-- Tambahkan pesan alternatif jika konten_image tidak tersedia -->
+                        <p>No Image Available</p>
+                    {% endif %}
+                    <div class="thumb-info-action"></div>
+                </div>
+            </div>    
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md12">
+            <p>{{ data_struktur.isi_konten|safe }}</p>
+        </div>
+    </div>
+</div>
+
+
+{% endblock main %}

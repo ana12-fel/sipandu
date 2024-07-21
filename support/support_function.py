@@ -24,6 +24,12 @@ def global_var(request):
     data_kegiatan = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Kegiatan').order_by('-id_data_konten')[:3]
     data_berita = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').order_by('-id_data_konten')[:3]
     data_kerja = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Bursa Kerja').order_by('-id_data_konten')[:3]
+    jumlah_berita = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Berita').count()
+    jumlah_pengumuman = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Pengumuman').count()
+    jumlah_kegiatan = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Kegiatan').count()
+    jumlah_kerja = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Bursa Kerja').count()
+    jumlah_beasiswa = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Beasiswa').count()
+
     
 
     try:
@@ -32,12 +38,14 @@ def global_var(request):
         data_sambutan = None
 
     try:
-        data_pengumuman = dt_konten.objects.get(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Pengumuman')
+        data_pengumuman = dt_konten.objects.filter(konten_sekolah=request.sekolah, konten_sub_kategori__sub_kategori_uraian='Pengumuman').latest('created_at')
+        print(data_pengumuman)
     except Exception as e:
         data_pengumuman = None
+        print('test')
 
     try:
-        data_kepala_sekolah = dt_guru.objects.get(guru_sekolah=request.sekolah, status_kepegawaian='kepala_sekolah')
+        data_kepala_sekolah = dt_guru.objects.filter(guru_sekolah=request.sekolah, status_kepegawaian='kepala_sekolah')
     except Exception as e:
         data_kepala_sekolah = None
         
@@ -65,6 +73,7 @@ def global_var(request):
         data_sekolah_header = get_object_or_404(dt_situs, sekolah_id=request.sekolah)
     else:
         data_sekolah_header = ''
+
 
     # Paket data yang akan dikembalikan
     data = {
@@ -97,6 +106,11 @@ def global_var(request):
         'data_kerja' : data_kerja,
         'data_sambutan' : data_sambutan,
         'data_pengumuman' : data_pengumuman,
+        'jumlah_berita' : jumlah_berita,
+        'jumlah_pengumuman' : jumlah_pengumuman,
+        'jumlah_kegiatan' : jumlah_kegiatan,
+        'jumlah_kerja' : jumlah_kerja,
+        'jumlah_beasiswa' : jumlah_beasiswa,
     }
     
     return data
